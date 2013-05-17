@@ -1,0 +1,5 @@
+.settings
+.project
+.idea
+.buildpath
+!.gitkeep
