@@ -2,4 +2,5 @@
 .project
 .idea
 .buildpath
+.nbproject
 !.gitkeep

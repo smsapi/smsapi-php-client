@@ -1,208 +1,133 @@
 <?php
 
-namespace SMSApi\Api\Action\SMS;
+namespace SMSApi\Api\Action\Sms;
 
-/**
- * Class Send
- * @method \SMSApi\Api\Response\Status execute() execute()
- */
-class Send extends \SMSApi\Api\Action\Base {
+use SMSApi\Api\Action\AbstractAction;
+use SMSApi\Proxy\Uri;
 
-	public function __construct() {
-		parent::__construct();
+class Send extends AbstractAction {
+
+	protected function response( $data ) {
+
+		return new \SMSApi\Api\Response\StatusResponse( $data );
 	}
 
-	protected function uri() { return 'sms.do'; }
+	public function uri() {
 
-	protected function values() {
+		$query = "";
 
-		$values = array(
-			'format' => 'json',
-			'username' => $this->client->getUsername(),
-			'password' => $this->client->getPassword(),
-		);
+		$query .= $this->paramsLoginToQuery();
 
-		if( !empty($this->groups) AND empty($this->to) ) {
-			$values['group'] = implode(',', $this->groups);
-		}
-		else if( !empty($this->to) AND empty($this->groups) ) {
-			$values['to'] = implode(',', $this->to);
-		}
-		else {
-			throw new \InvalidArgumentException();
-		}
+		$query .= $this->paramsBasicToQuery();
 
-		if( $this->from ) $values['from'] = $this->from;
+		$query .= $this->paramsOther();
 
-		if( $this->date_sent ) $values['date'] = $this->date_sent;
-		if( $this->date_expire ) $values['expiration_date'] = $this->date_expire;
-
-		$values['single'] = ($this->single ? '1' : '0');
-		$values['nounicode'] = ($this->nounicode ? '1' : '0');
-		$values['flash'] = ($this->flash ? '1' : '0');
-		$values['fast'] = ($this->fast ? '1' : '0');
-
-		$values['message'] = $this->text;
-		$values['datacoding'] = $this->datacoding;
-		$values['max_parts'] = $this->max_parts;
-		$values['partner'] = $this->partner;
-		$values['encoding'] = $this->encoding;
-		$values['test'] = $this->test;
-
-		if( $this->idx ) $values['idx'] = implode('|', $this->idx);
-		$values['check_idx'] = $this->check_idx ? '1' : '0';
-
-		return $values;
+		return new Uri( $this->proxy->getProtocol(), $this->proxy->getHost(), $this->proxy->getPort(), "/api/sms.do", $query );
 	}
 
-	protected function makeResult(\stdClass $obj) {
-		return \SMSApi\Api\Response\Status::fromObject($obj);
-	}
-
-	protected $from = null;
-
-	/**
-	 * @param $from string
-	 * @return $this
-	 */
-	public function setFrom($from) {
-
-		$this->from = $from;
+	public function setText( $text ) {
+		$this->params[ 'message' ] = $text;
 		return $this;
 	}
 
-	protected $text;
+	public function setTo( $to ) {
 
-	/**
-	 * @param $text string
-	 * @return $this
-	 */
-	public function setText($text) {
-		$this->text = $text;
-		return $this;
-	}
-
-	protected $to = null;
-
-	public function setTo($to) {
-
-		if( !is_array($to) ) {
-			$to = array($to);
+		if ( !is_array( $to ) ) {
+			$to = array( $to );
 		}
 
-		$this->to = $to;
+		$this->to->exchangeArray( $to );
 		return $this;
 	}
 
-	protected $groups = null;
+	public function setGroup( $group ) {
+		$this->group = $group;
+		return $this;
+	}
 
-	/**
-	 * @param $group string|string[]
-	 * @return $this
-	 */
-	public function setGroup($group) {
+	public function setDateSent( $date ) {
+		$this->date = $date;
+		return $this;
+	}
 
-		if( !is_array($group) ) {
-			$group = array($group);
+	public function setIDx( $idx ) {
+		if ( !is_array( $idx ) ) {
+			$idx = array( $idx );
 		}
 
-		$this->groups = $group;
+		$this->to->exchangeArray( $idx );
 		return $this;
 	}
 
-	protected $date_sent = null;
-
-	public function setDateSent($date) {
-		$this->date_sent = $date;
-		return $this;
-	}
-
-	protected $date_expire = null;
-
-	public function setDateExpiret($date) {
-		$this->date_expire = $date;
-		return $this;
-	}
-
-	protected $single = false;
-
-	public function setSingle($single) {
-		$this->single = (bool)$single;
-		return $this;
-	}
-
-	protected $nounicode = false;
-
-	public function setNoUnicode($nounicode) {
-		$this->nounicode = (bool)$nounicode;
-		return $this;
-	}
-
-	protected $flash = false;
-
-	public function setFlash($flash) {
-		$this->flash = (bool)$flash;
-		return $this;
-	}
-
-	protected $fast = false;
-
-	public function setFast($fast) {
-		$this->fast = (bool)$fast;
-		return $this;
-	}
-
-	protected $datacoding = null;
-
-	public function setDataCoding($datacoding) {
-		$this->datacoding = $datacoding;
-		return $this;
-	}
-
-	protected $max_parts = null;
-
-	public function setMaxParts($max_parts) {
-		$this->max_parts = (int)$max_parts;
-		return $this;
-	}
-
-	protected $partner = null;
-
-	public function setPartner($partner) {
-		$this->partner = $partner;
-		return $this;
-	}
-
-	protected $encoding = 'utf-8';
-
-	public function setEncoding($encoding) {
-		$this->encoding = $encoding;
-		return $this;
-	}
-
-	protected $check_idx = false;
-	public function setCheckIDx($flag) {
-
-		$this->check_idx = (bool)$flag;
-		return $this;
-	}
-
-	protected $idx = null;
-
-	public function setIDx($idx) {
-
-		if( !is_array($idx) ) {
-			$idx = array($idx);
+	public function setCheckIDx( $check ) {
+		if ( $check == true ) {
+			$this->params[ "check_idx" ] = "1";
+		} else if ( $check == false ) {
+			$this->params[ "check_idx" ] = "0";
 		}
 
-		$this->idx = $idx;
 		return $this;
 	}
 
-	protected $test = false;
-
-	public function setTest($test) {
-		$this->test = (bool)$test;
+	public function setPartner( $partner ) {
+		$this->params[ "partner_id" ] = $partner;
 		return $this;
 	}
+
+	public function setDateExpire( $date ) {
+		$this->params[ "expiration_date" ] = $date;
+		return $this;
+	}
+
+	public function setSender( $sender ) {
+		$this->params[ "from" ] = $sender;
+		return $this;
+	}
+
+	public function setSingle( $single ) {
+		if ( $single == true ) {
+			$this->params[ "single" ] = "1";
+		} else if ( $single == false ) {
+			$this->params[ "single" ] = "0";
+		}
+
+		return $this;
+	}
+
+	public function setNoUnicode( $noUnicode ) {
+		if ( $noUnicode == true ) {
+			$this->params[ "nounicode" ] = "1";
+		} else if ( $noUnicode == false ) {
+			$this->params[ "nounicode" ] = "0";
+		}
+
+		return $this;
+	}
+
+	public function setDataCoding( $dataCoding ) {
+		$this->params[ "datacoding" ] = $dataCoding;
+		return $this;
+	}
+
+	public function setFlash( $flash ) {
+		if ( $flash == true ) {
+			$this->params[ "flash" ] = "1";
+		} else if ( $flash == false && isset( $this->params[ "flash" ] ) ) {
+			unset( $this->params[ "flash" ] );
+		}
+
+		return $this;
+	}
+
+	public function setNormalize( $normalize ) {
+
+		if ( $normalize == true ) {
+			$this->params[ "normalize" ] = "1";
+		} else if ( $normalize == false && isset( $this->params[ "normalize" ] ) ) {
+			unset( $this->params[ "normalize" ] );
+		}
+
+		return $this;
+	}
+
 }

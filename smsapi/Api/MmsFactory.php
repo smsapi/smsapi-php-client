@@ -2,10 +2,10 @@
 
 namespace SMSApi\Api;
 
-class SmsFactory extends ActionFactory {
+class MmsFactory extends ActionFactory {
 
 	public function actionSend() {
-		$action = new \SMSApi\Api\Action\Sms\Send();
+		$action = new \SMSApi\Api\Action\Mms\Send();
 		$action->client( $this->client );
 		$action->proxy( $this->proxy );
 
@@ -13,7 +13,7 @@ class SmsFactory extends ActionFactory {
 	}
 
 	public function actionGet( $id = null ) {
-		$action = new \SMSApi\Api\Action\Sms\Get();
+		$action = new \SMSApi\Api\Action\Mms\Get();
 		$action->client( $this->client );
 		$action->proxy( $this->proxy );
 
@@ -27,7 +27,7 @@ class SmsFactory extends ActionFactory {
 	}
 
 	public function actionDelete( $id = null ) {
-		$action = new \SMSApi\Api\Action\Sms\Delete();
+		$action = new \SMSApi\Api\Action\Mms\Delete();
 		$action->client( $this->client );
 		$action->proxy( $this->proxy );
 
