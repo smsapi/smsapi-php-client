@@ -1,5 +1,5 @@
 <?php
-
+//sms
 namespace SMSApi\Api;
 
 class SmsFactory extends ActionFactory {
