@@ -1,5 +1,5 @@
 {
-    "name": "client-smsapi",
+    "name": "smsapi/client",
     "homepage": "http://www.smsapi.pl",
     "repositories": [
         {
