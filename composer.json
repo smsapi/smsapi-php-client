@@ -1,0 +1,21 @@
+{
+    "name": "client-smsapi",
+    "homepage": "http://www.smsapi.pl",
+    "repositories": [
+        {
+            "type":"package",
+            "package": {
+                "name": "smsapi/php-client",
+                "version": "dev-master",
+                "source": {
+                    "url": "https://github.com/smsapi/php-client.git",
+                    "type": "git",
+                    "reference":"master"
+                }
+            }
+        }
+    ],
+    "require": {
+        "smsapi/php-client": "dev-master"
+    }
+}

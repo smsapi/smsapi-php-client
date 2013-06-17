@@ -15,7 +15,7 @@ spl_autoload_register(
 			
 			if ( preg_match( '/^smsapi/', $cname ) ) {
 				
-				$classmap = include '_classmap.php';
+				$classmap = include 'autoload_classmap.php';
 				
 				if(isset($classmap[$cname])){
 					$class = explode( "\\", $classmap[$cname] );
