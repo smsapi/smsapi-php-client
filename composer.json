@@ -1,5 +1,6 @@
 {
     "name": "smsapi.pl/client",
+    "description": "library for communicating with provider",
     "homepage": "http://www.smsapi.pl",
     "repositories": [
         {
@@ -15,6 +16,7 @@
             }
         }
     ],
+    "minimum-stability": "dev",
     "require": {
         "smsapi/php-client": "dev-master"
     }
