@@ -1,23 +1,10 @@
 {
-    "name": "smsapi.pl/client",
-    "description": "library for communicating with provider",
-    "homepage": "http://www.smsapi.pl",
-    "repositories": [
-        {
-            "type":"package",
-            "package": {
-                "name": "smsapi/php-client",
-                "version": "dev-master",
-                "source": {
-                    "url": "https://github.com/smsapi/php-client.git",
-                    "type": "git",
-                    "reference":"master"
-                }
-            }
-        }
-    ],
+    "name": "smsapi.pl/php-client",
+    "description": "Library for communicating with provider",
+    "homepage": "http://www,smsapi.pl",
+    "version": "1.0.0",
+    "type": "library",
+    "keywords": ["sms", "mms", "vms"],
     "minimum-stability": "dev",
-    "require": {
-        "smsapi/php-client": "dev-master"
-    }
+    "require": {}
 }
