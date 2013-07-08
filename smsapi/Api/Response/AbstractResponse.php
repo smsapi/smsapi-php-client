@@ -8,6 +8,11 @@ abstract class AbstractResponse implements Response {
 
 	function __construct( $data ) {
 		$this->obj = json_decode( $data );
+		
+		if($this->obj === null){
+			throw new \SMSApi\Exception\SmsapiException("error json: ".json_last_error());
+		}
+		
 	}
 
 }
