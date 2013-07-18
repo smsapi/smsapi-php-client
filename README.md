@@ -20,7 +20,7 @@ try {
 
 	$actionSend->setTo('600xxxxxx');
 	$actionSend->setText('Hello World!!');
-	$actionSend->setSender('ECO');
+	$actionSend->setSender('SMSAPI.pl');
 
 	$response = $actionSend->execute();
 
