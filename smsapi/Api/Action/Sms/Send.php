@@ -5,6 +5,9 @@ namespace SMSApi\Api\Action\Sms;
 use SMSApi\Api\Action\AbstractAction;
 use SMSApi\Proxy\Uri;
 
+/**
+ * @method \SMSApi\Api\Response\StatusResponse execute() 
+ */
 class Send extends AbstractAction {
 
 	protected function response( $data ) {

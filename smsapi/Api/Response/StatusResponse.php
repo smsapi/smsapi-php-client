@@ -18,6 +18,9 @@ class StatusResponse extends CountableResponse {
 		}
 	}
 
+	/**
+	 * @return MessageResponse[]
+	 */
 	public function getList() {
 		return $this->list;
 	}

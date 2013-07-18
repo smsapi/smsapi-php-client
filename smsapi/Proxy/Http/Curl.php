@@ -90,7 +90,7 @@ class Curl extends AbstractHttp implements Proxy {
 			}
 
 
-			if ( $this->method = "POST" ) {
+			if ( $this->method == "POST" ) {
 
 				$body = $this->renderQueryByBody( $this->uri->getQuery(), $body );
 
