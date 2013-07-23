@@ -36,7 +36,7 @@ abstract class AbstractAction {
 	public function setTest( $val ) {
 		if ( $val == true ) {
 			$this->params[ 'test' ] = 1;
-		} else if ( $test == false ) {
+		} else if ( $val == false ) {
 			unset( $this->params[ 'test' ] );
 		}
 
@@ -46,7 +46,7 @@ abstract class AbstractAction {
 	protected function setJson( $val ) {
 		if ( $val == true ) {
 			$this->params[ 'format' ] = 'json';
-		} else if ( test == false ) {
+		} else if ( $val == false ) {
 			unset( $this->params[ 'format' ] );
 		}
 
