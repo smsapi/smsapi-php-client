@@ -10,6 +10,8 @@ use SMSApi\Proxy\Uri;
  */
 class Send extends AbstractAction {
 
+	protected $encoding = 'utf-8';
+	
 	protected function response( $data ) {
 
 		return new \SMSApi\Api\Response\StatusResponse( $data );
@@ -32,6 +34,12 @@ class Send extends AbstractAction {
 		$this->params[ 'message' ] = $text;
 		return $this;
 	}
+
+	public function setEncoding( $encoding ) {
+		$this->encoding = $encoding;
+		return $this;
+	}
+
 
 	public function setTo( $to ) {
 

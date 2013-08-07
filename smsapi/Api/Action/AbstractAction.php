@@ -11,6 +11,7 @@ abstract class AbstractAction {
 	protected $idx;
 	protected $group;
 	protected $date;
+	protected $encoding;
 
 	function __construct() {
 		$this->to = new \ArrayObject();
@@ -107,6 +108,8 @@ abstract class AbstractAction {
 		$query .= ($this->group != null) ? "&group=" . $this->group : "&to=" . $this->renderTo();
 
 		$query .= ($this->date != null) ? "&date=" . $this->date : "";
+		
+		$query .= ( $this->encoding != null ) ? "&encoding=" . $this->encoding : "";
 
 		return $query;
 	}
