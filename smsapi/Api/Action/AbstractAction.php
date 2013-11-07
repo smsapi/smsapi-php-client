@@ -118,25 +118,21 @@ abstract class AbstractAction {
 		return "username=" . $this->client->getUsername() . "&password=" . $this->client->getPassword();
 	}
 
-	public function execute() {
-
-		$data = null;
-		$response = null;
-		$name = null;
-
-		try {
-
+	public function execute() 
+	{
+		try 
+		{
 			$this->setJson( true );
 
 			$data = $this->proxy->execute( $this );
 
 			$this->handleError( $data );
 
-			$response = $this->response( $data );
-
-			return $response;
-		} catch ( Exception $ex ) {
-			throw new \SMSApi\Exception\ActionException( $ex . getMessage() );
+			return $this->response( $data );			
+		}
+		catch ( Exception $ex ) 
+		{
+			throw new \SMSApi\Exception\ActionException( $ex->getMessage() );
 		}
 	}
 

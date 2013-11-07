@@ -31,7 +31,7 @@ class Send extends AbstractAction {
 	}
 
 	public function setText( $text ) {
-		$this->params[ 'message' ] = $text;
+		$this->params[ 'message' ] = urlencode( $text );
 		return $this;
 	}
 
