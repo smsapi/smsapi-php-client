@@ -19,7 +19,13 @@ class SmsTest extends SmsapiTest {
 		/* @var $result \SMSApi\Api\Response\StatusResponse */
 		/* @var $item \SMSApi\Api\Response\MessageResponse */
 
-		$result = $action->setText( "test message" )->setTo( $this->numberTest )->setDateSent( $time )->execute();
+		$result =
+			$action
+				->setText( "test [%1%] message" )
+				->setTo( $this->numberTest )
+				->SetParam( 0, 'asd' )
+				->setDateSent( $time )
+				->execute();
 
 		echo "SmsSend:\n";
 

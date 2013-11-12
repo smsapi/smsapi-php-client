@@ -141,4 +141,21 @@ class Send extends AbstractAction {
 		return $this;
 	}
 
+	/**
+	 * @param int $i
+	 * @param string|string[] $text
+	 * @return $this
+	 * @throws \OutOfRangeException
+	 */
+	public function SetParam($i, $text) {
+
+		if ( $i > 3 || $i < 0 ) {
+			throw new \OutOfRangeException;
+		}
+
+		$value = is_array($text) ? implode('?', $text) : $text;
+		$this->params['param'.($i+1)] = urlencode( $value );
+
+		return $this;
+	}
 }

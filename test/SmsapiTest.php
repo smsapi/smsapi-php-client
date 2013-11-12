@@ -5,7 +5,7 @@ require_once '../../smsapi/Autoload.php';
 class SmsapiTest extends PHPUnit_Framework_TestCase {
 
 	protected $fileToIds = "_ids_test.txt";
-	protected $numberTest = "694562829";
+	protected $numberTest = "xxxyyyzzz";
 	
 	protected $api_login = "twoj_login";
 	protected $api_password = "twoje_haslo_do_api";
