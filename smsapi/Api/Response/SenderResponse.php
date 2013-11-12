@@ -6,7 +6,7 @@ class SenderResponse extends AbstractResponse {
 
 	private $name;
 	private $status;
-	private $setDefault;
+	private $default;
 
 	function __construct( $data ) {
 
@@ -16,21 +16,21 @@ class SenderResponse extends AbstractResponse {
 			parent::__construct( $data );
 		}
 
-		if ( isset( $this->obj->sender ) ) {
+		if( isset( $this->obj->sender ) ) {
 			$this->name = $this->obj->sender;
 		}
 
-		if ( isset( $this->obj->status ) ) {
+		if( isset( $this->obj->status ) ) {
 			$this->status = $this->obj->status;
 		}
 
-		if ( isset( $this->obj->default ) ) {
-			$this->setDefault = $this->obj->default;
+		if( isset( $this->obj->default ) ) {
+			$this->default = $this->obj->default;
 		}
 	}
 
 	public function isDefault() {
-		return ($this->setDefault != null && $this->setDefault == "default");
+		return (bool)$this->default;
 	}
 
 	public function getName() {

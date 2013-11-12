@@ -18,6 +18,9 @@ class SendersResponse extends AbstractResponse {
 		}
 	}
 
+	/**
+	 * @return SenderResponse[]|\ArrayObject
+	 */
 	public function getList() {
 		return $this->list;
 	}
