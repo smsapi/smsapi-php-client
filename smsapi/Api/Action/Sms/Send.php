@@ -141,6 +141,16 @@ class Send extends AbstractAction {
 		return $this;
 	}
 
+	public function setFast( $fast ) {
+		if ( $fast == true ) {
+			$this->params[ "fast" ] = "1";
+		} else if ( $fast == false && isset( $this->params[ "fast" ] ) ) {
+			unset( $this->params[ "fast" ] );
+		}
+
+		return $this;
+	}
+
 	/**
 	 * @param int $i
 	 * @param string|string[] $text
