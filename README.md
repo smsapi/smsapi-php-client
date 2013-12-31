@@ -32,3 +32,6 @@ catch( \SMSApi\Exception\SmsapiException $e ) {
 	echo 'ERROR: ' . $e->getMessage();
 }
 ```
+
+## LICENSE
+[Apache 2.0 License](https://github.com/smsapi/smsapi-php-client/blob/master/LICENSE)
