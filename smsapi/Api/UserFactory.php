@@ -49,7 +49,7 @@ class UserFactory extends ActionFactory {
 	}
 
 	public function actionGetPoints() {
-		$action = new \SMSApi\Api\Action\User\GetPoint();
+		$action = new \SMSApi\Api\Action\User\GetPoints();
 		$action->client( $this->client );
 		$action->proxy( $this->proxy );
 

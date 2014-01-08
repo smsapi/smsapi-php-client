@@ -2,62 +2,62 @@
 
 require_once '../SmsapiTest.php';
 
-class UserTest extends SmsapiTest {
-
+class UserTest extends SmsapiTest
+{
 	private $userTest = "fajny3";
 
-	private function renderUserItem( $item ) {
-
-		if ( $item ) {
+	private function renderUserItem($item)
+	{
+		if( $item ) {
 			print("Username: " . $item->getUsername()
 				. " Limit: " . $item->getLimit()
 				. " MouthLimit:" . $item->getMonthLimit()
 				. " Phonebook:" . $item->getPhonebook()
 				. " Senders: " . $item->getSenders()
 				. " Active: " . $item->getActive()
-				. "\n" );
+				. "\n");
 		} else {
-			print("Item is null" );
+			print("Item is null");
 		}
 	}
 
-	public function testAdd() {
-
-		$smsApi = new \SMSApi\Api\UserFactory( null, $this->client() );
+	public function testAdd()
+	{
+		$smsApi = new \SMSApi\Api\UserFactory(null, $this->client());
 
 		$result = null;
 		$error = 0;
 
-		$action = $smsApi->actionAdd( $this->userTest )
-			->setPassword( md5( "100costma100" ) )
-			->setPasswordApi( md5( "200costam200" ) )
-			->setActive( true )
-			->setLimit( "5.5" )
-			->setPhonebook( true );
+		$action = $smsApi->actionAdd($this->userTest)
+			->setPassword(md5("100costma100"))
+			->setPasswordApi(md5("200costam200"))
+			->setActive(true)
+			->setLimit("5.5")
+			->setPhonebook(true);
 
 		$result = $action->execute();
 
 		/* @var $result \SMSApi\Api\Response\UserResponse */
 
-		if ( empty( $result ) ) {
+		if( empty($result) ) {
 			$error++;
 		}
 
 		echo "\nUserAdd:\n";
 
-		$this->renderUserItem( $result );
+		$this->renderUserItem($result);
 
-		$this->assertEquals( 0, $error );
+		$this->assertEquals(0, $error);
 	}
 
-	public function testGet() {
-
-		$smsApi = new \SMSApi\Api\UserFactory( null, $this->client() );
+	public function testGet()
+	{
+		$smsApi = new \SMSApi\Api\UserFactory(null, $this->client());
 
 		$result = null;
 		$error = 0;
 
-		$action = $smsApi->actionGet( $this->userTest );
+		$action = $smsApi->actionGet($this->userTest);
 
 		$result = $action->execute();
 
@@ -65,25 +65,25 @@ class UserTest extends SmsapiTest {
 
 		echo "\nUserGet:\n";
 
-		if ( empty( $result ) ) {
+		if( empty($result) ) {
 			$error++;
 		}
 
-		$this->renderUserItem( $result );
+		$this->renderUserItem($result);
 
-		$this->assertEquals( 0, $error );
+		$this->assertEquals(0, $error);
 	}
 
-	public function testEdit() {
-
-		$smsApi = new \SMSApi\Api\UserFactory( null, $this->client() );
+	public function testEdit()
+	{
+		$smsApi = new \SMSApi\Api\UserFactory(null, $this->client());
 
 		$result = null;
 		$error = 0;
 
-		$action = $smsApi->actionEdit( $this->userTest )
-			->setLimit( "10" )
-			->setInfo( "to jest test" );
+		$action = $smsApi->actionEdit($this->userTest)
+			->setLimit("10")
+			->setInfo("to jest test");
 
 		$result = $action->execute();
 
@@ -91,18 +91,18 @@ class UserTest extends SmsapiTest {
 
 		echo "\nUserEdit:\n";
 
-		if ( empty( $result ) ) {
+		if( empty($result) ) {
 			$error++;
 		}
 
-		$this->renderUserItem( $result );
+		$this->renderUserItem($result);
 
-		$this->assertEquals( 0, $error );
+		$this->assertEquals(0, $error);
 	}
 
-	public function testList() {
-
-		$smsApi = new \SMSApi\Api\UserFactory( null, $this->client() );
+	public function testList()
+	{
+		$smsApi = new \SMSApi\Api\UserFactory(null, $this->client());
 
 		$result = null;
 		$error = 0;
@@ -116,16 +116,28 @@ class UserTest extends SmsapiTest {
 
 		echo "\nUserList:\n";
 
-		if ( empty( $result ) ) {
+		if( empty($result) ) {
 			$error++;
 		}
 
-		foreach ( $result->getList() as $item ) {
-			$this->renderUserItem( $item );
+		foreach( $result->getList() as $item ) {
+			$this->renderUserItem($item);
 		}
 
-		$this->assertEquals( 0, $error );
+		$this->assertEquals(0, $error);
 	}
 
+	public function testGetPoints()
+	{
+		$smsApi = new \SMSApi\Api\UserFactory(null, $this->client());
+
+		$action = $smsApi->actionGetPoints();
+
+		$result = $action->execute();
+
+		$this->assertInstanceOf(\SMSApi\Api\Response\PointsResponse::class, $result);
+		$this->greaterThanOrEqual($result->getPoints(), 0);
+
+	}
 }
 
