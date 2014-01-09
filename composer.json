@@ -6,5 +6,11 @@
     "type": "library",
     "keywords": ["sms", "mms", "vms"],
     "minimum-stability": "dev",
-    "require": {}
+    "require": {},
+    "autoload": {
+            "psr-0": {
+                        "php-client\\smsapi": "SMSApi"
+                    },
+                "classmap": [ "smsapi" ]
+            }
 }
