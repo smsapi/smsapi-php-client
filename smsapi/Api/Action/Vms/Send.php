@@ -117,4 +117,39 @@ class Send extends AbstractAction {
 		return $this;
 	}
 
+	/**
+	 * @param integer $try Number of connection attempts
+	 *
+	 * @return $this
+	 * @throws \OutOfRangeException
+	 */
+	public function setTry($try)
+	{
+		if($try < 1 || $try > 6) {
+			throw new \OutOfRangeException;
+		}
+
+		$this->params['try'] = $try;
+		return $this;
+	}
+
+	/**
+	 * Set the time in seconds where the connection have to be repeated
+	 * in the case of not answer by receiver or reject this connection.
+	 *
+	 * @param integer $interval Time in seconds
+	 *
+	 * @return $this
+	 * @throws \OutOfRangeException
+	 */
+	public function setInterval($interval)
+	{
+		if($interval < 1800 || $interval > 7200) {
+			throw new \OutOfRangeException;
+		}
+
+		$this->params['interval'] = $interval;
+		return $this;
+	}
+
 }
