@@ -33,5 +33,10 @@ catch( \SMSApi\Exception\SmsapiException $e ) {
 }
 ```
 
+## Wymagania
+
+PHP >= 5.3
+
+
 ## LICENSE
 [Apache 2.0 License](https://github.com/smsapi/smsapi-php-client/blob/master/LICENSE)
