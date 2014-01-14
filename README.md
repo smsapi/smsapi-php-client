@@ -35,8 +35,8 @@ catch( \SMSApi\Exception\SmsapiException $e ) {
 
 ## Wymagania
 
-PHP >= 5.3
-allow_url_fopen lub rozszerzenie curl
+* PHP >= 5.3
+* allow_url_fopen lub rozszerzenie curl
 
 
 ## LICENSE
