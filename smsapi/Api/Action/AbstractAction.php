@@ -76,7 +76,7 @@ abstract class AbstractAction {
 			if ( ($sizeTo != $sizeIdx ) ) {
 				throw new \SMSApi\Exception\ActionException( "size idx is not equals to" );
 			} else {
-				return $this->renderList( $this->to, ',' ) + "&idx=" + $this->renderList( $this->idx, '|' );
+				return $this->renderList( $this->to, ',' ) . "&idx=" . $this->renderList( $this->idx, '|' );
 			}
 		}
 
