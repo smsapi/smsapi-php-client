@@ -50,7 +50,7 @@ class Send extends AbstractAction {
 			$idx = array( $idx );
 		}
 
-		$this->to->exchangeArray( $idx );
+		$this->idx->exchangeArray( $idx );
 		return $this;
 	}
 
