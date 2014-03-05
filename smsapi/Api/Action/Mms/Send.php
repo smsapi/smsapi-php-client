@@ -75,7 +75,7 @@ class Send extends AbstractAction {
 	}
 
 	public function setSmil( $smil ) {
-		$this->params[ "smil" ] = $smil;
+		$this->params[ "smil" ] = urlencode($smil);
 		return $this;
 	}
 
