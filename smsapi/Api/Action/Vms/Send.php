@@ -144,7 +144,7 @@ class Send extends AbstractAction {
 	 */
 	public function setInterval($interval)
 	{
-		if($interval < 1800 || $interval > 7200) {
+		if($interval < 300 || $interval > 7200) {
 			throw new \OutOfRangeException;
 		}
 
