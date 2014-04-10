@@ -2,38 +2,89 @@
 
 namespace SMSApi\Api\Action;
 
+/**
+ * Class AbstractAction
+ * @package SMSApi\Api\Action
+ */
 abstract class AbstractAction {
 
+	/**
+	 * @var
+	 */
 	protected $client;
+	/**
+	 * @var
+	 */
 	protected $proxy;
+	/**
+	 * @var array
+	 */
 	protected $params = array( );
+	/**
+	 * @var \ArrayObject
+	 */
 	protected $to;
+	/**
+	 * @var \ArrayObject
+	 */
 	protected $idx;
+	/**
+	 * @var
+	 */
 	protected $group;
+	/**
+	 * @var
+	 */
 	protected $date;
+	/**
+	 * @var
+	 */
 	protected $encoding;
 
+	/**
+	 *
+	 */
 	function __construct() {
 		$this->to = new \ArrayObject();
 		$this->idx = new \ArrayObject();
 	}
 
+	/**
+	 * @return mixed
+	 */
 	abstract public function uri();
 
+	/**
+	 * @param $data
+	 * @return mixed
+	 */
 	abstract protected function response( $data );
 
+	/**
+	 * @return null
+	 */
 	public function file() {
 		return null;
 	}
 
+	/**
+	 * @param \SMSApi\Client $client
+	 */
 	public function client( \SMSApi\Client $client ) {
 		$this->client = $client;
 	}
 
+	/**
+	 * @param \SMSApi\Proxy\Proxy $proxy
+	 */
 	public function proxy( \SMSApi\Proxy\Proxy $proxy ) {
 		$this->proxy = $proxy;
 	}
 
+	/**
+	 * @param $val
+	 * @return $this
+	 */
 	public function setTest( $val ) {
 		if ( $val == true ) {
 			$this->params[ 'test' ] = 1;
@@ -44,6 +95,10 @@ abstract class AbstractAction {
 		return $this;
 	}
 
+	/**
+	 * @param $val
+	 * @return $this
+	 */
 	protected function setJson( $val ) {
 		if ( $val == true ) {
 			$this->params[ 'format' ] = 'json';
@@ -54,6 +109,10 @@ abstract class AbstractAction {
 		return $this;
 	}
 
+	/**
+	 * @param string $skip
+	 * @return string
+	 */
 	protected function paramsOther( $skip = "" ) {
 
 		$query = "";
@@ -67,6 +126,10 @@ abstract class AbstractAction {
 		return $query;
 	}
 
+	/**
+	 * @return string
+	 * @throws \SMSApi\Exception\ActionException
+	 */
 	protected function renderTo() {
 
 		$sizeTo = $this->to->count();
@@ -83,6 +146,11 @@ abstract class AbstractAction {
 		return $this->renderList( $this->to, ',' );
 	}
 
+	/**
+	 * @param \ArrayObject $values
+	 * @param $delimiter
+	 * @return string
+	 */
 	private function renderList( \ArrayObject $values, $delimiter ) {
 
 		$query = "";
@@ -101,6 +169,10 @@ abstract class AbstractAction {
 		return $query;
 	}
 
+	/**
+	 * @return string
+	 * @throws \SMSApi\Exception\ActionException
+	 */
 	protected function paramsBasicToQuery() {
 
 		$query = "";
@@ -114,11 +186,20 @@ abstract class AbstractAction {
 		return $query;
 	}
 
+	/**
+	 * @return string
+	 */
 	protected function paramsLoginToQuery() {
 		return "username=" . $this->client->getUsername() . "&password=" . $this->client->getPassword();
 	}
 
-	public function execute() 
+	/**
+	 * @return mixed
+	 * @throws \SMSApi\Exception\ClientException
+	 * @throws \SMSApi\Exception\ActionException
+	 * @throws \SMSApi\Exception\HostException
+	 */
+	public function execute()
 	{
 		try 
 		{
@@ -136,6 +217,12 @@ abstract class AbstractAction {
 		}
 	}
 
+	/**
+	 * @param $data
+	 * @throws \SMSApi\Exception\ActionException
+	 * @throws \SMSApi\Exception\ClientException
+	 * @throws \SMSApi\Exception\HostException
+	 */
 	protected function handleError( $data ) {
 
 		$error = new \SMSApi\Api\Response\ErrorResponse( $data );

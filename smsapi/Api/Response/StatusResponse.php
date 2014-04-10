@@ -2,10 +2,20 @@
 
 namespace SMSApi\Api\Response;
 
+/**
+ * Class StatusResponse
+ * @package SMSApi\Api\Response
+ */
 class StatusResponse extends CountableResponse {
 
+	/**
+	 * @var \ArrayObject|MessageResponse[]
+	 */
 	private $list;
 
+	/**
+	 * @param $data
+	 */
 	function __construct( $data ) {
 		parent::__construct( $data );
 

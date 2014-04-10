@@ -23,13 +23,13 @@ class PhonebookTest extends SmsapiTest {
 		}
 	}
 
-	private function renderContactItem( $item ) {
+	private function renderContactItem( \SMSApi\Api\Response\ContactResponse $item ) {
 
 		if ( $item ) {
 			print("ContactNumber: " . $item->getNumber()
 				. " FirstName: " . $item->getFirstName()
 				. " LastName:" . $item->getLastName()
-				. " City: " . $item->getBirthday()
+				. " City: " . $item->getCity()
 				. " Birthday: " . $item->getBirthday()
 				. " Info: " . $item->getInfo()
 				. " Gender: " . $item->getGender()

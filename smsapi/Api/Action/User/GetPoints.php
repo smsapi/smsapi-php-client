@@ -14,11 +14,18 @@ use SMSApi\Proxy\Uri;
  */
 class GetPoints extends AbstractAction {
 
+	/**
+	 * @param $data
+	 * @return \SMSApi\Api\Response\PointsResponse
+	 */
 	protected function response( $data ) {
 
 		return new \SMSApi\Api\Response\PointsResponse( $data );
 	}
 
+	/**
+	 * @return Uri
+	 */
 	public function uri() {
 
 		$query = "";

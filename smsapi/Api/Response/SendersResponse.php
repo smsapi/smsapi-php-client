@@ -2,10 +2,20 @@
 
 namespace SMSApi\Api\Response;
 
+/**
+ * Class SendersResponse
+ * @package SMSApi\Api\Response
+ */
 class SendersResponse extends AbstractResponse {
 
+	/**
+	 * @var \ArrayObject
+	 */
 	private $list;
 
+	/**
+	 * @param $data
+	 */
 	function __construct( $data ) {
 		parent::__construct( $data );
 

@@ -2,16 +2,50 @@
 
 namespace SMSApi\Api\Response;
 
+/**
+ * Class UserResponse
+ * @package SMSApi\Api\Response
+ */
 class UserResponse extends AbstractResponse {
 
+	/**
+	 * @var string
+	 */
 	private $username;
+
+	/**
+	 * @var double
+	 */
 	private $limit;
+
+	/**
+	 * @var double
+	 */
 	private $monthLimit;
+
+	/**
+	 * @var
+	 */
 	private $senders;
+
+	/**
+	 * @var int
+	 */
 	private $phonebook;
+
+	/**
+	 * @var int
+	 */
 	private $active;
+
+	/**
+	 * @var string
+	 */
 	private $info;
 
+	/**
+	 * @param $data
+	 */
 	function __construct( $data ) {
 
 		if ( is_object( $data ) ) {
@@ -49,30 +83,89 @@ class UserResponse extends AbstractResponse {
 		}
 	}
 
+	/**
+	 * Returns the username used to authenticate the user.
+	 *
+	 * @return string The username
+	 */
 	public function getUsername() {
 		return $this->username;
 	}
 
+	/**
+	 * Returns limit points assigned to the user.
+	 *
+	 * @return double Points limit
+	 */
 	public function getLimit() {
 		return $this->limit;
 	}
 
+	/**
+	 * Returns number of points that will be assigned to user account each first day of month.
+	 *
+	 * @return double Monthly points limit
+	 */
 	public function getMonthLimit() {
 		return $this->monthLimit;
 	}
 
+	/**
+	 * @deprecated
+	 * @return mixed
+	 */
 	public function getSenders() {
 		return $this->senders;
 	}
 
+	/**
+	 * Returns whether the user has access to main account sender names.
+	 *
+	 * @return bool true if the user has access, false otherwise
+	 */
+	public function hasFullAccessSenderNames() {
+		return (bool) $this->senders;
+	}
+
+	/**
+	 * @deprecated
+	 * @return int
+	 */
 	public function getPhonebook() {
 		return $this->phonebook;
 	}
 
+	/**
+	 * Returns whether the user has access to main account phonebook contacts
+	 *
+	 * @return bool true if the user has access, false otherwise
+	 */
+	public function hasFullAccessPhoneBook() {
+		return (bool)$this->phonebook;
+	}
+
+	/**
+	 * @deprecated
+	 * @return int
+	 */
 	public function getActive() {
 		return $this->active;
 	}
 
+	/**
+	 * Check whether the user is enabled.
+	 *
+	 * @return Boolean true if the user is enabled, false otherwise
+	 */
+	public function isActive() {
+		return (bool) $this->active;
+	}
+
+	/**
+	 * Returns user description text.
+	 *
+	 * @return string
+	 */
 	public function getInfo() {
 		return $this->info;
 	}

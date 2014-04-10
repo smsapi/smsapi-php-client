@@ -5,13 +5,24 @@ namespace SMSApi\Api\Action\User;
 use SMSApi\Api\Action\AbstractAction;
 use SMSApi\Proxy\Uri;
 
+/**
+ * Class UserList
+ * @package SMSApi\Api\Action\User
+ */
 class UserList extends AbstractAction {
 
+	/**
+	 * @param $data
+	 * @return \SMSApi\Api\Response\UsersResponse
+	 */
 	protected function response( $data ) {
 
 		return new \SMSApi\Api\Response\UsersResponse( $data );
 	}
 
+	/**
+	 * @return Uri
+	 */
 	public function uri() {
 
 		$query = "";

@@ -2,10 +2,20 @@
 
 namespace SMSApi\Api\Response;
 
+/**
+ * Class GroupsResponse
+ * @package SMSApi\Api\Response
+ */
 class GroupsResponse extends CountableResponse {
 
+	/**
+	 * @var \ArrayObject
+	 */
 	private $list;
 
+	/**
+	 * @param $data
+	 */
 	function __construct( $data ) {
 		parent::__construct( $data );
 
@@ -18,6 +28,9 @@ class GroupsResponse extends CountableResponse {
 		}
 	}
 
+	/**
+	 * @return \ArrayObject
+	 */
 	public function getList() {
 		return $this->list;
 	}

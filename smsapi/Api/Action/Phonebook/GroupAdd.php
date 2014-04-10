@@ -5,13 +5,24 @@ namespace SMSApi\Api\Action\Phonebook;
 use SMSApi\Api\Action\AbstractAction;
 use SMSApi\Proxy\Uri;
 
+/**
+ * Class GroupAdd
+ * @package SMSApi\Api\Action\Phonebook
+ */
 class GroupAdd extends AbstractAction {
 
+	/**
+	 * @param $data
+	 * @return \SMSApi\Api\Response\GroupResponse
+	 */
 	protected function response( $data ) {
 
 		return new \SMSApi\Api\Response\GroupResponse( $data );
 	}
 
+	/**
+	 * @return Uri
+	 */
 	public function uri() {
 
 		$query = "";
@@ -23,11 +34,19 @@ class GroupAdd extends AbstractAction {
 		return new Uri( $this->proxy->getProtocol(), $this->proxy->getHost(), $this->proxy->getPort(), "/api/phonebook.do", $query );
 	}
 
+	/**
+	 * @param $groupName
+	 * @return $this
+	 */
 	public function setName( $groupName ) {
 		$this->params[ "add_group" ] = $groupName;
 		return $this;
 	}
 
+	/**
+	 * @param $info
+	 * @return $this
+	 */
 	public function setInfo( $info ) {
 		$this->params[ "info" ] = $info;
 		return $this;

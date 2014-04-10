@@ -2,11 +2,24 @@
 
 namespace SMSApi\Api\Response;
 
+/**
+ * Class ErrorResponse
+ * @package SMSApi\Api\Response
+ */
 class ErrorResponse extends AbstractResponse {
 
+	/**
+	 * @var int
+	 */
 	public $code = 0;
+	/**
+	 * @var string
+	 */
 	public $message = "";
 
+	/**
+	 * @param $data
+	 */
 	function __construct( $data ) {
 		parent::__construct( $data );
 
@@ -19,6 +32,9 @@ class ErrorResponse extends AbstractResponse {
 		}
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function isError() {
 		return ($this->code != 0);
 	}

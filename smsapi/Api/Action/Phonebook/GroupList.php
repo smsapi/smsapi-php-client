@@ -5,13 +5,24 @@ namespace SMSApi\Api\Action\Phonebook;
 use SMSApi\Api\Action\AbstractAction;
 use SMSApi\Proxy\Uri;
 
+/**
+ * Class GroupList
+ * @package SMSApi\Api\Action\Phonebook
+ */
 class GroupList extends AbstractAction {
 
+	/**
+	 * @param $data
+	 * @return \SMSApi\Api\Response\GroupsResponse
+	 */
 	protected function response( $data ) {
 
 		return new \SMSApi\Api\Response\GroupsResponse( $data );
 	}
 
+	/**
+	 * @return Uri
+	 */
 	public function uri() {
 
 		$query = "";

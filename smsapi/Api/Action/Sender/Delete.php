@@ -5,13 +5,24 @@ namespace SMSApi\Api\Action\Sender;
 use SMSApi\Api\Action\AbstractAction;
 use SMSApi\Proxy\Uri;
 
+/**
+ * Class Delete
+ * @package SMSApi\Api\Action\Sender
+ */
 class Delete extends AbstractAction {
 
+	/**
+	 * @param $data
+	 * @return \SMSApi\Api\Response\CountableResponse
+	 */
 	protected function response( $data ) {
 
 		return new \SMSApi\Api\Response\CountableResponse( $data );
 	}
 
+	/**
+	 * @return Uri
+	 */
 	public function uri() {
 
 		$query = "";
@@ -23,6 +34,12 @@ class Delete extends AbstractAction {
 		return new Uri( $this->proxy->getProtocol(), $this->proxy->getHost(), $this->proxy->getPort(), "/api/sender.do", $query );
 	}
 
+	/**
+	 *
+	 *
+	 * @param $senderName string Sender name do delete
+	 * @return $this
+	 */
 	public function setSender( $senderName ) {
 		$this->params[ "delete" ] = $senderName;
 		return $this;

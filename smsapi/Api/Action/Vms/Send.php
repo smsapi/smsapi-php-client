@@ -5,22 +5,45 @@ namespace SMSApi\Api\Action\Vms;
 use SMSApi\Api\Action\AbstractAction;
 use SMSApi\Proxy\Uri;
 
+/**
+ * Class Send
+ * @package SMSApi\Api\Action\Vms
+ */
 class Send extends AbstractAction {
 
+
 	const LECTOR_AGNIESZKA = "agnieszka";
+
 	const LECTOR_EWA = "ewa";
+
 	const LECTOR_JACEK = "jacek";
+
 	const LECTOR_JAN = "jan";
+
 	const LECTOR_MAJA = "maja";
 
+	/**
+	 * @var
+	 */
 	private $tts;
+	/**
+	 * @var
+	 */
 	private $file;
 
+	/**
+	 * @param $data
+	 * @return \SMSApi\Api\Response\StatusResponse
+	 */
 	protected function response( $data ) {
 
 		return new \SMSApi\Api\Response\StatusResponse( $data );
 	}
 
+	/**
+	 * @return Uri
+	 * @throws \SMSApi\Exception\ActionException
+	 */
 	public function uri() {
 
 		$query = "";
@@ -38,10 +61,17 @@ class Send extends AbstractAction {
 		return new Uri( $this->proxy->getProtocol(), $this->proxy->getHost(), $this->proxy->getPort(), "/api/vms.do", $query );
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function file() {
 		return $this->file;
 	}
 
+	/**
+	 * @param $to
+	 * @return $this
+	 */
 	public function setTo( $to ) {
 
 		if ( !is_array( $to ) ) {
@@ -52,16 +82,28 @@ class Send extends AbstractAction {
 		return $this;
 	}
 
+	/**
+	 * @param $group
+	 * @return $this
+	 */
 	public function setGroup( $group ) {
 		$this->group = $group;
 		return $this;
 	}
 
+	/**
+	 * @param $date
+	 * @return $this
+	 */
 	public function setDateSent( $date ) {
 		$this->date = $date;
 		return $this;
 	}
 
+	/**
+	 * @param $idx
+	 * @return $this
+	 */
 	public function setIDx( $idx ) {
 		if ( !is_array( $idx ) ) {
 			$idx = array( $idx );
@@ -71,6 +113,10 @@ class Send extends AbstractAction {
 		return $this;
 	}
 
+	/**
+	 * @param $check
+	 * @return $this
+	 */
 	public function setCheckIDx( $check ) {
 		if ( $check == true ) {
 			$this->params[ "check_idx" ] = "1";
@@ -81,21 +127,37 @@ class Send extends AbstractAction {
 		return $this;
 	}
 
+	/**
+	 * @param $partner
+	 * @return $this
+	 */
 	public function setPartner( $partner ) {
 		$this->params[ "partner_id" ] = $partner;
 		return $this;
 	}
 
+	/**
+	 * @param $file
+	 * @return $this
+	 */
 	public function setFile( $file ) {
 		$this->file = $file;
 		return $this;
 	}
 
+	/**
+	 * @param $tts
+	 * @return $this
+	 */
 	public function setTts( $tts ) {
 		$this->tts = $tts;
 		return $this;
 	}
 
+	/**
+	 * @param $skipGsm
+	 * @return $this
+	 */
 	public function setSkipGsm( $skipGsm ) {
 
 		if ( $skipGsm == true ) {
@@ -107,11 +169,19 @@ class Send extends AbstractAction {
 		return $this;
 	}
 
+	/**
+	 * @param $lector
+	 * @return $this
+	 */
 	public function setTtsLector( $lector ) {
 		$this->params[ "tts_lector" ] = $lector;
 		return $this;
 	}
 
+	/**
+	 * @param $from
+	 * @return $this
+	 */
 	public function setFrom( $from ) {
 		$this->params[ "from" ] = $from;
 		return $this;

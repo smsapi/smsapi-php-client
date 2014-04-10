@@ -2,12 +2,28 @@
 
 namespace SMSApi\Api\Response;
 
+/**
+ * Class GroupResponse
+ * @package SMSApi\Api\Response
+ */
 class GroupResponse extends AbstractResponse {
 
+	/**
+	 * @var string
+	 */
 	private $name = null;
+	/**
+	 * @var string
+	 */
 	private $info = null;
-	private $numbers = null;
+	/**
+	 * @var array
+	 */
+	private $numbers_count = null;
 
+	/**
+	 * @param $data
+	 */
 	function __construct( $data ) {
 
 		if ( is_object( $data ) ) {
@@ -25,20 +41,43 @@ class GroupResponse extends AbstractResponse {
 		}
 
 		if ( isset( $this->obj->numbers_count ) ) {
-			$this->numbers = $this->obj->numbers_count;
+			$this->numbers_count = $this->obj->numbers_count;
 		}
 	}
 
+	/**
+	 * Returns group name
+	 *
+	 * @return string
+	 */
 	public function getName() {
 		return $this->name;
 	}
 
+	/**
+	 * Returns group information
+	 *
+	 * @return string
+	 */
 	public function getInfo() {
 		return $this->info;
 	}
 
+	/**
+	 * @deprecated
+	 * @return null
+	 */
 	public function getNumbers() {
-		return $this->numbers;
+		return $this->numbers_count;
+	}
+
+	/**
+	 * Returns count numbers in group
+	 *
+	 * @return int
+	 */
+	public function getNumbersCount() {
+		return $this->numbers_count;
 	}
 
 }

@@ -2,9 +2,16 @@
 
 namespace SMSApi\Api;
 
+/**
+ * Class VmsFactory
+ * @package SMSApi\Api
+ */
 class VmsFactory extends ActionFactory {
 
-	public function actionSend() {
+	/**
+	 * @return Action\Vms\Send
+	 */
+    public function actionSend() {
 		$action = new \SMSApi\Api\Action\Vms\Send();
 		$action->client( $this->client );
 		$action->proxy( $this->proxy );
@@ -12,7 +19,12 @@ class VmsFactory extends ActionFactory {
 		return $action;
 	}
 
-	public function actionGet( $id = null ) {
+	/**
+	 * @param null $id
+	 * @return Action\Vms\Get
+	 * @throws \SMSApi\Exception\ActionException
+	 */
+    public function actionGet( $id = null ) {
 		$action = new \SMSApi\Api\Action\Vms\Get();
 		$action->client( $this->client );
 		$action->proxy( $this->proxy );
@@ -26,7 +38,12 @@ class VmsFactory extends ActionFactory {
 		return $action;
 	}
 
-	public function actionDelete( $id = null ) {
+	/**
+	 * @param null $id
+	 * @return Action\Vms\Delete
+	 * @throws \SMSApi\Exception\ActionException
+	 */
+    public function actionDelete( $id = null ) {
 		$action = new \SMSApi\Api\Action\Vms\Delete();
 		$action->client( $this->client );
 		$action->proxy( $this->proxy );
