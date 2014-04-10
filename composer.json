@@ -2,7 +2,7 @@
     "name": "smsapi.pl/php-client",
     "description": "Library for communicating with provider",
     "homepage": "http://www.smsapi.pl",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "type": "library",
     "keywords": ["sms", "mms", "vms"],
     "minimum-stability": "dev",
