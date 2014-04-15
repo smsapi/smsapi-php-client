@@ -1,5 +1,5 @@
 <?php
-//sms
+
 namespace SMSApi\Api\Action\Sms;
 
 use SMSApi\Api\Action\AbstractAction;
@@ -42,6 +42,11 @@ class Send extends AbstractAction {
 	}
 
 	/**
+	 * Set SMS text message.
+	 *
+	 * Content of one message is normally 160 characters per single
+	 * SMS or 70 in case of using at least one special character
+	 *
 	 * @param $text
 	 * @return $this
 	 */
@@ -51,7 +56,13 @@ class Send extends AbstractAction {
 	}
 
 	/**
-	 * @param $encoding
+	 * Set the SMS encoding charset, default is UTF-8.
+	 *
+	 * Example:
+	 * windows-1250
+	 * iso-8859-2
+	 *
+	 * @param string $encoding
 	 * @return $this
 	 */
 	public function setEncoding( $encoding ) {
@@ -61,7 +72,9 @@ class Send extends AbstractAction {
 
 
 	/**
-	 * @param $to
+	 * Set mobile phone number of the recipients.
+	 *
+	 * @param string|array|int $to Phone number recipient/s.
 	 * @return $this
 	 */
 	public function setTo( $to ) {
@@ -75,7 +88,9 @@ class Send extends AbstractAction {
 	}
 
 	/**
-	 * @param $group
+	 * Set name of the group from the phone book to which message should be sent.
+	 *
+	 * @param string $group String group name
 	 * @return $this
 	 */
 	public function setGroup( $group ) {
@@ -84,7 +99,11 @@ class Send extends AbstractAction {
 	}
 
 	/**
-	 * @param $date
+	 * Set scheduled date sending message.
+	 *
+	 * Setting a past date will result in sending message instantly.
+	 *
+	 * @param mixed $date set timestamp or ISO 8601 date format
 	 * @return $this
 	 */
 	public function setDateSent( $date ) {
@@ -93,7 +112,9 @@ class Send extends AbstractAction {
 	}
 
 	/**
-	 * @param $idx
+	 * Set optional custom value sent with SMS and sent back in CALLBACK.
+	 *
+	 * @param string|array $idx
 	 * @return $this
 	 */
 	public function setIDx( $idx ) {
@@ -106,7 +127,13 @@ class Send extends AbstractAction {
 	}
 
 	/**
-	 * @param $check
+	 * Set checking idx is unique.
+	 *
+	 * Prevents from sending more than one message with the same idx.
+	 * When this parameter is set and message with the same idx was
+	 * already sent error 53 is returned.
+	 *
+	 * @param bool $check
 	 * @return $this
 	 */
 	public function setCheckIDx( $check ) {
@@ -120,7 +147,9 @@ class Send extends AbstractAction {
 	}
 
 	/**
-	 * @param $partner
+	 * Set affiliate code.
+	 *
+	 * @param string $partner affiliate code
 	 * @return $this
 	 */
 	public function setPartner( $partner ) {
@@ -129,7 +158,15 @@ class Send extends AbstractAction {
 	}
 
 	/**
-	 * @param $date
+	 *
+	 * Set expiration date.
+	 *
+	 * Message expiration date (in unix timestamp) is a date after which message won't be
+	 * delivered if it wasn't delivered yet. The difference between date sent and expiration
+	 * date can't be less than 1 hour and more than 12 hours. Time will be set with
+	 * tolerance +/- 5 minutes.
+	 *
+	 * @param int $date in timestamp
 	 * @return $this
 	 */
 	public function setDateExpire( $date ) {
@@ -138,7 +175,11 @@ class Send extends AbstractAction {
 	}
 
 	/**
-	 * @param $sender
+	 * Set name of the sender.
+	 *
+	 * Only verified names are being accepted.
+	 *
+	 * @param string $sender sender name
 	 * @return $this
 	 */
 	public function setSender( $sender ) {
@@ -147,7 +188,12 @@ class Send extends AbstractAction {
 	}
 
 	/**
-	 * @param $single
+	 * Set protection from send multipart messages.
+	 *
+	 * If the message will contain more than 160 chars (single message) it won't be
+	 * sent and return error
+	 *
+	 * @param bool $single
 	 * @return $this
 	 */
 	public function setSingle( $single ) {
@@ -161,7 +207,9 @@ class Send extends AbstractAction {
 	}
 
 	/**
-	 * @param $noUnicode
+	 * Set protection from sending messages containing special characters.
+	 *
+	 * @param bool $noUnicode if true turn on protection
 	 * @return $this
 	 */
 	public function setNoUnicode( $noUnicode ) {
@@ -175,7 +223,13 @@ class Send extends AbstractAction {
 	}
 
 	/**
-	 * @param $dataCoding
+	 * Set SMS message data coding.
+	 *
+	 * This parameter allows to send WAP PUSH messages.
+	 *
+	 * Example: bin
+	 *
+	 * @param string $dataCoding
 	 * @return $this
 	 */
 	public function setDataCoding( $dataCoding ) {
@@ -184,7 +238,12 @@ class Send extends AbstractAction {
 	}
 
 	/**
-	 * @param $flash
+	 * Set SMS message in flash mode.
+	 *
+	 * Flash SMS are automatically presented on the mobile screen and
+	 * have to be saved to be default stored in inbox.
+	 *
+	 * @param bool $flash
 	 * @return $this
 	 */
 	public function setFlash( $flash ) {
@@ -198,7 +257,11 @@ class Send extends AbstractAction {
 	}
 
 	/**
-	 * @param $normalize
+	 * Set normalize SMS text.
+	 *
+	 * Removing dialectic characters from message.
+	 *
+	 * @param bool $normalize
 	 * @return $this
 	 */
 	public function setNormalize( $normalize ) {
@@ -213,7 +276,10 @@ class Send extends AbstractAction {
 	}
 
 	/**
-	 * @param $fast
+	 * Set higher priority of sending message.
+	 * Prohibited for bulk messages.
+	 *
+	 * @param bool $fast if true set higher priority otherwise normal priority
 	 * @return $this
 	 */
 	public function setFast( $fast ) {
@@ -227,6 +293,8 @@ class Send extends AbstractAction {
 	}
 
 	/**
+	 * Set personalized parameters to bulk messages.
+	 *
 	 * @param int $i
 	 * @param string|string[] $text
 	 * @return $this
@@ -238,7 +306,7 @@ class Send extends AbstractAction {
 			throw new \OutOfRangeException;
 		}
 
-		$value = is_array($text) ? implode('?', $text) : $text;
+		$value = is_array($text) ? implode('|', $text) : $text;
 		$this->params['param'.($i+1)] = urlencode( $value );
 
 		return $this;
