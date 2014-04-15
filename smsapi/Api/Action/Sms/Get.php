@@ -7,6 +7,7 @@ use SMSApi\Proxy\Uri;
 
 /**
  * Class Get
+ *
  * @package SMSApi\Api\Action\Sms
  */
 class Get extends AbstractAction {
@@ -49,7 +50,11 @@ class Get extends AbstractAction {
 	}
 
 	/**
-	 * @param $id
+	 * Set ID of message to check.
+	 *
+	 * This id was returned after sending message.
+	 *
+	 * @param int $id
 	 * @return $this
 	 * @throws \SMSApi\Exception\ActionException
 	 */
@@ -63,14 +68,15 @@ class Get extends AbstractAction {
 	}
 
 	/**
+	 * Set IDs of messages to check.
+	 *
+	 * This id was returned after sending message.
+	 *
 	 * @param $ids
 	 * @return $this
 	 * @throws \SMSApi\Exception\ActionException
 	 */
-	public function ids( $ids ) {
-		if ( !is_array( $ids ) ) {
-			throw new \SMSApi\Exception\ActionException( 'Invalid value ids' );
-		}
+	public function ids( array $ids ) {
 
 		$this->id->exchangeArray( $ids );
 		return $this;
