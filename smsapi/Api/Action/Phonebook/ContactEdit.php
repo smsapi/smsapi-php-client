@@ -8,17 +8,29 @@ namespace SMSApi\Api\Action\Phonebook;
  */
 class ContactEdit extends ContactAdd {
 
+
 	/**
-	 * @param $number
-	 * @return $this
+	 * @deprecated since v1.0.0
 	 */
 	public function setContact( $number ) {
+		return $this->phoneNumber($number);
+	}
+
+	/**
+	 * Select contact phone number to edit.
+	 *
+	 * @param string|int $number phone number
+	 * @return $this
+	 */
+	public function filterByPhoneNumber( $number ) {
 		$this->params[ "edit_contact" ] = $number;
 		return $this;
 	}
 
 	/**
-	 * @param $number
+	 * Set new phone number.
+	 *
+	 * @param string|int $number phone number
 	 * @return $this
 	 */
 	public function setNumber( $number ) {

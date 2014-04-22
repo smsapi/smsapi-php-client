@@ -29,7 +29,7 @@ class GroupsResponse extends CountableResponse {
 	}
 
 	/**
-	 * @return \ArrayObject
+	 * @return \ArrayObject}GroupResponse[]
 	 */
 	public function getList() {
 		return $this->list;

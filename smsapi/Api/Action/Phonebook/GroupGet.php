@@ -35,12 +35,25 @@ class GroupGet extends AbstractAction {
 	}
 
 	/**
+	 * @deprecated since v1.0.0
 	 * @param $groupName
 	 * @return $this
 	 */
 	public function setGroup( $groupName ) {
+		return $this->filterByGroupName($groupName);
+	}
+
+	/**
+	 * Set group name to find.
+	 *
+	 * @param string $groupName group name
+	 * @return $this
+	 */
+	public function filterByGroupName( $groupName ) {
 		$this->params[ "get_group" ] = $groupName;
 		return $this;
 	}
+
+
 
 }

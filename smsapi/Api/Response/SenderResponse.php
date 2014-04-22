@@ -48,7 +48,7 @@ class SenderResponse extends AbstractResponse {
 	}
 
 	/**
-	 * Is sender name is default selected
+	 * Is sender name is default selected.
 	 *
 	 * @return bool
 	 */
@@ -57,7 +57,7 @@ class SenderResponse extends AbstractResponse {
 	}
 
 	/**
-	 * Returns sender name
+	 * Returns sender name.
 	 *
 	 * @return string
 	 */
@@ -66,7 +66,7 @@ class SenderResponse extends AbstractResponse {
 	}
 
 	/**
-	 * Returns status sender name
+	 * Returns status sender name.
 	 *
 	 * Example:
 	 * ACTIVE INACTIVE

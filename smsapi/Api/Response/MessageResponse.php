@@ -65,7 +65,7 @@ class MessageResponse implements Response {
 	/**
 	 * Returns phone number
 	 *
-	 * @return int
+	 * @return int Phone number
 	 */
 	public function getNumber() {
 		return $this->number;
@@ -74,7 +74,7 @@ class MessageResponse implements Response {
 	/**
 	 * Returns costs of delivery
 	 *
-	 * @return float
+	 * @return double
 	 */
 	public function getPoints() {
 		return $this->points;
@@ -93,7 +93,6 @@ class MessageResponse implements Response {
 	}
 
 	/**
-	 *
 	 * @return null
 	 */
 	public function getError() {

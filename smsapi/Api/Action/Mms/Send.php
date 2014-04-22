@@ -38,9 +38,9 @@ class Send extends AbstractAction {
 	}
 
 	/**
+	 * Set mobile phone number of the recipients.
 	 *
-	 *
-	 * @param $to array|string
+	 * @param $to array|string phone number
 	 * @return $this
 	 */
 	public function setTo( $to ) {
@@ -54,7 +54,9 @@ class Send extends AbstractAction {
 	}
 
 	/**
-	 * @param $group
+	 * Set name of the group from the phone book to which message should be sent.
+	 *
+	 * @param string $group group name
 	 * @return $this
 	 */
 	public function setGroup( $group ) {
@@ -63,6 +65,10 @@ class Send extends AbstractAction {
 	}
 
 	/**
+	 * Set scheduled date sending message.
+	 *
+	 * Setting a past date will result in sending message instantly.
+	 *
 	 * @param $date
 	 * @return $this
 	 */
@@ -72,7 +78,9 @@ class Send extends AbstractAction {
 	}
 
 	/**
-	 * @param $idx
+	 * Set optional custom value sent with SMS and sent back in CALLBACK.
+	 *
+	 * @param string|array $idx
 	 * @return $this
 	 */
 	public function setIDx( $idx ) {
@@ -85,7 +93,13 @@ class Send extends AbstractAction {
 	}
 
 	/**
-	 * @param $check
+	 * Set checking idx is unique.
+	 *
+	 * Prevents from sending more than one message with the same idx.
+	 * When this parameter is set and message with the same idx was
+	 * already sent error 53 is returned.
+	 *
+	 * @param bool $check
 	 * @return $this
 	 */
 	public function setCheckIDx( $check ) {
@@ -98,8 +112,11 @@ class Send extends AbstractAction {
 		return $this;
 	}
 
+
 	/**
-	 * @param $partner
+	 * Set affiliate code.
+	 *
+	 * @param string $partner affiliate code
 	 * @return $this
 	 */
 	public function setPartner( $partner ) {
@@ -108,7 +125,9 @@ class Send extends AbstractAction {
 	}
 
 	/**
-	 * @param $subject
+	 * Set message subject.
+	 *
+	 * @param string $subject subject of message
 	 * @return $this
 	 */
 	public function setSubject( $subject ) {
@@ -117,7 +136,9 @@ class Send extends AbstractAction {
 	}
 
 	/**
-	 * @param $smil
+	 * Set MMS smill.
+	 *
+	 * @param string $smil xml smill
 	 * @return $this
 	 */
 	public function setSmil( $smil ) {

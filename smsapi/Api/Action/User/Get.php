@@ -35,10 +35,22 @@ class Get extends AbstractAction {
 	}
 
 	/**
+	 * @deprecated since v1.0.0
 	 * @param $username
 	 * @return $this
 	 */
 	public function setUsername( $username ) {
+		$this->params[ "get_user" ] = $username;
+		return $this;
+	}
+
+	/**
+	 * Set username to edit account.
+	 *
+	 * @param string $username username
+	 * @return $this
+	 */
+	public function filterByUserName( $username ) {
 		$this->params[ "get_user" ] = $username;
 		return $this;
 	}

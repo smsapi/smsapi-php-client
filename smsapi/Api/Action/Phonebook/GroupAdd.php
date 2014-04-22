@@ -35,7 +35,9 @@ class GroupAdd extends AbstractAction {
 	}
 
 	/**
-	 * @param $groupName
+	 * Set group name.
+	 *
+	 * @param string $groupName
 	 * @return $this
 	 */
 	public function setName( $groupName ) {
@@ -44,7 +46,9 @@ class GroupAdd extends AbstractAction {
 	}
 
 	/**
-	 * @param $info
+	 * Set additional group description.
+	 *
+	 * @param string $info group description
 	 * @return $this
 	 */
 	public function setInfo( $info ) {

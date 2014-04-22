@@ -45,7 +45,7 @@ class UserFactory extends ActionFactory {
 		$action->proxy( $this->proxy );
 
 		if ( !empty( $username ) ) {
-			$action->setUsername( $username );
+			$action->filterByUsername( $username );
 		}
 
 		return $action;
@@ -61,7 +61,7 @@ class UserFactory extends ActionFactory {
 		$action->proxy( $this->proxy );
 
 		if ( !empty( $username ) ) {
-			$action->setUsername( $username );
+			$action->filterByUsername( $username );
 		}
 
 		return $action;

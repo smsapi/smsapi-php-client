@@ -64,7 +64,7 @@ class GroupResponse extends AbstractResponse {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated since v1.0.0 use GroupResponse::getNumbersCount
 	 * @return null
 	 */
 	public function getNumbers() {

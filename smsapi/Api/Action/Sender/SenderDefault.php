@@ -35,7 +35,9 @@ class SenderDefault extends AbstractAction {
 	}
 
 	/**
-	 * @param $senderName
+	 * Set name of default sender name.
+	 *
+	 * @param string $senderName sender name
 	 * @return $this
 	 */
 	public function setSender( $senderName ) {

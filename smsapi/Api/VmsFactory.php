@@ -30,9 +30,9 @@ class VmsFactory extends ActionFactory {
 		$action->proxy( $this->proxy );
 
 		if ( !empty( $id ) && is_string( $id ) ) {
-			$action->id( $id );
+			$action->filterById( $id );
 		} else if ( !empty( $id ) && is_array( $id ) ) {
-			$action->ids( $id );
+			$action->filterByIds( $id );
 		}
 
 		return $action;
@@ -49,9 +49,9 @@ class VmsFactory extends ActionFactory {
 		$action->proxy( $this->proxy );
 
 		if ( !empty( $id ) && is_string( $id ) ) {
-			$action->id( $id );
+			$action->filterById( $id );
 		} else if ( !empty( $id ) && is_array( $id ) ) {
-			$action->ids( $id );
+			$action->filterByIds( $id );
 		}
 
 		return $action;

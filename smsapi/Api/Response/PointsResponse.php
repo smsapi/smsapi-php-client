@@ -9,7 +9,9 @@ namespace SMSApi\Api\Response;
 class PointsResponse extends AbstractResponse
 {
 	/**
-	 * @return mixed
+	 * Number of points available for user.
+	 *
+	 * @return number
 	 */
 	public function getPoints()
 	{

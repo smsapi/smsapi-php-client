@@ -35,10 +35,19 @@ class ContactGet extends AbstractAction {
 	}
 
 	/**
-	 * @param $number
-	 * @return $this
+	 * @deprecated since v1.0.0
 	 */
 	public function setContact( $number ) {
+		return $this->filterByPhoneNumber( $number );
+	}
+
+	/**
+	 * Set filter by contact phone number.
+	 *
+	 * @param string|int $number phone number
+	 * @return $this
+	 */
+	public function filterByPhoneNumber( $number ) {
 		$this->params[ "get_contact" ] = $number;
 		return $this;
 	}

@@ -45,7 +45,7 @@ class SenderFactory extends ActionFactory {
 		$action->proxy( $this->proxy );
 
 		if ( !empty( $senderName ) ) {
-			$action->setSender( $senderName );
+			$action->filterBySenderName( $senderName );
 		}
 
 		return $action;

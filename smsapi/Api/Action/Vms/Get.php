@@ -49,31 +49,48 @@ class Get extends AbstractAction {
 	}
 
 	/**
+	 * Set ID of messages to check.
+	 *
+	 * This id was returned after sending message.
+	 *
 	 * @param $id
 	 * @return $this
 	 * @throws \SMSApi\Exception\ActionException
 	 */
-	public function id( $id ) {
-		if ( !is_string( $id ) ) {
-			throw new \SMSApi\Exception\ActionException( 'Invalid value id' );
-		}
+	public function filterById( $id ) {
 
 		$this->id->append( $id );
 		return $this;
 	}
 
 	/**
+	 * Set IDs of messages to check.
+	 *
+	 * This id was returned after sending message.
+	 *
 	 * @param $ids
 	 * @return $this
 	 * @throws \SMSApi\Exception\ActionException
 	 */
-	public function ids( $ids ) {
-		if ( !is_array( $ids ) ) {
-			throw new \SMSApi\Exception\ActionException( 'Invalid value ids' );
-		}
+	public function filterByIds( array $ids ) {
 
 		$this->id->exchangeArray( $ids );
 		return $this;
 	}
+
+	/**
+	 * @deprecated since v1.0.0
+	 */
+	public function ids($array) {
+		return $this->filterByIds($array);
+	}
+
+	/**
+	 * @deprecated since v1.0.0
+	 */
+	public function id($id) {
+		return $this->filterById($id);
+	}
+
 
 }

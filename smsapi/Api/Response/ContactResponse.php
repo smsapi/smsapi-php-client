@@ -183,7 +183,7 @@ class ContactResponse extends AbstractResponse {
 	/**
 	 * Returns create date in timestamp
 	 *
-	 * @return int
+	 * @return int date in timestamp
 	 */
 	public function getDateAdd() {
 		return $this->dateAdd;
@@ -192,7 +192,7 @@ class ContactResponse extends AbstractResponse {
 	/**
 	 * Returns modification date in timestamp
 	 *
-	 * @return int
+	 * @return int date in timestamp
 	 */
 	public function getDateMod() {
 		return $this->dateMod;

@@ -45,7 +45,7 @@ class PhonebookFactory extends ActionFactory {
 		$action->proxy( $this->proxy );
 
 		if ( !empty( $groupName ) ) {
-			$action->setGroup( $groupName );
+			$action->filterByGroupName( $groupName );
 		}
 
 		return $action;
@@ -61,7 +61,7 @@ class PhonebookFactory extends ActionFactory {
 		$action->proxy( $this->proxy );
 
 		if ( !empty( $groupName ) ) {
-			$action->setGroup( $groupName );
+			$action->filterByGroupName( $groupName );
 		}
 
 		return $action;
@@ -77,7 +77,7 @@ class PhonebookFactory extends ActionFactory {
 		$action->proxy( $this->proxy );
 
 		if ( !empty( $groupName ) ) {
-			$action->setGroup( $groupName );
+			$action->filterByGroupName( $groupName );
 		}
 
 		return $action;
@@ -120,7 +120,7 @@ class PhonebookFactory extends ActionFactory {
 		$action->proxy( $this->proxy );
 
 		if ( !empty( $number ) ) {
-			$action->setContact( $number );
+			$action->filterByPhoneNumber( $number );
 		}
 
 		return $action;
@@ -136,7 +136,7 @@ class PhonebookFactory extends ActionFactory {
 		$action->proxy( $this->proxy );
 
 		if ( !empty( $number ) ) {
-			$action->setContact( $number );
+			$action->filterByPhoneNumber( $number );
 		}
 
 		return $action;
@@ -152,7 +152,7 @@ class PhonebookFactory extends ActionFactory {
 		$action->proxy( $this->proxy );
 
 		if ( !empty( $number ) ) {
-			$action->setContact( $number );
+			$action->filterByPhoneNumber( $number );
 		}
 
 		return $action;

@@ -9,7 +9,8 @@ namespace SMSApi\Api\Action\Phonebook;
 class GroupEdit extends GroupAdd {
 
 	/**
-	 * @param $groupName
+	 * @deprecated since 1.0.0
+	 * @param string $groupName group name
 	 * @return $this
 	 */
 	public function setGroup( $groupName ) {
@@ -18,7 +19,20 @@ class GroupEdit extends GroupAdd {
 	}
 
 	/**
-	 * @param $groupName
+	 * Set edited group.
+	 *
+	 * @param string $groupName group name
+	 * @return $this
+	 */
+	public function filterByGroupName( $groupName ) {
+		$this->params[ "edit_group" ] = $groupName;
+		return $this;
+	}
+
+	/**
+	 * Set new group name.
+	 *
+	 * @param string $groupName new group name
 	 * @return $this
 	 */
 	public function setName( $groupName ) {

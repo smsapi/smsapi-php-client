@@ -35,12 +35,23 @@ class ContactDelete extends AbstractAction {
 	}
 
 	/**
-	 * @param $number
+	 * Set contact phone number to delete.
+	 *
+	 * @param string|int $number phone number
 	 * @return $this
 	 */
-	public function setContact( $number ) {
+	public function filterByPhoneNumber( $number ) {
 		$this->params[ "delete_contact" ] = $number;
 		return $this;
+	}
+
+	/**
+	 * @deprecated since v1.0.0
+	 * @param string|int $number phone number
+	 * @return $this
+	 */
+	public function setContact($number) {
+		return $this->filterByPhoneNumber($number);
 	}
 
 }

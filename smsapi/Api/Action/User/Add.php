@@ -35,7 +35,9 @@ class Add extends AbstractAction {
 	}
 
 	/**
-	 * @param $username
+	 * New account user name.
+	 *
+	 * @param string $username account name
 	 * @return $this
 	 */
 	public function setUsername( $username ) {
@@ -44,7 +46,9 @@ class Add extends AbstractAction {
 	}
 
 	/**
-	 * @param $password
+	 * Set account password encoded md5 algorithm.
+	 *
+	 * @param string $password  password encoded md5
 	 * @return $this
 	 */
 	public function setPassword( $password ) {
@@ -53,7 +57,9 @@ class Add extends AbstractAction {
 	}
 
 	/**
-	 * @param $password
+	 * Set account api password hashed with md5.
+	 *
+	 * @param string $password password api encoded md5
 	 * @return $this
 	 */
 	public function setPasswordApi( $password ) {
@@ -62,7 +68,9 @@ class Add extends AbstractAction {
 	}
 
 	/**
-	 * @param $limit
+	 * Set credit limit granted to account.
+	 *
+	 * @param number $limit limit
 	 * @return $this
 	 */
 	public function setLimit( $limit ) {
@@ -71,7 +79,9 @@ class Add extends AbstractAction {
 	}
 
 	/**
-	 * @param $limit
+	 * Set month credits, the amount that will be granted 1st day of every month.
+	 *
+	 * @param number $limit limit number
 	 * @return $this
 	 */
 	public function setMonthLimit( $limit ) {
@@ -80,11 +90,12 @@ class Add extends AbstractAction {
 	}
 
 	/**
-	 * @param $access
+	 * Set access to main account sender names.
+	 *
+	 * @param bool $access if true access is granted
 	 * @return $this
 	 */
-	public function setSenders( $access ) {
-
+	public function setFullAccessSenderNames( $access ) {
 		if ( $access == true ) {
 			$this->params[ "senders" ] = "1";
 		} else if ( $access == false ) {
@@ -95,10 +106,20 @@ class Add extends AbstractAction {
 	}
 
 	/**
-	 * @param $access
+	 * @deprecated since v1.0.0 use SMSApi\Api\Action\User\Add::setFullAccessSenderNames
+	 */
+	public function setSenders( $access ) {
+		return $this->setFullAccessSenderNames($access);
+	}
+
+	/**
+	 * Set access to main account phonebook contacts.
+	 *
+	 * @param bool $access
 	 * @return $this
 	 */
-	public function setPhonebook( $access ) {
+
+	public function setFullAccessPhoneBook( $access ) {
 
 		if ( $access == true ) {
 			$this->params[ "phonebook" ] = "1";
@@ -109,8 +130,19 @@ class Add extends AbstractAction {
 		return $this;
 	}
 
+
 	/**
-	 * @param $val
+	 * @deprecated since v1.0.0 use SMSApi\Api\Action\User\Add::setFullAccessPhoneBook
+	 */
+	public function setPhonebook( $access )
+	{
+		return $this->setFullAccessPhoneBook($access);
+	}
+
+	/**
+	 * Set account active status.
+	 *
+	 * @param bool $val if true set account enable otherwise disabled
 	 * @return $this
 	 */
 	public function setActive( $val ) {
@@ -125,7 +157,9 @@ class Add extends AbstractAction {
 	}
 
 	/**
-	 * @param $info
+	 * Set additional account description.
+	 *
+	 * @param string $info description
 	 * @return $this
 	 */
 	public function setInfo( $info ) {

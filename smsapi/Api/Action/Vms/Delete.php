@@ -49,11 +49,15 @@ class Delete extends AbstractAction {
 	}
 
 	/**
+	 * Set ID of messages to delete.
+	 *
+	 * This id was returned after sending message.
+	 *
 	 * @param $id
 	 * @return $this
 	 * @throws \SMSApi\Exception\ActionException
 	 */
-	public function id( $id ) {
+	public function filterById( $id ) {
 		if ( !is_string( $id ) ) {
 			throw new \SMSApi\Exception\ActionException( 'Invalid value id' );
 		}
@@ -63,17 +67,33 @@ class Delete extends AbstractAction {
 	}
 
 	/**
+	 *
+	 * Set array IDs of messages to delete.
+	 *
+	 * This id was returned after sending message.
+	 *
 	 * @param $ids
 	 * @return $this
 	 * @throws \SMSApi\Exception\ActionException
 	 */
-	public function ids( $ids ) {
-		if ( !is_array( $ids ) ) {
-			throw new \SMSApi\Exception\ActionException( 'Invalid value ids' );
-		}
+	public function filterByIds( array $ids ) {
 
 		$this->id->exchangeArray( $ids );
 		return $this;
+	}
+
+	/**
+	 * @deprecated since v1.0.0
+	 */
+	public function ids($array) {
+		return $this->filterByIds($array);
+	}
+
+	/**
+	 * @deprecated since v1.0.0
+	 */
+	public function id($id) {
+		return $this->filterById($id);
 	}
 
 }

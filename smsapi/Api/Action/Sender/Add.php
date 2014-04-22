@@ -35,7 +35,9 @@ class Add extends AbstractAction {
 	}
 
 	/**
-	 * @param $senderName
+	 * Set new sender name.
+	 *
+	 * @param string $senderName sender name
 	 * @return $this
 	 */
 	public function setName( $senderName ) {

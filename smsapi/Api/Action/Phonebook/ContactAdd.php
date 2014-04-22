@@ -51,7 +51,9 @@ class ContactAdd extends AbstractAction {
 	}
 
 	/**
-	 * @param $number
+	 * Set contact phone number.
+	 *
+	 * @param string|int $number
 	 * @return $this
 	 */
 	public function setNumber( $number ) {
@@ -60,7 +62,9 @@ class ContactAdd extends AbstractAction {
 	}
 
 	/**
-	 * @param $firstName
+	 * Set contact first name.
+	 *
+	 * @param string $firstName
 	 * @return $this
 	 */
 	public function setFirstName( $firstName ) {
@@ -69,7 +73,9 @@ class ContactAdd extends AbstractAction {
 	}
 
 	/**
-	 * @param $lastName
+	 * Set contact last name.
+	 *
+	 * @param string $lastName
 	 * @return $this
 	 */
 	public function setLastName( $lastName ) {
@@ -78,7 +84,9 @@ class ContactAdd extends AbstractAction {
 	}
 
 	/**
-	 * @param $info
+	 * Set additional contact description.
+	 *
+	 * @param string $info
 	 * @return $this
 	 */
 	public function setInfo( $info ) {
@@ -87,6 +95,8 @@ class ContactAdd extends AbstractAction {
 	}
 
 	/**
+	 * Set contact email address.
+	 *
 	 * @param $email
 	 * @return $this
 	 */
@@ -96,7 +106,9 @@ class ContactAdd extends AbstractAction {
 	}
 
 	/**
-	 * @param $birthday
+	 * Set contact birthday date.
+	 *
+	 * @param string $birthday
 	 * @return $this
 	 */
 	public function setBirthday( $birthday ) {
@@ -105,7 +117,9 @@ class ContactAdd extends AbstractAction {
 	}
 
 	/**
-	 * @param $city
+	 * Set contact city.
+	 *
+	 * @param string $city
 	 * @return $this
 	 */
 	public function setCity( $city ) {
@@ -114,7 +128,9 @@ class ContactAdd extends AbstractAction {
 	}
 
 	/**
-	 * @param $gender
+	 * Set contact gender.
+	 *
+	 * @param string $gender female, male, unknown
 	 * @return $this
 	 */
 	public function setGender( $gender ) {
@@ -123,7 +139,9 @@ class ContactAdd extends AbstractAction {
 	}
 
 	/**
-	 * @param $group
+	 * Add contact to group.
+	 *
+	 * @param string $group group name
 	 * @return $this
 	 */
 	public function setGroup( $group ) {
@@ -132,7 +150,9 @@ class ContactAdd extends AbstractAction {
 	}
 
 	/**
-	 * @param array $groups
+	 * Add contact to groups.
+	 *
+	 * @param string[] $group array with groups names
 	 * @return $this
 	 */
 	public function setGroups( array $groups ) {

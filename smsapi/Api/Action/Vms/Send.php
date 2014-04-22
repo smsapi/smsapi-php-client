@@ -69,7 +69,9 @@ class Send extends AbstractAction {
 	}
 
 	/**
-	 * @param $to
+	 * Set mobile phone number of the recipients.
+	 *
+	 * @param $to array|string phone number
 	 * @return $this
 	 */
 	public function setTo( $to ) {
@@ -83,7 +85,9 @@ class Send extends AbstractAction {
 	}
 
 	/**
-	 * @param $group
+	 * Set name of the group from the phone book to which message should be sent.
+	 *
+	 * @param string $group group name
 	 * @return $this
 	 */
 	public function setGroup( $group ) {
@@ -92,6 +96,10 @@ class Send extends AbstractAction {
 	}
 
 	/**
+	 * Set scheduled date sending message.
+	 *
+	 * Setting a past date will result in sending message instantly.
+	 *
 	 * @param $date
 	 * @return $this
 	 */
@@ -101,7 +109,9 @@ class Send extends AbstractAction {
 	}
 
 	/**
-	 * @param $idx
+	 * Set optional custom value sent with SMS and sent back in CALLBACK.
+	 *
+	 * @param string|array $idx
 	 * @return $this
 	 */
 	public function setIDx( $idx ) {
@@ -114,7 +124,13 @@ class Send extends AbstractAction {
 	}
 
 	/**
-	 * @param $check
+	 * Set checking idx is unique.
+	 *
+	 * Prevents from sending more than one message with the same idx.
+	 * When this parameter is set and message with the same idx was
+	 * already sent error 53 is returned.
+	 *
+	 * @param bool $check
 	 * @return $this
 	 */
 	public function setCheckIDx( $check ) {
@@ -128,7 +144,9 @@ class Send extends AbstractAction {
 	}
 
 	/**
-	 * @param $partner
+	 * Set affiliate code.
+	 *
+	 * @param string $partner affiliate code
 	 * @return $this
 	 */
 	public function setPartner( $partner ) {
@@ -137,6 +155,8 @@ class Send extends AbstractAction {
 	}
 
 	/**
+	 * Set local audio filename.
+	 *
 	 * @param $file
 	 * @return $this
 	 */
@@ -146,7 +166,9 @@ class Send extends AbstractAction {
 	}
 
 	/**
-	 * @param $tts
+	 * Set text to voice synthesizer.
+	 *
+	 * @param string $tts text to read
 	 * @return $this
 	 */
 	public function setTts( $tts ) {
@@ -155,6 +177,8 @@ class Send extends AbstractAction {
 	}
 
 	/**
+	 * Set flag to not send messages on cell phone numbers.
+	 *
 	 * @param $skipGsm
 	 * @return $this
 	 */
@@ -170,7 +194,9 @@ class Send extends AbstractAction {
 	}
 
 	/**
-	 * @param $lector
+	 * Set lector name.
+	 *
+	 * @param string $lector The value of $lector can be: agnieszka, ewa, jacek, jan or maja
 	 * @return $this
 	 */
 	public function setTtsLector( $lector ) {
@@ -179,6 +205,8 @@ class Send extends AbstractAction {
 	}
 
 	/**
+	 * Set called number. Leaving the field blank causes the sending of the default number of callers.
+	 *
 	 * @param $from
 	 * @return $this
 	 */
@@ -188,8 +216,9 @@ class Send extends AbstractAction {
 	}
 
 	/**
-	 * @param integer $try Number of connection attempts
+	 * Set number of connection attempts.
 	 *
+	 * @param integer $try Number of connection attempts
 	 * @return $this
 	 * @throws \OutOfRangeException
 	 */

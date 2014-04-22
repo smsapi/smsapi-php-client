@@ -29,7 +29,7 @@ class ContactsResponse extends CountableResponse {
 	}
 
 	/**
-	 * @return \ArrayObject
+	 * @return \ArrayObject|ContactsResponse[]
 	 */
 	public function getList() {
 		return $this->list;

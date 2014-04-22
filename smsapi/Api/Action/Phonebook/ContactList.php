@@ -53,6 +53,7 @@ class ContactList extends AbstractAction {
 	}
 
 	/**
+	 * @deprecated since v1.1.0
 	 * @param $number
 	 * @return $this
 	 */
@@ -62,6 +63,18 @@ class ContactList extends AbstractAction {
 	}
 
 	/**
+	 * Set filter contacts by phone number.
+	 *
+	 * @param string|number $number phone number
+	 * @return $this
+	 */
+	public function filterByPhoneNumber( $number ) {
+		$this->params[ "number" ] = $number;
+		return $this;
+	}
+
+	/**
+	 * @deprecated since v1.1.0
 	 * @param $group
 	 * @return $this
 	 */
@@ -70,7 +83,31 @@ class ContactList extends AbstractAction {
 		return $this;
 	}
 
+
 	/**
+	 * Set filter contacts by group name.
+	 *
+	 * @param string $group group name
+	 * @return $this
+	 */
+	public function filterByGroup( $group ) {
+		$this->groups->append( $group );
+		return $this;
+	}
+
+	/**
+	 * Set filter contacts by group names.
+	 *
+	 * @param string[] $group array of group names
+	 * @return $this
+	 */
+	public function filterByGroups( array $groups ) {
+		$this->groups->exchangeArray( $groups );
+		return $this;
+	}
+
+	/**
+	 * @deprecated since v1.0.0
 	 * @param array $groups
 	 * @return $this
 	 */
@@ -80,6 +117,7 @@ class ContactList extends AbstractAction {
 	}
 
 	/**
+	 * @deprecated since v1.0.0
 	 * @param $text
 	 * @return $this
 	 */
@@ -88,7 +126,20 @@ class ContactList extends AbstractAction {
 		return $this;
 	}
 
+
 	/**
+	 * The result list will contain contacts with given chars string.
+	 *
+	 * @param string $text search string
+	 * @return $this
+	 */
+	public function search( $text ) {
+		$this->params[ "text_search" ] = $text;
+		return $this;
+	}
+
+	/**
+	 * @deprecated since v1.1.0
 	 * @param $gender
 	 * @return $this
 	 */
@@ -98,16 +149,32 @@ class ContactList extends AbstractAction {
 	}
 
 	/**
-	 * @param $orderBy
+	 * Set filter by gender.
+	 *
+	 * @param string $gender The value of $gender can be: male, female, unknown
 	 * @return $this
 	 */
-	public function setOrderBy( $orderBy ) {
-		$this->params[ "order_by" ] = $orderBy;
+	public function filterByGender( $gender ) {
+		$this->params[ "gender" ] = $gender;
 		return $this;
 	}
 
 	/**
-	 * @param $orderDir
+	 * Set order parameter.
+	 *
+	 * @param string $orderBy The value of $orderBy can be: first_name, last_name
+	 * @return $this
+	 */
+	public function setOrderBy( $orderBy ) {
+		$this->params[ "order_by" ] = $orderBy;
+
+		return $this;
+	}
+
+	/**
+	 * Set order direction.
+	 *
+	 * @param string $orderDir The value of $orderBy can be: desc, asc
 	 * @return $this
 	 */
 	public function setOrderDir( $orderDir ) {
@@ -116,7 +183,9 @@ class ContactList extends AbstractAction {
 	}
 
 	/**
-	 * @param $limit
+	 * Set result limit.
+	 *
+	 * @param int $limit Max limit is 200 contacts
 	 * @return $this
 	 */
 	public function setLimit( $limit ) {
@@ -125,7 +194,9 @@ class ContactList extends AbstractAction {
 	}
 
 	/**
-	 * @param $offset
+	 * Set result offset.
+	 *
+	 * @param int $offset
 	 * @return $this
 	 */
 	public function setOffset( $offset ) {
@@ -134,4 +205,3 @@ class ContactList extends AbstractAction {
 	}
 
 }
-

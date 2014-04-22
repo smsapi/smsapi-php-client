@@ -35,14 +35,21 @@ class Delete extends AbstractAction {
 	}
 
 	/**
-	 *
+	 * Set filter by sender name.
 	 *
 	 * @param $senderName string Sender name do delete
 	 * @return $this
 	 */
-	public function setSender( $senderName ) {
+	public function filterBySenderName( $senderName ) {
 		$this->params[ "delete" ] = $senderName;
 		return $this;
+	}
+
+	/**
+	 * @deprecated since v1.0.0
+	 */
+	public function setSender( $senderName ) {
+		return $this->filterBySenderName($senderName);
 	}
 
 }

@@ -111,7 +111,7 @@ class UserResponse extends AbstractResponse {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated since v1.0.0 use UserResponse::hasFullAccessSenderNames
 	 * @return mixed
 	 */
 	public function getSenders() {
@@ -128,7 +128,7 @@ class UserResponse extends AbstractResponse {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated since v1.0.0
 	 * @return int
 	 */
 	public function getPhonebook() {
@@ -145,7 +145,7 @@ class UserResponse extends AbstractResponse {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated since v1.0.0
 	 * @return int
 	 */
 	public function getActive() {

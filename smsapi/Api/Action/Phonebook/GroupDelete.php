@@ -35,7 +35,8 @@ class GroupDelete extends AbstractAction {
 	}
 
 	/**
-	 * @param $groupName
+	 * @deprecated since v1.0.0
+	 * @param string $groupName group name
 	 * @return $this
 	 */
 	public function setGroup( $groupName ) {
@@ -44,7 +45,20 @@ class GroupDelete extends AbstractAction {
 	}
 
 	/**
-	 * @param $remove
+	 * Set group to delete.
+	 *
+	 * @param string $groupName group name
+	 * @return $this
+	 */
+	public function filterByGroupName( $groupName ) {
+		$this->params[ "delete_group" ] = $groupName;
+		return $this;
+	}
+
+	/**
+	 * Set flag to remove contacts from group.
+	 *
+	 * @param bool $remove if true contact in group will be removed
 	 * @return $this
 	 */
 	public function removeContacts( $remove ) {
