@@ -1,6 +1,6 @@
-#Upgrade to 1.1.0
+# Upgrade to 1.1.0
 
-##Deprecated methods.
+## Deprecated methods.
 
 *It will be removed without replacement in 1.2.0*
 
