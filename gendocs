@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+apigen --source smsapi/ --destination docs/ --title "SMSAPI api client" --php no
