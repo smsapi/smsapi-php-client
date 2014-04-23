@@ -170,24 +170,26 @@
 </span><span id="56" class="l"><a class="l" href="#56">56: </a>    }
 </span><span id="57" class="l"><a class="l" href="#57">57: </a>
 </span><span id="58" class="l"><a class="l" href="#58">58: </a>    <span class="php-comment">/**
-</span></span><span id="59" class="l"><a class="l" href="#59">59: </a><span class="php-comment">     * Set flag to remove contacts from group.
+</span></span><span id="59" class="l"><a class="l" href="#59">59: </a><span class="php-comment">     * Set flag on true to remove contacts from group.
 </span></span><span id="60" class="l"><a class="l" href="#60">60: </a><span class="php-comment">     *
-</span></span><span id="61" class="l"><a class="l" href="#61">61: </a><span class="php-comment">     * @param bool $remove if true contact in group will be removed
-</span></span><span id="62" class="l"><a class="l" href="#62">62: </a><span class="php-comment">     * @return $this
-</span></span><span id="63" class="l"><a class="l" href="#63">63: </a><span class="php-comment">     */</span>
-</span><span id="64" class="l"><a class="l" href="#64">64: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> <a id="_removeContacts" href="#_removeContacts">removeContacts</a>( <span class="php-var">$remove</span> ) {
-</span><span id="65" class="l"><a class="l" href="#65">65: </a>        <span class="php-keyword1">if</span> ( <span class="php-var">$remove</span> == <span class="php-keyword1">true</span> ) {
-</span><span id="66" class="l"><a class="l" href="#66">66: </a>            <span class="php-var">$this</span>-&gt;params[ <span class="php-quote">&quot;remove_contacts&quot;</span> ] = <span class="php-quote">&quot;1&quot;</span>;
-</span><span id="67" class="l"><a class="l" href="#67">67: </a>        } <span class="php-keyword1">else</span> <span class="php-keyword1">if</span> ( <span class="php-var">$remove</span> == <span class="php-keyword1">false</span> &amp;&amp; <span class="php-keyword1">isset</span>( <span class="php-var">$this</span>-&gt;params[ <span class="php-quote">&quot;remove_contacts&quot;</span> ] ) ) {
-</span><span id="68" class="l"><a class="l" href="#68">68: </a>            <span class="php-keyword1">unset</span>( <span class="php-var">$this</span>-&gt;params[ <span class="php-quote">&quot;remove_contacts&quot;</span> ] );
-</span><span id="69" class="l"><a class="l" href="#69">69: </a>        }
-</span><span id="70" class="l"><a class="l" href="#70">70: </a>
-</span><span id="71" class="l"><a class="l" href="#71">71: </a>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>;
-</span><span id="72" class="l"><a class="l" href="#72">72: </a>    }
-</span><span id="73" class="l"><a class="l" href="#73">73: </a>
-</span><span id="74" class="l"><a class="l" href="#74">74: </a>}
+</span></span><span id="61" class="l"><a class="l" href="#61">61: </a><span class="php-comment">     * If this flag is false or unset contact will be only unbind from group.
+</span></span><span id="62" class="l"><a class="l" href="#62">62: </a><span class="php-comment">     *
+</span></span><span id="63" class="l"><a class="l" href="#63">63: </a><span class="php-comment">     * @param bool $remove if true contact in group will be removed
+</span></span><span id="64" class="l"><a class="l" href="#64">64: </a><span class="php-comment">     * @return $this
+</span></span><span id="65" class="l"><a class="l" href="#65">65: </a><span class="php-comment">     */</span>
+</span><span id="66" class="l"><a class="l" href="#66">66: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> <a id="_removeContacts" href="#_removeContacts">removeContacts</a>( <span class="php-var">$remove</span> ) {
+</span><span id="67" class="l"><a class="l" href="#67">67: </a>        <span class="php-keyword1">if</span> ( <span class="php-var">$remove</span> == <span class="php-keyword1">true</span> ) {
+</span><span id="68" class="l"><a class="l" href="#68">68: </a>            <span class="php-var">$this</span>-&gt;params[ <span class="php-quote">&quot;remove_contacts&quot;</span> ] = <span class="php-quote">&quot;1&quot;</span>;
+</span><span id="69" class="l"><a class="l" href="#69">69: </a>        } <span class="php-keyword1">else</span> <span class="php-keyword1">if</span> ( <span class="php-var">$remove</span> == <span class="php-keyword1">false</span> &amp;&amp; <span class="php-keyword1">isset</span>( <span class="php-var">$this</span>-&gt;params[ <span class="php-quote">&quot;remove_contacts&quot;</span> ] ) ) {
+</span><span id="70" class="l"><a class="l" href="#70">70: </a>            <span class="php-keyword1">unset</span>( <span class="php-var">$this</span>-&gt;params[ <span class="php-quote">&quot;remove_contacts&quot;</span> ] );
+</span><span id="71" class="l"><a class="l" href="#71">71: </a>        }
+</span><span id="72" class="l"><a class="l" href="#72">72: </a>
+</span><span id="73" class="l"><a class="l" href="#73">73: </a>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>;
+</span><span id="74" class="l"><a class="l" href="#74">74: </a>    }
 </span><span id="75" class="l"><a class="l" href="#75">75: </a>
-</span><span id="76" class="l"><a class="l" href="#76">76: </a></span></code></pre>
+</span><span id="76" class="l"><a class="l" href="#76">76: </a>}
+</span><span id="77" class="l"><a class="l" href="#77">77: </a>
+</span><span id="78" class="l"><a class="l" href="#78">78: </a></span></code></pre>
 
 	<div id="footer">
 		SMSAPI api client API documentation generated by <a href="http://apigen.org">ApiGen 2.8.0</a>

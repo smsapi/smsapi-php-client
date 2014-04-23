@@ -56,7 +56,8 @@ class GroupDelete extends AbstractAction {
 	}
 
 	/**
-	 * Set flag on true to remove contacts from group.
+	 * Set true to remove contacts from phonebook.
+	 * If contacts are in other groups, they will be only unbind.
 	 *
 	 * If this flag is false or unset contact will be only unbind from group.
 	 *
@@ -74,4 +75,3 @@ class GroupDelete extends AbstractAction {
 	}
 
 }
-
