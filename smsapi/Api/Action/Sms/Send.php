@@ -177,9 +177,12 @@ class Send extends AbstractAction {
 	/**
 	 * Set name of the sender.
 	 *
+	 * To send SMS as ECO use sender name `ECO`.
+	 * To send SMS as 2Way use sender name `2Way`.
+	 *
 	 * Only verified names are being accepted.
 	 *
-	 * @param string $sender sender name
+	 * @param string $sender sender name or eco or 2way
 	 * @return $this
 	 */
 	public function setSender( $sender ) {
