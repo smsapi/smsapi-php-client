@@ -56,7 +56,9 @@ class GroupDelete extends AbstractAction {
 	}
 
 	/**
-	 * Set flag to remove contacts from group.
+	 * Set flag on true to remove contacts from group.
+	 *
+	 * If this flag is false or unset contact will be only unbind from group.
 	 *
 	 * @param bool $remove if true contact in group will be removed
 	 * @return $this
