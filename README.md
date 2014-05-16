@@ -1,4 +1,4 @@
-php-client
+﻿php-client
 ==========
 
 Klient PHP pozwalający na wysyłanie wiadomości SMS, MMS, VMS oraz zarządzanie kontem w serwisie SMSAPI.pl
@@ -20,7 +20,7 @@ try {
 
 	$actionSend->setTo('600xxxxxx');
 	$actionSend->setText('Hello World!!');
-	$actionSend->setSender('SMSAPI.pl');
+	$actionSend->setSender('SMSAPI.pl'); //Pole nadawcy lub typ wiadomość 'ECO', '2Way'
 
 	$response = $actionSend->execute();
 
