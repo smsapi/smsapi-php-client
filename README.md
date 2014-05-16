@@ -33,6 +33,10 @@ catch( \SMSApi\Exception\SmsapiException $e ) {
 }
 ```
 
+[Dokumentacja API biblioteki.](https://github.com/smsapi/smsapi-php-client/wiki)
+
+Sprawdź na przykładach, w jaki sposób można korzystać z biblioteki ([examples](https://github.com/smsapi/smsapi-php-client/wiki/Examples)).
+
 ## Wymagania
 
 * PHP >= 5.3
