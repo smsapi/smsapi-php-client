@@ -92,5 +92,24 @@ class SmsTest extends SmsapiTest {
 		$this->assertNotEquals( 0, $result->getCount() );
 	}
 
-}
+    public function testTemplate()
+    {
+        $smsApi = new SmsFactory(null, $this->client());
+        $result = null;
+        $error = 0;
+        $time = time() + 86400;
 
+        $result = $smsApi->actionSend()
+            ->setTemplate('Testowa nazwa')
+            ->setTo($this->numberTest)
+            ->execute();
+
+        foreach ($result->getList() as $item) {
+            if ($item->getError()) {
+                $error++;
+            }
+        }
+
+        $this->assertEquals(0, $error);
+    }
+}
