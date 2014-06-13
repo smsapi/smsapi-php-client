@@ -1,7 +1,9 @@
-.settings
-.project
-.idea
-.buildpath
-.nbproject
-!.gitkeep
+/.settings
+/.project
+/.idea
+/.buildpath
+/.nbproject
 /nbproject
+/*.sublime-project
+/*.sublime-workspace
+/test/Run/_ids_test.txt
