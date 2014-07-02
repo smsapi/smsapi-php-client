@@ -42,6 +42,15 @@ Sprawdź na przykładach, w jaki sposób można korzystać z biblioteki ([exampl
 * PHP >= 5.3
 * allow_url_fopen lub rozszerzenie curl
 
+## Instalacja
 
-## LICENSE
+W swoim projekcie dodaj do `composer.json` pakiet :
+
+    {
+        "require": {
+            "smsapi.pl/php-client": "1.1.*"
+        }
+    }
+
+## Licencja
 [Apache 2.0 License](https://github.com/smsapi/smsapi-php-client/blob/master/LICENSE)
