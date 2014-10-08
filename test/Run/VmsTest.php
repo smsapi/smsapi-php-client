@@ -26,7 +26,7 @@ class VmsTest extends SmsapiTest {
 
 		$result = null;
 
-		$time = time() + 86400;
+        $time = $this->prepareTimeToSend();
 
 		$audio_file = __DIR__ . DIRECTORY_SEPARATOR . "voice_small.wav";
 
@@ -58,7 +58,7 @@ class VmsTest extends SmsapiTest {
 
 		$result = null;
 
-		$time = time() + 86400;
+		$time = $this->prepareTimeToSend();
 
 		$tts = "co ty robisz";
 
@@ -137,6 +137,18 @@ class VmsTest extends SmsapiTest {
 
 		$this->assertNotEquals( 0, $result->getCount() );
 	}
+
+    /**
+     * @return int
+     */
+    private function prepareTimeToSend()
+    {
+        $dateSent = new DateTime('+1 day', new DateTimeZone('Europe/Warsaw'));
+        $dateSent->setTime(14, 0);
+
+        $time = $dateSent->getTimestamp();
+        return $time;
+    }
 
 }
 
