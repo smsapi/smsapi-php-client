@@ -60,7 +60,7 @@ class VmsTest extends SmsapiTest {
 
 		$time = time() + 86400;
 
-		$tts = "co ty robisz";
+		$tts = "Wiadomość w formacie TTS";
 
 		$action = $smsApi->actionSend();
 
