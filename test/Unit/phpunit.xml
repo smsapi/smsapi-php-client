@@ -1,0 +1,10 @@
+<phpunit
+        bootstrap="../../smsapi/Autoload.php">
+
+    <testsuites>
+        <testsuite name="SMSAPI - Unit Tests Suite">
+            <directory>smsapi</directory>
+        </testsuite>
+    </testsuites>
+
+</phpunit>

@@ -2,15 +2,14 @@
 
 require_once '../SmsapiTest.php';
 
-class VmsTest extends SmsapiTest {
+class VmsTest extends SmsapiTest
+{
 
 	private $error = 0;
 	private $ids = array( );
 
-	public function testSendAudio() {
-
-		//$this->markTestIncomplete(__METHOD__.' this test has not been implemented.');
-
+	public function testSendAudio()
+    {
 		$this->sendAudioFile();
 
 		$this->sendAudioTts();
@@ -21,7 +20,8 @@ class VmsTest extends SmsapiTest {
 		$this->assertEquals( 0, $this->error );
 	}
 
-	private function sendAudioFile() {
+	private function sendAudioFile()
+    {
 		$smsApi = new \SMSApi\Api\VmsFactory( null, $this->client() );
 
 		$result = null;
@@ -52,8 +52,8 @@ class VmsTest extends SmsapiTest {
 		}
 	}
 
-	public function sendAudioTts() {
-
+	public function sendAudioTts()
+    {
 		$smsApi = new \SMSApi\Api\VmsFactory( null, $this->client() );
 
 		$result = null;
@@ -85,10 +85,8 @@ class VmsTest extends SmsapiTest {
 		}
 	}
 
-	public function testGet() {
-
-		//$this->markTestIncomplete(__METHOD__.' this test has not been implemented.');
-
+	public function testGet()
+    {
 		$smsApi = new \SMSApi\Api\VmsFactory( null, $this->client() );
 
 		$result = null;
@@ -116,10 +114,8 @@ class VmsTest extends SmsapiTest {
 		$this->assertEquals( 0, $error );
 	}
 
-	public function testDelete() {
-
-		//$this->markTestIncomplete(__METHOD__.' this test has not been implemented.');
-
+	public function testDelete()
+    {
 		$smsApi = new \SMSApi\Api\VmsFactory( null, $this->client() );
 
 		$result = null;
@@ -135,7 +131,7 @@ class VmsTest extends SmsapiTest {
 		echo "\nMmsDelete:\n";
 		echo "Delete: " . $result->getCount();
 
-		$this->assertNotEquals( 0, $result->getCount() );
+		$this->assertEquals( 2, $result->getCount() );
 	}
 
     /**
