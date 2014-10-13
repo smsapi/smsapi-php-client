@@ -4,7 +4,12 @@ require_once '../SmsapiTest.php';
 
 class UserTest extends SmsapiTest
 {
-	private $userTest = "fajny3";
+	private static $userTest;
+
+    public static function setUpBeforeClass()
+    {
+        self::$userTest = "test-smsapi-client";
+    }
 
 	private function renderUserItem($item)
 	{
@@ -23,12 +28,16 @@ class UserTest extends SmsapiTest
 
 	public function testAdd()
 	{
+        if ($this->userExists()) {
+            $this->markTestSkipped("User: " . self::$userTest . "already exists. No need to add another.");
+        }
+
 		$smsApi = new \SMSApi\Api\UserFactory(null, $this->client());
 
 		$result = null;
 		$error = 0;
 
-		$action = $smsApi->actionAdd($this->userTest)
+		$action = $smsApi->actionAdd(self::$userTest)
 			->setPassword(md5("100costma100"))
 			->setPasswordApi(md5("200costam200"))
 			->setActive(true)
@@ -50,20 +59,23 @@ class UserTest extends SmsapiTest
 		$this->assertEquals(0, $error);
 	}
 
+    private function userExists()
+    {
+        try {
+            $this->getApiUser();
+            return true;
+        } catch(\SMSApi\Exception\ActionException $e) {
+            return false;
+        }
+    }
+
 	public function testGet()
 	{
-		$smsApi = new \SMSApi\Api\UserFactory(null, $this->client());
-
-		$result = null;
-		$error = 0;
-
-		$action = $smsApi->actionGet($this->userTest);
-
-		$result = $action->execute();
-
-		/* @var $result \SMSApi\Api\Response\UserResponse */
+        $result = $this->getApiUser();
 
 		echo "\nUserGet:\n";
+
+        $error = 0;
 
 		if( empty($result) ) {
 			$error++;
@@ -81,7 +93,7 @@ class UserTest extends SmsapiTest
 		$result = null;
 		$error = 0;
 
-		$action = $smsApi->actionEdit($this->userTest)
+		$action = $smsApi->actionEdit(self::$userTest)
 			->setLimit("10")
 			->setInfo("to jest test");
 
@@ -139,5 +151,19 @@ class UserTest extends SmsapiTest
 		$this->greaterThanOrEqual($result->getPoints(), 0);
 
 	}
+
+    /**
+     * @return \SMSApi\Api\Response\UserResponse
+     */
+    private function getApiUser()
+    {
+        $smsApi = new \SMSApi\Api\UserFactory(null, $this->client());
+
+        $action = $smsApi->actionGet(self::$userTest);
+
+        $result = $action->execute();
+
+        return $result;
+    }
 }
 

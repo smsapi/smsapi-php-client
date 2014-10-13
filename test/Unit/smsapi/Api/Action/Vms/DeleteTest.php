@@ -11,7 +11,7 @@ class DeleteTest extends \PHPUnit_Framework_TestCase
      */
     private $deleteVmsAction;
 
-    protected  function setUp()
+    protected function setUp()
     {
         $deleteVmsAction = new Delete();
 
@@ -52,4 +52,4 @@ class DeleteTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('username=test&password=&sch_del=del1,del2,del3', $result->getQuery());
     }
-} 
+}
