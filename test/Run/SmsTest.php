@@ -94,7 +94,7 @@ class SmsTest extends SmsapiTest {
 
     public function testTemplate()
     {
-        $smsApi = new SmsFactory(null, $this->client());
+        $smsApi = new \SMSApi\Api\SmsFactory(null, $this->client());
         $result = null;
         $error = 0;
         $time = time() + 86400;

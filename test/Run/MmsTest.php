@@ -14,7 +14,7 @@ class MmsTest extends SmsapiTest {
 
 		$time = time() + 86400;
 
-		$smil = "<smil><head><layout><root-layout height='100%' width='100%'/><region id='Image' width='100%' height='100%' left='0' top='0'/></layout></head><body><par><img src='http://www.smsapi.pl/media/mms.jpg' region='Image' /></par></body></smil>";
+		$smil = "<smil><head><layout><root-layout height='100%' width='100%'/><region id='Image' width='100%' height='100%' left='0' top='0'/></layout></head><body><par><img src='http://www.smsapi.pl/assets/img/mms.jpg' region='Image' /></par></body></smil>";
 
 		$action = $smsApi->actionSend();
 
