@@ -128,7 +128,7 @@ class VmsTest extends SmsapiTest
 
 		$result = $action->ids( $ids )->execute();
 
-		echo "\nMmsDelete:\n";
+		echo "\nVmsDelete:\n";
 		echo "Delete: " . $result->getCount();
 
 		$this->assertEquals( 2, $result->getCount() );
