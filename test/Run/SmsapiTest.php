@@ -7,7 +7,7 @@ class SmsapiTest extends PHPUnit_Framework_TestCase
 
 	protected $fileToIds = "_ids_test.txt";
 	protected $numberTest = "xxxyyyzzz";
-	
+
 	protected $api_login = "twoj_login";
 	protected $api_password = "twoje_haslo_do_api";
 
@@ -43,13 +43,17 @@ class SmsapiTest extends PHPUnit_Framework_TestCase
 
 	protected function readIds()
     {
-		$str = file_get_contents(__DIR__ . '/' . $this->fileToIds);
+		$str = file_get_contents($this->getFileToIdsPath());
 		return unserialize( $str );
 	}
 
 	protected function writeIds( $ids )
     {
-		file_put_contents(__DIR__ . '/' . $this->fileToIds, serialize( $ids ));
+		file_put_contents($this->getFileToIdsPath(), serialize( $ids ));
 	}
 
+    private function getFileToIdsPath()
+    {
+        return __DIR__ . '/' . $this->fileToIds;
+    }
 }
