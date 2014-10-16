@@ -2,21 +2,22 @@
 
 require_once __DIR__  . '/../../smsapi/Autoload.php';
 
-class SmsapiTest extends PHPUnit_Framework_TestCase
+abstract class SmsapiTest extends PHPUnit_Framework_TestCase
 {
 
-	protected $fileToIds = "_ids_test.txt";
+    private $fileToIds = "_ids_test.txt";
+
 	protected $numberTest = "xxxyyyzzz";
 
-	protected $api_login = "twoj_login";
-	protected $api_password = "twoje_haslo_do_api";
+	private  $api_login = "twoj_login";
+	private  $api_password = "twoje_haslo_do_api";
 
 	protected function client()
     {
 		try {
+			$client = new \SMSApi\Client($this->getApiLogin());
+			$client->setPasswordRAW($this->getApiPassword());
 
-			$client = new \SMSApi\Client( $this->api_login );
-			$client->setPasswordRAW( $this->api_password );
 			return $client;
 		} catch ( \SMSApi\Exception\ClientException $ex ) {
 			/**
@@ -29,6 +30,16 @@ class SmsapiTest extends PHPUnit_Framework_TestCase
 		}
 		return null;
 	}
+
+    private function getApiLogin()
+    {
+        return $this->api_login;
+    }
+
+    private function getApiPassword()
+    {
+        return $this->api_password;
+    }
 
 	protected function renderMessageItem( \SMSApi\Api\Response\MessageResponse $item ) {
 
