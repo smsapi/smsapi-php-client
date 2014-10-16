@@ -7,8 +7,6 @@ abstract class SmsapiTest extends PHPUnit_Framework_TestCase
 
     private $fileToIds = "_ids_test.txt";
 
-	private $numberTest = "xxxyyyzzz";
-
 	protected function client()
     {
 		try {
@@ -49,7 +47,9 @@ abstract class SmsapiTest extends PHPUnit_Framework_TestCase
 
     protected function getNumberTest()
     {
-        return $this->numberTest;
+        $configuration = $this->getConfiguration();
+
+        return $configuration['number_test'];
     }
 
 	protected function renderMessageItem( \SMSApi\Api\Response\MessageResponse $item ) {
