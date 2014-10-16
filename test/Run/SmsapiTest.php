@@ -1,6 +1,6 @@
 <?php
 
-require_once '../../smsapi/Autoload.php';
+require_once __DIR__  . '/../../smsapi/Autoload.php';
 
 class SmsapiTest extends PHPUnit_Framework_TestCase
 {
@@ -41,13 +41,15 @@ class SmsapiTest extends PHPUnit_Framework_TestCase
 		);
 	}
 
-	protected function readIds() {
-		$str = file_get_contents( $this->fileToIds );
+	protected function readIds()
+    {
+		$str = file_get_contents(__DIR__ . '/' . $this->fileToIds);
 		return unserialize( $str );
 	}
 
-	protected function writeIds( $ids ) {
-		file_put_contents( $this->fileToIds, serialize( $ids ) );
+	protected function writeIds( $ids )
+    {
+		file_put_contents(__DIR__ . '/' . $this->fileToIds, serialize( $ids ));
 	}
 
 }

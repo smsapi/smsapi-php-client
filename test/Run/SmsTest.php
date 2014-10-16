@@ -1,6 +1,6 @@
 <?php
 
-require_once '../SmsapiTest.php';
+require_once 'SmsapiTest.php';
 
 class SmsTest extends SmsapiTest
 {
