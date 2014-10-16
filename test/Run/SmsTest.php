@@ -23,10 +23,10 @@ class SmsTest extends SmsapiTest
 
 		$result =
 			$action
-				->setText( "test [%1%] message" )
-				->setTo( $this->numberTest )
-				->SetParam( 0, 'asd' )
-				->setDateSent( $time )
+				->setText("test [%1%] message")
+				->setTo($this->getNumberTest())
+				->SetParam(0, 'asd')
+				->setDateSent($time)
 				->execute();
 
 		echo "SmsSend:\n";
@@ -125,7 +125,7 @@ class SmsTest extends SmsapiTest
 
         $result = $smsApi->actionSend()
             ->setTemplate('Testowa nazwa')
-            ->setTo($this->numberTest)
+            ->setTo($this->getNumberTest())
             ->execute();
 
         return $result;
