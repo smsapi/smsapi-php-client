@@ -7,4 +7,5 @@
 /*.sublime-project
 /*.sublime-workspace
 /test/Run/_ids_test.txt
+test/Run/config.php
 /vendor

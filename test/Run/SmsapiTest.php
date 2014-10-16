@@ -9,9 +9,6 @@ abstract class SmsapiTest extends PHPUnit_Framework_TestCase
 
 	protected $numberTest = "xxxyyyzzz";
 
-	private  $api_login = "twoj_login";
-	private  $api_password = "twoje_haslo_do_api";
-
 	protected function client()
     {
 		try {
@@ -33,12 +30,21 @@ abstract class SmsapiTest extends PHPUnit_Framework_TestCase
 
     private function getApiLogin()
     {
-        return $this->api_login;
+        $configuration = $this->getConfiguration();
+
+        return $configuration['api_login'];
     }
 
     private function getApiPassword()
     {
-        return $this->api_password;
+        $configuration = $this->getConfiguration();
+
+        return $configuration['api_password'];
+    }
+
+    private function getConfiguration()
+    {
+        return include __DIR__ . '/config.php';
     }
 
 	protected function renderMessageItem( \SMSApi\Api\Response\MessageResponse $item ) {
