@@ -1,8 +1,8 @@
 <?php
 
-require_once 'SmsapiTest.php';
+require_once 'SmsapiTestCase.php';
 
-class VmsTest extends SmsapiTest
+class VmsTest extends SmsapiTestCase
 {
 
 	private $error = 0;

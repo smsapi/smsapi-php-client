@@ -1,8 +1,8 @@
 <?php
 
-require_once 'SmsapiTest.php';
+require_once 'SmsapiTestCase.php';
 
-class MmsTest extends SmsapiTest {
+class MmsTest extends SmsapiTestCase {
 
 	public function testSend() {
 

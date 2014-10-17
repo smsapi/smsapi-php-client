@@ -2,7 +2,7 @@
 
 require_once __DIR__  . '/../../smsapi/Autoload.php';
 
-abstract class SmsapiTest extends PHPUnit_Framework_TestCase
+abstract class SmsapiTestCase extends PHPUnit_Framework_TestCase
 {
 
     private $fileToIds = "_ids_test.txt";
