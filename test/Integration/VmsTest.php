@@ -65,33 +65,30 @@ class VmsTest extends SmsapiTestCase
         return $ids;
 	}
 
-	public function testGet()
+    /**
+     * @depends testSendAudioFile
+     * @depends testSendAudioTts
+     */
+    public function testGet($audioIds, $ttsIds)
     {
 		$smsApi = new \SMSApi\Api\VmsFactory( null, $this->client() );
 
-		$result = null;
-		$error = 0;
-
 		$action = $smsApi->actionGet();
 
-		$ids = $this->readIds();
+		$ids = array_merge($audioIds, $ttsIds);
 
 		/* @var $result \SMSApi\Api\Response\StatusResponse */
-		/* @var $item \SMSApi\Api\Response\MessageResponse */
 
-		$result = $action->ids( $ids )->execute();
+		$result = $action->filterByIds($ids)->execute();
 
 		echo "\nVmsGet:\n";
 
-		foreach ( $result->getList() as $item ) {
-			if ( !$item->getError() ) {
-				$this->renderMessageItem( $item );
-			} else {
-				$error++;
-			}
-		}
+        $this->renderStatusResponse($result);
 
-		$this->assertEquals( 0, $error );
+        $errorCount = $this->countErrors($result);
+
+		$this->assertEquals(0, $errorCount);
+        $this->assertEquals(2, $result->getCount());
 	}
 
     /**
@@ -110,7 +107,7 @@ class VmsTest extends SmsapiTestCase
 
 		/* @var $result \SMSApi\Api\Response\CountableResponse */
 
-		$result = $action->ids( $ids )->execute();
+		$result = $action->filterByIds($ids)->execute();
 
 		echo "\nVmsDelete:\n";
 		echo "Delete: " . $result->getCount();
