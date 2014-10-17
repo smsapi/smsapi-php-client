@@ -124,7 +124,7 @@ class SmsTest extends SmsapiTestCase
         $smsApi = new \SMSApi\Api\SmsFactory(null, $this->client());
 
         $result = $smsApi->actionSend()
-            ->setTemplate('Testowa nazwa')
+            ->setTemplate($this->getSmsTemplateName())
             ->setTo($this->getNumberTest())
             ->execute();
 

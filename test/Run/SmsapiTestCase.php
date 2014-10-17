@@ -52,6 +52,13 @@ abstract class SmsapiTestCase extends PHPUnit_Framework_TestCase
         return $configuration['number_test'];
     }
 
+    protected function getSmsTemplateName()
+    {
+        $configuration = $this->getConfiguration();
+
+        return $configuration['sms_template_name'];
+    }
+
 	protected function renderMessageItem( \SMSApi\Api\Response\MessageResponse $item ) {
 
 		print("ID: " . $item->getId()
