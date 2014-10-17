@@ -29,7 +29,7 @@ class UserTest extends SmsapiTest
 	public function testAdd()
 	{
         if ($this->userExists()) {
-            $this->markTestSkipped("User: " . self::$userTest . "already exists. No need to add another.");
+            $this->markTestSkipped("User: \"" . self::$userTest . "\" already exists. No need to add another.");
         }
 
 		$smsApi = new \SMSApi\Api\UserFactory(null, $this->client());
