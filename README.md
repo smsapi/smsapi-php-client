@@ -20,7 +20,7 @@ try {
 
 	$actionSend->setTo('600xxxxxx');
 	$actionSend->setText('Hello World!!');
-	$actionSend->setSender('SMSAPI.pl'); //Pole nadawcy lub typ wiadomość 'ECO', '2Way'
+	$actionSend->setSender('Info'); //Pole nadawcy lub typ wiadomość 'ECO', '2Way'
 
 	$response = $actionSend->execute();
 
