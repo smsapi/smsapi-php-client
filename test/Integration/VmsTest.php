@@ -2,18 +2,15 @@
 
 class VmsTest extends SmsapiTestCase
 {
-
 	public function testSendAudioFile()
     {
-		$smsApi = new \SMSApi\Api\VmsFactory( null, $this->client() );
+		$smsApi = new \SMSApi\Api\VmsFactory(null, $this->client());
 
         $time = $this->prepareTimeToSend();
 
 		$audio_file = __DIR__ . DIRECTORY_SEPARATOR . "voice_small.wav";
 
 		$action = $smsApi->actionSend();
-
-		/* @var $result \SMSApi\Api\Response\StatusResponse */
 
 		$result =
             $action->setFile($audio_file)
@@ -35,17 +32,13 @@ class VmsTest extends SmsapiTestCase
 
 	public function testSendAudioTts()
     {
-		$smsApi = new \SMSApi\Api\VmsFactory( null, $this->client() );
-
-		$result = null;
+		$smsApi = new \SMSApi\Api\VmsFactory(null, $this->client());
 
 		$time = $this->prepareTimeToSend();
 
 		$tts = "Wiadomość w formacie TTS";
 
 		$action = $smsApi->actionSend();
-
-		/* @var $result \SMSApi\Api\Response\StatusResponse */
 
 		$result = $action->setTts($tts)
 			->setTo($this->getNumberTest())
@@ -71,13 +64,11 @@ class VmsTest extends SmsapiTestCase
      */
     public function testGet($audioIds, $ttsIds)
     {
-		$smsApi = new \SMSApi\Api\VmsFactory( null, $this->client() );
+		$smsApi = new \SMSApi\Api\VmsFactory(null, $this->client());
 
 		$action = $smsApi->actionGet();
 
 		$ids = array_merge($audioIds, $ttsIds);
-
-		/* @var $result \SMSApi\Api\Response\StatusResponse */
 
 		$result = $action->filterByIds($ids)->execute();
 
@@ -85,9 +76,7 @@ class VmsTest extends SmsapiTestCase
 
         $this->renderStatusResponse($result);
 
-        $errorCount = $this->countErrors($result);
-
-		$this->assertEquals(0, $errorCount);
+		$this->assertEquals(0, $this->countErrors($result));
         $this->assertEquals(2, $result->getCount());
 	}
 
@@ -97,34 +86,25 @@ class VmsTest extends SmsapiTestCase
      */
     public function testDelete($audioIds, $ttsIds)
     {
-		$smsApi = new \SMSApi\Api\VmsFactory( null, $this->client() );
-
-		$result = null;
+		$smsApi = new \SMSApi\Api\VmsFactory(null, $this->client());
 
 		$action = $smsApi->actionDelete();
 
 		$ids = array_merge($audioIds, $ttsIds);
 
-		/* @var $result \SMSApi\Api\Response\CountableResponse */
-
 		$result = $action->filterByIds($ids)->execute();
 
-		echo "\nVmsDelete:\n";
-		echo "Delete: " . $result->getCount();
+		echo "\nVmsDeleted: " . $result->getCount() . "\n";
 
-		$this->assertEquals( 2, $result->getCount() );
+		$this->assertEquals(2, $result->getCount());
 	}
 
-    /**
-     * @return int
-     */
     private function prepareTimeToSend()
     {
         $dateSent = new DateTime('+1 day', new DateTimeZone('Europe/Warsaw'));
         $dateSent->setTime(14, 0);
 
-        $time = $dateSent->getTimestamp();
-        return $time;
+        return $dateSent->getTimestamp();
     }
 
     private function countErrors(\SMSApi\Api\Response\StatusResponse $response)
@@ -147,7 +127,6 @@ class VmsTest extends SmsapiTestCase
                 $this->renderMessageItem($item);
             }
         }
-
     }
 
     private function collectIds(\SMSApi\Api\Response\StatusResponse $response)
@@ -162,6 +141,4 @@ class VmsTest extends SmsapiTestCase
 
         return $ids;
     }
-
 }
-
