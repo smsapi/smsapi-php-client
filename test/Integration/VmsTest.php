@@ -6,16 +6,16 @@ class VmsTest extends SmsapiTestCase
     {
 		$smsApi = new \SMSApi\Api\VmsFactory(null, $this->client());
 
-        $time = $this->prepareTimeToSend();
+        $dateToSend = $this->prepareDateToSend();
 
-		$audio_file = __DIR__ . DIRECTORY_SEPARATOR . "voice_small.wav";
+		$audioFilePath = __DIR__ . DIRECTORY_SEPARATOR . "voice_small.wav";
 
 		$action = $smsApi->actionSend();
 
 		$result =
-            $action->setFile($audio_file)
+            $action->setFile($audioFilePath)
                 ->setTo($this->getNumberTest())
-                ->setDateSent($time)
+                ->setDateSent($dateToSend)
                 ->execute();
 
 		echo "VmsSendFile:\n";
@@ -34,7 +34,7 @@ class VmsTest extends SmsapiTestCase
     {
 		$smsApi = new \SMSApi\Api\VmsFactory(null, $this->client());
 
-		$time = $this->prepareTimeToSend();
+		$dateToSend = $this->prepareDateToSend();
 
 		$tts = "Wiadomość w formacie TTS";
 
@@ -42,7 +42,7 @@ class VmsTest extends SmsapiTestCase
 
 		$result = $action->setTts($tts)
 			->setTo($this->getNumberTest())
-			->setDateSent($time)
+			->setDateSent($dateToSend)
 			->setTtsLector(\SMSApi\Api\Action\Vms\Send::LECTOR_JACEK)
 			->execute();
 
@@ -99,7 +99,7 @@ class VmsTest extends SmsapiTestCase
 		$this->assertEquals(2, $result->getCount());
 	}
 
-    private function prepareTimeToSend()
+    private function prepareDateToSend()
     {
         $dateSent = new DateTime('+1 day', new DateTimeZone('Europe/Warsaw'));
         $dateSent->setTime(14, 0);
