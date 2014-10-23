@@ -25,7 +25,7 @@ class DeleteTest extends \PHPUnit_Framework_TestCase
     {
         $result = $this->deleteVmsAction->uri();
 
-        $this->assertInstanceOf(\SMSApi\Proxy\Uri::class, $result);
+        $this->assertInstanceOf('\SMSApi\Proxy\Uri', $result);
     }
 
     public function testUriWithNoFilter()
