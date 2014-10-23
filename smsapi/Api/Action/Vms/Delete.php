@@ -43,7 +43,7 @@ class Delete extends AbstractAction {
 
 		$query .= $this->paramsOther();
 
-		$query .= "&sch_del=" . implode( "|", $this->id->getArrayCopy() );
+		$query .= "&sch_del=" . implode(",", $this->id->getArrayCopy());
 
 		return new Uri( $this->proxy->getProtocol(), $this->proxy->getHost(), $this->proxy->getPort(), "/api/vms.do", $query );
 	}

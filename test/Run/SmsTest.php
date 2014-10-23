@@ -2,9 +2,11 @@
 
 require_once '../SmsapiTest.php';
 
-class SmsTest extends SmsapiTest {
+class SmsTest extends SmsapiTest
+{
 
-	public function testSend() {
+	public function testSend()
+    {
 
 		$smsApi = new \SMSApi\Api\SmsFactory( null, $this->client() );
 
@@ -43,8 +45,8 @@ class SmsTest extends SmsapiTest {
 		$this->assertEquals( 0, $error );
 	}
 
-	public function testGet() {
-
+	public function testGet()
+    {
 		$smsApi = new \SMSApi\Api\SmsFactory( null, $this->client() );
 
 		$result = null;
@@ -72,8 +74,8 @@ class SmsTest extends SmsapiTest {
 		$this->assertEquals( 0, $error );
 	}
 
-	public function testDelete() {
-
+	public function testDelete()
+    {
 		$smsApi = new \SMSApi\Api\SmsFactory( null, $this->client() );
 
 		$result = null;
@@ -97,7 +99,6 @@ class SmsTest extends SmsapiTest {
         $smsApi = new \SMSApi\Api\SmsFactory(null, $this->client());
         $result = null;
         $error = 0;
-        $time = time() + 86400;
 
         $result = $smsApi->actionSend()
             ->setTemplate('Testowa nazwa')
