@@ -96,21 +96,38 @@ class SmsTest extends SmsapiTest
 
     public function testTemplate()
     {
+        try {
+            $result = $this->sendSmsByTemplate();
+
+            $error = 0;
+
+            foreach ($result->getList() as $item) {
+                if ($item->getError()) {
+                    $error++;
+                }
+            }
+
+            $this->assertEquals(0, $error);
+
+        } catch (\SMSApi\Exception\ActionException $e) {
+            if($e->getCode() == 104) {
+                $this->markTestSkipped('Template does not exists.');
+            }
+        }
+    }
+
+    /**
+     * @return \SMSApi\Api\Response\StatusResponse
+     */
+    private function sendSmsByTemplate()
+    {
         $smsApi = new \SMSApi\Api\SmsFactory(null, $this->client());
-        $result = null;
-        $error = 0;
 
         $result = $smsApi->actionSend()
             ->setTemplate('Testowa nazwa')
             ->setTo($this->numberTest)
             ->execute();
 
-        foreach ($result->getList() as $item) {
-            if ($item->getError()) {
-                $error++;
-            }
-        }
-
-        $this->assertEquals(0, $error);
+        return $result;
     }
 }
