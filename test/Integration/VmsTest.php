@@ -1,8 +1,8 @@
 <?php
 
-require_once '../SmsapiTest.php';
+require_once 'SmsapiTestCase.php';
 
-class VmsTest extends SmsapiTest
+class VmsTest extends SmsapiTestCase
 {
 
 	private $error = 0;
@@ -35,10 +35,11 @@ class VmsTest extends SmsapiTest
 		/* @var $result \SMSApi\Api\Response\StatusResponse */
 		/* @var $item \SMSApi\Api\Response\MessageResponse */
 
-		$result = $action->setFile( $audio_file )
-			->setTo( $this->numberTest )
-			->setDateSent( $time )
-			->execute();
+		$result =
+            $action->setFile($audio_file)
+                ->setTo($this->getNumberTest())
+                ->setDateSent($time)
+                ->execute();
 
 		echo "VmsSendFile:\n";
 
@@ -67,10 +68,10 @@ class VmsTest extends SmsapiTest
 		/* @var $result \SMSApi\Api\Response\StatusResponse */
 		/* @var $item \SMSApi\Api\Response\MessageResponse */
 
-		$result = $action->setTts( $tts )
-			->setTo( $this->numberTest )
-			->setDateSent( $time )
-			->setTtsLector( \SMSApi\Api\Action\Vms\Send::LECTOR_JACEK )
+		$result = $action->setTts($tts)
+			->setTo($this->getNumberTest())
+			->setDateSent($time)
+			->setTtsLector(\SMSApi\Api\Action\Vms\Send::LECTOR_JACEK)
 			->execute();
 
 		echo "VmsSendTts:\n";

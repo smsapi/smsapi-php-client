@@ -1,8 +1,8 @@
 <?php
 
-require_once '../SmsapiTest.php';
+require_once 'SmsapiTestCase.php';
 
-class SmsTest extends SmsapiTest
+class SmsTest extends SmsapiTestCase
 {
 
 	public function testSend()
@@ -23,10 +23,10 @@ class SmsTest extends SmsapiTest
 
 		$result =
 			$action
-				->setText( "test [%1%] message" )
-				->setTo( $this->numberTest )
-				->SetParam( 0, 'asd' )
-				->setDateSent( $time )
+				->setText("test [%1%] message")
+				->setTo($this->getNumberTest())
+				->SetParam(0, 'asd')
+				->setDateSent($time)
 				->execute();
 
 		echo "SmsSend:\n";
@@ -124,8 +124,8 @@ class SmsTest extends SmsapiTest
         $smsApi = new \SMSApi\Api\SmsFactory(null, $this->client());
 
         $result = $smsApi->actionSend()
-            ->setTemplate('Testowa nazwa')
-            ->setTo($this->numberTest)
+            ->setTemplate($this->getSmsTemplateName())
+            ->setTo($this->getNumberTest())
             ->execute();
 
         return $result;

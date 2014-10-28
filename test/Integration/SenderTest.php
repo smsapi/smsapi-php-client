@@ -1,8 +1,8 @@
 <?php
 
-require_once '../SmsapiTest.php';
+require_once 'SmsapiTestCase.php';
 
-class SenderTest extends SmsapiTest {
+class SenderTest extends SmsapiTestCase {
 
 	private $senderTest = "Olek";
 

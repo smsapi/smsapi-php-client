@@ -1,8 +1,8 @@
 <?php
 
-require_once '../SmsapiTest.php';
+require_once 'SmsapiTestCase.php';
 
-class MmsTest extends SmsapiTest {
+class MmsTest extends SmsapiTestCase {
 
 	public function testSend() {
 
@@ -21,7 +21,11 @@ class MmsTest extends SmsapiTest {
 		/* @var $result \SMSApi\Api\Response\StatusResponse */
 		/* @var $item \SMSApi\Api\Response\MessageResponse */
 
-		$result = $action->setSubject( "test mms" )->setTo( $this->numberTest )->setDateSent( $time )->setSmil( $smil )->execute();
+		$result = $action->setSubject("test mms")
+                            ->setTo($this->getNumberTest())
+                            ->setDateSent($time)
+                            ->setSmil($smil)
+                            ->execute();
 
 		echo "MmsSend:\n";
 
