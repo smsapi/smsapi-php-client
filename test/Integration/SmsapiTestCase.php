@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__  . '/../../smsapi/Autoload.php';
-
 abstract class SmsapiTestCase extends PHPUnit_Framework_TestCase
 {
 

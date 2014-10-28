@@ -14,8 +14,9 @@
         "classmap": [ "smsapi" ]
     },
     "autoload-dev": {
-        "psr-4": {
-            "": "test/"
+        "psr-0": {
+            "": "test/Integration",
+            "SMSApi\\": "test/Unit/smsapi"
         }
     },
     "require-dev": {

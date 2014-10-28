@@ -1,7 +1,5 @@
 <?php
 
-require_once 'SmsapiTestCase.php';
-
 class PhonebookTest extends SmsapiTestCase {
 
 	private $groupTest = "mytest";
