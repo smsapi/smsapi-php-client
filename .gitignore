@@ -9,3 +9,4 @@
 /test/Integration/_ids_test.txt
 test/Integration/config.php
 /vendor
+/composer.lock
