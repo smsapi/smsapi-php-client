@@ -43,8 +43,8 @@ class ContactAdd extends AbstractAction {
 
 		$query .= $this->paramsOther();
 
-		if ( !empty( $this->groups ) ) {
-			$query .= "&groups=" . implode( "|", $this->groups->getArrayCopy() );
+		if ( count( $this->groups ) > 0 ) {
+			$query .= "&groups=" . implode( ",", $this->groups->getArrayCopy() );
 		}
 
 		return new Uri( $this->proxy->getProtocol(), $this->proxy->getHost(), $this->proxy->getPort(), "/api/phonebook.do", $query );
@@ -139,7 +139,8 @@ class ContactAdd extends AbstractAction {
 	}
 
 	/**
-	 * Add contact to group.
+	 * Set contact to group.
+	 * Others contact groups will be removed.
 	 *
 	 * @param string $group group name
 	 * @return $this
@@ -150,9 +151,10 @@ class ContactAdd extends AbstractAction {
 	}
 
 	/**
-	 * Add contact to groups.
+	 * Set contact to groups.
+	 * Others contact groups will be removed.
 	 *
-	 * @param string[] $group array with groups names
+	 * @param array $groups array with groups names
 	 * @return $this
 	 */
 	public function setGroups( array $groups ) {
