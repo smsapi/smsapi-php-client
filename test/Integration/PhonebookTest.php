@@ -191,6 +191,20 @@ class PhonebookTest extends SmsapiTestCase {
 		$this->assertEquals( 0, $error );
 	}
 
+	public function testContactGetWithGroups() {
+
+		$smsApi = new \SMSApi\Api\PhonebookFactory( null, $this->client() );
+
+		$action = $smsApi->actionContactGet( $this->contactTestEdit );
+		$action->withGroups();
+
+		/* @var $result \SMSApi\Api\Response\ContactResponse */
+
+		$result = $action->execute();
+
+		$this->assertEquals($result->getGroups(),['mytestedit']);
+	}
+
 	public function testContactDelete() {
 
 		$smsApi = new \SMSApi\Api\PhonebookFactory( null, $this->client() );

@@ -52,4 +52,15 @@ class ContactGet extends AbstractAction {
 		return $this;
 	}
 
+
+	/**
+	 * Add contact groups to response
+	 *
+	 * @return $this
+	 */
+	public function withGroups() {
+		$this->params[ "with_groups" ] = 1;
+		return $this;
+	}
+
 }
