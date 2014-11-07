@@ -30,8 +30,7 @@ class ContactGetTest extends \PHPUnit_Framework_TestCase
 
     public function testUriWithGroups()
     {
-        $this->getContactAction
-            ->withGroups();
+        $this->getContactAction;
 
         $uri = $this->getContactAction
             ->uri();

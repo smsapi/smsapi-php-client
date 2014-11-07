@@ -27,6 +27,8 @@ class ContactGet extends AbstractAction {
 
 		$query = "";
 
+		$this->withGroups();
+
 		$query .= $this->paramsLoginToQuery();
 
 		$query .= $this->paramsOther();
@@ -58,7 +60,7 @@ class ContactGet extends AbstractAction {
 	 *
 	 * @return $this
 	 */
-	public function withGroups() {
+	private function withGroups() {
 		$this->params[ "with_groups" ] = 1;
 		return $this;
 	}
