@@ -22,6 +22,6 @@ class SendTest extends \PHPUnit_Framework_TestCase
 
         $result = $sendVmsAction->execute();
 
-        $this->assertInstanceOf(StatusResponse::class, $result);
+        $this->assertInstanceOf('SMSApi\Api\Response\StatusResponse', $result);
     }
 }

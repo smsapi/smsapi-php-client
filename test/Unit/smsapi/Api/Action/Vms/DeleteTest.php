@@ -64,7 +64,7 @@ class DeleteTest extends \PHPUnit_Framework_TestCase
     {
         $result = $this->deleteVmsAction->execute();
 
-        $this->assertInstanceOf(CountableResponse::class, $result);
+        $this->assertInstanceOf('SMSApi\Api\Response\CountableResponse', $result);
         $this->assertSame(0, $result->getCount());
     }
 }
