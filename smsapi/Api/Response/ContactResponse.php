@@ -2,6 +2,8 @@
 
 namespace SMSApi\Api\Response;
 
+use SMSApi\Exception\InvalidParameterException;
+
 /**
  * Class ContactResponse
  * @package SMSApi\Api\Response
@@ -61,6 +63,11 @@ class ContactResponse extends AbstractResponse {
 	 */
 	private $dateMod;
 
+	/**
+	 * @var array
+	 */
+	private $groups = null;
+
 	public function __construct( $data ) {
 
 		if ( is_object( $data ) ) {
@@ -103,6 +110,10 @@ class ContactResponse extends AbstractResponse {
 
 		if ( isset( $this->obj->date_mod ) ) {
 			$this->dateMod = $this->obj->date_mod;
+		}
+
+		if (isset($this->obj->groups)) {
+			$this->groups = (array)$this->obj->groups;
 		}
 	}
 
@@ -197,5 +208,23 @@ class ContactResponse extends AbstractResponse {
 	public function getDateMod() {
 		return $this->dateMod;
 	}
+
+	/**
+	 * Returns groups
+	 *
+	 * @throws InvalidParameterException
+	 * @return array with group names
+	 */
+	public function getGroups()
+	{
+
+		if ($this->groups === null) {
+			throw new InvalidParameterException('Use action \SMSApi\Api\Action\Phonebook\ContactGet::withGroups() method to load resources with groups');
+		}
+
+		return $this->groups;
+	}
+
+
 
 }
