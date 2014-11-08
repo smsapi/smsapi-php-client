@@ -18,10 +18,6 @@ class ContactGetTest extends \PHPUnit_Framework_TestCase
 
         $proxy = $this->getMock('\SMSApi\Proxy\Http\Native', array(), array(''));
 
-        $proxy->expects($this->any())
-            ->method('execute')
-            ->will($this->returnValue('{}'));
-
         $addContactAction->client(new Client('test'));
         $addContactAction->proxy($proxy);
 

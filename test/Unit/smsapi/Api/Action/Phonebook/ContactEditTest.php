@@ -17,10 +17,6 @@ class ContactEditTest extends \PHPUnit_Framework_TestCase {
 
         $proxy = $this->getMock('\SMSApi\Proxy\Http\Native', array(), array(''));
 
-        $proxy->expects($this->any())
-            ->method('execute')
-            ->will($this->returnValue('{}'));
-
         $editContactAction->client(new Client('test'));
         $editContactAction->proxy($proxy);
 
