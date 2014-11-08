@@ -9,7 +9,16 @@ use SMSApi\Proxy\Uri;
  * Class ContactGet
  * @package SMSApi\Api\Action\Phonebook
  */
-class ContactGet extends AbstractAction {
+class ContactGet extends AbstractAction
+{
+    /**
+     * Add contact groups to response
+     *
+     * @var array
+     */
+    protected $params = array(
+        "with_groups" => 1,
+    );
 
 	/**
 	 * @param $data
@@ -26,8 +35,6 @@ class ContactGet extends AbstractAction {
 	public function uri() {
 
 		$query = "";
-
-		$this->withGroups();
 
 		$query .= $this->paramsLoginToQuery();
 
@@ -53,16 +60,4 @@ class ContactGet extends AbstractAction {
 		$this->params[ "get_contact" ] = $number;
 		return $this;
 	}
-
-
-	/**
-	 * Add contact groups to response
-	 *
-	 * @return $this
-	 */
-	private function withGroups() {
-		$this->params[ "with_groups" ] = 1;
-		return $this;
-	}
-
 }
