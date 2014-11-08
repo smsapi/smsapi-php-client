@@ -6,19 +6,16 @@ namespace SMSApi\Api\Response;
 class ContactResponseTest extends \PHPUnit_Framework_TestCase
 {
 
-    /**
-     * @expectedException \SMSApi\Exception\InvalidParameterException
-     * @expectedExceptionMessage Use action \SMSApi\Api\Action\Phonebook\ContactGet::withGroups() method to load resources with groups
-     */
-    public function testExceptionWhenGroupsIsNotLoaded()
+    public function testGetGroupsShouldBeEmpty()
     {
-
         $data = array();
 
         $contactResponse = new ContactResponse($data);
 
-        $contactResponse->getGroups();
+        $groups = $contactResponse->getGroups();
 
+        $this->assertInternalType('array', $groups);
+        $this->assertEmpty($groups);
     }
 
     public function testResponseReturnContactGroups()

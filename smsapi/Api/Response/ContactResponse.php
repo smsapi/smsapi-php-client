@@ -2,8 +2,6 @@
 
 namespace SMSApi\Api\Response;
 
-use SMSApi\Exception\InvalidParameterException;
-
 /**
  * Class ContactResponse
  * @package SMSApi\Api\Response
@@ -66,7 +64,7 @@ class ContactResponse extends AbstractResponse {
 	/**
 	 * @var array
 	 */
-	private $groups = null;
+	private $groups = array();
 
 	public function __construct( $data ) {
 
@@ -212,19 +210,10 @@ class ContactResponse extends AbstractResponse {
 	/**
 	 * Returns groups
 	 *
-	 * @throws InvalidParameterException
 	 * @return array with group names
 	 */
 	public function getGroups()
 	{
-
-		if ($this->groups === null) {
-			throw new InvalidParameterException('Use action \SMSApi\Api\Action\Phonebook\ContactGet::withGroups() method to load resources with groups');
-		}
-
 		return $this->groups;
 	}
-
-
-
 }
