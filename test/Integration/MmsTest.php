@@ -9,7 +9,7 @@ class MmsTest extends SmsapiTestCase
 
     protected function setUp()
     {
-        $this->mmsFactory = new \SMSApi\Api\MmsFactory(null, $this->client());
+        $this->mmsFactory = new \SMSApi\Api\MmsFactory($this->proxy, $this->client());
     }
 
 	public function testSend()

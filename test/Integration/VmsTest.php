@@ -9,7 +9,7 @@ class VmsTest extends SmsapiTestCase
 
     protected function setUp()
     {
-        $this->vmsFactory = new \SMSApi\Api\VmsFactory(null, $this->client());
+        $this->vmsFactory = new \SMSApi\Api\VmsFactory($this->proxy, $this->client());
     }
 
 	public function testSendAudioFile()

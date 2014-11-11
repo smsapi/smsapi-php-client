@@ -11,7 +11,7 @@ class SenderTest extends SmsapiTestCase
 
     protected function setUp()
     {
-        $this->senderFactory = new \SMSApi\Api\SenderFactory(null, $this->client());
+        $this->senderFactory = new \SMSApi\Api\SenderFactory($this->proxy, $this->client());
     }
 
 	private function renderSenderItem( $item ) {

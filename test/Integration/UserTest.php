@@ -16,7 +16,7 @@ class UserTest extends SmsapiTestCase
 
     protected function setUp()
     {
-        $this->userFactory = new \SMSApi\Api\UserFactory(null, $this->client());
+        $this->userFactory = new \SMSApi\Api\UserFactory($this->proxy, $this->client());
     }
 
 	private function renderUserItem($item)

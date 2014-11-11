@@ -15,7 +15,7 @@ class PhonebookTest extends SmsapiTestCase
 
     protected function setUp()
     {
-        $this->phoneBookFactory = new \SMSApi\Api\PhonebookFactory(null, $this->client());
+        $this->phoneBookFactory = new \SMSApi\Api\PhonebookFactory($this->proxy, $this->client());
     }
 
 	private function renderGroupItem( $item ) {
