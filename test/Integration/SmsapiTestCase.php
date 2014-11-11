@@ -92,4 +92,39 @@ abstract class SmsapiTestCase extends PHPUnit_Framework_TestCase
     {
         return __DIR__ . '/' . $this->fileToIds;
     }
+
+    protected function collectIds(\SMSApi\Api\Response\StatusResponse $response)
+    {
+        $ids = array();
+
+        foreach ($response->getList() as $item) {
+            if (!$item->getError()) {
+                $ids[] = $item->getId();
+            }
+        }
+
+        return $ids;
+    }
+
+    protected function countErrors(\SMSApi\Api\Response\StatusResponse $response)
+    {
+        $errors = 0;
+
+        foreach ($response->getList() as $item) {
+            if ($item->getError()) {
+                $errors++;
+            }
+        }
+
+        return $errors;
+    }
+
+    protected function renderStatusResponse(\SMSApi\Api\Response\StatusResponse $response)
+    {
+        foreach ($response->getList() as $item) {
+            if (!$item->getError()) {
+                $this->renderMessageItem($item);
+            }
+        }
+    }
 }
