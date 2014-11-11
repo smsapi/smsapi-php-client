@@ -8,8 +8,12 @@
             <directory>./test/Unit</directory>
         </testsuite>
 
-        <testsuite name="SMSAPI - Integration Tests Suite">
-            <directory>./test/Integration</directory>
+        <testsuite name="SMSAPI - Integration Tests with Native Proxy">
+            <file>./test/Integration/NativeProxySuiteTest.php</file>
+        </testsuite>
+
+        <testsuite name="SMSAPI - Integration Tests with Curl Proxy">
+            <file>./test/Integration/CurlProxySuiteTest.php</file>
         </testsuite>
     </testsuites>
 
