@@ -2,15 +2,23 @@
 
 class VmsTest extends SmsapiTestCase
 {
+    /**
+     * @var \SMSApi\Api\VmsFactory
+     */
+    private $vmsFactory;
+
+    protected function setUp()
+    {
+        $this->vmsFactory = new \SMSApi\Api\VmsFactory(null, $this->client());
+    }
+
 	public function testSendAudioFile()
     {
-		$smsApi = new \SMSApi\Api\VmsFactory(null, $this->client());
-
         $dateToSend = $this->prepareDateToSend();
 
 		$audioFilePath = __DIR__ . DIRECTORY_SEPARATOR . "voice_small.wav";
 
-		$action = $smsApi->actionSend();
+		$action = $this->vmsFactory->actionSend();
 
 		$result =
             $action->setFile($audioFilePath)
@@ -32,13 +40,11 @@ class VmsTest extends SmsapiTestCase
 
 	public function testSendAudioTts()
     {
-		$smsApi = new \SMSApi\Api\VmsFactory(null, $this->client());
-
 		$dateToSend = $this->prepareDateToSend();
 
 		$tts = "Wiadomość w formacie TTS";
 
-		$action = $smsApi->actionSend();
+		$action = $this->vmsFactory->actionSend();
 
 		$result = $action->setTts($tts)
 			->setTo($this->getNumberTest())
@@ -64,9 +70,7 @@ class VmsTest extends SmsapiTestCase
      */
     public function testGet($audioIds, $ttsIds)
     {
-		$smsApi = new \SMSApi\Api\VmsFactory(null, $this->client());
-
-		$action = $smsApi->actionGet();
+		$action = $this->vmsFactory->actionGet();
 
 		$ids = array_merge($audioIds, $ttsIds);
 
@@ -86,9 +90,7 @@ class VmsTest extends SmsapiTestCase
      */
     public function testDelete($audioIds, $ttsIds)
     {
-		$smsApi = new \SMSApi\Api\VmsFactory(null, $this->client());
-
-		$action = $smsApi->actionDelete();
+		$action = $this->vmsFactory->actionDelete();
 
 		$ids = array_merge($audioIds, $ttsIds);
 

@@ -1,11 +1,19 @@
 <?php
 
-class MmsTest extends SmsapiTestCase {
+class MmsTest extends SmsapiTestCase
+{
+    /**
+     * @var \SMSApi\Api\MmsFactory
+     */
+    private $mmsFactory;
 
-	public function testSend() {
+    protected function setUp()
+    {
+        $this->mmsFactory = new \SMSApi\Api\MmsFactory(null, $this->client());
+    }
 
-		$smsApi = new \SMSApi\Api\MmsFactory( null, $this->client() );
-
+	public function testSend()
+    {
 		$result = null;
 		$error = 0;
 		$ids = array( );
@@ -14,7 +22,7 @@ class MmsTest extends SmsapiTestCase {
 
 		$smil = "<smil><head><layout><root-layout height='100%' width='100%'/><region id='Image' width='100%' height='100%' left='0' top='0'/></layout></head><body><par><img src='http://www.smsapi.pl/assets/img/mms.jpg' region='Image' /></par></body></smil>";
 
-		$action = $smsApi->actionSend();
+		$action = $this->mmsFactory->actionSend();
 
 		/* @var $result \SMSApi\Api\Response\StatusResponse */
 		/* @var $item \SMSApi\Api\Response\MessageResponse */
@@ -41,14 +49,12 @@ class MmsTest extends SmsapiTestCase {
 		$this->assertEquals( 0, $error );
 	}
 
-	public function testGet() {
-
-		$smsApi = new \SMSApi\Api\MmsFactory( null, $this->client() );
-
+	public function testGet()
+    {
 		$result = null;
 		$error = 0;
 
-		$action = $smsApi->actionGet();
+		$action = $this->mmsFactory->actionGet();
 
 		$ids = $this->readIds();
 
@@ -70,13 +76,11 @@ class MmsTest extends SmsapiTestCase {
 		$this->assertEquals( 0, $error );
 	}
 
-	public function testDelete() {
-
-		$smsApi = new \SMSApi\Api\MmsFactory( null, $this->client() );
-
+	public function testDelete()
+    {
 		$result = null;
 
-		$action = $smsApi->actionDelete();
+		$action = $this->mmsFactory->actionDelete();
 
 		$ids = $this->readIds();
 
@@ -89,6 +93,4 @@ class MmsTest extends SmsapiTestCase {
 
 		$this->assertNotEquals( 0, $result->getCount() );
 	}
-
 }
-
