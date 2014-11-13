@@ -2,7 +2,6 @@
 
 namespace SMSApi\Api\Action\Vms;
 
-use SMSApi\Api\Response\CountableResponse;
 use SMSApi\Client;
 
 class DeleteTest extends \PHPUnit_Framework_TestCase

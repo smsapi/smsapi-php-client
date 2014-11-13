@@ -2,14 +2,13 @@
 
 namespace SMSApi\Api\Action\Vms;
 
-use SMSApi\Api\Response\StatusResponse;
 use SMSApi\Client;
 
 class SendTest extends \PHPUnit_Framework_TestCase
 {
     public function testExecute()
     {
-        $sendVmsAction = new Get();
+        $sendVmsAction = new Send();
 
         $proxy = $this->getMock('\SMSApi\Proxy\Http\Native', array(), array(''));
 

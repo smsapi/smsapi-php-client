@@ -2,7 +2,6 @@
 
 namespace SMSApi\Api\Action\Vms;
 
-use SMSApi\Api\Response\StatusResponse;
 use SMSApi\Client;
 
 class GetTest extends \PHPUnit_Framework_TestCase
