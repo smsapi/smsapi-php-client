@@ -18,8 +18,6 @@ class SmsTest extends SmsapiTestCase
 
 		$action = $this->smsFactory->actionSend();
 
-		/* @var $result \SMSApi\Api\Response\StatusResponse */
-
 		$result =
 			$action
 				->setText("test [%1%] message")
@@ -47,8 +45,6 @@ class SmsTest extends SmsapiTestCase
     {
 		$action = $this->smsFactory->actionGet();
 
-		/* @var $result \SMSApi\Api\Response\StatusResponse */
-
 		$result = $action->filterByIds($ids)->execute();
 
 		echo "\nSmsGet:\n";
@@ -65,8 +61,6 @@ class SmsTest extends SmsapiTestCase
 	public function testDelete(array $ids)
     {
 		$action = $this->smsFactory->actionDelete();
-
-		/* @var $result \SMSApi\Api\Response\CountableResponse */
 
 		$result = $action->filterById($ids[0])->execute();
 
@@ -87,7 +81,6 @@ class SmsTest extends SmsapiTestCase
 
         $this->assertEquals(0, $this->countErrors($result));
         $this->assertEquals(1, $result->getCount());
-        
     }
 
     /**

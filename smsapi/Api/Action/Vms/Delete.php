@@ -30,9 +30,9 @@ class Delete extends AbstractAction
 	 * @param $data
 	 * @return CountableResponse
 	 */
-	protected function response( $data ) {
-
-		return new CountableResponse( $data );
+	protected function response($data)
+    {
+		return new CountableResponse($data);
 	}
 
 	/**

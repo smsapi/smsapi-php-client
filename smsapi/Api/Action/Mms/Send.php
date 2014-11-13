@@ -3,22 +3,25 @@
 namespace SMSApi\Api\Action\Mms;
 
 use SMSApi\Api\Action\AbstractAction;
+use SMSApi\Api\Response\StatusResponse;
 use SMSApi\Proxy\Uri;
 
 /**
  * Class Send
  * @package SMSApi\Api\Action\Mms
+ *
+ * @method StatusResponse execute()
  */
-class Send extends AbstractAction {
-
+class Send extends AbstractAction
+{
 	/**
 	 * @param $data
-	 * @return \SMSApi\Api\Response\StatusResponse
+	 * @return StatusResponse
 	 */
-	protected function response( $data ) {
-
-		return new \SMSApi\Api\Response\StatusResponse( $data );
-	}
+    protected function response($data)
+    {
+        return new StatusResponse($data);
+    }
 
 	/**
 	 * @return Uri
