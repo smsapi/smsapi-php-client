@@ -59,11 +59,4 @@ class DeleteTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('username=test&password=&sch_del=del1,del2,del3', $result->getQuery());
     }
 
-    public function testExecute()
-    {
-        $result = $this->deleteVmsAction->execute();
-
-        $this->assertInstanceOf('SMSApi\Api\Response\CountableResponse', $result);
-        $this->assertSame(0, $result->getCount());
-    }
 }
