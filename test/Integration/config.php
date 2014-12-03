@@ -7,11 +7,11 @@ if (is_file($distFilePath)) {
 
 } else {
 
-    return [
+    return array(
         'api_login' => "",
         'api_password' => "",
         'number_test' => "",
         'sms_template_name' => ""
-    ];
+    );
 }
 

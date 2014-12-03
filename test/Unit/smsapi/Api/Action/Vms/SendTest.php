@@ -11,7 +11,7 @@ class SendTest extends \PHPUnit_Framework_TestCase
     {
         $sendVmsAction = new Get();
 
-        $proxy = $this->getMock('\SMSApi\Proxy\Http\Native', array(), ['']);
+        $proxy = $this->getMock('\SMSApi\Proxy\Http\Native', array(), array(''));
 
         $proxy->expects($this->any())
             ->method('execute')

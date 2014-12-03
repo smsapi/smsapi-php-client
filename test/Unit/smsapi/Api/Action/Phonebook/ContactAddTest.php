@@ -15,7 +15,7 @@ class ContactAddTest extends \PHPUnit_Framework_TestCase {
     {
         $addContactAction = new ContactAdd();
 
-        $proxy = $this->getMock('\SMSApi\Proxy\Http\Native', array(), ['']);
+        $proxy = $this->getMock('\SMSApi\Proxy\Http\Native', array(), array(''));
 
         $proxy->expects($this->any())
             ->method('execute')

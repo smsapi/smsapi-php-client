@@ -16,7 +16,7 @@ class DeleteTest extends \PHPUnit_Framework_TestCase
     {
         $deleteVmsAction = new Delete();
 
-        $proxy = $this->getMock('\SMSApi\Proxy\Http\Native', array(), ['']);
+        $proxy = $this->getMock('\SMSApi\Proxy\Http\Native', array(), array(''));
 
         $proxy->expects($this->any())
             ->method('execute')
@@ -44,7 +44,7 @@ class DeleteTest extends \PHPUnit_Framework_TestCase
 
     public function testUriWithOneIdFilter()
     {
-        $this->deleteVmsAction->filterByIds(['deleteId']);
+        $this->deleteVmsAction->filterByIds(array('deleteId'));
 
         $result = $this->deleteVmsAction->uri();
 
@@ -53,7 +53,7 @@ class DeleteTest extends \PHPUnit_Framework_TestCase
 
     public function testUriWithManyIdFilter()
     {
-        $this->deleteVmsAction->filterByIds(['del1', 'del2', 'del3']);
+        $this->deleteVmsAction->filterByIds(array('del1', 'del2', 'del3'));
 
         $result = $this->deleteVmsAction->uri();
 
