@@ -48,7 +48,7 @@ W swoim projekcie dodaj do `composer.json` pakiet :
 
     {
         "require": {
-            "smsapi.pl/php-client": "1.1.*"
+            "smsapi/php-client": "1.2.*"
         }
     }
 
