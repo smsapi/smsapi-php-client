@@ -1,8 +1,18 @@
 <?php
 
-class SenderTest extends SmsapiTestCase {
+class SenderTest extends SmsapiTestCase
+{
+    /**
+     * @var \SMSApi\Api\SenderFactory
+     */
+    private $senderFactory;
 
 	private $senderTest = "Olek";
+
+    protected function setUp()
+    {
+        $this->senderFactory = new \SMSApi\Api\SenderFactory($this->proxy, $this->client());
+    }
 
 	private function renderSenderItem( $item ) {
 
@@ -16,13 +26,11 @@ class SenderTest extends SmsapiTestCase {
 		}
 	}
 
-	public function testAdd() {
-
-		$smsApi = new \SMSApi\Api\SenderFactory( null, $this->client() );
-
+	public function testAdd()
+    {
 		$result = null;
 
-		$action = $smsApi->actionAdd( $this->senderTest );
+		$action = $this->senderFactory->actionAdd($this->senderTest);
 
 		$result = $action->execute();
 
@@ -33,14 +41,12 @@ class SenderTest extends SmsapiTestCase {
 		$this->assertNotEquals( 0, $result->getCount() );
 	}
 
-	public function testList() {
-
-		$smsApi = new \SMSApi\Api\SenderFactory( null, $this->client() );
-
+	public function testList()
+    {
 		$result = null;
 		$error = 0;
 
-		$action = $smsApi->actionList();
+		$action = $this->senderFactory->actionList();
 
 		/* @var $result \SMSApi\Api\Response\SendersResponse */
 		/* @var $item \SMSApi\Api\Response\SenderResponse */
@@ -60,13 +66,11 @@ class SenderTest extends SmsapiTestCase {
 		$this->assertEquals( 0, $error );
 	}
 
-	public function testDelete() {
-
-		$smsApi = new \SMSApi\Api\SenderFactory( null, $this->client() );
-
+	public function testDelete()
+    {
 		$result = null;
 
-		$action = $smsApi->actionDelete( $this->senderTest );
+		$action = $this->senderFactory->actionDelete($this->senderTest);
 
 		$result = $action->execute();
 
@@ -76,6 +80,4 @@ class SenderTest extends SmsapiTestCase {
 
 		$this->assertNotEquals( 0, $result->getCount() );
 	}
-
 }
-

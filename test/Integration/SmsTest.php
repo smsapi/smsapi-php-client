@@ -2,19 +2,25 @@
 
 class SmsTest extends SmsapiTestCase
 {
+    /**
+     * @var \SMSApi\Api\SmsFactory
+     */
+    private $smsFactory;
+
+    protected function setUp()
+    {
+        $this->smsFactory = new \SMSApi\Api\SmsFactory($this->proxy, $this->client());
+    }
 
 	public function testSend()
     {
-
-		$smsApi = new \SMSApi\Api\SmsFactory( null, $this->client() );
-
 		$result = null;
 		$error = 0;
 		$ids = array( );
 
 		$time = time() + 86400;
 
-		$action = $smsApi->actionSend();
+		$action = $this->smsFactory->actionSend();
 
 		/* @var $result \SMSApi\Api\Response\StatusResponse */
 		/* @var $item \SMSApi\Api\Response\MessageResponse */
@@ -45,19 +51,17 @@ class SmsTest extends SmsapiTestCase
 
 	public function testGet()
     {
-		$smsApi = new \SMSApi\Api\SmsFactory( null, $this->client() );
-
 		$result = null;
 		$error = 0;
 
-		$action = $smsApi->actionGet();
+		$action = $this->smsFactory->actionGet();
 
 		$ids = $this->readIds();
 
 		/* @var $result \SMSApi\Api\Response\StatusResponse */
 		/* @var $item \SMSApi\Api\Response\MessageResponse */
 
-		$result = $action->ids( $ids )->execute();
+		$result = $action->filterByIds($ids)->execute();
 
 		echo "\nSmsGet:\n";
 
@@ -74,17 +78,15 @@ class SmsTest extends SmsapiTestCase
 
 	public function testDelete()
     {
-		$smsApi = new \SMSApi\Api\SmsFactory( null, $this->client() );
-
 		$result = null;
 
-		$action = $smsApi->actionDelete();
+		$action = $this->smsFactory->actionDelete();
 
 		$ids = $this->readIds();
 
 		/* @var $result \SMSApi\Api\Response\CountableResponse */
 
-		$result = $action->ids( $ids )->execute();
+		$result = $action->filterByIds($ids)->execute();
 
 		echo "\nSmsDelete:\n";
 		echo "Delete: " . $result->getCount();
@@ -116,14 +118,14 @@ class SmsTest extends SmsapiTestCase
     /**
      * @return \SMSApi\Api\Response\StatusResponse
      */
-    private function sendSmsByTemplate($template)
+    private function sendSmsByTemplate()
     {
-        $smsApi = new \SMSApi\Api\SmsFactory(null, $this->client());
-
-        $result = $smsApi->actionSend()
-            ->setTemplate($template)
-            ->setTo($this->getNumberTest())
-            ->execute();
+        $result =
+            $this->smsFactory
+                ->actionSend()
+                ->setTemplate($this->getSmsTemplateName())
+                ->setTo($this->getNumberTest())
+                ->execute();
 
         return $result;
     }

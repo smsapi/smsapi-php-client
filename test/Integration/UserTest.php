@@ -4,9 +4,19 @@ class UserTest extends SmsapiTestCase
 {
 	private static $userTest;
 
+    /**
+     * @var \SMSApi\Api\UserFactory
+     */
+    private $userFactory;
+
     public static function setUpBeforeClass()
     {
         self::$userTest = "test-smsapi-client";
+    }
+
+    protected function setUp()
+    {
+        $this->userFactory = new \SMSApi\Api\UserFactory($this->proxy, $this->client());
     }
 
 	private function renderUserItem($item)
@@ -30,12 +40,10 @@ class UserTest extends SmsapiTestCase
             $this->markTestSkipped("User: \"" . self::$userTest . "\" already exists. No need to add another.");
         }
 
-		$smsApi = new \SMSApi\Api\UserFactory(null, $this->client());
-
 		$result = null;
 		$error = 0;
 
-		$action = $smsApi->actionAdd(self::$userTest)
+		$action = $this->userFactory->actionAdd(self::$userTest)
 			->setPassword(md5("100costma100"))
 			->setPasswordApi(md5("200costam200"))
 			->setActive(true)
@@ -86,12 +94,10 @@ class UserTest extends SmsapiTestCase
 
 	public function testEdit()
 	{
-		$smsApi = new \SMSApi\Api\UserFactory(null, $this->client());
-
 		$result = null;
 		$error = 0;
 
-		$action = $smsApi->actionEdit(self::$userTest)
+		$action = $this->userFactory->actionEdit(self::$userTest)
 			->setLimit("10")
 			->setInfo("to jest test");
 
@@ -112,12 +118,10 @@ class UserTest extends SmsapiTestCase
 
 	public function testList()
 	{
-		$smsApi = new \SMSApi\Api\UserFactory(null, $this->client());
-
 		$result = null;
 		$error = 0;
 
-		$action = $smsApi->actionList();
+		$action = $this->userFactory->actionList();
 
 		/* @var $result \SMSApi\Api\Response\UsersResponse */
 		/* @var $item \SMSApi\Api\Response\UserResponse */
@@ -139,15 +143,12 @@ class UserTest extends SmsapiTestCase
 
 	public function testGetPoints()
 	{
-		$smsApi = new \SMSApi\Api\UserFactory(null, $this->client());
-
-		$action = $smsApi->actionGetPoints();
+		$action = $this->userFactory->actionGetPoints();
 
 		$result = $action->execute();
 
 		$this->assertInstanceOf(\SMSApi\Api\Response\PointsResponse::className, $result);
 		$this->greaterThanOrEqual($result->getPoints(), 0);
-
 	}
 
     /**
@@ -155,13 +156,10 @@ class UserTest extends SmsapiTestCase
      */
     private function getApiUser()
     {
-        $smsApi = new \SMSApi\Api\UserFactory(null, $this->client());
-
-        $action = $smsApi->actionGet(self::$userTest);
+        $action = $this->userFactory->actionGet(self::$userTest);
 
         $result = $action->execute();
 
         return $result;
     }
 }
-

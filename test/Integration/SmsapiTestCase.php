@@ -2,8 +2,17 @@
 
 abstract class SmsapiTestCase extends PHPUnit_Framework_TestCase
 {
-
     private $fileToIds = "_ids_test.txt";
+
+    /**
+     * @var null|\SMSApi\Proxy\Proxy
+     */
+    protected $proxy;
+
+    public function setProxy(\SMSApi\Proxy\Proxy $proxy)
+    {
+        $this->proxy = $proxy;
+    }
 
 	protected function client()
     {
