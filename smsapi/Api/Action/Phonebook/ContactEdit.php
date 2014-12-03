@@ -38,4 +38,26 @@ class ContactEdit extends ContactAdd {
 		return $this;
 	}
 
+
+	/**
+	 * Add contact to group.
+	 *
+	 * @param $groupName
+	 */
+	public function addToGroup($groupName)
+	{
+		$this->params[ "add_to_group" ] = $groupName;
+	}
+
+
+	/**
+	 * Remove contact from group.
+	 *
+	 * @param $groupName
+	 */
+	public function removeFromGroup($groupName)
+	{
+		$this->params[ "remove_from_groups" ] = $groupName;
+	}
+
 }

@@ -145,7 +145,7 @@ class UserTest extends SmsapiTestCase
 
 		$result = $action->execute();
 
-		$this->assertInstanceOf(\SMSApi\Api\Response\PointsResponse::class, $result);
+		$this->assertInstanceOf(\SMSApi\Api\Response\PointsResponse::className, $result);
 		$this->greaterThanOrEqual($result->getPoints(), 0);
 
 	}

@@ -1,10 +1,17 @@
 <?php
 
-return [
-    'api_login' => "twoj_login",
-	'api_password' => "twoje_haslo_do_api",
+$distFilePath = __DIR__ . '/config.dist.php';
 
-    'number_test' => "xxxyyyzzz",
+if (is_file($distFilePath)) {
+    return include $distFilePath;
 
-    'sms_template_name' => 'nazwa_szablonu'
-];
+} else {
+
+    return array(
+        'api_login' => "",
+        'api_password' => "",
+        'number_test' => "",
+        'sms_template_name' => ""
+    );
+}
+

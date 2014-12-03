@@ -9,7 +9,7 @@ abstract class SmsapiTestCase extends PHPUnit_Framework_TestCase
     {
 		try {
 			$client = new \SMSApi\Client($this->getApiLogin());
-			$client->setPasswordRAW($this->getApiPassword());
+			$client->setPasswordHash($this->getApiPassword());
 
 			return $client;
 		} catch ( \SMSApi\Exception\ClientException $ex ) {

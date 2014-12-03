@@ -8,6 +8,7 @@ namespace SMSApi\Api\Response;
  */
 class PointsResponse extends AbstractResponse
 {
+    const className = __CLASS__;
 	/**
 	 * Number of points available for user.
 	 *

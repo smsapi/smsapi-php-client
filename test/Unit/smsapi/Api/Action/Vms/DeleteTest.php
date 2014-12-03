@@ -2,6 +2,7 @@
 
 namespace SMSApi\Api\Action\Vms;
 
+use SMSApi\Api\Response\CountableResponse;
 use SMSApi\Client;
 
 class DeleteTest extends \PHPUnit_Framework_TestCase
@@ -15,8 +16,14 @@ class DeleteTest extends \PHPUnit_Framework_TestCase
     {
         $deleteVmsAction = new Delete();
 
+        $proxy = $this->getMock('\SMSApi\Proxy\Http\Native', array(), array(''));
+
+        $proxy->expects($this->any())
+            ->method('execute')
+            ->will($this->returnValue('{}'));
+
         $deleteVmsAction->client(new Client('test'));
-        $deleteVmsAction->proxy(new \SMSApi\Proxy\Http\Native(''));
+        $deleteVmsAction->proxy($proxy);
 
         $this->deleteVmsAction = $deleteVmsAction;
     }
@@ -37,7 +44,7 @@ class DeleteTest extends \PHPUnit_Framework_TestCase
 
     public function testUriWithOneIdFilter()
     {
-        $this->deleteVmsAction->filterByIds(['deleteId']);
+        $this->deleteVmsAction->filterByIds(array('deleteId'));
 
         $result = $this->deleteVmsAction->uri();
 
@@ -46,10 +53,18 @@ class DeleteTest extends \PHPUnit_Framework_TestCase
 
     public function testUriWithManyIdFilter()
     {
-        $this->deleteVmsAction->filterByIds(['del1', 'del2', 'del3']);
+        $this->deleteVmsAction->filterByIds(array('del1', 'del2', 'del3'));
 
         $result = $this->deleteVmsAction->uri();
 
         $this->assertEquals('username=test&password=&sch_del=del1,del2,del3', $result->getQuery());
+    }
+
+    public function testExecute()
+    {
+        $result = $this->deleteVmsAction->execute();
+
+        $this->assertInstanceOf('SMSApi\Api\Response\CountableResponse', $result);
+        $this->assertSame(0, $result->getCount());
     }
 }
