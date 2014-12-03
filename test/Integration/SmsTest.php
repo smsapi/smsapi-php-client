@@ -116,7 +116,7 @@ class SmsTest extends SmsapiTestCase
     /**
      * @return \SMSApi\Api\Response\StatusResponse
      */
-    private function sendSmsByTemplate($tamplate)
+    private function sendSmsByTemplate($template)
     {
         $smsApi = new \SMSApi\Api\SmsFactory(null, $this->client());
 
