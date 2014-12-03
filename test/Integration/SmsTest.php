@@ -94,35 +94,34 @@ class SmsTest extends SmsapiTestCase
 
     public function testTemplate()
     {
-        try {
-            $result = $this->sendSmsByTemplate();
+        $template = $this->getSmsTemplateName();
 
-            $error = 0;
+        if (!$template) {
+            $this->markTestSkipped('Template does not exists.');
+        }
 
-            foreach ($result->getList() as $item) {
-                if ($item->getError()) {
-                    $error++;
-                }
-            }
+        $result = $this->sendSmsByTemplate($template);
 
-            $this->assertEquals(0, $error);
+        $error = 0;
 
-        } catch (\SMSApi\Exception\ActionException $e) {
-            if($e->getCode() == 104) {
-                $this->markTestSkipped('Template does not exists.');
+        foreach ($result->getList() as $item) {
+            if ($item->getError()) {
+                $error++;
             }
         }
+
+        $this->assertEquals(0, $error);
     }
 
     /**
      * @return \SMSApi\Api\Response\StatusResponse
      */
-    private function sendSmsByTemplate()
+    private function sendSmsByTemplate($template)
     {
         $smsApi = new \SMSApi\Api\SmsFactory(null, $this->client());
 
         $result = $smsApi->actionSend()
-            ->setTemplate($this->getSmsTemplateName())
+            ->setTemplate($template)
             ->setTo($this->getNumberTest())
             ->execute();
 
