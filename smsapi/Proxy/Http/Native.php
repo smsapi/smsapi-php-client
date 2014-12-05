@@ -67,22 +67,9 @@ class Native extends AbstractHttp implements Proxy
 
 	private function doFopen( $file )
     {
-        $body = "";
+        $body = $this->prepareRequestBody($file);
 
-        if ( !empty( $file ) && file_exists( $file ) ) {
-            $body = $this->prepareFileContent( $file );
-        }
-
-        $headers = array();
-
-        $headers[ 'User-Agent' ] = 'SMSApi';
-        $headers[ 'Accept' ] = '';
-
-        if ( !empty( $file ) && file_exists( $file ) ) {
-            $headers[ 'Content-Type' ] = 'multipart/form-data; boundary=' . $this->boundary;
-        } else {
-            $headers[ 'Content-Type' ] = 'application/x-www-form-urlencoded';
-        }
+        $headers = $this->prepareRequestHeaders($file);
 
         $url = $this->uri->getSchema() . "://" . $this->uri->getHost() . $this->uri->getPath();
 
@@ -116,4 +103,44 @@ class Native extends AbstractHttp implements Proxy
             fclose( $fp );
         }
 	}
+
+    /**
+     * @param $file
+     * @return string
+     */
+    private function prepareRequestBody($file)
+    {
+        $body = "";
+
+        if ($this->isFileValid($file)) {
+            $body = $this->prepareFileContent($file);
+        }
+
+        return $body;
+    }
+
+    /**
+     * @param $file
+     * @return array
+     */
+    private function prepareRequestHeaders($file)
+    {
+        $headers = array();
+
+        $headers['User-Agent'] = 'SMSApi';
+        $headers['Accept'] = '';
+
+        if ($this->isFileValid($file)) {
+            $headers['Content-Type'] = 'multipart/form-data; boundary=' . $this->boundary;
+        } else {
+            $headers['Content-Type'] = 'application/x-www-form-urlencoded';
+        }
+
+        return $headers;
+    }
+
+    private function isFileValid($file)
+    {
+        return !empty($file) && file_exists($file);
+    }
 }
