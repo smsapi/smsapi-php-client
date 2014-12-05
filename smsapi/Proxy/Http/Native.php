@@ -29,13 +29,22 @@ class Native extends AbstractHttp implements Proxy
 				throw new \SMSApi\Exception\ProxyException( "Invalid URI" );
 			}
 
+            $body = "";
+
+            $this->headers[ 'User-Agent' ] = 'SMSApi';
+            $this->headers[ 'Accept' ] = '';
+
 			if ( !empty( $this->file ) && file_exists( $this->file ) ) {
 
-				$this->toConnect( $this->file );
+                $this->headers[ 'Content-Type' ] = 'multipart/form-data; boundary=' . $this->boundary;
+
+                $body = $this->prepareFileContent( $this->file );
 			} else {
 
-				$this->toConnect();
+                $this->headers[ 'Content-Type' ] = 'application/x-www-form-urlencoded';
 			}
+
+            $this->doFopen( $body );
 
 			$code = $this->getStatusCode( $this->response[ 'meta' ] );
 
@@ -70,25 +79,6 @@ class Native extends AbstractHttp implements Proxy
 
         return $status_code;
     }
-
-	private function toConnect( $filename = null ) {
-
-		$body = "";
-
-		$this->headers[ 'User-Agent' ] = 'SMSApi';
-		$this->headers[ 'Accept' ] = '';
-
-		if ( $filename ) {
-
-			$this->headers[ 'Content-Type' ] = 'multipart/form-data; boundary=' . $this->boundary;
-
-			$body = $this->prepareFileContent( $filename );
-		} else {
-			$this->headers[ 'Content-Type' ] = 'application/x-www-form-urlencoded';
-		}
-
-        $this->doFopen( $body );
-	}
 
 	private function doFopen( $body ) {
 		if ( isset( $this->uri ) ) {
