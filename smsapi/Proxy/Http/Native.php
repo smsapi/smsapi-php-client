@@ -69,33 +69,34 @@ class Native extends AbstractHttp implements Proxy
     {
         $body = "";
 
-        $this->headers[ 'User-Agent' ] = 'SMSApi';
-        $this->headers[ 'Accept' ] = '';
-
         if ( !empty( $file ) && file_exists( $file ) ) {
-
-            $this->headers[ 'Content-Type' ] = 'multipart/form-data; boundary=' . $this->boundary;
-
             $body = $this->prepareFileContent( $file );
-        } else {
-
-            $this->headers[ 'Content-Type' ] = 'application/x-www-form-urlencoded';
         }
 
+        $headers = array();
+
+        $headers[ 'User-Agent' ] = 'SMSApi';
+        $headers[ 'Accept' ] = '';
+
+        if ( !empty( $file ) && file_exists( $file ) ) {
+            $headers[ 'Content-Type' ] = 'multipart/form-data; boundary=' . $this->boundary;
+        } else {
+            $headers[ 'Content-Type' ] = 'application/x-www-form-urlencoded';
+        }
 
         $url = $this->uri->getSchema() . "://" . $this->uri->getHost() . $this->uri->getPath();
 
-        $heders = "";
-        foreach ( $this->headers as $k => $v ) {
+        $headersString = "";
+        foreach ( $headers as $k => $v ) {
             if ( is_string( $k ) )
                 $v = ucfirst( $k ) . ": $v";
-            $heders .= "$v\r\n";
+            $headersString .= "$v\r\n";
         }
 
         $opts = array(
             'http' => array(
                 'method'	 => $this->method,
-                'header'	 => $heders,
+                'header'	 => $headersString,
                 'content'	 => empty( $body ) ? $this->uri->getQuery() : $body,
             )
         );
