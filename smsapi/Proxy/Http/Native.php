@@ -65,7 +65,7 @@ class Native extends AbstractHttp implements Proxy
         return $status_code;
     }
 
-	private function doFopen( $file )
+	private function doFopen($file)
     {
         $body = $this->prepareRequestBody($file);
 
@@ -73,34 +73,29 @@ class Native extends AbstractHttp implements Proxy
 
         $url = $this->uri->getSchema() . "://" . $this->uri->getHost() . $this->uri->getPath();
 
-        $headersString = "";
-        foreach ( $headers as $k => $v ) {
-            if ( is_string( $k ) )
-                $v = ucfirst( $k ) . ": $v";
-            $headersString .= "$v\r\n";
-        }
-
-        $opts = array(
-            'http' => array(
-                'method'	 => $this->method,
-                'header'	 => $headersString,
-                'content'	 => empty( $body ) ? $this->uri->getQuery() : $body,
-            )
-        );
-
-        $context = stream_context_create( $opts );
-
-        if ( !empty( $body ) ) {
+        if (!empty($body)) {
             $url .= '?' . $this->uri->getQuery();
         }
 
-        $fp = fopen( $url, 'r', false, $context );
+        $headersString = $this->preparePlainTextHeaders($headers);
 
-        $this->response[ 'meta' ] = stream_get_meta_data( $fp );
-        $this->response[ 'output' ] = stream_get_contents( $fp );
+        $options = array(
+            'http' => array(
+                'method'	 => $this->method,
+                'header'	 => $headersString,
+                'content'	 => empty($body) ? $this->uri->getQuery() : $body,
+            )
+        );
 
-        if ( $fp ) {
-            fclose( $fp );
+        $context = stream_context_create($options);
+
+        $fp = fopen($url, 'r', false, $context);
+
+        $this->response['meta'] = stream_get_meta_data($fp);
+        $this->response['output'] = stream_get_contents($fp);
+
+        if ($fp) {
+            fclose($fp);
         }
 	}
 
@@ -142,5 +137,22 @@ class Native extends AbstractHttp implements Proxy
     private function isFileValid($file)
     {
         return !empty($file) && file_exists($file);
+    }
+
+    /**
+     * @param $headers
+     * @return string
+     */
+    private function preparePlainTextHeaders($headers)
+    {
+        $headersString = "";
+
+        foreach ($headers as $k => $v) {
+            if (is_string($k))
+                $v = ucfirst($k) . ": $v";
+            $headersString .= "$v\r\n";
+        }
+
+        return $headersString;
     }
 }
