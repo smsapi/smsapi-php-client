@@ -28,7 +28,11 @@ class Native extends AbstractHttp implements Proxy
 				throw new ProxyException("Invalid URI");
 			}
 
-            $response = $this->doFopen($file);
+            $url = $this->prepareRequestUrl();
+
+            $query = $this->uri->getQuery();
+
+            $response = $this->makeRequest($url, $query, $file);
 
 			$statusCode = $this->getStatusCode($response['meta']);
 
@@ -65,16 +69,14 @@ class Native extends AbstractHttp implements Proxy
         return $statusCode;
     }
 
-	private function doFopen($file)
+	private function makeRequest($url, $query, $file)
     {
         $body = $this->prepareRequestBody($file);
 
         $headers = $this->prepareRequestHeaders($file);
 
-        $url = $this->uri->getSchema() . "://" . $this->uri->getHost() . $this->uri->getPath();
-
         if (!empty($body)) {
-            $url .= '?' . $this->uri->getQuery();
+            $url .= '?' . $query;
         }
 
         $headersString = $this->preparePlainTextHeaders($headers);
@@ -83,7 +85,7 @@ class Native extends AbstractHttp implements Proxy
             'http' => array(
                 'method'	 => $this->method,
                 'header'	 => $headersString,
-                'content'	 => empty($body) ? $this->uri->getQuery() : $body,
+                'content'	 => empty($body) ? $query : $body,
             )
         );
 
@@ -156,5 +158,14 @@ class Native extends AbstractHttp implements Proxy
         }
 
         return $headersString;
+    }
+
+    /**
+     * @return string
+     */
+    private function prepareRequestUrl()
+    {
+        $url = $this->uri->getSchema() . "://" . $this->uri->getHost() . $this->uri->getPath();
+        return $url;
     }
 }
