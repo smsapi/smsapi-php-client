@@ -25,7 +25,7 @@ class Native extends AbstractHttp implements Proxy
 			$file = $action->file();
 
 			if ($this->uri == null) {
-				throw new ProxyException( "Invalid URI" );
+				throw new ProxyException("Invalid URI");
 			}
 
             $response = $this->doFopen($file);
@@ -44,25 +44,25 @@ class Native extends AbstractHttp implements Proxy
 		return $response['output'];
 	}
 
-	private function getStatusCode($meta_data) 
+    private function getStatusCode($metaData)
     {
-		$status_code = null;
+        $statusCode = null;
 
-        if ( isset( $meta_data[ 'wrapper_data' ] ) AND is_array( $meta_data[ 'wrapper_data' ] ) ) {
-            if (isset($meta_data['wrapper_data']['headers']) and is_array($meta_data['wrapper_data']['headers'])) {
-                $headers = $meta_data['wrapper_data']['headers'];
+        if ( isset( $metaData[ 'wrapper_data' ] ) AND is_array( $metaData[ 'wrapper_data' ] ) ) {
+            if (isset($metaData['wrapper_data']['headers']) and is_array($metaData['wrapper_data']['headers'])) {
+                $headers = $metaData['wrapper_data']['headers'];
             } else {
-                $headers = $meta_data['wrapper_data'];
+                $headers = $metaData['wrapper_data'];
             }
 
-            foreach ($headers as $_) {
-                if ( preg_match( '/^[\s]*HTTP\/1\.[01]\s([\d]+)\sOK[\s]*$/i', $_, $_code ) ) {
-                    $status_code = next( $_code );
+            foreach ($headers as $wrapperRow) {
+                if (preg_match( '/^[\s]*HTTP\/1\.[01]\s([\d]+)\sOK[\s]*$/i', $wrapperRow, $code)) {
+                    $statusCode = next($code);
                 }
             }
         }
 
-        return $status_code;
+        return $statusCode;
     }
 
 	private function doFopen($file)
