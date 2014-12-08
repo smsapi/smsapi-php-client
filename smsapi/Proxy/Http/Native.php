@@ -2,6 +2,8 @@
 
 namespace SMSApi\Proxy\Http;
 
+use SMSApi\Api\Action\AbstractAction;
+use SMSApi\Exception\ProxyException;
 use SMSApi\Proxy\Proxy;
 
 class Native extends AbstractHttp implements Proxy
@@ -16,37 +18,35 @@ class Native extends AbstractHttp implements Proxy
      */
 	const CONNECT_SOCKET = 2;
 
-	private $response = array( 'meta'	 => null, 'output' => null );
-
-	public function execute( \SMSApi\Api\Action\AbstractAction $action ) {
-
+	public function execute(AbstractAction $action)
+    {
 		try {
-
 			$this->uri = $action->uri();
 			$file = $action->file();
 
-			if ( $this->uri == null ) {
-				throw new \SMSApi\Exception\ProxyException( "Invalid URI" );
+			if ($this->uri == null) {
+				throw new ProxyException( "Invalid URI" );
 			}
 
-            $this->doFopen($file);
+            $response = $this->doFopen($file);
 
-			$code = $this->getStatusCode( $this->response[ 'meta' ] );
+			$statusCode = $this->getStatusCode($response['meta']);
 
-			$this->checkCode( $code );
+			$this->checkCode($statusCode);
 
-			if ( empty( $this->response[ 'output' ] ) ) {
-				throw new \SMSApi\Exception\ProxyException( 'Error fetching remote content empty' );
+			if (empty($response['output'])) {
+				throw new ProxyException('Error fetching remote content empty');
 			}
-		} catch ( \Exception $ex ) {
-			throw new \SMSApi\Exception\ProxyException( $ex->getMessage() );
+		} catch (\Exception $ex) {
+			throw new ProxyException($ex->getMessage());
 		}
 
-		return $this->response[ 'output' ];
+		return $response['output'];
 	}
 
-    private function getStatusCode( $meta_data ) {
-        $status_code = null;
+	private function getStatusCode($meta_data) 
+    {
+		$status_code = null;
 
         if ( isset( $meta_data[ 'wrapper_data' ] ) AND is_array( $meta_data[ 'wrapper_data' ] ) ) {
             if (isset($meta_data['wrapper_data']['headers']) and is_array($meta_data['wrapper_data']['headers'])) {
@@ -91,12 +91,14 @@ class Native extends AbstractHttp implements Proxy
 
         $fp = fopen($url, 'r', false, $context);
 
-        $this->response['meta'] = stream_get_meta_data($fp);
-        $this->response['output'] = stream_get_contents($fp);
+        $response['meta'] = stream_get_meta_data($fp);
+        $response['output'] = stream_get_contents($fp);
 
         if ($fp) {
             fclose($fp);
         }
+
+        return $response;
 	}
 
     /**
