@@ -2,19 +2,39 @@
 
 namespace SMSApi\Proxy\Http;
 
-class AbstractHttp {
+use SMSApi\Api\Action\AbstractAction;
+use SMSApi\Exception\ProxyException;
+use SMSApi\Proxy\Uri;
 
+abstract class AbstractHttp
+{
 	protected $protocol;
 	protected $host;
 	protected $port;
-	protected $uri;
-	protected $file;
-	protected $boundary = '**RGRG87VFSGF86796GSD**';
+    protected $boundary = '**RGRG87VFSGF86796GSD**';
 	protected $method = "POST";
 	protected $timeout = 5;
 	protected $maxRedirects = 1;
-	protected $userAgent = "SMSAPI";
-	protected $headers = array( );
+
+    /**
+     * @deprecated - no usages
+     */
+    protected $uri;
+
+    /**
+     * @deprecated - no usages
+     */
+    protected $file;
+
+    /**
+     * @deprecated - no usages
+     */
+    protected $userAgent = "SMSAPI";
+
+    /**
+     * @deprecated - no usages
+     */
+    protected $headers = array();
 
 	public function __construct( $host ) {
 
@@ -34,23 +54,57 @@ class AbstractHttp {
 		}
 	}
 
-	public function getHost() {
-		return $this->host;
-	}
+    public function getHost()
+    {
+        return $this->host;
+    }
 
-	public function getPort() {
-		return $this->port;
-	}
+    public function getPort()
+    {
+        return $this->port;
+    }
 
-	public function getProtocol() {
-		return $this->protocol;
-	}
+    public function getProtocol()
+    {
+        return $this->protocol;
+    }
 
-	protected function checkCode( $code ) {
-		if ( $code AND $code < 200 OR $code > 299 ) {
-			throw new \SMSApi\Exception\ProxyException( 'Error fetching remote' );
-		}
-	}
+    public function execute(AbstractAction $action)
+    {
+        try {
+            $uri = $action->uri();
+            $file = $action->file();
+
+            if ($uri == null) {
+                throw new ProxyException("Invalid URI");
+            }
+
+            $url = $this->prepareRequestUrl($uri);
+
+            $query = $uri->getQuery();
+
+            $response = $this->makeRequest($url, $query, $file);
+
+            $this->checkCode($response['code']);
+
+            if (empty($response['output'])) {
+                throw new ProxyException('Error fetching remote content empty');
+            }
+        } catch (\Exception $e) {
+            throw new ProxyException($e->getMessage());
+        }
+
+        return $response['output'];
+    }
+
+    abstract protected function makeRequest($url, $query, $file);
+
+    protected function checkCode($code)
+    {
+        if ($code AND $code < 200 OR $code > 299) {
+            throw new ProxyException('Error fetching remote');
+        }
+    }
 
 	protected function detectFileMimeType( $file ) {
 		$type = null;
@@ -125,5 +179,53 @@ class AbstractHttp {
 		return $tmpBody;
 	}
 
-}
+    /**
+     * @param Uri $uri
+     * @return string
+     */
+    protected function prepareRequestUrl(Uri $uri)
+    {
+        $url = $uri->getSchema() . "://" . $uri->getHost() . $uri->getPath();
+        return $url;
+    }
 
+    /**
+     * @param $file
+     * @return string
+     */
+    protected function prepareRequestBody($file)
+    {
+        $body = "";
+
+        if ($this->isFileValid($file)) {
+            $body = $this->prepareFileContent($file);
+        }
+
+        return $body;
+    }
+
+    private function isFileValid($file)
+    {
+        return !empty($file) && file_exists($file);
+    }
+
+    /**
+     * @param $file
+     * @return array
+     */
+    protected function prepareRequestHeaders($file)
+    {
+        $headers = array();
+
+        $headers['User-Agent'] = 'SMSApi';
+        $headers['Accept'] = '';
+
+        if ($this->isFileValid($file)) {
+            $headers['Content-Type'] = 'multipart/form-data; boundary=' . $this->boundary;
+        } else {
+            $headers['Content-Type'] = 'application/x-www-form-urlencoded';
+        }
+
+        return $headers;
+    }
+}
