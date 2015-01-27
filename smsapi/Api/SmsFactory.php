@@ -50,8 +50,6 @@ class SmsFactory extends ActionFactory {
 
 		if ( !empty( $id ) && is_string( $id ) ) {
 			$action->filterById( $id );
-		} else if ( !empty( $id ) && is_array( $id ) ) {
-			$action->filterByIds( $id );
 		}
 
 		return $action;

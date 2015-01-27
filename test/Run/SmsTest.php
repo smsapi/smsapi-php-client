@@ -80,11 +80,11 @@ class SmsTest extends SmsapiTest {
 
 		$action = $smsApi->actionDelete();
 
-		$ids = $this->readIds();
+		$id = $this->readIds()[0];
 
 		/* @var $result \SMSApi\Api\Response\CountableResponse */
 
-		$result = $action->ids( $ids )->execute();
+		$result = $action->filterById( $id )->execute();
 
 		echo "\nSmsDelete:\n";
 		echo "Delete: " . $result->getCount();
