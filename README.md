@@ -20,7 +20,7 @@ try {
 
 	$actionSend->setTo('600xxxxxx');
 	$actionSend->setText('Hello World!!');
-	$actionSend->setSender('SMSAPI.pl'); //Pole nadawcy lub typ wiadomość 'ECO', '2Way'
+	$actionSend->setSender('Info'); //Pole nadawcy lub typ wiadomość 'ECO', '2Way'
 
 	$response = $actionSend->execute();
 
@@ -42,6 +42,15 @@ Sprawdź na przykładach, w jaki sposób można korzystać z biblioteki ([exampl
 * PHP >= 5.3
 * allow_url_fopen lub rozszerzenie curl
 
+## Instalacja
 
-## LICENSE
+W swoim projekcie dodaj do `composer.json` pakiet :
+
+    {
+        "require": {
+            "smsapi/php-client": "1.2.*"
+        }
+    }
+
+## Licencja
 [Apache 2.0 License](https://github.com/smsapi/smsapi-php-client/blob/master/LICENSE)

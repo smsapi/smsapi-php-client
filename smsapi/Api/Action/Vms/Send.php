@@ -3,29 +3,28 @@
 namespace SMSApi\Api\Action\Vms;
 
 use SMSApi\Api\Action\AbstractAction;
+use SMSApi\Api\Response\StatusResponse;
 use SMSApi\Proxy\Uri;
 
 /**
  * Class Send
  * @package SMSApi\Api\Action\Vms
+ *
+ * @method StatusResponse execute()
  */
-class Send extends AbstractAction {
-
-
+class Send extends AbstractAction
+{
 	const LECTOR_AGNIESZKA = "agnieszka";
-
 	const LECTOR_EWA = "ewa";
-
 	const LECTOR_JACEK = "jacek";
-
 	const LECTOR_JAN = "jan";
-
 	const LECTOR_MAJA = "maja";
 
 	/**
 	 * @var
 	 */
 	private $tts;
+
 	/**
 	 * @var
 	 */
@@ -33,11 +32,11 @@ class Send extends AbstractAction {
 
 	/**
 	 * @param $data
-	 * @return \SMSApi\Api\Response\StatusResponse
+	 * @return StatusResponse
 	 */
-	protected function response( $data ) {
-
-		return new \SMSApi\Api\Response\StatusResponse( $data );
+	protected function response( $data )
+    {
+		return new StatusResponse( $data );
 	}
 
 	/**

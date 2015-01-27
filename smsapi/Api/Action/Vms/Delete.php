@@ -3,14 +3,17 @@
 namespace SMSApi\Api\Action\Vms;
 
 use SMSApi\Api\Action\AbstractAction;
+use SMSApi\Api\Response\CountableResponse;
 use SMSApi\Proxy\Uri;
 
 /**
  * Class Delete
  * @package SMSApi\Api\Action\Vms
+ *
+ * @method CountableResponse execute()
  */
-class Delete extends AbstractAction {
-
+class Delete extends AbstractAction
+{
 	/**
 	 * @var \ArrayObject
 	 */
@@ -25,11 +28,11 @@ class Delete extends AbstractAction {
 
 	/**
 	 * @param $data
-	 * @return \SMSApi\Api\Response\CountableResponse
+	 * @return CountableResponse
 	 */
 	protected function response( $data ) {
 
-		return new \SMSApi\Api\Response\CountableResponse( $data );
+		return new CountableResponse( $data );
 	}
 
 	/**
@@ -43,7 +46,7 @@ class Delete extends AbstractAction {
 
 		$query .= $this->paramsOther();
 
-		$query .= "&sch_del=" . implode( "|", $this->id->getArrayCopy() );
+		$query .= "&sch_del=" . implode(",", $this->id->getArrayCopy());
 
 		return new Uri( $this->proxy->getProtocol(), $this->proxy->getHost(), $this->proxy->getPort(), "/api/vms.do", $query );
 	}

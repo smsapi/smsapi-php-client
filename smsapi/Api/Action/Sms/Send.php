@@ -314,4 +314,16 @@ class Send extends AbstractAction {
 
 		return $this;
 	}
+
+    /**
+     * Set template
+     * @param $name
+     * @return $this
+     */
+    public function setTemplate($name)
+    {
+        $this->params['template'] = urlencode($name);
+
+        return $this;
+    }
 }

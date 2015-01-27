@@ -1,13 +1,22 @@
 <?php
 
-require_once '../SmsapiTest.php';
+class PhonebookTest extends SmsapiTestCase
+{
 
-class PhonebookTest extends SmsapiTest {
+    /**
+     * @var \SMSApi\Api\PhonebookFactory
+     */
+    private $phoneBookFactory;
 
 	private $groupTest = "mytest";
 	private $groupTestEdit = "mytestedit";
 	private $contactTest = "694562829";
 	private $contactTestEdit = "617234123";
+
+    protected function setUp()
+    {
+        $this->phoneBookFactory = new \SMSApi\Api\PhonebookFactory($this->proxy, $this->client());
+    }
 
 	private function renderGroupItem( $item ) {
 
@@ -42,14 +51,12 @@ class PhonebookTest extends SmsapiTest {
 		}
 	}
 
-	public function testGroupAdd() {
-
-		$smsApi = new \SMSApi\Api\PhonebookFactory( null, $this->client() );
-
+	public function testGroupAdd()
+    {
 		$result = null;
 		$error = 0;
 
-		$action = $smsApi->actionGroupAdd( $this->groupTest );
+		$action = $this->phoneBookFactory->actionGroupAdd($this->groupTest);
 
 		/* @var $result \SMSApi\Api\Response\GroupResponse */
 
@@ -66,14 +73,12 @@ class PhonebookTest extends SmsapiTest {
 		$this->assertEquals( 0, $error );
 	}
 
-	public function testGroupEdit() {
-
-		$smsApi = new \SMSApi\Api\PhonebookFactory( null, $this->client() );
-
+	public function testGroupEdit()
+    {
 		$result = null;
 		$error = 0;
 
-		$action = $smsApi->actionGroupEdit( $this->groupTest );
+		$action = $this->phoneBookFactory->actionGroupEdit($this->groupTest);
 
 		/* @var $result \SMSApi\Api\Response\GroupResponse */
 
@@ -90,14 +95,12 @@ class PhonebookTest extends SmsapiTest {
 		$this->assertEquals( 0, $error );
 	}
 
-	public function testContactAdd() {
-
-		$smsApi = new \SMSApi\Api\PhonebookFactory( null, $this->client() );
-
+	public function testContactAdd()
+    {
 		$result = null;
 		$error = 0;
 
-		$action = $smsApi->actionContactAdd( $this->contactTest );
+		$action = $this->phoneBookFactory->actionContactAdd($this->contactTest);
 
 		$action->setFirstName( "Bolek" )
 			->setLastName( "Dzik" )
@@ -123,14 +126,12 @@ class PhonebookTest extends SmsapiTest {
 		$this->assertEquals( 0, $error );
 	}
 
-	public function testGroupGet() {
-
-		$smsApi = new \SMSApi\Api\PhonebookFactory( null, $this->client() );
-
+	public function testGroupGet()
+    {
 		$result = null;
 		$error = 0;
 
-		$action = $smsApi->actionGroupGet( $this->groupTestEdit );
+		$action = $this->phoneBookFactory->actionGroupGet($this->groupTestEdit);
 
 		$result = $action->execute();
 
@@ -145,14 +146,12 @@ class PhonebookTest extends SmsapiTest {
 		$this->assertEquals( 0, $error );
 	}
 
-	public function testContactEdit() {
-
-		$smsApi = new \SMSApi\Api\PhonebookFactory( null, $this->client() );
-
+	public function testContactEdit()
+    {
 		$result = null;
 		$error = 0;
 
-		$action = $smsApi->actionContactEdit( $this->contactTest );
+		$action = $this->phoneBookFactory->actionContactEdit($this->contactTest);
 
 		/* @var $result \SMSApi\Api\Response\ContactResponse */
 
@@ -169,14 +168,12 @@ class PhonebookTest extends SmsapiTest {
 		$this->assertEquals( 0, $error );
 	}
 
-	public function testContactGet() {
-
-		$smsApi = new \SMSApi\Api\PhonebookFactory( null, $this->client() );
-
+	public function testContactGet()
+    {
 		$result = null;
 		$error = 0;
 
-		$action = $smsApi->actionContactGet( $this->contactTestEdit );
+		$action = $this->phoneBookFactory->actionContactGet($this->contactTestEdit);
 
 		/* @var $result \SMSApi\Api\Response\ContactResponse */
 
@@ -193,14 +190,12 @@ class PhonebookTest extends SmsapiTest {
 		$this->assertEquals( 0, $error );
 	}
 
-	public function testContactDelete() {
-
-		$smsApi = new \SMSApi\Api\PhonebookFactory( null, $this->client() );
-
+	public function testContactDelete()
+    {
 		$result = null;
 		$error = 0;
 
-		$action = $smsApi->actionContactDelete( $this->contactTestEdit );
+		$action = $this->phoneBookFactory->actionContactDelete( $this->contactTestEdit );
 
 		/* @var $result SMSApi\Api\Response\RawResponse */
 
@@ -217,14 +212,12 @@ class PhonebookTest extends SmsapiTest {
 		$this->assertEquals( 0, $error );
 	}
 
-	public function testGroupDelete() {
-
-		$smsApi = new \SMSApi\Api\PhonebookFactory( null, $this->client() );
-
+	public function testGroupDelete()
+    {
 		$result = null;
 		$error = 0;
 
-		$action = $smsApi->actionGroupDelete( $this->groupTestEdit );
+		$action = $this->phoneBookFactory->actionGroupDelete($this->groupTestEdit);
 
 		/* @var $result SMSApi\Api\Response\RawResponse */
 
@@ -241,14 +234,12 @@ class PhonebookTest extends SmsapiTest {
 		$this->assertEquals( 0, $error );
 	}
 
-	public function testContactList() {
-
-		$smsApi = new \SMSApi\Api\PhonebookFactory( null, $this->client() );
-
+	public function testContactList()
+    {
 		$result = null;
 		$error = 0;
 
-		$action = $smsApi->actionContactList();
+		$action = $this->phoneBookFactory->actionContactList();
 
 		/* @var $result SMSApi\Api\Response\ContactsResponse */
 		/* @var $item SMSApi\Api\Response\ContactResponse */
@@ -268,14 +259,12 @@ class PhonebookTest extends SmsapiTest {
 		$this->assertEquals( 0, $error );
 	}
 
-	public function testGroupList() {
-
-		$smsApi = new \SMSApi\Api\PhonebookFactory( null, $this->client() );
-
+	public function testGroupList()
+    {
 		$result = null;
 		$error = 0;
 
-		$action = $smsApi->actionGroupList();
+		$action = $this->phoneBookFactory->actionGroupList();
 
 		/* @var $result SMSApi\Api\Response\GroupsResponse */
 		/* @var $item SMSApi\Api\Response\GroupResponse */
@@ -294,6 +283,4 @@ class PhonebookTest extends SmsapiTest {
 
 		$this->assertEquals( 0, $error );
 	}
-
 }
-

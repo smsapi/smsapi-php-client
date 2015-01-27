@@ -1,7 +1,4 @@
-.settings
-.project
-.idea
-.buildpath
-.nbproject
-!.gitkeep
-/nbproject
+/test/Integration/config.dist.php
+/test/Integration/_ids_test.txt
+/vendor
+/composer.lock
