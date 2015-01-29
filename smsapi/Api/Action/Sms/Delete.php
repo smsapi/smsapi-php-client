@@ -12,16 +12,9 @@ use SMSApi\Proxy\Uri;
 class Delete extends AbstractAction {
 
 	/**
-	 * @var \ArrayObject
+	 * @var int
 	 */
 	private $id;
-
-	/**
-	 *
-	 */
-	function __construct() {
-		$this->id = new \ArrayObject();
-	}
 
 	/**
 	 * @param $data
@@ -43,7 +36,7 @@ class Delete extends AbstractAction {
 
 		$query .= $this->paramsOther();
 
-		$query .= "&sch_del=" . implode( "|", $this->id->getArrayCopy() );
+		$query .= "&sch_del=" . $this->id;
 
 		return new Uri( $this->proxy->getProtocol(), $this->proxy->getHost(), $this->proxy->getPort(), "/api/sms.do", $query );
 	}
@@ -59,30 +52,8 @@ class Delete extends AbstractAction {
 	 * @throws \SMSApi\Exception\ActionException
 	 */
 	public function filterById( $id ) {
-		$this->id->append( $id );
+		$this->id = $id;
 		return $this;
-	}
-
-	/**
-	 * Set IDs of messages to delete.
-	 *
-	 * This id was returned after sending message.
-	 *
-	 * @param array $ids Message ids
-	 * @return $this
-	 */
-	public function filterByIds( array $ids ) {
-		$this->id->exchangeArray( $ids );
-		return $this;
-	}
-
-	/**
-	 * @deprecated since v1.0.0
-	 * @param array $ids
-	 * @return $this
-	 */
-	public function ids( array $ids ) {
-		return $this->filterByIds( $ids );
 	}
 
 	/**

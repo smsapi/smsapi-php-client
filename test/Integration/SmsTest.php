@@ -86,7 +86,7 @@ class SmsTest extends SmsapiTestCase
 
 		/* @var $result \SMSApi\Api\Response\CountableResponse */
 
-		$result = $action->filterByIds($ids)->execute();
+		$result = $action->filterById($ids[0])->execute();
 
 		echo "\nSmsDelete:\n";
 		echo "Delete: " . $result->getCount();
