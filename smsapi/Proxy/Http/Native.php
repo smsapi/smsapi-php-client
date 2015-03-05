@@ -51,20 +51,25 @@ class Native extends AbstractHttp implements Proxy
 		return $this->response[ 'output' ];
 	}
 
-	private function getStatusCode( $meta_data ) {
-		$status_code = null;
+    private function getStatusCode( $meta_data ) {
+        $status_code = null;
 
-		if ( isset( $meta_data[ 'wrapper_data' ] ) AND is_array( $meta_data[ 'wrapper_data' ] ) ) {
-			foreach ( $meta_data[ 'wrapper_data' ] as $_ ) {
+        if ( isset( $meta_data[ 'wrapper_data' ] ) AND is_array( $meta_data[ 'wrapper_data' ] ) ) {
+            if (isset($meta_data['wrapper_data']['headers']) and is_array($meta_data['wrapper_data']['headers'])) {
+                $headers = $meta_data['wrapper_data']['headers'];
+            } else {
+                $headers = $meta_data['wrapper_data'];
+            }
 
-				if ( preg_match( '/^[\s]*HTTP\/1\.[01]\s([\d]+)\sOK[\s]*$/i', $_, $_code ) ) {
-					$status_code = next( $_code );
-				}
-			}
-		}
+            foreach ($headers as $_) {
+                if ( preg_match( '/^[\s]*HTTP\/1\.[01]\s([\d]+)\sOK[\s]*$/i', $_, $_code ) ) {
+                    $status_code = next( $_code );
+                }
+            }
+        }
 
-		return $status_code;
-	}
+        return $status_code;
+    }
 
 	private function toConnect( $filename = null ) {
 
