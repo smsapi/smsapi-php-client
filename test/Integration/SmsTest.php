@@ -14,84 +14,59 @@ class SmsTest extends SmsapiTestCase
 
 	public function testSend()
     {
-		$result = null;
-		$error = 0;
-		$ids = array( );
-
-		$time = time() + 86400;
+		$dateSend = time() + 86400;
 
 		$action = $this->smsFactory->actionSend();
-
-		/* @var $result \SMSApi\Api\Response\StatusResponse */
-		/* @var $item \SMSApi\Api\Response\MessageResponse */
 
 		$result =
 			$action
 				->setText("test [%1%] message")
 				->setTo($this->getNumberTest())
 				->SetParam(0, 'asd')
-				->setDateSent($time)
+				->setDateSent($dateSend)
 				->execute();
 
 		echo "SmsSend:\n";
 
-		foreach ( $result->getList() as $item ) {
-			if ( !$item->getError() ) {
-				$this->renderMessageItem( $item );
-				$ids[ ] = $item->getId();
-			} else {
-				$error++;
-			}
-		}
+		$this->renderStatusResponse($result);
 
-		$this->writeIds( $ids );
+        $ids = $this->collectIds($result);
 
-		$this->assertEquals( 0, $error );
+        $this->assertCount(1, $ids);
+		$this->assertEquals(0, $this->countErrors($result));
+
+        return $ids;
 	}
 
-	public function testGet()
+    /**
+     * @depends testSend
+     */
+	public function testGet(array $ids)
     {
-		$result = null;
-		$error = 0;
-
 		$action = $this->smsFactory->actionGet();
-
-		$ids = $this->readIds();
-
-		/* @var $result \SMSApi\Api\Response\StatusResponse */
-		/* @var $item \SMSApi\Api\Response\MessageResponse */
 
 		$result = $action->filterByIds($ids)->execute();
 
 		echo "\nSmsGet:\n";
 
-		foreach ( $result->getList() as $item ) {
-			if ( !$item->getError() ) {
-				$this->renderMessageItem( $item );
-			} else {
-				$error++;
-			}
-		}
+        $this->renderStatusResponse($result);
 
-		$this->assertEquals( 0, $error );
+		$this->assertEquals(0, $this->countErrors($result));
+        $this->assertEquals(1, $result->getCount());
 	}
 
-	public function testDelete()
+    /**
+     * @depends testSend
+     */
+	public function testDelete(array $ids)
     {
-		$result = null;
-
 		$action = $this->smsFactory->actionDelete();
-
-		$ids = $this->readIds();
-
-		/* @var $result \SMSApi\Api\Response\CountableResponse */
 
 		$result = $action->filterById($ids[0])->execute();
 
-		echo "\nSmsDelete:\n";
-		echo "Delete: " . $result->getCount();
+		echo "\nSmsDelete: " . $result->getCount();
 
-		$this->assertNotEquals( 0, $result->getCount() );
+		$this->assertEquals(1, $result->getCount());
 	}
 
     public function testTemplate()
@@ -101,18 +76,11 @@ class SmsTest extends SmsapiTestCase
         if (!$template) {
             $this->markTestSkipped('Template does not exists.');
         }
+        
+        $result = $this->sendSmsByTemplate();
 
-        $result = $this->sendSmsByTemplate($template);
-
-        $error = 0;
-
-        foreach ($result->getList() as $item) {
-            if ($item->getError()) {
-                $error++;
-            }
-        }
-
-        $this->assertEquals(0, $error);
+        $this->assertEquals(0, $this->countErrors($result));
+        $this->assertEquals(1, $result->getCount());
     }
 
     /**

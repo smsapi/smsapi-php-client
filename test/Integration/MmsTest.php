@@ -14,39 +14,29 @@ class MmsTest extends SmsapiTestCase
 
 	public function testSend()
     {
-		$result = null;
-		$error = 0;
-		$ids = array( );
-
-		$time = time() + 86400;
+		$dateSend = time() + 86400;
 
         $smil = $this->prepareMmsSmil();
 
         $action = $this->mmsFactory->actionSend();
 
-		/* @var $result \SMSApi\Api\Response\StatusResponse */
-		/* @var $item \SMSApi\Api\Response\MessageResponse */
-
-		$result = $action->setSubject("test mms")
-                            ->setTo($this->getNumberTest())
-                            ->setDateSent($time)
-                            ->setSmil($smil)
-                            ->execute();
+		$result =
+            $action->setSubject("test mms")
+                    ->setTo($this->getNumberTest())
+                    ->setDateSent($dateSend)
+                    ->setSmil($smil)
+                    ->execute();
 
 		echo "MmsSend:\n";
 
-		foreach ( $result->getList() as $item ) {
-			if ( !$item->getError() ) {
-				$this->renderMessageItem( $item );
-				$ids[ ] = $item->getId();
-			} else {
-				$error++;
-			}
-		}
+		$this->renderStatusResponse($result);
 
-		$this->writeIds( $ids );
+        $ids = $this->collectIds($result);
 
-		$this->assertEquals( 0, $error );
+        $this->assertCount(1, $ids);
+		$this->assertEquals(0, $this->countErrors($result));
+
+        return $ids;
 	}
 
     /**
@@ -68,48 +58,34 @@ class MmsTest extends SmsapiTestCase
         return $smil;
     }
 
-	public function testGet()
+    /**
+     * @depends testSend
+     */
+	public function testGet(array $ids)
     {
-		$result = null;
-		$error = 0;
-
 		$action = $this->mmsFactory->actionGet();
-
-		$ids = $this->readIds();
-
-		/* @var $result \SMSApi\Api\Response\StatusResponse */
-		/* @var $item \SMSApi\Api\Response\MessageResponse */
 
 		$result = $action->filterByIds($ids)->execute();
 
 		echo "\nMmsGet:\n";
 
-		foreach ( $result->getList() as $item ) {
-			if ( !$item->getError() ) {
-				$this->renderMessageItem( $item );
-			} else {
-				$error++;
-			}
-		}
+		$this->renderStatusResponse($result);
 
-		$this->assertEquals( 0, $error );
+		$this->assertEquals(0, $this->countErrors($result));
+        $this->assertEquals(1, $result->getCount());
 	}
 
-	public function testDelete()
+    /**
+     * @depends testSend
+     */
+	public function testDelete(array $ids)
     {
-		$result = null;
-
 		$action = $this->mmsFactory->actionDelete();
-
-		$ids = $this->readIds();
-
-		/* @var $result \SMSApi\Api\Response\CountableResponse */
 
 		$result = $action->filterByIds($ids)->execute();
 
-		echo "\nMmsDelete:\n";
-		echo "Delete: " . $result->getCount();
+		echo "\nMmsDelete: " . $result->getCount();
 
-		$this->assertNotEquals( 0, $result->getCount() );
+		$this->assertEquals(1, $result->getCount());
 	}
 }

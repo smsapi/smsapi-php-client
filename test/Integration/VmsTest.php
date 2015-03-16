@@ -108,39 +108,4 @@ class VmsTest extends SmsapiTestCase
 
         return $dateSent->getTimestamp();
     }
-
-    private function countErrors(\SMSApi\Api\Response\StatusResponse $response)
-    {
-        $errors = 0;
-
-        foreach ($response->getList() as $item) {
-            if ($item->getError()) {
-                $errors++;
-            }
-        }
-
-        return $errors;
-    }
-
-    private function renderStatusResponse(\SMSApi\Api\Response\StatusResponse $response)
-    {
-        foreach ($response->getList() as $item) {
-            if (!$item->getError()) {
-                $this->renderMessageItem($item);
-            }
-        }
-    }
-
-    private function collectIds(\SMSApi\Api\Response\StatusResponse $response)
-    {
-        $ids = array();
-
-        foreach ($response->getList() as $item) {
-            if (!$item->getError()) {
-                $ids[] = $item->getId();
-            }
-        }
-
-        return $ids;
-    }
 }

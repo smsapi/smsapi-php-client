@@ -34,10 +34,10 @@ class Send extends AbstractAction
 	 * @param $data
 	 * @return StatusResponse
 	 */
-	protected function response( $data )
+    protected function response($data)
     {
-		return new StatusResponse( $data );
-	}
+        return new StatusResponse($data);
+    }
 
 	/**
 	 * @return Uri

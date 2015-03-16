@@ -2,8 +2,6 @@
 
 abstract class SmsapiTestCase extends PHPUnit_Framework_TestCase
 {
-    private $fileToIds = "_ids_test.txt";
-
     /**
      * @var null|\SMSApi\Proxy\Proxy
      */
@@ -77,19 +75,38 @@ abstract class SmsapiTestCase extends PHPUnit_Framework_TestCase
 		);
 	}
 
-	protected function readIds()
+    protected function collectIds(\SMSApi\Api\Response\StatusResponse $response)
     {
-		$str = file_get_contents($this->getFileToIdsPath());
-		return unserialize( $str );
-	}
+        $ids = array();
 
-	protected function writeIds( $ids )
-    {
-		file_put_contents($this->getFileToIdsPath(), serialize( $ids ));
-	}
+        foreach ($response->getList() as $item) {
+            if (!$item->getError()) {
+                $ids[] = $item->getId();
+            }
+        }
 
-    private function getFileToIdsPath()
+        return $ids;
+    }
+
+    protected function countErrors(\SMSApi\Api\Response\StatusResponse $response)
     {
-        return __DIR__ . '/' . $this->fileToIds;
+        $errors = 0;
+
+        foreach ($response->getList() as $item) {
+            if ($item->getError()) {
+                $errors++;
+            }
+        }
+
+        return $errors;
+    }
+
+    protected function renderStatusResponse(\SMSApi\Api\Response\StatusResponse $response)
+    {
+        foreach ($response->getList() as $item) {
+            if (!$item->getError()) {
+                $this->renderMessageItem($item);
+            }
+        }
     }
 }
