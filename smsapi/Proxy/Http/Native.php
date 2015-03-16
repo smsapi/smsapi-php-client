@@ -16,113 +16,77 @@ class Native extends AbstractHttp implements Proxy
      */
 	const CONNECT_SOCKET = 2;
 
-	private $response = array( 'meta'	 => null, 'output' => null );
+	protected function makeRequest($url, $query, $file)
+    {
+        $body = $this->prepareRequestBody($file);
 
-	public function execute( \SMSApi\Api\Action\AbstractAction $action ) {
+        $headers = $this->prepareRequestHeaders($file);
 
-		try {
+        if (!empty($body)) {
+            $url .= '?' . $query;
+        }
 
-			$this->uri = $action->uri();
-			$this->file = $action->file();
+        $headersString = $this->preparePlainTextHeaders($headers);
 
-			if ( $this->uri == null ) {
-				throw new \SMSApi\Exception\ProxyException( "Invalid URI" );
-			}
+        $options = array(
+            'http' => array(
+                'method'	 => $this->method,
+                'header'	 => $headersString,
+                'content'	 => empty($body) ? $query : $body,
+            )
+        );
 
-			if ( !empty( $this->file ) && file_exists( $this->file ) ) {
+        $context = stream_context_create($options);
 
-				$this->toConnect( $this->file );
-			} else {
+        $fp = fopen($url, 'r', false, $context);
 
-				$this->toConnect();
-			}
+        $response['code'] = $this->getStatusCode(stream_get_meta_data($fp));
+        $response['output'] = stream_get_contents($fp);
 
-			$code = $this->getStatusCode( $this->response[ 'meta' ] );
+        if ($fp) {
+            fclose($fp);
+        }
 
-			$this->checkCode( $code );
-
-			if ( empty( $this->response[ 'output' ] ) ) {
-				throw new \SMSApi\Exception\ProxyException( 'Error fetching remote content empty' );
-			}
-		} catch ( \Exception $ex ) {
-			throw new \SMSApi\Exception\ProxyException( $ex->getMessage() );
-		}
-
-		return $this->response[ 'output' ];
+        return $response;
 	}
 
-    private function getStatusCode( $meta_data ) {
-        $status_code = null;
+    private function getStatusCode($metaData)
+    {
+        $statusCode = null;
 
-        if ( isset( $meta_data[ 'wrapper_data' ] ) AND is_array( $meta_data[ 'wrapper_data' ] ) ) {
-            if (isset($meta_data['wrapper_data']['headers']) and is_array($meta_data['wrapper_data']['headers'])) {
-                $headers = $meta_data['wrapper_data']['headers'];
+        if ( isset( $metaData[ 'wrapper_data' ] ) AND is_array( $metaData[ 'wrapper_data' ] ) ) {
+            if (isset($metaData['wrapper_data']['headers']) and is_array($metaData['wrapper_data']['headers'])) {
+                $headers = $metaData['wrapper_data']['headers'];
             } else {
-                $headers = $meta_data['wrapper_data'];
+                $headers = $metaData['wrapper_data'];
             }
 
-            foreach ($headers as $_) {
-                if ( preg_match( '/^[\s]*HTTP\/1\.[01]\s([\d]+)\sOK[\s]*$/i', $_, $_code ) ) {
-                    $status_code = next( $_code );
+            foreach ($headers as $wrapperRow) {
+                if (preg_match( '/^[\s]*HTTP\/1\.[01]\s([\d]+)\sOK[\s]*$/i', $wrapperRow, $code)) {
+                    $statusCode = next($code);
                 }
             }
         }
 
-        return $status_code;
+        return $statusCode;
     }
 
-	private function toConnect( $filename = null ) {
+    /**
+     * @param $headers
+     * @return string
+     */
+    private function preparePlainTextHeaders($headers)
+    {
+        $headersString = "";
 
-		$body = "";
+        foreach ($headers as $k => $v) {
+            if (is_string($k)) {
+                $v = ucfirst($k) . ": " . $v;
+            }
 
-		$this->headers[ 'User-Agent' ] = 'SMSApi';
-		$this->headers[ 'Accept' ] = '';
+            $headersString .= $v . "\r\n";
+        }
 
-		if ( $filename ) {
-
-			$this->headers[ 'Content-Type' ] = 'multipart/form-data; boundary=' . $this->boundary;
-
-			$body = $this->prepareFileContent( $filename );
-		} else {
-			$this->headers[ 'Content-Type' ] = 'application/x-www-form-urlencoded';
-		}
-
-        $this->doFopen( $body );
-	}
-
-	private function doFopen( $body ) {
-		if ( isset( $this->uri ) ) {
-			$url = $this->uri->getSchema() . "://" . $this->uri->getHost() . $this->uri->getPath();
-
-			$heders = "";
-			foreach ( $this->headers as $k => $v ) {
-				if ( is_string( $k ) )
-					$v = ucfirst( $k ) . ": $v";
-				$heders .= "$v\r\n";
-			}
-
-			$opts = array(
-				'http' => array(
-					'method'	 => $this->method,
-					'header'	 => $heders,
-					'content'	 => empty( $body ) ? $this->uri->getQuery() : $body,
-				)
-			);
-
-			$context = stream_context_create( $opts );
-
-			if ( !empty( $body ) ) {
-				$url .= '?' . $this->uri->getQuery();
-			}
-
-			$fp = fopen( $url, 'r', false, $context );
-
-			$this->response[ 'meta' ] = stream_get_meta_data( $fp );
-			$this->response[ 'output' ] = stream_get_contents( $fp );
-
-			if ( $fp ) {
-				fclose( $fp );
-			}
-		}
-	}
+        return $headersString;
+    }
 }
