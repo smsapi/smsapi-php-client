@@ -1,3 +1,4 @@
 /test/Integration/config.dist.php
 /vendor
 /composer.lock
+/cache.properties

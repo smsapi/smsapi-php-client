@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="smsapi-php-client" default="build" basedir=".">
+    <target name="build" depends="clean,composer,lint,phpunit"/>
+    <target name="clean" description="Cleanup build artifacts">
+        <delete file="${basedir}/composer.lock"/>
+    </target>
+    <target name="composer" description="Install dependencies">
+        <exec executable="wget" failonerror="true">
+            <arg value="-nc" />
+            <arg value="http://getcomposer.org/composer.phar" />
+        </exec>
+        <exec executable="php">
+            <arg value="composer.phar" />
+            <arg value="self-update" />
+        </exec>
+        <exec executable="php" failonerror="true">
+            <arg value="composer.phar" />
+            <arg value="install" />
+        </exec>
+    </target>
+    <target name="lint" description="Perform syntax check of sourcecode files">
+        <apply executable="php" failonerror="true">
+            <arg value="-l" />
+            <fileset dir="${basedir}">
+                <include name="smsapi/*.php" />
+                <include name="test/*.php" />
+                <modified />
+            </fileset>
+        </apply>
+    </target>
+    <target name="phpunit" description="Run unit tests with PHPUnit">
+        <exec executable="php" failonerror="true">
+            <arg value="${basedir}/vendor/bin/phpunit" />
+            <arg value="--configuration" />
+            <arg path="${basedir}/phpunit.xml.dist" />
+        </exec>
+    </target>
+</project>
