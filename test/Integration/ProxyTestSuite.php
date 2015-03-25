@@ -22,4 +22,11 @@ abstract class ProxyTestSuite extends PHPUnit_Framework_TestSuite
         $this->addTestSuite('UserTest');
         $this->addTestSuite('VmsTest');
     }
+
+    protected static function getHost()
+    {
+        $config = include __DIR__ . '/config.php';
+
+        return $config['host'];
+    }
 }

@@ -13,7 +13,7 @@ class NativeProxySuiteTest extends \ProxyTestSuite
 
         $suite->addTestsToSuite();
 
-        $nativeProxy = new \SMSApi\Proxy\Http\Native('https://ssl.smsapi.pl');
+        $nativeProxy = new \SMSApi\Proxy\Http\Native(self::getHost());
 
         $suite->injectProxy($nativeProxy);
 
