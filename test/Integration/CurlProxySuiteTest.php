@@ -17,7 +17,7 @@ class CurlProxySuiteTest extends \ProxyTestSuite
 
         $suite->addTestsToSuite();
 
-        $curlProxy = new \SMSApi\Proxy\Http\Curl('https://ssl.smsapi.pl');
+        $curlProxy = new \SMSApi\Proxy\Http\Curl(self::getHost());
 
         $suite->injectProxy($curlProxy);
 
