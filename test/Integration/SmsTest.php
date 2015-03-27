@@ -76,7 +76,7 @@ class SmsTest extends SmsapiTestCase
         if (!$template) {
             $this->markTestSkipped('Template does not exists.');
         }
-        
+
         $result = $this->sendSmsByTemplate();
 
         $this->assertEquals(0, $this->countErrors($result));
@@ -96,5 +96,21 @@ class SmsTest extends SmsapiTestCase
                 ->execute();
 
         return $result;
+    }
+
+    public function testDetails()
+    {
+        $someMessage = 'test message';
+        $sendSms = $this->smsFactory
+            ->actionSend()
+            ->setTo($this->getNumberTest())
+            ->setText($someMessage)
+            ->setDetails(true);
+
+        $result = $sendSms->execute();
+
+        $this->assertEquals($someMessage, $result->getMessage());
+        $this->assertEquals(strlen($someMessage), $result->getLength());
+        $this->assertEquals(1, $result->getParts());
     }
 }

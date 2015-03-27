@@ -39,5 +39,20 @@ class GetPoints extends AbstractAction {
 		return new Uri( $this->proxy->getProtocol(), $this->proxy->getHost(), $this->proxy->getPort(), "/api/user.do", $query );
 	}
 
+    /**
+     * Return detailed information
+     * @param bool $name
+     * @return $this
+     */
+    public function setDetails($details)
+    {
+        if ($details) {
+            $this->params['details'] = 1;
+        } else {
+            unset($this->params['details']);
+        }
+
+        return $this;
+    }
 }
 
