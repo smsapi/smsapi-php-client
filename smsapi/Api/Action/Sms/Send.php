@@ -330,4 +330,20 @@ class Send extends AbstractAction
 
         return $this;
     }
+
+    /**
+     * Return detailed information
+     * @param bool $name
+     * @return $this
+     */
+    public function setDetails($details)
+    {
+        if ($details) {
+            $this->params['details'] = 1;
+        } else {
+            unset($this->params['details']);
+        }
+
+        return $this;
+    }
 }
