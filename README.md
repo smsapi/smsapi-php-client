@@ -1,5 +1,4 @@
-﻿php-client
-==========
+﻿# SMSAPI PHP Client
 
 Klient PHP pozwalający na wysyłanie wiadomości SMS, MMS, VMS oraz zarządzanie kontem w serwisie SMSAPI.pl
 
@@ -48,11 +47,13 @@ Sprawdź na przykładach, w jaki sposób można korzystać z biblioteki ([exampl
 
 W swoim projekcie dodaj do `composer.json` pakiet :
 
-    {
-        "require": {
-            "smsapi/php-client": "1.3.*"
-        }
+```json
+{
+    "require": {
+        "smsapi/php-client": "1.3.*"
     }
+}
+```
 
 ## Licencja
-[Apache 2.0 License](https://github.com/smsapi/smsapi-php-client/blob/master/LICENSE)
+[Apache 2.0 License](LICENSE)

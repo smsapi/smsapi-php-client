@@ -1,14 +1,20 @@
-## 1.3.0
+# SMSAPI PHP Client
+
+## 1.3.0 - 2015-03-31
 * fix autoload
 * cleanup composer
-* add support for details
+* add support for details parameter
+* cleanup CHANGELOG
+* update docs
+* update phpunit.xml.dist, rename and move to build directory
 
-## 1.2.0
+## 1.2.1 - 2015-03-25
 
-## 1.1.0
-### Features
-* Add documentation in PHPDoc format.
-* Refactored and renamed some methods [UPGRADE.md](UPGRADE.md)
+## 1.2.0 - 2014-12-03
 
-## 1.0 (March 13, 2013)
-Initialize
+## 1.1.0 - 2014-04-23
+* add documentation in PHPDoc format.
+* refactored and renamed some methods [UPGRADE.md](UPGRADE.md)
+
+## 1.0.0 - 2014-03-07
+* initialize
