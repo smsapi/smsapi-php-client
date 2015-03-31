@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="smsapi-php-client" default="build" basedir=".">
-    <target name="build" depends="clean,composer,lint,phpunit"/>
+    <target name="build" depends="clean,composer,lint,phpunit,apigen"/>
     <target name="clean" description="Cleanup build artifacts">
         <delete file="${basedir}/composer.lock"/>
+        <delete dir="${basedir}/docs"/>
     </target>
     <target name="composer" description="Install dependencies">
         <exec executable="wget" failonerror="true">
@@ -32,7 +33,17 @@
         <exec executable="php" failonerror="true">
             <arg value="${basedir}/vendor/bin/phpunit" />
             <arg value="--configuration" />
-            <arg path="${basedir}/phpunit.xml.dist" />
+            <arg path="${basedir}/build/phpunit.xml" />
+        </exec>
+    </target>
+    <target name="apigen" description="Generate docs">
+        <exec executable="apigen" failonerror="false">
+            <arg value="--source" />
+            <arg path="${basedir}/smsapi" />
+            <arg value="--destination" />
+            <arg path="${basedir}/docs" />
+            <arg value="--title SMSAPI api client" />
+            <arg value="--php no" />
         </exec>
     </target>
 </project>

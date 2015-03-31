@@ -1,18 +1,15 @@
 {
     "name": "smsapi.pl/php-client",
     "description": "Library for communicating with provider",
-    "homepage": "http://www.smsapi.pl",
-    "version": "1.2.1",
+    "homepage": "http://smsapi.pl",
+    "version": "1.3.0",
     "type": "library",
     "license": "Apache-2.0",
     "keywords": ["sms", "mms", "vms"],
-    "minimum-stability": "dev",
-    "require": {},
     "autoload": {
-        "psr-0": {
-            "php-client\\smsapi": "SMSApi"
-        },
-        "classmap": [ "smsapi" ]
+        "psr-4": {
+            "SMSApi\\": "smsapi"
+        }
     },
     "autoload-dev": {
         "psr-0": {
