@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="generator" content="ApiGen 2.8.0" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="generator" content="ApiGen 2.8.0">
 
-	<title>Class SMSApi\Proxy\Http\Native | SMSAPI api client</title>
+	<title>Class SMSApi\Proxy\Http\Native</title>
 
-	<script type="text/javascript" src="resources/combined.js?174271566"></script>
-	<script type="text/javascript" src="elementlist.js?998687766"></script>
-	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360" />
+	<script type="text/javascript" src="resources/combined.js?394153670"></script>
+	<script type="text/javascript" src="elementlist.js?136106159"></script>
+	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360">
 
 </head>
 
@@ -21,6 +21,8 @@
 		<div id="groups">
 			<h3>Namespaces</h3>
 			<ul>
+				<li><a href="namespace-PHP.html">PHP</a>
+						</li>
 				<li class="active"><a href="namespace-SMSApi.html">SMSApi<span></span></a>
 						<ul>
 				<li><a href="namespace-SMSApi.Api.html">Api<span></span></a>
@@ -53,7 +55,7 @@
 			</ul>
 		</div>
 
-		<hr />
+		<hr>
 
 
 		<div id="elements">
@@ -77,10 +79,10 @@
 <div id="right">
 <div id="rightInner">
 	<form id="search">
-		<input type="hidden" name="cx" value="" />
-		<input type="hidden" name="ie" value="UTF-8" />
-		<input type="text" name="q" class="text" />
-		<input type="submit" value="Search" />
+		<input type="hidden" name="cx" value="">
+		<input type="hidden" name="ie" value="UTF-8">
+		<input type="text" name="q" class="text">
+		<input type="submit" value="Search">
 	</form>
 
 	<div id="navigation">
@@ -116,7 +118,7 @@
 			
 		</dd>
 		<dd style="padding-left:30px">
-			<img src="resources/inherit.png" alt="Extended by" />
+			<img src="resources/inherit.png" alt="Extended by">
 <b><span>SMSApi\Proxy\Http\Native</span></b>			
 			 implements 
 				<a href="class-SMSApi.Proxy.Proxy.html"><span>SMSApi\Proxy\Proxy</span></a>
@@ -135,28 +137,28 @@
 	<div class="info">
 		
 		
-		<b>Namespace:</b> <a href="namespace-SMSApi.html">SMSApi</a>\<a href="namespace-SMSApi.Proxy.html">Proxy</a>\<a href="namespace-SMSApi.Proxy.Http.html">Http</a><br />
+		<b>Namespace:</b> <a href="namespace-SMSApi.html">SMSApi</a>\<a href="namespace-SMSApi.Proxy.html">Proxy</a>\<a href="namespace-SMSApi.Proxy.Http.html">Http</a><br>
 		
 
-		<b>Located at</b> <a href="source-class-SMSApi.Proxy.Http.Native.html#7-194" title="Go to source code">Proxy/Http/Native.php</a><br />
+		<b>Located at</b> <a href="source-class-SMSApi.Proxy.Http.Native.html#7-92" title="Go to source code">Proxy/Http/Native.php</a><br>
 	</div>
 
 
 
 	<table class="summary" id="methods">
 	<caption>Methods summary</caption>
-	<tr data-order="execute" id="_execute">
+	<tr data-order="makeRequest" id="_makeRequest">
 
 		<td class="attributes"><code>
-			 public 
+			 protected 
 			
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#_execute">#</a>
-		<code><a href="source-class-SMSApi.Proxy.Http.Native.html#15-46" title="Go to source code">execute</a>( <span><code><a href="class-SMSApi.Api.Action.AbstractAction.html">SMSApi\Api\Action\AbstractAction</a></code> <var>$action</var></span> )</code>
+		<a class="anchor" href="#_makeRequest">#</a>
+		<code><a href="source-class-SMSApi.Proxy.Http.Native.html#19-51" title="Go to source code">makeRequest</a>( <span>mixed <var>$url</var></span>, <span>mixed <var>$query</var></span>, <span>mixed <var>$file</var></span> )</code>
 
 		<div class="description short">
 			
@@ -171,8 +173,6 @@
 
 
 
-				<h4>Implementation of</h4>
-				<div class="list"><code><a href="class-SMSApi.Proxy.Proxy.html#_execute">SMSApi\Proxy\Proxy::execute()</a></code></div>
 		</div>
 		</div></td>
 	</tr>
@@ -186,10 +186,14 @@
 			<a href="class-SMSApi.Proxy.Http.AbstractHttp.html#_checkCode">checkCode()</a>, 
 			<a href="class-SMSApi.Proxy.Http.AbstractHttp.html#_detectFileMimeType">detectFileMimeType()</a>, 
 			<a href="class-SMSApi.Proxy.Http.AbstractHttp.html#_encodeFormData">encodeFormData()</a>, 
+			<a href="class-SMSApi.Proxy.Http.AbstractHttp.html#_execute">execute()</a>, 
 			<a href="class-SMSApi.Proxy.Http.AbstractHttp.html#_getHost">getHost()</a>, 
 			<a href="class-SMSApi.Proxy.Http.AbstractHttp.html#_getPort">getPort()</a>, 
 			<a href="class-SMSApi.Proxy.Http.AbstractHttp.html#_getProtocol">getProtocol()</a>, 
 			<a href="class-SMSApi.Proxy.Http.AbstractHttp.html#_prepareFileContent">prepareFileContent()</a>, 
+			<a href="class-SMSApi.Proxy.Http.AbstractHttp.html#_prepareRequestBody">prepareRequestBody()</a>, 
+			<a href="class-SMSApi.Proxy.Http.AbstractHttp.html#_prepareRequestHeaders">prepareRequestHeaders()</a>, 
+			<a href="class-SMSApi.Proxy.Http.AbstractHttp.html#_prepareRequestUrl">prepareRequestUrl()</a>, 
 			<a href="class-SMSApi.Proxy.Http.AbstractHttp.html#_renderQueryByBody">renderQueryByBody()</a>
 		</code></td>
 	</tr>
@@ -201,49 +205,6 @@
 
 
 
-	<table class="summary" id="constants">
-	<caption>Constants summary</caption>
-	<tr data-order="CONNECT_FOPEN" id="CONNECT_FOPEN">
-
-		<td class="attributes"><code>integer</code></td>
-		<td class="name"><code>
-				<a href="source-class-SMSApi.Proxy.Http.Native.html#9" title="Go to source code"><b>CONNECT_FOPEN</b></a>
-		</code></td>
-		<td class="value"><code><span class="php-num">1</span></code></td>
-		<td class="description"><div>
-			<a href="#CONNECT_FOPEN" class="anchor">#</a>
-
-			<div class="description short">
-				
-			</div>
-
-			<div class="description detailed hidden">
-				
-
-			</div>
-		</div></td>
-	</tr>
-	<tr data-order="CONNECT_SOCKET" id="CONNECT_SOCKET">
-
-		<td class="attributes"><code>integer</code></td>
-		<td class="name"><code>
-				<a href="source-class-SMSApi.Proxy.Http.Native.html#10" title="Go to source code"><b>CONNECT_SOCKET</b></a>
-		</code></td>
-		<td class="value"><code><span class="php-num">2</span></code></td>
-		<td class="description"><div>
-			<a href="#CONNECT_SOCKET" class="anchor">#</a>
-
-			<div class="description short">
-				
-			</div>
-
-			<div class="description detailed hidden">
-				
-
-			</div>
-		</div></td>
-	</tr>
-	</table>
 
 
 
@@ -254,16 +215,12 @@
 	<tr>
 		<td><code>
 			<a href="class-SMSApi.Proxy.Http.AbstractHttp.html#$boundary"><var>$boundary</var></a>, 
-			<a href="class-SMSApi.Proxy.Http.AbstractHttp.html#$file"><var>$file</var></a>, 
-			<a href="class-SMSApi.Proxy.Http.AbstractHttp.html#$headers"><var>$headers</var></a>, 
 			<a href="class-SMSApi.Proxy.Http.AbstractHttp.html#$host"><var>$host</var></a>, 
 			<a href="class-SMSApi.Proxy.Http.AbstractHttp.html#$maxRedirects"><var>$maxRedirects</var></a>, 
 			<a href="class-SMSApi.Proxy.Http.AbstractHttp.html#$method"><var>$method</var></a>, 
 			<a href="class-SMSApi.Proxy.Http.AbstractHttp.html#$port"><var>$port</var></a>, 
 			<a href="class-SMSApi.Proxy.Http.AbstractHttp.html#$protocol"><var>$protocol</var></a>, 
-			<a href="class-SMSApi.Proxy.Http.AbstractHttp.html#$timeout"><var>$timeout</var></a>, 
-			<a href="class-SMSApi.Proxy.Http.AbstractHttp.html#$uri"><var>$uri</var></a>, 
-			<a href="class-SMSApi.Proxy.Http.AbstractHttp.html#$userAgent"><var>$userAgent</var></a>
+			<a href="class-SMSApi.Proxy.Http.AbstractHttp.html#$timeout"><var>$timeout</var></a>
 		</code></td>
 	</tr>
 	</table>
@@ -275,7 +232,7 @@
 </div>
 
 	<div id="footer">
-		SMSAPI api client API documentation generated by <a href="http://apigen.org">ApiGen 2.8.0</a>
+		 API documentation generated by <a href="http://apigen.org">ApiGen 2.8.0</a>
 	</div>
 </div>
 </div>
