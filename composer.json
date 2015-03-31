@@ -1,13 +1,11 @@
 {
     "name": "smsapi.pl/php-client",
     "description": "Library for communicating with provider",
-    "homepage": "http://www.smsapi.pl",
+    "homepage": "http://smsapi.pl",
     "version": "1.3.0",
     "type": "library",
     "license": "Apache-2.0",
     "keywords": ["sms", "mms", "vms"],
-    "minimum-stability": "dev",
-    "require": {},
     "autoload": {
         "psr-4": {
             "SMSApi\\": "smsapi"
