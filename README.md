@@ -6,30 +6,32 @@ Klient PHP pozwalający na wysyłanie wiadomości SMS, MMS, VMS oraz zarządzani
 ```php
 <?php
 
-require_once 'smsapi/Autoload.php';
+use SMSApi\Client;
+use SMSApi\Api\SmsFactory;
+use SMSApi\Exception\SmsapiException;
 
-$client = new \SMSApi\Client('login');
+require_once 'vendor/autoload.php';
+
+$client = new Client('login');
 $client->setPasswordHash( md5('super tajne haslo') );
 
-$smsapi = new \SMSApi\Api\SmsFactory();
+$smsapi = new SmsFactory;
 $smsapi->setClient($client);
 
 try {
-
 	$actionSend = $smsapi->actionSend();
 
 	$actionSend->setTo('600xxxxxx');
 	$actionSend->setText('Hello World!!');
-	$actionSend->setSender('Info'); //Pole nadawcy lub typ wiadomość 'ECO', '2Way'
+	$actionSend->setSender('Info'); //Pole nadawcy, lub typ wiadomości: 'ECO', '2Way'
 
 	$response = $actionSend->execute();
 
-	foreach( $response->getList() as $status ) {
-		echo  $status->getNumber() . ' ' . $status->getPoints() . ' ' . $status->getStatus();
+	foreach ($response->getList() as $status) {
+		echo $status->getNumber() . ' ' . $status->getPoints() . ' ' . $status->getStatus();
 	}
-}
-catch( \SMSApi\Exception\SmsapiException $e ) {
-	echo 'ERROR: ' . $e->getMessage();
+} catch (SmsapiException $exception) {
+	echo 'ERROR: ' . $exception->getMessage();
 }
 ```
 
