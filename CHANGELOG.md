@@ -1,4 +1,5 @@
 ## 1.3.0
+* fix autoload
 
 ## 1.1 (unknown)
 

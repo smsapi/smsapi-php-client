@@ -9,10 +9,9 @@
     "minimum-stability": "dev",
     "require": {},
     "autoload": {
-        "psr-0": {
-            "php-client\\smsapi": "SMSApi"
-        },
-        "classmap": [ "smsapi" ]
+        "psr-4": {
+            "SMSApi\\": "smsapi"
+        }
     },
     "autoload-dev": {
         "psr-0": {
