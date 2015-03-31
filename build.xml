@@ -33,7 +33,7 @@
         <exec executable="php" failonerror="true">
             <arg value="${basedir}/vendor/bin/phpunit" />
             <arg value="--configuration" />
-            <arg path="${basedir}/phpunit.xml.dist" />
+            <arg path="${basedir}/build/phpunit.xml" />
         </exec>
     </target>
     <target name="apigen" description="Generate docs">
