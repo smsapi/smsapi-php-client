@@ -37,13 +37,15 @@
         </exec>
     </target>
     <target name="apigen" description="Generate docs">
-        <exec executable="apigen" failonerror="false">
+        <exec executable="php" failonerror="false">
+            <arg value="${basedir}/vendor/bin/apigen" />
+            <arg value="generate" />
             <arg value="--source" />
             <arg path="${basedir}/smsapi" />
             <arg value="--destination" />
             <arg path="${basedir}/docs" />
-            <arg value="--title SMSAPI api client" />
-            <arg value="--php no" />
+            <arg value="--title" />
+            <arg value="SMSAPI Api Client" />
         </exec>
     </target>
 </project>
