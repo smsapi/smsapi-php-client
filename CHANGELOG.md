@@ -1,5 +1,8 @@
 # SMSAPI PHP Client
 
+## 1.3.1 - 2015-04-01
+* move ApiGen to Composer and update docs
+
 ## 1.3.0 - 2015-03-31
 * fix autoload
 * cleanup composer
