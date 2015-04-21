@@ -1,5 +1,8 @@
 # SMSAPI PHP Client
 
+## 1.3.3 - 2015-04-02
+* fix details parameter
+
 ## 1.3.2 - 2015-04-02
 * remove useless method mocks
 
