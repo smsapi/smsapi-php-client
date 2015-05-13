@@ -1,5 +1,8 @@
 # SMSAPI PHP Client
 
+## 1.3.4 - 2015-05-13
+* restore old autoload
+
 ## 1.3.3 - 2015-04-02
 * fix details parameter
 
