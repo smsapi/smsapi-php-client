@@ -41,7 +41,7 @@ class GetPoints extends AbstractAction {
 
     /**
      * Return detailed information
-     * @param bool $name
+     * @param bool $details
      * @return $this
      */
     public function setDetails($details)

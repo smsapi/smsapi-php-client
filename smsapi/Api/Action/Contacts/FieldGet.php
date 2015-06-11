@@ -1,0 +1,34 @@
+<?php
+
+namespace SMSApi\Api\Action\Contacts;
+
+use SMSApi\Api\Response\Contacts\FieldResponse;
+use SMSApi\Client;
+use SMSApi\Proxy\Proxy;
+
+final class FieldGet extends ContactsAction
+{
+    private $fieldId;
+
+    public function __construct($fieldId, Client $client, Proxy $proxy)
+    {
+        parent::__construct($client, $proxy);
+
+        $this->fieldId = $fieldId;
+    }
+
+    public function getMethod()
+    {
+        return self::METHOD_GET;
+    }
+
+    protected function getResource()
+    {
+        return strtr('/contacts/fields/:fieldId', array(':fieldId' => $this->fieldId));
+    }
+
+    protected function response($data)
+    {
+        return FieldResponse::fromJsonString($data);
+    }
+}

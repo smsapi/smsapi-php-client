@@ -2,24 +2,33 @@
 
 namespace SMSApi\Api\Action;
 
+use Exception;
+use SMSApi\Api\Action\Contacts\ContactsAction;
+use SMSApi\Exception\ActionException;
+use SMSApi\Exception\ClientException;
+use SMSApi\Exception\HostException;
+use SMSApi\Exception\ProxyException;
+use SMSApi\Exception\SmsapiException;
+use SMSApi\Proxy\Proxy;
+
 /**
  * Class AbstractAction
  * @package SMSApi\Api\Action
  */
-abstract class AbstractAction {
-
-	/**
+abstract class AbstractAction
+{
+    /**
 	 * @var
 	 */
 	protected $client;
-	/**
-	 * @var
-	 */
+
+	/** @var Proxy */
 	protected $proxy;
+
 	/**
 	 * @var array
 	 */
-	protected $params = array( );
+	protected $params = [ ];
 	/**
 	 * @var \ArrayObject
 	 */
@@ -40,6 +49,8 @@ abstract class AbstractAction {
 	 * @var
 	 */
 	protected $encoding;
+
+    protected $isContacts = false;
 
 	/**
 	 *
@@ -72,6 +83,8 @@ abstract class AbstractAction {
 	 */
 	public function client( \SMSApi\Client $client ) {
 		$this->client = $client;
+
+        return $this;
 	}
 
 	/**
@@ -79,6 +92,8 @@ abstract class AbstractAction {
 	 */
 	public function proxy( \SMSApi\Proxy\Proxy $proxy ) {
 		$this->proxy = $proxy;
+
+        return $this;
 	}
 
 	/**
@@ -109,21 +124,22 @@ abstract class AbstractAction {
 		return $this;
 	}
 
-	/**
-	 * @param string $skip
-	 * @return string
-	 */
-	protected function paramsOther( $skip = "" ) {
+	protected function paramsOther($skip = '')
+    {
+        $query = '';
+        foreach ($this->params as $key => $val) {
+            if ($key != $skip && $val != null) {
+                if (is_array($val)) {
+                    foreach ($val as $v) {
+                        $query .= '&' . $key . '[]=' . $v;
+                    }
+                } else {
+                    $query .= '&' . $key . '=' . $val;
+                }
+            }
+        }
 
-		$query = "";
-
-		foreach ( $this->params as $key => $val ) {
-			if ( $key != $skip && $val != null ) {
-				$query .= '&' . $key . '=' . $val;
-			}
-		}
-
-		return $query;
+        return $query;
 	}
 
 	/**
@@ -180,7 +196,7 @@ abstract class AbstractAction {
 		$query .= ($this->group != null) ? "&group=" . $this->group : "&to=" . $this->renderTo();
 
 		$query .= ($this->date != null) ? "&date=" . $this->date : "";
-		
+
 		$query .= ( $this->encoding != null ) ? "&encoding=" . $this->encoding : "";
 
 		return $query;
@@ -201,17 +217,23 @@ abstract class AbstractAction {
 	 */
 	public function execute()
 	{
-		try 
+		try
 		{
 			$this->setJson( true );
 
 			$data = $this->proxy->execute( $this );
 
-			$this->handleError( $data );
+            if ($this->isContacts) {
+                $this->handleContactsError($data);
 
-			return $this->response( $data );			
+                return $this->response($data['output']);
+            } else {
+                $this->handleError($data);
+
+                return $this->response($data);
+            }
 		}
-		catch ( Exception $ex ) 
+		catch ( Exception $ex )
 		{
 			throw new \SMSApi\Exception\ActionException( $ex->getMessage() );
 		}
@@ -240,4 +262,22 @@ abstract class AbstractAction {
 		}
 	}
 
+    private function handleContactsError(array $data)
+    {
+        if ($data['code'] < 200 and $data['code'] > 299) {
+            if (isset($data['output']['code'], $data['output']['message'])) {
+                $code = $data['output']['code'];
+                $message = $data['output']['message'];
+                if (SmsapiException::isHostError($code)) {
+                    throw new HostException($message, $code);
+                } elseif (SmsapiException::isClientError($code) ) {
+                    throw new ClientException($message, $code);
+                } else {
+                    throw new ActionException($message, $code);
+                }
+            } else {
+                throw new ProxyException;
+            }
+        }
+    }
 }

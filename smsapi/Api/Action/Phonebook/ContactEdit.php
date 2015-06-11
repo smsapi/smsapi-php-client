@@ -3,8 +3,9 @@
 namespace SMSApi\Api\Action\Phonebook;
 
 /**
- * Class ContactEdit
+ * Class ContactsEdit
  * @package SMSApi\Api\Action\Phonebook
+ * @deprecated use \SMSApi\Api\Action\Contacts\ContactsEdit
  */
 class ContactEdit extends ContactAdd {
 

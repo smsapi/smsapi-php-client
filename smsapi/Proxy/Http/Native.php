@@ -2,9 +2,7 @@
 
 namespace SMSApi\Proxy\Http;
 
-use SMSApi\Proxy\Proxy;
-
-class Native extends AbstractHttp implements Proxy
+class Native extends AbstractHttp
 {
     /**
      * @deprecated
@@ -16,7 +14,7 @@ class Native extends AbstractHttp implements Proxy
      */
 	const CONNECT_SOCKET = 2;
 
-	protected function makeRequest($url, $query, $file)
+	protected function makeRequest($method, $url, $query, $file)
     {
         $body = $this->prepareRequestBody($file);
 
@@ -30,7 +28,7 @@ class Native extends AbstractHttp implements Proxy
 
         $options = array(
             'http' => array(
-                'method'	 => $this->method,
+                'method'	 => $method,
                 'header'	 => $headersString,
                 'content'	 => empty($body) ? $query : $body,
             )

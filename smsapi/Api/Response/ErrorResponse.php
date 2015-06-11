@@ -4,7 +4,7 @@ namespace SMSApi\Api\Response;
 
 /**
  * Class ErrorResponse
- * @package SMSApi\Api\Response
+ * @package SMSApi\Api\AbstractContactsResponse
  */
 class ErrorResponse extends AbstractResponse {
 

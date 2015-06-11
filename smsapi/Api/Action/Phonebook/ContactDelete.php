@@ -6,8 +6,9 @@ use SMSApi\Api\Action\AbstractAction;
 use SMSApi\Proxy\Uri;
 
 /**
- * Class ContactDelete
+ * Class ContactsDelete
  * @package SMSApi\Api\Action\Phonebook
+ * @deprecated use \SMSApi\Api\Action\Contacts\ContactsDelete
  */
 class ContactDelete extends AbstractAction {
 
