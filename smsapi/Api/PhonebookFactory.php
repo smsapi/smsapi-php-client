@@ -5,6 +5,7 @@ namespace SMSApi\Api;
 /**
  * Class PhonebookFactory
  * @package SMSApi\Api
+ * @deprecated use ContactsFactory
  */
 class PhonebookFactory extends ActionFactory {
 

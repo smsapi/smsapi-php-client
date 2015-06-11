@@ -4,7 +4,8 @@ namespace SMSApi\Api\Response;
 
 /**
  * Class GroupsResponse
- * @package SMSApi\Api\Response
+ * @package SMSApi\Api\AbstractContactsResponse
+ * @deprecated use Contacts\GroupsResponse
  */
 class GroupsResponse extends CountableResponse {
 
