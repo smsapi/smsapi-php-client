@@ -25,7 +25,7 @@ class ContactsEdit extends ContactsAction
 
     public function getResource()
     {
-        return strtr('/contacts/:contactId', [':contactId' => $this->contactId]);
+        return strtr('/contacts/:contactId', array(':contactId' => $this->contactId));
     }
 
     protected function response($data)

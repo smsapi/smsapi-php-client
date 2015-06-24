@@ -28,10 +28,10 @@ final class ContactsGroupAdd extends ContactsAction
     {
         return strtr(
             '/contacts/:contactId/groups/:groupId',
-            [
+            array(
                 ':contactId' => $this->contactId,
                 ':groupId' => $this->groupId,
-            ]
+            )
         );
     }
 

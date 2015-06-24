@@ -14,6 +14,8 @@ abstract class ContactsAction extends AbstractAction
     const METHOD_DELETE = 'DELETE';
     const METHOD_PUT = 'PUT';
 
+    protected $isContacts = true;
+
     public function __construct(Client $client, Proxy $proxy)
     {
         parent::__construct();

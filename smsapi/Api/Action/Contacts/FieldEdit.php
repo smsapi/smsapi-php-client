@@ -24,7 +24,7 @@ final class FieldEdit extends ContactsAction
 
     protected function getResource()
     {
-        return strtr('/contacts/fields/:fieldId', [':fieldId' => $this->fieldId]);
+        return strtr('/contacts/fields/:fieldId', array(':fieldId' => $this->fieldId));
     }
 
     protected function response($data)

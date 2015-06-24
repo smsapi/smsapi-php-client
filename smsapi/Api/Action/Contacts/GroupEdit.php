@@ -24,7 +24,7 @@ final class GroupEdit extends ContactsAction
 
     public function getResource()
     {
-        return strtr('/contacts/groups/:groupId', [':groupId' => $this->groupId]);
+        return strtr('/contacts/groups/:groupId', array(':groupId' => $this->groupId));
     }
 
     protected function response($data)

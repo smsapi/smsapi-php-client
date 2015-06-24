@@ -50,6 +50,8 @@ abstract class AbstractAction
 	 */
 	protected $encoding;
 
+    protected $isContacts = false;
+
 	/**
 	 *
 	 */
@@ -221,7 +223,7 @@ abstract class AbstractAction
 
 			$data = $this->proxy->execute( $this );
 
-            if (is_a($this, 'SMSApi\Api\Action\Contacts\ContactsAction')) {
+            if ($this->isContacts) {
                 $this->handleContactsError($data);
 
                 return $this->response($data['output']);
@@ -264,12 +266,14 @@ abstract class AbstractAction
     {
         if ($data['code'] < 200 and $data['code'] > 299) {
             if (isset($data['output']['code'], $data['output']['message'])) {
-                if (SmsapiException::isHostError($data['output']['code'])) {
-                    throw new HostException($data['output']['message'], $data['output']['code']);
-                } elseif (SmsapiException::isClientError($data['output']['code']) ) {
-                    throw new ClientException($data['output']['message'], $data['output']['code']);
+                $code = $data['output']['code'];
+                $message = $data['output']['message'];
+                if (SmsapiException::isHostError($code)) {
+                    throw new HostException($message, $code);
+                } elseif (SmsapiException::isClientError($code) ) {
+                    throw new ClientException($message, $code);
                 } else {
-                    throw new ActionException($data['output']['message'], $data['output']['code']);
+                    throw new ActionException($message, $code);
                 }
             } else {
                 throw new ProxyException;

@@ -3,19 +3,18 @@
 namespace SMSApi\Api\Action\Contacts;
 
 use DateTime;
-use InvalidArgumentException;
 use SMSApi\Api\Response\Contacts\ContactResponse;
 use SMSApi\Client;
 use SMSApi\Proxy\Proxy;
 
 final class ContactAdd extends ContactsAction
 {
-    private static $PARAMETER_METHODS = [
+    private static $PARAMETER_METHODS = array(
         ContactResponse::FIELD_FIRST_NAME => 'setFirstName',
         ContactResponse::FIELD_LAST_NAME => 'setLastName',
         ContactResponse::FIELD_PHONE_NUMBER => 'setPhoneNumber',
         ContactResponse::FIELD_EMAIL => 'setEmail',
-    ];
+    );
 
     public static function fromFirstName($firstName, Client $client, Proxy $proxy)
     {
