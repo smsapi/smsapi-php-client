@@ -3,7 +3,8 @@
 namespace SMSApi\Api\Action;
 
 use Exception;
-use SMSApi\Api\Action\Contacts\ContactsAction;
+use SMSApi\Api\Response\ErrorResponse;
+use SMSApi\Client;
 use SMSApi\Exception\ActionException;
 use SMSApi\Exception\ClientException;
 use SMSApi\Exception\HostException;
@@ -17,8 +18,13 @@ use SMSApi\Proxy\Proxy;
  */
 abstract class AbstractAction
 {
+    const METHOD_GET = 'GET';
+    const METHOD_POST = 'POST';
+    const METHOD_DELETE = 'DELETE';
+    const METHOD_PUT = 'PUT';
+
     /**
-	 * @var
+	 * @var Client
 	 */
 	protected $client;
 
@@ -28,7 +34,7 @@ abstract class AbstractAction
 	/**
 	 * @var array
 	 */
-	protected $params = [ ];
+	protected $params = array();
 	/**
 	 * @var \ArrayObject
 	 */
@@ -78,19 +84,21 @@ abstract class AbstractAction
 		return null;
 	}
 
-	/**
-	 * @param \SMSApi\Client $client
-	 */
-	public function client( \SMSApi\Client $client ) {
+    /**
+     * @param Client $client
+     * @return $this
+     */
+	public function client( Client $client ) {
 		$this->client = $client;
 
         return $this;
 	}
 
-	/**
-	 * @param \SMSApi\Proxy\Proxy $proxy
-	 */
-	public function proxy( \SMSApi\Proxy\Proxy $proxy ) {
+    /**
+     * @param Proxy $proxy
+     * @return $this
+     */
+	public function proxy( Proxy $proxy ) {
 		$this->proxy = $proxy;
 
         return $this;
@@ -110,6 +118,11 @@ abstract class AbstractAction
 		return $this;
 	}
 
+    public function isContacts()
+    {
+        return $this->isContacts;
+    }
+
 	/**
 	 * @param $val
 	 * @return $this
@@ -124,7 +137,7 @@ abstract class AbstractAction
 		return $this;
 	}
 
-	protected function paramsOther($skip = '')
+    protected function paramsOther($skip = '')
     {
         $query = '';
         foreach ($this->params as $key => $val) {
@@ -144,7 +157,7 @@ abstract class AbstractAction
 
 	/**
 	 * @return string
-	 * @throws \SMSApi\Exception\ActionException
+	 * @throws ActionException
 	 */
 	protected function renderTo() {
 
@@ -153,7 +166,7 @@ abstract class AbstractAction
 
 		if ( $sizeIdx > 0 ) {
 			if ( ($sizeTo != $sizeIdx ) ) {
-				throw new \SMSApi\Exception\ActionException( "size idx is not equals to" );
+				throw new ActionException( "size idx is not equals to" );
 			} else {
 				return $this->renderList( $this->to, ',' ) . "&idx=" . $this->renderList( $this->idx, '|' );
 			}
@@ -221,23 +234,28 @@ abstract class AbstractAction
 		{
 			$this->setJson( true );
 
-			$data = $this->proxy->execute( $this );
+            $data = $this->proxy->execute($this);
 
             if ($this->isContacts) {
                 $this->handleContactsError($data);
 
                 return $this->response($data['output']);
             } else {
-                $this->handleError($data);
+                $this->handleError($data['output']);
 
-                return $this->response($data);
+                return $this->response($data['output']);
             }
 		}
 		catch ( Exception $ex )
 		{
-			throw new \SMSApi\Exception\ActionException( $ex->getMessage() );
+			throw new ActionException( $ex->getMessage() );
 		}
 	}
+
+    public function getMethod()
+    {
+        return self::METHOD_POST;
+    }
 
 	/**
 	 * @param $data
@@ -247,17 +265,17 @@ abstract class AbstractAction
 	 */
 	protected function handleError( $data ) {
 
-		$error = new \SMSApi\Api\Response\ErrorResponse( $data );
+		$error = new ErrorResponse( $data );
 
 		if ( $error->isError() ) {
-			if ( \SMSApi\Exception\SmsapiException::isHostError( $error->code ) ) {
-				throw new \SMSApi\Exception\HostException( $error->message, $error->code );
+			if ( SmsapiException::isHostError( $error->code ) ) {
+				throw new HostException( $error->message, $error->code );
 			}
 
-			if ( \SMSApi\Exception\SmsapiException::isClientError( $error->code ) ) {
-				throw new \SMSApi\Exception\ClientException( $error->message, $error->code );
+			if ( SmsapiException::isClientError( $error->code ) ) {
+				throw new ClientException( $error->message, $error->code );
 			} else {
-				throw new \SMSApi\Exception\ActionException( $error->message, $error->code );
+				throw new ActionException( $error->message, $error->code );
 			}
 		}
 	}

@@ -33,10 +33,10 @@ final class GroupPermissionEdit extends ContactsAction
     {
         return strtr(
             '/contacts/groups/:groupId/permission/:username',
-            [
+            array(
                 ':groupId' => $this->groupId,
                 ':username' => $this->username,
-            ]
+            )
         );
     }
 

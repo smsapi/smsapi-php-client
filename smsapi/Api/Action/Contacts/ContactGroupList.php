@@ -29,6 +29,6 @@ final class ContactsGroupList extends ContactsAction
 
     protected function getResource()
     {
-        return strtr('/contacts/:contactId/groups', [':contactId' => $this->contactId]);
+        return strtr('/contacts/:contactId/groups', array(':contactId' => $this->contactId));
     }
 }

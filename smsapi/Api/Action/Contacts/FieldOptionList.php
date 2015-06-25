@@ -24,7 +24,7 @@ final class FieldOptionList extends ContactsAction
 
     protected function getResource()
     {
-        return strtr('/contacts/fields/:fieldId/options', [':fieldId' => $this->fieldId]);
+        return strtr('/contacts/fields/:fieldId/options', array(':fieldId' => $this->fieldId));
     }
 
     protected function response($data)

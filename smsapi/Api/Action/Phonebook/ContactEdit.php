@@ -14,7 +14,7 @@ class ContactEdit extends ContactAdd {
 	 * @deprecated since v1.0.0
 	 */
 	public function setContact( $number ) {
-		return $this->phoneNumber($number);
+		return $this->filterByPhoneNumber($number);
 	}
 
 	/**

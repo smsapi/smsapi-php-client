@@ -2,7 +2,10 @@
 
 namespace SMSApi\Api;
 
-use SMSApi\Api\Action\Contacts\ContactAdd;
+use SMSApi\Api\Action\Contacts\ContactAddByEmail;
+use SMSApi\Api\Action\Contacts\ContactAddByFirstName;
+use SMSApi\Api\Action\Contacts\ContactAddByLastName;
+use SMSApi\Api\Action\Contacts\ContactAddByPhoneNumber;
 use SMSApi\Api\Action\Contacts\ContactsDelete;
 use SMSApi\Api\Action\Contacts\ContactsEdit;
 use SMSApi\Api\Action\Contacts\ContactsGet;
@@ -45,22 +48,22 @@ final class ContactsFactory extends ActionFactory
 
     public function actionContactAddFromFirstName($firstName)
     {
-        return ContactAdd::fromFirstName($firstName, $this->client, $this->proxy);
+        return new ContactAddByFirstName($firstName, $this->client, $this->proxy);
     }
 
     public function actionContactAddFromLastName($lastName)
     {
-        return ContactAdd::fromLastName($lastName, $this->client, $this->proxy);
+        return new ContactAddByLastName($lastName, $this->client, $this->proxy);
     }
 
     public function actionContactAddFromEmail($email)
     {
-        return ContactAdd::fromEmail($email, $this->client, $this->proxy);
+        return new ContactAddByEmail($email, $this->client, $this->proxy);
     }
 
     public function actionContactAddFromPhoneNumber($phoneNumber)
     {
-        return ContactAdd::fromPhoneNumber($phoneNumber, $this->client, $this->proxy);
+        return new ContactAddByPhoneNumber($phoneNumber, $this->client, $this->proxy);
     }
 
     public function actionContactEdit($contactId)
@@ -128,9 +131,9 @@ final class ContactsFactory extends ActionFactory
         return new GroupPermissionGet($groupId, $username, $this->client, $this->proxy);
     }
 
-    public function actionGroupPermissionAdd($username)
+    public function actionGroupPermissionAdd($groupId, $username)
     {
-        return new GroupPermissionAdd($username, $this->client, $this->proxy);
+        return new GroupPermissionAdd($groupId, $username, $this->client, $this->proxy);
     }
 
     public function actionGroupPermissionEdit($groupId, $username)

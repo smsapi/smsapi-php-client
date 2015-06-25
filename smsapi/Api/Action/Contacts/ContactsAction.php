@@ -9,11 +9,6 @@ use SMSApi\Proxy\Uri;
 
 abstract class ContactsAction extends AbstractAction
 {
-    const METHOD_GET = 'GET';
-    const METHOD_POST = 'POST';
-    const METHOD_DELETE = 'DELETE';
-    const METHOD_PUT = 'PUT';
-
     protected $isContacts = true;
 
     public function __construct(Client $client, Proxy $proxy)
@@ -35,11 +30,6 @@ abstract class ContactsAction extends AbstractAction
             $this->paramsLoginToQuery() . $this->paramsOther()
         );
     }
-
-    /**
-     * @return string
-     */
-    abstract public function getMethod();
 
     /**
      * @return string

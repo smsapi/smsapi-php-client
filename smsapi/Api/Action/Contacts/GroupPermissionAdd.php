@@ -30,7 +30,7 @@ final class GroupPermissionAdd extends ContactsAction
 
     protected function getResource()
     {
-        return strtr('/contacts/groups/:groupId/permission', [':groupId' => $this->groupId]);
+        return strtr('/contacts/groups/:groupId/permission', array(':groupId' => $this->groupId));
     }
 
     public function enableRead()
