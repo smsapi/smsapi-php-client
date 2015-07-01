@@ -1,5 +1,8 @@
 # SMSAPI PHP Client
 
+## 1.3.5 - 2015-07-01
+* change default host
+
 ## 1.3.4 - 2015-05-13
 * restore old autoload
 
