@@ -3,6 +3,9 @@
 ## 1.4.0 - 2015-06-24
 * add contacts support
 
+## 1.3.5 - 2015-07-01
+* change default host
+
 ## 1.3.4 - 2015-05-13
 * restore old autoload
 

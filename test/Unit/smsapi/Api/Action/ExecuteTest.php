@@ -77,7 +77,7 @@ class ExecuteTest extends \PHPUnit_Framework_TestCase
 
     private function prepareProxyStub()
     {
-        $proxyStub = $this->getMock('\SMSApi\Proxy\Http\Native', array(), ['']);
+        $proxyStub = $this->getMock('\SMSApi\Proxy\Http\Native', array(), array(''));
 
         $proxyStub->expects($this->once())
             ->method('execute')

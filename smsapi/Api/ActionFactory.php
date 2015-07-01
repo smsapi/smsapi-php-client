@@ -27,7 +27,7 @@ abstract class ActionFactory {
 		if ( $proxy instanceof \SMSApi\Proxy\Proxy ) {
 			$this->setProxy( $proxy );
 		} else {
-			$this->setProxy( new \SMSApi\Proxy\Http\Native( 'https://ssl.smsapi.pl/' ) );
+			$this->setProxy( new \SMSApi\Proxy\Http\Native( 'https://api.smsapi.pl/' ) );
 		}
 
 		if ( $client instanceof \SMSApi\Client ) {
