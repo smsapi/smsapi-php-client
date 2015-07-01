@@ -4,15 +4,15 @@ namespace SMSApi\Proxy\Http;
 
 use SMSApi\Api\Action\AbstractAction;
 use SMSApi\Exception\ProxyException;
+use SMSApi\Proxy\Proxy;
 use SMSApi\Proxy\Uri;
 
-abstract class AbstractHttp
+abstract class AbstractHttp implements Proxy
 {
 	protected $protocol;
 	protected $host;
 	protected $port;
     protected $boundary = '**RGRG87VFSGF86796GSD**';
-	protected $method = "POST";
 	protected $timeout = 5;
 	protected $maxRedirects = 1;
 
@@ -36,7 +36,7 @@ abstract class AbstractHttp
      */
     protected $headers = array();
 
-	public function __construct( $host ) {
+    public function __construct( $host ) {
 
 		$tmp = explode( "://", $host );
 
@@ -79,13 +79,15 @@ abstract class AbstractHttp
                 throw new ProxyException("Invalid URI");
             }
 
+            $method = $action->getMethod();
             $url = $this->prepareRequestUrl($uri);
-
             $query = $uri->getQuery();
 
-            $response = $this->makeRequest($url, $query, $file);
+            $response = $this->makeRequest($method, $url, $query, $file);
 
-            $this->checkCode($response['code']);
+            if (!$action->isContacts()) {
+                $this->checkCode($response['code']);
+            }
 
             if (empty($response['output'])) {
                 throw new ProxyException('Error fetching remote content empty');
@@ -94,10 +96,10 @@ abstract class AbstractHttp
             throw new ProxyException($e->getMessage());
         }
 
-        return $response['output'];
+        return $response;
     }
 
-    abstract protected function makeRequest($url, $query, $file);
+    abstract protected function makeRequest($method, $url, $query, $file);
 
     protected function checkCode($code)
     {
@@ -125,7 +127,7 @@ abstract class AbstractHttp
 		return $type;
 	}
 
-	protected function encodeFormData( $boundary, $name, $value, $filename = null, $headers = array( ) ) {
+	protected function encodeFormData( $boundary, $name, $value, $filename = null, $headers = array() ) {
 		$ret = "--{$boundary}\r\n" .
 			'Content-Disposition: form-data; name="' . $name . '"';
 
@@ -149,7 +151,7 @@ abstract class AbstractHttp
 		$file[ 'data' ] = file_get_contents( $filename );
 		$file[ 'filename' ] = basename( $filename );
 		$file[ 'ctype' ] = $this->detectFileMimeType( $filename );
-		$fhead = array( 'Content-Type' => $file[ 'ctype' ] );
+		$fhead = array('Content-Type' => $file[ 'ctype' ]);
 
 		$body = $this->encodeFormData( $this->boundary, $file[ 'formname' ], $file[ 'data' ], $file[ 'filename' ], $fhead );
 
@@ -163,7 +165,7 @@ abstract class AbstractHttp
 		$tmpBody = "";
 
 		if ( !empty( $query ) && !empty( $body ) ) {
-			$params = array( );
+			$params = array();
 			parse_str( $query, $params );
 			foreach ( $params as $k2 => $v2 ) {
 				$tmpBody .= $this->encodeFormData( $this->boundary, $k2, $v2 );
@@ -217,7 +219,7 @@ abstract class AbstractHttp
     {
         $headers = array();
 
-        $headers['User-Agent'] = 'SMSApi';
+        $headers['User-Agent'] = 'smsapi-php-client';
         $headers['Accept'] = '';
 
         if ($this->isFileValid($file)) {

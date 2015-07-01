@@ -4,7 +4,7 @@ namespace SMSApi\Api\Response;
 
 /**
  * Class StatusResponse
- * @package SMSApi\Api\Response
+ * @package SMSApi\Api\AbstractContactsResponse
  */
 class StatusResponse extends CountableResponse {
 

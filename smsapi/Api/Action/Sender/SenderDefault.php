@@ -3,6 +3,7 @@
 namespace SMSApi\Api\Action\Sender;
 
 use SMSApi\Api\Action\AbstractAction;
+use SMSApi\Api\Response\RawResponse;
 use SMSApi\Proxy\Uri;
 
 /**
@@ -13,11 +14,11 @@ class SenderDefault extends AbstractAction {
 
 	/**
 	 * @param $data
-	 * @return \SMSApi\Api\Response\RawResponse
+	 * @return RawResponse
 	 */
 	protected function response( $data ) {
 
-		return new \SMSApi\Api\Response\RawResponse( $data );
+		return new RawResponse( $data );
 	}
 
 	/**

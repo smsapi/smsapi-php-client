@@ -3,11 +3,10 @@
 namespace SMSApi\Proxy\Http;
 
 use SMSApi\Exception\ProxyException;
-use SMSApi\Proxy\Proxy;
 
-class Curl extends AbstractHttp implements Proxy
+class Curl extends AbstractHttp
 {
-    protected function makeRequest($url, $query, $file)
+    protected function makeRequest($method, $url, $query, $file)
     {
         $body = $this->prepareRequestBody($file);
 
@@ -37,7 +36,7 @@ class Curl extends AbstractHttp implements Proxy
             throw new ProxyException( 'Unable to connect' );
         }
 
-        if ( $this->method == "POST" ) {
+        if ($method == "POST" ) {
 
             $body = $this->renderQueryByBody($query, $body);
 

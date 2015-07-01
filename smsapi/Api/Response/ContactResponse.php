@@ -6,7 +6,8 @@ use SMSApi\Exception\InvalidParameterException;
 
 /**
  * Class ContactResponse
- * @package SMSApi\Api\Response
+ * @package SMSApi\Api\AbstractContactsResponse
+ * @deprecated use Contacts\ContactResponse
  */
 class ContactResponse extends AbstractResponse {
 

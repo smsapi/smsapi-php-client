@@ -3,6 +3,7 @@
 namespace SMSApi\Api\Action\User;
 
 use SMSApi\Api\Action\AbstractAction;
+use SMSApi\Api\Response\PointsResponse;
 use SMSApi\Proxy\Uri;
 
 /**
@@ -10,17 +11,17 @@ use SMSApi\Proxy\Uri;
  *
  * @package SMSApi\Api\Action\User
  *
- * @method \SMSApi\Api\Response\PointsResponse|null execute() execute()
+ * @method PointsResponse|null execute() execute()
  */
 class GetPoints extends AbstractAction {
 
 	/**
 	 * @param $data
-	 * @return \SMSApi\Api\Response\PointsResponse
+	 * @return PointsResponse
 	 */
 	protected function response( $data ) {
 
-		return new \SMSApi\Api\Response\PointsResponse( $data );
+		return new PointsResponse( $data );
 	}
 
 	/**
@@ -41,7 +42,7 @@ class GetPoints extends AbstractAction {
 
     /**
      * Return detailed information
-     * @param bool $name
+     * @param bool $details
      * @return $this
      */
     public function setDetails($details)

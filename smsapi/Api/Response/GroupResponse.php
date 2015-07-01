@@ -4,7 +4,8 @@ namespace SMSApi\Api\Response;
 
 /**
  * Class GroupResponse
- * @package SMSApi\Api\Response
+ * @package SMSApi\Api\AbstractContactsResponse
+ * @deprecated use Contacts\GroupResponse
  */
 class GroupResponse extends AbstractResponse {
 
