@@ -1,5 +1,6 @@
 <?php
 use SMSApi\Api\ContactsFactory;
+use SMSApi\Api\Response\Contacts\ContactResponse;
 use SMSApi\Api\Response\Contacts\FieldResponse;
 use SMSApi\Api\Response\Contacts\ListResponse;
 use SMSApi\Api\Response\UserResponse;
@@ -7,10 +8,8 @@ use SMSApi\Api\UserFactory;
 
 final class ContactsTest extends SmsapiTestCase
 {
-    private static $contactIds = array();
-    private static $groupIds = array();
-    private static $fieldIds = array();
-    private static $groupPermissionIds = array();
+    private static $contactId = array();
+    private static $groupId = array();
 
     /** @var ContactsFactory */
     private $contactsFactory;
@@ -18,7 +17,6 @@ final class ContactsTest extends SmsapiTestCase
     public function setUp()
     {
         $this->contactsFactory = new ContactsFactory($this->proxy, $this->client());
-
     }
 
     /**
@@ -75,6 +73,8 @@ final class ContactsTest extends SmsapiTestCase
         $someDescription = 'some description';
         $someFirstName = 'some first name';
         $someLastName = 'some last name';
+        $someCity = 'some city';
+        $someSource = 'some source';
         $testedObject = $this->contactsFactory
             ->actionContactAddFromEmail($someEmail)
             ->setBirthdayDate($someBirthdayDate)
@@ -82,6 +82,8 @@ final class ContactsTest extends SmsapiTestCase
             ->setFirstName($someFirstName)
             ->setLastName($someLastName)
             ->setPhoneNumber($somePhoneNumber)
+            ->setCity($someCity)
+            ->setSource($someSource)
             ->setGenderAsMale();
 
         $result = $testedObject->execute();
@@ -93,7 +95,10 @@ final class ContactsTest extends SmsapiTestCase
         $this->assertEquals($someFirstName, $result->getFirstName());
         $this->assertEquals($someLastName, $result->getLastName());
         $this->assertEquals($somePhoneNumber, $result->getPhoneNumber());
-        self::$contactIds[] = $result->getId();
+        $this->assertEquals($someCity, $result->getCity());
+        $this->assertEquals($someSource, $result->getSource());
+        $this->assertEquals(ContactResponse::GENDER_MALE, $result->getGender());
+        self::$contactId = $result->getId();
     }
 
     /**
@@ -109,13 +114,18 @@ final class ContactsTest extends SmsapiTestCase
         $someDescription = 'some description';
         $someFirstName = 'some first name';
         $someLastName = 'some last name';
+        $someCity = 'some city';
+        $someSource = 'some source';
         $testedObject = $this->contactsFactory
             ->actionContactAddFromPhoneNumber($somePhoneNumber)
             ->setBirthdayDate($someBirthdayDate)
             ->setDescription($someDescription)
             ->setFirstName($someFirstName)
             ->setLastName($someLastName)
-            ->setEmail($someEmail);
+            ->setEmail($someEmail)
+            ->setCity($someCity)
+            ->setSource($someSource)
+            ->setGenderAsMale();
 
         $result = $testedObject->execute();
 
@@ -127,7 +137,9 @@ final class ContactsTest extends SmsapiTestCase
         $this->assertEquals($someFirstName, $result->getFirstName());
         $this->assertEquals($someLastName, $result->getLastName());
         $this->assertEquals($somePhoneNumber, $result->getPhoneNumber());
-        self::$contactIds[] = $result->getId();
+        $this->assertEquals($someCity, $result->getCity());
+        $this->assertEquals($someSource, $result->getSource());
+        $this->assertEquals(ContactResponse::GENDER_MALE, $result->getGender());
 
         return $result->getId();
     }
@@ -147,6 +159,8 @@ final class ContactsTest extends SmsapiTestCase
         $otherDescription = 'other description';
         $otherFirstName = 'other first name';
         $otherLastName = 'other last name';
+        $someCity = 'other city';
+        $someSource = 'other source';
         $testedObject = $this->contactsFactory
             ->actionContactEdit($contactId)
             ->setEmail($otherEmail)
@@ -155,7 +169,9 @@ final class ContactsTest extends SmsapiTestCase
             ->setFirstName($otherFirstName)
             ->setLastName($otherLastName)
             ->setPhoneNumber($otherPhoneNumber)
-            ->setGenderAsMale();
+            ->setCity($someCity)
+            ->setSource($someSource)
+            ->setGenderAsFemale();
 
         $result = $testedObject->execute();
 
@@ -167,6 +183,9 @@ final class ContactsTest extends SmsapiTestCase
         $this->assertEquals($otherFirstName, $result->getFirstName());
         $this->assertEquals($otherLastName, $result->getLastName());
         $this->assertEquals($otherPhoneNumber, $result->getPhoneNumber());
+        $this->assertEquals($someCity, $result->getCity());
+        $this->assertEquals($someSource, $result->getSource());
+        $this->assertEquals(ContactResponse::GENDER_FEMALE, $result->getGender());
 
         return $contactId;
     }
@@ -202,7 +221,7 @@ final class ContactsTest extends SmsapiTestCase
 
         $this->assertInstanceOf('\SMSApi\Api\Response\Contacts\GroupResponse', $result);
         $this->assertEquals($someName, $result->getName());
-        self::$groupIds[] = $result->getId();
+        self::$groupId = $result->getId();
 
         return $result->getId();
     }
@@ -250,12 +269,12 @@ final class ContactsTest extends SmsapiTestCase
      */
     public function it_should_add_contact_group()
     {
-        $someGroupId = reset(self::$groupIds);
-        $testedObject = $this->contactsFactory->actionContactGroupAdd(reset(self::$contactIds), $someGroupId);
+        $someGroupId = self::$groupId;
+        $testedObject = $this->contactsFactory->actionContactGroupAdd(self::$contactId, $someGroupId);
 
         $result = $testedObject->execute();
 
-        $this->assertListResponse('\SMSApi\Api\Response\Contacts\GroupsResponse', self::$groupIds, $result);
+        $this->assertListResponse('\SMSApi\Api\Response\Contacts\GroupsResponse', array($someGroupId), $result);
     }
 
     /**
@@ -264,8 +283,8 @@ final class ContactsTest extends SmsapiTestCase
      */
     public function it_should_get_contact_group()
     {
-        $someGroupId = reset(self::$groupIds);
-        $testedObject = $this->contactsFactory->actionContactGroupGet(reset(self::$contactIds), $someGroupId);
+        $someGroupId = self::$groupId;
+        $testedObject = $this->contactsFactory->actionContactGroupGet(self::$contactId, $someGroupId);
 
         $result = $testedObject->execute();
 
@@ -280,7 +299,7 @@ final class ContactsTest extends SmsapiTestCase
     public function it_should_add_group_permission()
     {
         $username = $this->getSubuserUsername();
-        $groupId = reset(self::$groupIds);
+        $groupId = self::$groupId;
         $testedObject = $this->contactsFactory
             ->actionGroupPermissionAdd($groupId, $username)
             ->enableRead()
@@ -295,7 +314,6 @@ final class ContactsTest extends SmsapiTestCase
         $this->assertTrue($result->getWrite());
         $this->assertEquals($username, $result->getUsername());
         $this->assertEquals($groupId, $result->getGroupId());
-        self::$groupPermissionIds = $groupId;
     }
 
     /**
@@ -305,7 +323,7 @@ final class ContactsTest extends SmsapiTestCase
     public function it_should_edit_group_permission()
     {
         $username = $this->getSubuserUsername();
-        $groupId = reset(self::$groupIds);
+        $groupId = self::$groupId;
         $testedObject = $this->contactsFactory
             ->actionGroupPermissionEdit($groupId, $username)
             ->disableRead()
@@ -329,7 +347,7 @@ final class ContactsTest extends SmsapiTestCase
     public function it_should_get_group_permission()
     {
         $username = $this->getSubuserUsername();
-        $groupId = reset(self::$groupIds);
+        $groupId = self::$groupId;
         $testedObject = $this->contactsFactory->actionGroupPermissionGet($groupId, $username);
 
         $result = $testedObject->execute();
@@ -345,7 +363,7 @@ final class ContactsTest extends SmsapiTestCase
      */
     public function it_should_list_group_permission()
     {
-        $groupId = reset(self::$groupIds);
+        $groupId = self::$groupId;
         $testedObject = $this->contactsFactory->actionGroupPermissionList($groupId);
 
         $result = $testedObject->execute();
@@ -362,8 +380,8 @@ final class ContactsTest extends SmsapiTestCase
      */
     public function it_should_add_group_member()
     {
-        $contactId = reset(self::$contactIds);
-        $testedObject = $this->contactsFactory->actionGroupMemberAdd(reset(self::$groupIds), $contactId);
+        $contactId = self::$contactId;
+        $testedObject = $this->contactsFactory->actionGroupMemberAdd(self::$groupId, $contactId);
 
         $result = $testedObject->execute();
 
@@ -377,8 +395,8 @@ final class ContactsTest extends SmsapiTestCase
      */
     public function it_should_get_group_member()
     {
-        $contactId = reset(self::$contactIds);
-        $testedObject = $this->contactsFactory->actionGroupMemberGet(reset(self::$groupIds), $contactId);
+        $contactId = self::$contactId;
+        $testedObject = $this->contactsFactory->actionGroupMemberGet(self::$groupId, $contactId);
 
         $result = $testedObject->execute();
 
@@ -402,16 +420,18 @@ final class ContactsTest extends SmsapiTestCase
         $this->assertInstanceOf('\SMSApi\Api\Response\Contacts\FieldResponse', $result);
         $this->assertEquals($someName, $result->getName());
         $this->assertEquals(FieldResponse::TYPE_DATE, $result->getType());
-        self::$fieldIds[] = $result->getId();
+
+        return $result->getId();
     }
 
     /**
      * @test
      * @depends it_should_add_field
+     * @param string $fieldId
+     * @return string
      */
-    public function it_should_edit_field()
+    public function it_should_edit_field($fieldId)
     {
-        $fieldId = reset(self::$fieldIds);
         $newName = 'new name';
         $testedObject = $this->contactsFactory
             ->actionFieldEdit($fieldId)
@@ -424,30 +444,20 @@ final class ContactsTest extends SmsapiTestCase
         $this->assertEquals($fieldId, $result->getId());
         $this->assertEquals($newName, $result->getName());
         $this->assertEquals(FieldResponse::TYPE_EMAIL, $result->getType());
-    }
 
-    /**
-     * @test
-     * @depends it_should_edit_field
-     */
-    public function it_should_list_fields()
-    {
-        $testedObject = $this->contactsFactory->actionFieldList();
-
-        $result = $testedObject->execute();
-
-        $this->assertListResponse('\SMSApi\Api\Response\Contacts\FieldsResponse', self::$fieldIds, $result);
+        return $fieldId;
     }
 
     /**
      * @test
      * @depends it_should_list_fields
+     * @param string $fieldId
      */
-    public function it_should_list_field_options()
+    public function it_should_list_field_options($fieldId)
     {
         $this->markTestSkipped('API error');
 
-        $testedObject = $this->contactsFactory->actionFieldOptionList(reset(self::$fieldIds));
+        $testedObject = $this->contactsFactory->actionFieldOptionList($fieldId);
 
         $result = $testedObject->execute();
 

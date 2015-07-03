@@ -51,14 +51,8 @@ final class GroupResponse extends AbstractContactsResponse implements Identifiab
         $this->contactsCount = $data[self::FIELD_CONTACTS_COUNT];
         $this->createdBy = $data[self::FIELD_CREATED_BY];
         $this->permissions = $data[self::FIELD_PERMISSIONS];
-
-        if ($data[self::FIELD_DATE_CREATED]) {
-            $this->dateCreated = new DateTime($data[self::FIELD_DATE_CREATED]);
-        }
-
-        if ($data[self::FIELD_DATE_UPDATED]) {
-            $this->dateUpdated = new DateTime($data[self::FIELD_DATE_UPDATED]);
-        }
+        $this->dateCreated = new DateTime($data[self::FIELD_DATE_CREATED]);
+        $this->dateUpdated = new DateTime($data[self::FIELD_DATE_UPDATED]);
     }
 
     public function getId()

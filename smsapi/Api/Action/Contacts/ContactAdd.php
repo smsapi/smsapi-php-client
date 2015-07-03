@@ -73,4 +73,18 @@ abstract class ContactAdd extends ContactsAction
 
         return $this;
     }
+
+    public function setCity($city)
+    {
+        $this->params[ContactResponse::FIELD_CITY] = $city;
+
+        return $this;
+    }
+
+    public function setSource($source)
+    {
+        $this->params[ContactResponse::FIELD_SOURCE] = $source;
+
+        return $this;
+    }
 }

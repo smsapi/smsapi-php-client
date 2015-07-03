@@ -9,7 +9,6 @@ use SMSApi\Exception\ActionException;
 use SMSApi\Exception\ClientException;
 use SMSApi\Exception\ContactsException;
 use SMSApi\Exception\HostException;
-use SMSApi\Exception\ProxyException;
 use SMSApi\Exception\SmsapiException;
 use SMSApi\Proxy\Proxy;
 
