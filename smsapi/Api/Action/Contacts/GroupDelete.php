@@ -2,10 +2,13 @@
 
 namespace SMSApi\Api\Action\Contacts;
 
-use SMSApi\Api\Response\RawResponse;
+use SMSApi\Api\Response\Contacts\DeleteResponse;
 use SMSApi\Client;
 use SMSApi\Proxy\Proxy;
 
+/**
+ * @method DeleteResponse execute()
+ */
 final class GroupDelete extends ContactsAction
 {
     const RESOURCE = '/contacts/groups/';
@@ -31,6 +34,6 @@ final class GroupDelete extends ContactsAction
 
     protected function response($data)
     {
-        return new RawResponse($data);
+        return new DeleteResponse;
     }
 }

@@ -2,11 +2,14 @@
 
 namespace SMSApi\Api\Action\Contacts;
 
-use SMSApi\Api\Response\RawResponse;
+use SMSApi\Api\Response\Contacts\DeleteResponse;
 use SMSApi\Client;
 use SMSApi\Proxy\Proxy;
 
-final class ContactsDelete extends ContactsAction
+/**
+ * @method DeleteResponse execute()
+ */
+final class ContactDelete extends ContactsAction
 {
     private $contactId;
 
@@ -29,6 +32,6 @@ final class ContactsDelete extends ContactsAction
 
     protected function response($data)
     {
-        return new RawResponse($data);
+        return new DeleteResponse;
     }
 }

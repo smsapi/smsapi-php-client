@@ -6,7 +6,10 @@ use DateTime;
 use SMSApi\Api\Response\Contacts\ContactResponse;
 use SMSApi\Api\Response\Contacts\ContactsResponse;
 
-final class ContactsList extends ContactsAction
+/**
+ * @method ContactsResponse execute()
+ */
+final class ContactList extends ContactsAction
 {
     const PARAM_SEARCH = 'q';
     const PARAM_OFFSET = 'offset';

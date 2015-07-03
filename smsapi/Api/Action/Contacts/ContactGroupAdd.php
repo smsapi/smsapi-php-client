@@ -2,11 +2,14 @@
 
 namespace SMSApi\Api\Action\Contacts;
 
-use SMSApi\Api\Response\Contacts\GroupResponse;
+use SMSApi\Api\Response\Contacts\GroupsResponse;
 use SMSApi\Client;
 use SMSApi\Proxy\Proxy;
 
-final class ContactsGroupAdd extends ContactsAction
+/**
+ * @method GroupsResponse execute()
+ */
+final class ContactGroupAdd extends ContactsAction
 {
     private $contactId;
     private $groupId;
@@ -21,7 +24,7 @@ final class ContactsGroupAdd extends ContactsAction
 
     public function getMethod()
     {
-        return self::METHOD_POST;
+        return self::METHOD_PUT;
     }
 
     protected function getResource()
@@ -37,6 +40,6 @@ final class ContactsGroupAdd extends ContactsAction
 
     protected function response($data)
     {
-        return GroupResponse::fromJsonString($data);
+        return GroupsResponse::fromJsonString($data);
     }
 }

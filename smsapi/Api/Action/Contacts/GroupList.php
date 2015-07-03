@@ -5,6 +5,9 @@ namespace SMSApi\Api\Action\Contacts;
 use SMSApi\Api\Response\Contacts\GroupResponse;
 use SMSApi\Api\Response\Contacts\GroupsResponse;
 
+/**
+ * @method GroupsResponse execute()
+ */
 final class GroupList extends ContactsAction
 {
     public function getMethod()

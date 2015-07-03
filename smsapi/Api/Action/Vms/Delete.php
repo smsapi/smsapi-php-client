@@ -4,6 +4,7 @@ namespace SMSApi\Api\Action\Vms;
 
 use SMSApi\Api\Action\AbstractAction;
 use SMSApi\Api\Response\CountableResponse;
+use SMSApi\Exception\ActionException;
 use SMSApi\Proxy\Uri;
 
 /**
@@ -58,11 +59,11 @@ class Delete extends AbstractAction
 	 *
 	 * @param $id
 	 * @return $this
-	 * @throws \SMSApi\Exception\ActionException
+	 * @throws ActionException
 	 */
 	public function filterById( $id ) {
 		if ( !is_string( $id ) ) {
-			throw new \SMSApi\Exception\ActionException( 'Invalid value id' );
+			throw new ActionException( 'Invalid value id' );
 		}
 
 		$this->id->append( $id );
@@ -85,16 +86,21 @@ class Delete extends AbstractAction
 		return $this;
 	}
 
-	/**
-	 * @deprecated since v1.0.0
-	 */
+    /**
+     * @deprecated since v1.0.0
+     * @param $array
+     * @return Delete
+     */
 	public function ids($array) {
 		return $this->filterByIds($array);
 	}
 
-	/**
-	 * @deprecated since v1.0.0
-	 */
+    /**
+     * @deprecated since v1.0.0
+     * @param $id
+     * @return Delete
+     * @throws ActionException
+     */
 	public function id($id) {
 		return $this->filterById($id);
 	}

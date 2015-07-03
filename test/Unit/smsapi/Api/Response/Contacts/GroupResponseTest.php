@@ -71,7 +71,7 @@ class GroupResponseTest extends PHPUnit_Framework_TestCase
     private function createGroupResponse($dateCreated, $dateUpdated)
     {
         return new GroupResponse(
-            [
+            array(
                 GroupResponse::FIELD_ID => 1,
                 GroupResponse::FIELD_NAME => 'some name',
                 GroupResponse::FIELD_DESCRIPTION => null,
@@ -80,8 +80,8 @@ class GroupResponseTest extends PHPUnit_Framework_TestCase
                 GroupResponse::FIELD_DATE_CREATED => $dateCreated,
                 GroupResponse::FIELD_DATE_UPDATED => $dateUpdated,
                 GroupResponse::FIELD_CREATED_BY => 'some username',
-                GroupResponse::FIELD_PERMISSIONS => [],
-            ]
+                GroupResponse::FIELD_PERMISSIONS => array(),
+            )
         );
     }
 }

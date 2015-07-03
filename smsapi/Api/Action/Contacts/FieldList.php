@@ -4,6 +4,9 @@ namespace SMSApi\Api\Action\Contacts;
 
 use SMSApi\Api\Response\Contacts\FieldsResponse;
 
+/**
+ * @method FieldsResponse execute()
+ */
 final class FieldList extends ContactsAction
 {
     public function getMethod()

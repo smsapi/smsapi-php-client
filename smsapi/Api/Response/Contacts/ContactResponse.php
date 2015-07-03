@@ -4,13 +4,12 @@ namespace SMSApi\Api\Response\Contacts;
 
 use DateTime;
 
-final class ContactResponse extends AbstractContactsResponse
+final class ContactResponse extends AbstractContactsResponse implements IdentifiableResponse
 {
     const GENDER_UNDEFINED = 'undefined';
     const GENDER_MALE = 'male';
     const GENDER_FEMALE = 'female';
 
-    const FIELD_ID = 'id';
     const FIELD_GENDER = 'gender';
     const FIELD_PHONE_NUMBER = 'phone_number';
     const FIELD_EMAIL = 'email';
@@ -64,7 +63,7 @@ final class ContactResponse extends AbstractContactsResponse
         $this->gender = $data[self::FIELD_GENDER];
 
         if ($data[self::FIELD_BIRTHDAY_DATE]) {
-            $this->birthdayDate = $data[self::FIELD_BIRTHDAY_DATE];
+            $this->birthdayDate = new DateTime($data[self::FIELD_BIRTHDAY_DATE]);
         }
     }
 

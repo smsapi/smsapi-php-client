@@ -2,11 +2,14 @@
 
 namespace SMSApi\Api\Action\Contacts;
 
-use SMSApi\Api\Response\RawResponse;
+use SMSApi\Api\Response\Contacts\DeleteResponse;
 use SMSApi\Client;
 use SMSApi\Proxy\Proxy;
 
-final class ContactsGroupDelete extends ContactsAction
+/**
+ * @method DeleteResponse execute()
+ */
+final class ContactGroupDelete extends ContactsAction
 {
     private $contactId;
     private $groupId;
@@ -26,17 +29,17 @@ final class ContactsGroupDelete extends ContactsAction
 
     protected function response($data)
     {
-        return new RawResponse($data);
+        return new DeleteResponse;
     }
 
     protected function getResource()
     {
         return strtr(
             '/contacts/:contactId/groups/:groupId',
-            [
+            array(
                 ':contactId' => $this->contactId,
                 ':groupId' => $this->groupId,
-            ]
+            )
         );
     }
 }

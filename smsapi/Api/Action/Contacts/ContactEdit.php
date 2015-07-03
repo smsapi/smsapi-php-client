@@ -7,7 +7,10 @@ use SMSApi\Api\Response\Contacts\ContactResponse;
 use SMSApi\Client;
 use SMSApi\Proxy\Proxy;
 
-class ContactsEdit extends ContactsAction
+/**
+ * @method ContactResponse execute()
+ */
+class ContactEdit extends ContactsAction
 {
     private $contactId;
 

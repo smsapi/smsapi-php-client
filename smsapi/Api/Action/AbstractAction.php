@@ -3,9 +3,11 @@
 namespace SMSApi\Api\Action;
 
 use Exception;
-use SMSApi\Api\Action\Contacts\ContactsAction;
+use SMSApi\Api\Response\ErrorResponse;
+use SMSApi\Client;
 use SMSApi\Exception\ActionException;
 use SMSApi\Exception\ClientException;
+use SMSApi\Exception\ContactsException;
 use SMSApi\Exception\HostException;
 use SMSApi\Exception\ProxyException;
 use SMSApi\Exception\SmsapiException;
@@ -17,8 +19,13 @@ use SMSApi\Proxy\Proxy;
  */
 abstract class AbstractAction
 {
+    const METHOD_GET = 'GET';
+    const METHOD_POST = 'POST';
+    const METHOD_DELETE = 'DELETE';
+    const METHOD_PUT = 'PUT';
+
     /**
-	 * @var
+	 * @var Client
 	 */
 	protected $client;
 
@@ -28,7 +35,7 @@ abstract class AbstractAction
 	/**
 	 * @var array
 	 */
-	protected $params = [ ];
+	protected $params = array();
 	/**
 	 * @var \ArrayObject
 	 */
@@ -78,19 +85,21 @@ abstract class AbstractAction
 		return null;
 	}
 
-	/**
-	 * @param \SMSApi\Client $client
-	 */
-	public function client( \SMSApi\Client $client ) {
+    /**
+     * @param Client $client
+     * @return $this
+     */
+	public function client( Client $client ) {
 		$this->client = $client;
 
         return $this;
 	}
 
-	/**
-	 * @param \SMSApi\Proxy\Proxy $proxy
-	 */
-	public function proxy( \SMSApi\Proxy\Proxy $proxy ) {
+    /**
+     * @param Proxy $proxy
+     * @return $this
+     */
+	public function proxy( Proxy $proxy ) {
 		$this->proxy = $proxy;
 
         return $this;
@@ -110,6 +119,11 @@ abstract class AbstractAction
 		return $this;
 	}
 
+    public function isContacts()
+    {
+        return $this->isContacts;
+    }
+
 	/**
 	 * @param $val
 	 * @return $this
@@ -124,11 +138,11 @@ abstract class AbstractAction
 		return $this;
 	}
 
-	protected function paramsOther($skip = '')
+    protected function paramsOther($skip = '')
     {
         $query = '';
         foreach ($this->params as $key => $val) {
-            if ($key != $skip && $val != null) {
+            if ($key != $skip && $val !== null) {
                 if (is_array($val)) {
                     foreach ($val as $v) {
                         $query .= '&' . $key . '[]=' . $v;
@@ -144,7 +158,7 @@ abstract class AbstractAction
 
 	/**
 	 * @return string
-	 * @throws \SMSApi\Exception\ActionException
+	 * @throws ActionException
 	 */
 	protected function renderTo() {
 
@@ -153,7 +167,7 @@ abstract class AbstractAction
 
 		if ( $sizeIdx > 0 ) {
 			if ( ($sizeTo != $sizeIdx ) ) {
-				throw new \SMSApi\Exception\ActionException( "size idx is not equals to" );
+				throw new ActionException( "size idx is not equals to" );
 			} else {
 				return $this->renderList( $this->to, ',' ) . "&idx=" . $this->renderList( $this->idx, '|' );
 			}
@@ -221,63 +235,49 @@ abstract class AbstractAction
 		{
 			$this->setJson( true );
 
-			$data = $this->proxy->execute( $this );
+            $data = $this->proxy->execute($this);
 
-            if ($this->isContacts) {
-                $this->handleContactsError($data);
+            $this->handleError($data, $this->isContacts);
 
-                return $this->response($data['output']);
-            } else {
-                $this->handleError($data);
-
-                return $this->response($data);
-            }
+            return $this->response($data['output']);
 		}
 		catch ( Exception $ex )
 		{
-			throw new \SMSApi\Exception\ActionException( $ex->getMessage() );
+			throw new ActionException($ex->getMessage(), $ex->getCode(), $ex);
 		}
 	}
 
-	/**
-	 * @param $data
-	 * @throws \SMSApi\Exception\ActionException
-	 * @throws \SMSApi\Exception\ClientException
-	 * @throws \SMSApi\Exception\HostException
-	 */
-	protected function handleError( $data ) {
-
-		$error = new \SMSApi\Api\Response\ErrorResponse( $data );
-
-		if ( $error->isError() ) {
-			if ( \SMSApi\Exception\SmsapiException::isHostError( $error->code ) ) {
-				throw new \SMSApi\Exception\HostException( $error->message, $error->code );
-			}
-
-			if ( \SMSApi\Exception\SmsapiException::isClientError( $error->code ) ) {
-				throw new \SMSApi\Exception\ClientException( $error->message, $error->code );
-			} else {
-				throw new \SMSApi\Exception\ActionException( $error->message, $error->code );
-			}
-		}
-	}
-
-    private function handleContactsError(array $data)
+    public function getMethod()
     {
-        if ($data['code'] < 200 and $data['code'] > 299) {
-            if (isset($data['output']['code'], $data['output']['message'])) {
-                $code = $data['output']['code'];
-                $message = $data['output']['message'];
-                if (SmsapiException::isHostError($code)) {
-                    throw new HostException($message, $code);
-                } elseif (SmsapiException::isClientError($code) ) {
-                    throw new ClientException($message, $code);
+        return self::METHOD_POST;
+    }
+
+    /**
+     * @param array $data
+     * @param bool $isContacts
+     * @throws ActionException
+     * @throws ClientException
+     * @throws ContactsException
+     * @throws HostException
+     */
+	protected function handleError(array $data, $isContacts)
+    {
+        if ($isContacts) {
+            if ($data['code'] < 200 or $data['code'] > 299) {
+                throw new ContactsException($data);
+            }
+        } else {
+            $error = new ErrorResponse($data['output']);
+
+            if ($error->isError()) {
+                if (SmsapiException::isHostError($error->code)) {
+                    throw new HostException($error->message, $error->code);
+                } elseif (SmsapiException::isClientError($error->code) ) {
+                    throw new ClientException($error->message, $error->code);
                 } else {
-                    throw new ActionException($message, $code);
+                    throw new ActionException($error->message, $error->code);
                 }
-            } else {
-                throw new ProxyException;
             }
         }
-    }
+	}
 }

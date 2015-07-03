@@ -6,6 +6,9 @@ use SMSApi\Api\Response\Contacts\GroupResponse;
 use SMSApi\Client;
 use SMSApi\Proxy\Proxy;
 
+/**
+ * @method GroupResponse execute()
+ */
 final class GroupGet extends ContactsAction
 {
     const RESOURCE = '/contacts/groups/';

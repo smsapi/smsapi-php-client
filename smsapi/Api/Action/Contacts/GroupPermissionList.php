@@ -6,6 +6,9 @@ use SMSApi\Api\Response\Contacts\PermissionsResponse;
 use SMSApi\Client;
 use SMSApi\Proxy\Proxy;
 
+/**
+ * @method PermissionsResponse execute()
+ */
 final class GroupPermissionList extends ContactsAction
 {
     private $groupId;
@@ -29,6 +32,6 @@ final class GroupPermissionList extends ContactsAction
 
     protected function getResource()
     {
-        return strtr('/contacts/groups/:groupId/permission', [':groupId' => $this->groupId]);
+        return strtr('/contacts/groups/:groupId/permissions', array(':groupId' => $this->groupId));
     }
 }

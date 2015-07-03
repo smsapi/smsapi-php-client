@@ -6,6 +6,9 @@ use SMSApi\Api\Response\Contacts\FieldResponse;
 use SMSApi\Client;
 use SMSApi\Proxy\Proxy;
 
+/**
+ * @method FieldResponse execute()
+ */
 final class FieldAdd extends ContactsAction
 {
     public function __construct($name, Client $client, Proxy $proxy)

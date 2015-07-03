@@ -6,7 +6,10 @@ use SMSApi\Api\Response\Contacts\GroupResponse;
 use SMSApi\Client;
 use SMSApi\Proxy\Proxy;
 
-final class ContactsGroupGet extends ContactsAction
+/**
+ * @method GroupResponse execute()
+ */
+final class ContactGroupGet extends ContactsAction
 {
     private $contactId;
     private $groupId;

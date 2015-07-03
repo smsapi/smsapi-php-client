@@ -14,7 +14,7 @@ class Native extends AbstractHttp
      */
 	const CONNECT_SOCKET = 2;
 
-	protected function makeRequest($method, $url, $query, $file)
+	protected function makeRequest($method, $url, $query, $file, $isContacts)
     {
         $body = $this->prepareRequestBody($file);
 
@@ -31,6 +31,7 @@ class Native extends AbstractHttp
                 'method'	 => $method,
                 'header'	 => $headersString,
                 'content'	 => empty($body) ? $query : $body,
+                'ignore_errors' => $isContacts,
             )
         );
 
@@ -60,7 +61,7 @@ class Native extends AbstractHttp
             }
 
             foreach ($headers as $wrapperRow) {
-                if (preg_match( '/^[\s]*HTTP\/1\.[01]\s([\d]+)\sOK[\s]*$/i', $wrapperRow, $code)) {
+                if (preg_match('/^\s*HTTP\/1\.[01]\s([\d]+)\s/i', $wrapperRow, $code)) {
                     $statusCode = next($code);
                 }
             }

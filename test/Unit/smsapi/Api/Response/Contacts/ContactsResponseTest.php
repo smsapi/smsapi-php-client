@@ -24,10 +24,10 @@ class ContactsResponseTest extends PHPUnit_Framework_TestCase
      */
     private function createContacts()
     {
-        return [
+        return array(
             ContactsResponse::FIELD_SIZE => 1,
-            ContactsResponse::FIELD_COLLECTION => [
-                [
+            ContactsResponse::FIELD_COLLECTION => array(
+                array(
                     ContactResponse::FIELD_ID => 1,
                     ContactResponse::FIELD_PHONE_NUMBER => null,
                     ContactResponse::FIELD_EMAIL => null,
@@ -38,8 +38,8 @@ class ContactsResponseTest extends PHPUnit_Framework_TestCase
                     ContactResponse::FIELD_GENDER => null,
                     ContactResponse::FIELD_CITY => null,
                     ContactResponse::FIELD_SOURCE => null,
-                ],
-            ],
-        ];
+                ),
+            ),
+        );
     }
 }

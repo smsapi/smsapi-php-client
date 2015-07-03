@@ -6,15 +6,18 @@ use SMSApi\Api\Response\Contacts\FieldResponse;
 use SMSApi\Client;
 use SMSApi\Proxy\Proxy;
 
+/**
+ * @method FieldResponse execute()
+ */
 final class FieldEdit extends ContactsAction
 {
-    private $fieldId;
+    private $id;
 
-    public function __construct($fieldId, Client $client, Proxy $proxy)
+    public function __construct($id, Client $client, Proxy $proxy)
     {
         parent::__construct($client, $proxy);
 
-        $this->fieldId = $fieldId;
+        $this->id = $id;
     }
 
     public function getMethod()
@@ -24,7 +27,7 @@ final class FieldEdit extends ContactsAction
 
     protected function getResource()
     {
-        return strtr('/contacts/fields/:fieldId', array(':fieldId' => $this->fieldId));
+        return strtr('/contacts/fields/:id', array(':id' => urlencode($this->id)));
     }
 
     protected function response($data)

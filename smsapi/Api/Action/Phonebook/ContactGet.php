@@ -6,9 +6,9 @@ use SMSApi\Api\Action\AbstractAction;
 use SMSApi\Proxy\Uri;
 
 /**
- * Class ContactsGet
+ * Class ContactGet
  * @package SMSApi\Api\Action\Phonebook
- * @deprecated use \SMSApi\Api\Action\Contacts\ContactsGet
+ * @deprecated use \SMSApi\Api\Action\Contacts\ContactGet
  */
 class ContactGet extends AbstractAction {
 

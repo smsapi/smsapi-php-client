@@ -2,8 +2,11 @@
 
 namespace SMSApi\Api\Action\Contacts;
 
-use SMSApi\Api\Response\RawResponse;
+use SMSApi\Api\Response\Contacts\DeleteResponse;
 
+/**
+ * @method DeleteResponse execute()
+ */
 final class GroupMemberDelete extends GroupMemberAdd
 {
     public function getMethod()
@@ -13,6 +16,6 @@ final class GroupMemberDelete extends GroupMemberAdd
 
     protected function response($data)
     {
-        return new RawResponse($data);
+        return new DeleteResponse;
     }
 }

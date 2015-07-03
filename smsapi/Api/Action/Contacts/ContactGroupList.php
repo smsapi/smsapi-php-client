@@ -6,7 +6,10 @@ use SMSApi\Api\Response\Contacts\GroupsResponse;
 use SMSApi\Client;
 use SMSApi\Proxy\Proxy;
 
-final class ContactsGroupList extends ContactsAction
+/**
+ * @method GroupsResponse execute()
+ */
+final class ContactGroupList extends ContactsAction
 {
     private $contactId;
 
@@ -29,6 +32,6 @@ final class ContactsGroupList extends ContactsAction
 
     protected function getResource()
     {
-        return strtr('/contacts/:contactId/groups', [':contactId' => $this->contactId]);
+        return strtr('/contacts/:contactId/groups', array(':contactId' => $this->contactId));
     }
 }

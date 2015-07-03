@@ -6,6 +6,9 @@ use SMSApi\Api\Response\Contacts\ContactResponse;
 use SMSApi\Client;
 use SMSApi\Proxy\Proxy;
 
+/**
+ * @method ContactResponse execute()
+ */
 class GroupMemberAdd extends ContactsAction
 {
     private $groupId;
@@ -21,7 +24,7 @@ class GroupMemberAdd extends ContactsAction
 
     public function getMethod()
     {
-        return self::METHOD_POST;
+        return self::METHOD_PUT;
     }
 
     protected function response($data)
@@ -31,6 +34,9 @@ class GroupMemberAdd extends ContactsAction
 
     protected function getResource()
     {
-        return '/contacts/groups/:groupId/members/:contactId';
+        return strtr(
+            '/contacts/groups/:groupId/members/:contactId',
+            array(':groupId' => $this->groupId, ':contactId' => $this->contactId)
+        );
     }
 }

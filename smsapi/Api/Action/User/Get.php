@@ -3,6 +3,7 @@
 namespace SMSApi\Api\Action\User;
 
 use SMSApi\Api\Action\AbstractAction;
+use SMSApi\Api\Response\UserResponse;
 use SMSApi\Proxy\Uri;
 
 /**
@@ -13,11 +14,11 @@ class Get extends AbstractAction {
 
 	/**
 	 * @param $data
-	 * @return \SMSApi\Api\Response\UserResponse
+	 * @return UserResponse
 	 */
 	protected function response( $data ) {
 
-		return new \SMSApi\Api\Response\UserResponse( $data );
+		return new UserResponse( $data );
 	}
 
 	/**

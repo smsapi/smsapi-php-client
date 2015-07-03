@@ -40,7 +40,7 @@ class ContactResponseTest extends PHPUnit_Framework_TestCase
     private function createContactResponse($birthdayDate)
     {
         return new ContactResponse(
-            [
+            array(
                 ContactResponse::FIELD_ID => 1,
                 ContactResponse::FIELD_PHONE_NUMBER => null,
                 ContactResponse::FIELD_EMAIL => null,
@@ -51,7 +51,7 @@ class ContactResponseTest extends PHPUnit_Framework_TestCase
                 ContactResponse::FIELD_BIRTHDAY_DATE => $birthdayDate,
                 ContactResponse::FIELD_CITY => null,
                 ContactResponse::FIELD_SOURCE => null,
-            ]
+            )
         );
     }
 }

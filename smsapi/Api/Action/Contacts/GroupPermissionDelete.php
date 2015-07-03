@@ -2,10 +2,13 @@
 
 namespace SMSApi\Api\Action\Contacts;
 
-use SMSApi\Api\Response\RawResponse;
+use SMSApi\Api\Response\Contacts\DeleteResponse;
 use SMSApi\Client;
 use SMSApi\Proxy\Proxy;
 
+/**
+ * @method DeleteResponse execute()
+ */
 final class GroupPermissionDelete extends ContactsAction
 {
     private $groupId;
@@ -26,17 +29,17 @@ final class GroupPermissionDelete extends ContactsAction
 
     protected function response($data)
     {
-        return new RawResponse($data);
+        return new DeleteResponse;
     }
 
     protected function getResource()
     {
         return strtr(
-            '/contacts/groups/:groupId/permission/:username',
-            [
+            '/contacts/groups/:groupId/permissions/:username',
+            array(
                 ':groupId' => $this->groupId,
-                ':username' => $this->username,
-            ]
+                ':username' => urlencode($this->username),
+            )
         );
     }
 }

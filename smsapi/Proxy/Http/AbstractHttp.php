@@ -3,7 +3,7 @@
 namespace SMSApi\Proxy\Http;
 
 use SMSApi\Api\Action\AbstractAction;
-use SMSApi\Api\Action\Contacts\ContactsAction;
+use SMSApi\Client;
 use SMSApi\Exception\ProxyException;
 use SMSApi\Proxy\Proxy;
 use SMSApi\Proxy\Uri;
@@ -14,7 +14,6 @@ abstract class AbstractHttp implements Proxy
 	protected $host;
 	protected $port;
     protected $boundary = '**RGRG87VFSGF86796GSD**';
-    protected $method = 'POST';
 	protected $timeout = 5;
 	protected $maxRedirects = 1;
 
@@ -36,7 +35,10 @@ abstract class AbstractHttp implements Proxy
     /**
      * @deprecated - no usages
      */
-    protected $headers = [];
+    protected $headers = array();
+
+    /** @var Client */
+    private $basicAuthentication;
 
     public function __construct( $host ) {
 
@@ -81,37 +83,34 @@ abstract class AbstractHttp implements Proxy
                 throw new ProxyException("Invalid URI");
             }
 
+            $method = $action->getMethod();
             $url = $this->prepareRequestUrl($uri);
-
             $query = $uri->getQuery();
 
-            if ($action instanceof ContactsAction) {
-                $method = $action->getMethod();
-            } else {
-                $method = $this->method;
-            }
+            $response = $this->makeRequest($method, $url, $query, $file, $action->isContacts());
 
-            $response = $this->makeRequest($method, $url, $query, $file);
-
-            if (!($action instanceof ContactsAction)) {
+            if (!$action->isContacts()) {
                 $this->checkCode($response['code']);
             }
 
-            if (empty($response['output'])) {
+            if ($method !== AbstractAction::METHOD_DELETE and empty($response['output'])) {
                 throw new ProxyException('Error fetching remote content empty');
             }
         } catch (\Exception $e) {
-            throw new ProxyException($e->getMessage());
+            throw new ProxyException($e->getMessage(), 0, $e);
         }
 
-        if ($action instanceof ContactsAction) {
-            return $response;
-        } else {
-            return $response['output'];
-        }
+        return $response;
     }
 
-    abstract protected function makeRequest($method, $url, $query, $file);
+    public function setBasicAuthentication(Client $client)
+    {
+        $this->basicAuthentication = $client;
+
+        return $this;
+    }
+
+    abstract protected function makeRequest($method, $url, $query, $file, $isContacts);
 
     protected function checkCode($code)
     {
@@ -139,7 +138,7 @@ abstract class AbstractHttp implements Proxy
 		return $type;
 	}
 
-	protected function encodeFormData( $boundary, $name, $value, $filename = null, $headers = [ ] ) {
+	protected function encodeFormData( $boundary, $name, $value, $filename = null, $headers = array() ) {
 		$ret = "--{$boundary}\r\n" .
 			'Content-Disposition: form-data; name="' . $name . '"';
 
@@ -163,7 +162,7 @@ abstract class AbstractHttp implements Proxy
 		$file[ 'data' ] = file_get_contents( $filename );
 		$file[ 'filename' ] = basename( $filename );
 		$file[ 'ctype' ] = $this->detectFileMimeType( $filename );
-		$fhead = [ 'Content-Type' => $file[ 'ctype' ] ];
+		$fhead = array('Content-Type' => $file[ 'ctype' ]);
 
 		$body = $this->encodeFormData( $this->boundary, $file[ 'formname' ], $file[ 'data' ], $file[ 'filename' ], $fhead );
 
@@ -177,7 +176,7 @@ abstract class AbstractHttp implements Proxy
 		$tmpBody = "";
 
 		if ( !empty( $query ) && !empty( $body ) ) {
-			$params = [ ];
+			$params = array();
 			parse_str( $query, $params );
 			foreach ( $params as $k2 => $v2 ) {
 				$tmpBody .= $this->encodeFormData( $this->boundary, $k2, $v2 );
@@ -229,7 +228,7 @@ abstract class AbstractHttp implements Proxy
      */
     protected function prepareRequestHeaders($file)
     {
-        $headers = [];
+        $headers = array();
 
         $headers['User-Agent'] = 'smsapi-php-client';
         $headers['Accept'] = '';
@@ -238,6 +237,15 @@ abstract class AbstractHttp implements Proxy
             $headers['Content-Type'] = 'multipart/form-data; boundary=' . $this->boundary;
         } else {
             $headers['Content-Type'] = 'application/x-www-form-urlencoded';
+        }
+
+        if ($this->basicAuthentication) {
+            $headers['Authorization'] =
+                'Basic '
+                . base64_encode(
+                    $this->basicAuthentication->getUsername()
+                    . ':' . $this->basicAuthentication->getPassword()
+                );
         }
 
         return $headers;

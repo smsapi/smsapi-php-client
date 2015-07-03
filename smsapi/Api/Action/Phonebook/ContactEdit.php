@@ -3,9 +3,9 @@
 namespace SMSApi\Api\Action\Phonebook;
 
 /**
- * Class ContactsEdit
+ * Class ContactEdit
  * @package SMSApi\Api\Action\Phonebook
- * @deprecated use \SMSApi\Api\Action\Contacts\ContactsEdit
+ * @deprecated use \SMSApi\Api\Action\Contacts\ContactEdit
  */
 class ContactEdit extends ContactAdd {
 
@@ -14,7 +14,7 @@ class ContactEdit extends ContactAdd {
 	 * @deprecated since v1.0.0
 	 */
 	public function setContact( $number ) {
-		return $this->phoneNumber($number);
+		return $this->filterByPhoneNumber($number);
 	}
 
 	/**

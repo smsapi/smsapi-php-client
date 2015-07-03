@@ -6,6 +6,9 @@ use SMSApi\Api\Response\Contacts\OptionResponse;
 use SMSApi\Client;
 use SMSApi\Proxy\Proxy;
 
+/**
+ * @method OptionResponse execute()
+ */
 final class FieldOptionList extends ContactsAction
 {
     private $fieldId;
@@ -24,7 +27,7 @@ final class FieldOptionList extends ContactsAction
 
     protected function getResource()
     {
-        return strtr('/contacts/fields/:fieldId/options', [':fieldId' => $this->fieldId]);
+        return strtr('/contacts/fields/:fieldId/options', array(':fieldId' => $this->fieldId));
     }
 
     protected function response($data)

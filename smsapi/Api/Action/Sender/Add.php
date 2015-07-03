@@ -3,6 +3,7 @@
 namespace SMSApi\Api\Action\Sender;
 
 use SMSApi\Api\Action\AbstractAction;
+use SMSApi\Api\Response\CountableResponse;
 use SMSApi\Proxy\Uri;
 
 /**
@@ -13,11 +14,11 @@ class Add extends AbstractAction {
 
 	/**
 	 * @param $data
-	 * @return \SMSApi\Api\Response\CountableResponse
+	 * @return CountableResponse
 	 */
 	protected function response( $data ) {
 
-		return new \SMSApi\Api\Response\CountableResponse( $data );
+		return new CountableResponse( $data );
 	}
 
 	/**

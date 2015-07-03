@@ -3,6 +3,7 @@
 namespace SMSApi\Proxy;
 
 use SMSApi\Api\Action\AbstractAction;
+use SMSApi\Client;
 use SMSApi\Exception\ProxyException;
 
 interface Proxy
@@ -28,4 +29,6 @@ interface Proxy
      * @return int|null
      */
 	public function getPort();
+
+    public function setBasicAuthentication(Client $client);
 }

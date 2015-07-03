@@ -4,9 +4,8 @@ namespace SMSApi\Api\Response\Contacts;
 
 use DateTime;
 
-final class GroupResponse extends AbstractContactsResponse
+final class GroupResponse extends AbstractContactsResponse implements IdentifiableResponse
 {
-    const FIELD_ID = 'id';
     const FIELD_NAME = 'name';
     const FIELD_DESCRIPTION = 'description';
     const FIELD_IDX = 'idx';

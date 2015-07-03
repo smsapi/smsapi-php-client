@@ -7,8 +7,8 @@ abstract class ListResponse extends AbstractContactsResponse
     const FIELD_SIZE = 'size';
     const FIELD_COLLECTION = 'collection';
 
-    /** @var AbstractContactsResponse[] */
-    private $collection = [];
+    /** @var IdentifiableResponse[] */
+    private $collection = array();
 
     /** @var int */
     private $size;
@@ -23,6 +23,7 @@ abstract class ListResponse extends AbstractContactsResponse
     }
 
     /**
+     * @param array $item
      * @return AbstractContactsResponse
      */
     abstract protected function createItem(array $item);
