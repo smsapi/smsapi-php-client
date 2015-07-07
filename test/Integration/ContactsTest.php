@@ -448,22 +448,6 @@ final class ContactsTest extends SmsapiTestCase
         return $fieldId;
     }
 
-    /**
-     * @test
-     * @depends it_should_list_fields
-     * @param string $fieldId
-     */
-    public function it_should_list_field_options($fieldId)
-    {
-        $this->markTestSkipped('API error');
-
-        $testedObject = $this->contactsFactory->actionFieldOptionList($fieldId);
-
-        $result = $testedObject->execute();
-
-        $this->assertListResponse('\SMSApi\Api\Response\Contacts\OptionResponse', array(), $result);
-    }
-
     private function assertListResponse($expectedInstance, $expectedIds, ListResponse $testedList)
     {
         $this->assertInstanceOf($expectedInstance, $testedList);

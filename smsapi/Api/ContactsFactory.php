@@ -16,7 +16,6 @@ use SMSApi\Api\Action\Contacts\FieldAdd;
 use SMSApi\Api\Action\Contacts\FieldDelete;
 use SMSApi\Api\Action\Contacts\FieldEdit;
 use SMSApi\Api\Action\Contacts\FieldList;
-use SMSApi\Api\Action\Contacts\FieldOptionList;
 use SMSApi\Api\Action\Contacts\GroupAdd;
 use SMSApi\Api\Action\Contacts\GroupDelete;
 use SMSApi\Api\Action\Contacts\GroupEdit;
@@ -165,10 +164,5 @@ final class ContactsFactory extends ActionFactory
     public function actionFieldDelete($fieldId)
     {
         return new FieldDelete($fieldId, $this->client, $this->proxy);
-    }
-
-    public function actionFieldOptionList($fieldId)
-    {
-        return new FieldOptionList($fieldId, $this->client, $this->proxy);
     }
 }
