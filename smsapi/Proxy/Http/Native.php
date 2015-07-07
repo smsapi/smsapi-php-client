@@ -2,6 +2,8 @@
 
 namespace SMSApi\Proxy\Http;
 
+use SMSApi\Api\Action\AbstractAction;
+
 class Native extends AbstractHttp
 {
     /**
@@ -20,7 +22,7 @@ class Native extends AbstractHttp
 
         $headers = $this->prepareRequestHeaders($file);
 
-        if (!empty($body)) {
+        if (!empty($body) or ($query and $method === AbstractAction::METHOD_GET)) {
             $url .= '?' . $query;
         }
 

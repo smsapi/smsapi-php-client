@@ -67,7 +67,7 @@ final class ContactsTest extends SmsapiTestCase
     public function it_should_add_contact_from_email()
     {
         $somePhoneNumber = 48226947156;
-        $someBirthdayDate = new DateTime;
+        $someBirthdayDate = new DateTime('1989-01-01');
         $someBirthdayDate->setTime(0, 0, 0);
         $someEmail = 'some-mail@example.com';
         $someDescription = 'some description';
@@ -108,7 +108,7 @@ final class ContactsTest extends SmsapiTestCase
     public function it_should_add_contact_from_phone_number()
     {
         $somePhoneNumber = 48226290715;
-        $someBirthdayDate = new DateTime;
+        $someBirthdayDate = new DateTime('1990-01-01');
         $someBirthdayDate->setTime(0, 0, 0);
         $someEmail = 'another-mail@example.com';
         $someDescription = 'some description';
@@ -153,7 +153,7 @@ final class ContactsTest extends SmsapiTestCase
     public function it_should_edit_contact($contactId)
     {
         $otherPhoneNumber = 48226952900;
-        $otherBirthdayDate = new DateTime;
+        $otherBirthdayDate = new DateTime('1991-01-01');
         $otherBirthdayDate->setTime(0, 0, 0);
         $otherEmail = 'other-mail@example.com';
         $otherDescription = 'other description';
@@ -194,6 +194,7 @@ final class ContactsTest extends SmsapiTestCase
      * @test
      * @depends it_should_edit_contact
      * @param string $contactId
+     * @return ContactResponse
      */
     public function it_should_get_contact($contactId)
     {
@@ -203,11 +204,112 @@ final class ContactsTest extends SmsapiTestCase
 
         $this->assertInstanceOf('\SMSApi\Api\Response\Contacts\ContactResponse', $result);
         $this->assertEquals($contactId, $result->getId());
+
+        return $result;
     }
 
     /**
      * @test
      * @depends it_should_get_contact
+     * @param ContactResponse $contactResponse
+     * @return ContactResponse
+     */
+    public function it_should_find_all_contact_by_email(ContactResponse $contactResponse)
+    {
+        $actionContactList = $this->contactsFactory->actionContactList();
+        $email = $contactResponse->getEmail();
+
+        $result = $actionContactList->setEmail($email)->execute();
+
+        $this->assertInstanceOf('\SMSApi\Api\Response\Contacts\ContactsResponse', $result);
+        $this->assertEquals(1, $result->getSize());
+        $collection = $result->getCollection();
+        $this->assertEquals($email, $collection[0]->getEmail());
+
+        return $contactResponse;
+    }
+
+    /**
+     * @test
+     * @depends it_should_find_all_contact_by_email
+     * @param ContactResponse $contactResponse
+     */
+    public function it_should_find_all_contact_by_phone_number(ContactResponse $contactResponse)
+    {
+        $actionContactList = $this->contactsFactory->actionContactList();
+        $phoneNumber = $contactResponse->getPhoneNumber();
+
+        $result = $actionContactList->setPhoneNumber($phoneNumber)->execute();
+
+        $this->assertInstanceOf('\SMSApi\Api\Response\Contacts\ContactsResponse', $result);
+        $this->assertEquals(1, $result->getSize());
+        $collection = $result->getCollection();
+        $this->assertEquals($phoneNumber, $collection[0]->getPhoneNumber());
+
+        return $contactResponse;
+    }
+
+    /**
+     * @test
+     * @depends it_should_find_all_contact_by_phone_number
+     * @param ContactResponse $contactResponse
+     */
+    public function it_should_find_all_contact_by_birthday_date(ContactResponse $contactResponse)
+    {
+        $actionContactList = $this->contactsFactory->actionContactList();
+        $birthdayDate = $contactResponse->getBirthdayDate();
+
+        $result = $actionContactList->setBirthDayDate($birthdayDate)->execute();
+
+        $this->assertInstanceOf('\SMSApi\Api\Response\Contacts\ContactsResponse', $result);
+        $this->assertEquals(1, $result->getSize());
+        $collection = $result->getCollection();
+        $this->assertEquals($birthdayDate, $collection[0]->getBirthdayDate());
+
+        return $contactResponse;
+    }
+
+    /**
+     * @test
+     * @depends it_should_find_all_contact_by_birthday_date
+     * @param ContactResponse $contactResponse
+     */
+    public function it_should_find_all_contact_by_first_name(ContactResponse $contactResponse)
+    {
+        $actionContactList = $this->contactsFactory->actionContactList();
+        $firstName = $contactResponse->getFirstName();
+
+        $result = $actionContactList->setFirstName($firstName)->execute();
+
+        $this->assertInstanceOf('\SMSApi\Api\Response\Contacts\ContactsResponse', $result);
+        $this->assertEquals(1, $result->getSize());
+        $collection = $result->getCollection();
+        $this->assertEquals($firstName, $collection[0]->getFirstName());
+
+        return $contactResponse;
+    }
+
+    /**
+     * @test
+     * @depends it_should_find_all_contact_by_first_name
+     * @param ContactResponse $contactResponse
+     */
+    public function it_should_find_all_contact_by_last_name(ContactResponse $contactResponse)
+    {
+        $actionContactList = $this->contactsFactory->actionContactList();
+        $lastName = $contactResponse->getLastName();
+
+        $result = $actionContactList->setLastName($lastName)->execute();
+
+        $this->assertInstanceOf('\SMSApi\Api\Response\Contacts\ContactsResponse', $result);
+        $this->assertEquals(1, $result->getSize());
+        $collection = $result->getCollection();
+        $this->assertEquals($lastName, $collection[0]->getLastName());
+    }
+
+    /**
+     * @test
+     * @depends it_should_find_all_contact_by_last_name
      */
     public function it_should_add_group()
     {
