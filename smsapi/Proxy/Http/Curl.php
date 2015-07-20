@@ -2,12 +2,12 @@
 
 namespace SMSApi\Proxy\Http;
 
+use SMSApi\Api\Action\AbstractAction;
 use SMSApi\Exception\ProxyException;
-use SMSApi\Proxy\Proxy;
 
-class Curl extends AbstractHttp implements Proxy
+class Curl extends AbstractHttp
 {
-    protected function makeRequest($url, $query, $file)
+    protected function makeRequest($method, $url, $query, $file, $isContacts)
     {
         $body = $this->prepareRequestBody($file);
 
@@ -37,17 +37,21 @@ class Curl extends AbstractHttp implements Proxy
             throw new ProxyException( 'Unable to connect' );
         }
 
-        if ( $this->method == "POST" ) {
+        $data = $this->renderQueryByBody($query, $body);
 
-            $body = $this->renderQueryByBody($query, $body);
-
-            curl_setopt( $curl, CURLOPT_URL, $url );
-
-            curl_setopt( $curl, CURLOPT_POST, true );
-
-            curl_setopt( $curl, CURLOPT_POSTFIELDS, $body );
-        } else {
-            curl_setopt( $curl, CURLOPT_URL, $url . '?' . $query);
+        switch ($method) {
+            case AbstractAction::METHOD_GET:
+                curl_setopt( $curl, CURLOPT_URL, $url . '?' . $query);
+                break;
+            case AbstractAction::METHOD_POST:
+                curl_setopt( $curl, CURLOPT_URL, $url);
+                curl_setopt($curl, CURLOPT_POST, true);
+                curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+                break;
+            default:
+                curl_setopt( $curl, CURLOPT_URL, $url);
+                curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
+                curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
         }
 
         $curlHeaders = array( );

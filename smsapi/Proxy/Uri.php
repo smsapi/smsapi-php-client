@@ -13,9 +13,9 @@ class Uri {
 	function __construct( $schema, $host, $port, $path, $query ) {
 
 		$this->schema = $schema;
-		$this->host = $host;
+		$this->host = rtrim($host, '/');
 		$this->port = $port;
-		$this->path = $path;
+		$this->path = '/' . ltrim($path, '/');
 		$this->query = $query;
 	}
 

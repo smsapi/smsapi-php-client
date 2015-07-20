@@ -8,6 +8,7 @@ use SMSApi\Proxy\Uri;
 /**
  * Class ContactAdd
  * @package SMSApi\Api\Action\Phonebook
+ * @deprecated use \SMSApi\Api\Action\Contacts\ContactAdd
  */
 class ContactAdd extends AbstractAction {
 

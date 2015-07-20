@@ -71,7 +71,7 @@ class Get extends AbstractAction
 	 *
 	 * This id was returned after sending message.
 	 *
-	 * @param $ids
+	 * @param array $ids
 	 * @return $this
 	 * @throws \SMSApi\Exception\ActionException
 	 */
@@ -81,16 +81,20 @@ class Get extends AbstractAction
 		return $this;
 	}
 
-	/**
-	 * @deprecated since v1.0.0
-	 */
+    /**
+     * @deprecated since v1.0.0
+     * @param $array
+     * @return Get
+     */
 	public function ids($array) {
 		return $this->filterByIds($array);
 	}
 
-	/**
-	 * @deprecated since v1.0.0
-	 */
+    /**
+     * @deprecated since v1.0.0
+     * @param $id
+     * @return Get
+     */
 	public function id($id) {
 		return $this->filterById($id);
 	}

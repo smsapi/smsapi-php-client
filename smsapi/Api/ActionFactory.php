@@ -2,6 +2,8 @@
 
 namespace SMSApi\Api;
 
+use SMSApi\Proxy\Http\Native;
+
 /**
  * Class ActionFactory
  * @package SMSApi\Api
@@ -27,7 +29,7 @@ abstract class ActionFactory {
 		if ( $proxy instanceof \SMSApi\Proxy\Proxy ) {
 			$this->setProxy( $proxy );
 		} else {
-			$this->setProxy( new \SMSApi\Proxy\Http\Native( 'https://api.smsapi.pl/' ) );
+			$this->setProxy(new Native('https://api.smsapi.pl'));
 		}
 
 		if ( $client instanceof \SMSApi\Client ) {
