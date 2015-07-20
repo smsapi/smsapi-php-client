@@ -8,6 +8,7 @@ use SMSApi\Proxy\Uri;
 /**
  * Class GroupDelete
  * @package SMSApi\Api\Action\Phonebook
+ * @deprecated use \SMSApi\Api\Action\Contacts\GroupDelete
  */
 class GroupDelete extends AbstractAction {
 

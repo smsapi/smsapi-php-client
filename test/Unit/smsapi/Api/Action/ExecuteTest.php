@@ -81,7 +81,7 @@ class ExecuteTest extends \PHPUnit_Framework_TestCase
 
         $proxyStub->expects($this->once())
             ->method('execute')
-            ->will($this->returnValue('{}'));
+            ->will($this->returnValue(array('output' => '{}', 'code' => 0)));
 
         return $proxyStub;
     }

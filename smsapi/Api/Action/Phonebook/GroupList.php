@@ -8,6 +8,7 @@ use SMSApi\Proxy\Uri;
 /**
  * Class GroupList
  * @package SMSApi\Api\Action\Phonebook
+ * @deprecated use \SMSApi\Api\Action\Contacts\GroupList
  */
 class GroupList extends AbstractAction {
 

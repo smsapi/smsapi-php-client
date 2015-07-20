@@ -2,9 +2,9 @@
 
 namespace SMSApi\Proxy\Http;
 
-use SMSApi\Proxy\Proxy;
+use SMSApi\Api\Action\AbstractAction;
 
-class Native extends AbstractHttp implements Proxy
+class Native extends AbstractHttp
 {
     /**
      * @deprecated
@@ -16,13 +16,13 @@ class Native extends AbstractHttp implements Proxy
      */
 	const CONNECT_SOCKET = 2;
 
-	protected function makeRequest($url, $query, $file)
+	protected function makeRequest($method, $url, $query, $file, $isContacts)
     {
         $body = $this->prepareRequestBody($file);
 
         $headers = $this->prepareRequestHeaders($file);
 
-        if (!empty($body)) {
+        if (!empty($body) or ($query and $method === AbstractAction::METHOD_GET)) {
             $url .= '?' . $query;
         }
 
@@ -30,9 +30,10 @@ class Native extends AbstractHttp implements Proxy
 
         $options = array(
             'http' => array(
-                'method'	 => $this->method,
+                'method'	 => $method,
                 'header'	 => $headersString,
                 'content'	 => empty($body) ? $query : $body,
+                'ignore_errors' => $isContacts,
             )
         );
 
@@ -62,7 +63,7 @@ class Native extends AbstractHttp implements Proxy
             }
 
             foreach ($headers as $wrapperRow) {
-                if (preg_match( '/^[\s]*HTTP\/1\.[01]\s([\d]+)\sOK[\s]*$/i', $wrapperRow, $code)) {
+                if (preg_match('/^\s*HTTP\/1\.[01]\s([\d]+)\s/i', $wrapperRow, $code)) {
                     $statusCode = next($code);
                 }
             }

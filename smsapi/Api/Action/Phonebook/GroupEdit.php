@@ -5,6 +5,7 @@ namespace SMSApi\Api\Action\Phonebook;
 /**
  * Class GroupEdit
  * @package SMSApi\Api\Action\Phonebook
+ * @deprecated use \SMSApi\Api\Action\Contacts\GroupEdit
  */
 class GroupEdit extends GroupAdd {
 

@@ -2,13 +2,33 @@
 
 namespace SMSApi\Proxy;
 
-interface Proxy {
+use SMSApi\Api\Action\AbstractAction;
+use SMSApi\Client;
+use SMSApi\Exception\ProxyException;
 
-	public function execute( \SMSApi\Api\Action\AbstractAction $action );
+interface Proxy
+{
+    /**
+     * @param AbstractAction $action
+     * @return string
+     * @throws ProxyException
+     */
+	public function execute(AbstractAction $action);
 
+    /**
+     * @return string|null
+     */
 	public function getProtocol();
 
+    /**
+     * @return string|null
+     */
 	public function getHost();
 
+    /**
+     * @return int|null
+     */
 	public function getPort();
+
+    public function setBasicAuthentication(Client $client);
 }
