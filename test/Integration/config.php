@@ -11,6 +11,9 @@ if (is_file($distFilePath)) {
         'number_test' => '',
         'sms_template_name' => '',
         'host' => '',
+        'contacts_login' => '',
+        'contacts_password' => '',
+        'contacts_host' => '',
     );
 }
 

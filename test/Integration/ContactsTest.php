@@ -1,10 +1,14 @@
 <?php
+
 use SMSApi\Api\ContactsFactory;
 use SMSApi\Api\Response\Contacts\ContactResponse;
 use SMSApi\Api\Response\Contacts\FieldResponse;
 use SMSApi\Api\Response\Contacts\ListResponse;
 use SMSApi\Api\Response\UserResponse;
 use SMSApi\Api\UserFactory;
+use SMSApi\Client;
+use SMSApi\Proxy\Http\Curl;
+use SMSApi\Proxy\Http\Native;
 
 final class ContactsTest extends SmsapiTestCase
 {
@@ -14,9 +18,31 @@ final class ContactsTest extends SmsapiTestCase
     /** @var ContactsFactory */
     private $contactsFactory;
 
+    private function getClient()
+    {
+        $configuration = include __DIR__ . '/config.php';
+
+        $client = new Client($configuration['contacts_login']);
+        $client->setPasswordHash($configuration['contacts_password']);
+
+        return $client;
+    }
+
     public function setUp()
     {
-        $this->contactsFactory = new ContactsFactory($this->proxy, $this->client());
+        $configuration = include __DIR__ . '/config.php';
+
+        $client = new Client($configuration['contacts_login']);
+        $client->setPasswordHash($configuration['contacts_password']);
+
+        if ($this->proxy instanceof Native) {
+            $proxy = new Native($configuration['contacts_host']);
+        } else {
+            $proxy = new Curl($configuration['contacts_host']);
+        }
+        $proxy = new Native($configuration['contacts_host']);
+
+        $this->contactsFactory = new ContactsFactory($proxy, $this->getClient());
     }
 
     /**
@@ -30,6 +56,8 @@ final class ContactsTest extends SmsapiTestCase
                 $this->contactsFactory->actionContactDelete($contact->getId())->execute()
             );
         }
+
+        $this->assertTrue(true);
     }
 
     /**
@@ -44,6 +72,8 @@ final class ContactsTest extends SmsapiTestCase
                 $this->contactsFactory->actionGroupDelete($group->getId())->execute()
             );
         }
+
+        $this->assertTrue(true);
     }
 
     /**
@@ -58,6 +88,8 @@ final class ContactsTest extends SmsapiTestCase
                 $this->contactsFactory->actionFieldDelete($field->getId())->execute()
             );
         }
+
+        $this->assertTrue(true);
     }
 
     /**
@@ -565,7 +597,7 @@ final class ContactsTest extends SmsapiTestCase
 
     private function getSubuserUsername()
     {
-        $userFactory = new UserFactory($this->proxy, $this->client());
+        $userFactory = new UserFactory($this->proxy, $this->getClient());
 
         /** @var UserResponse[] $subusers */
         $subusers = $userFactory->actionList()->execute()->getList();

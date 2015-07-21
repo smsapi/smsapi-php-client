@@ -21,6 +21,7 @@ abstract class ProxyTestSuite extends PHPUnit_Framework_TestSuite
         $this->addTestSuite('SmsTest');
         $this->addTestSuite('UserTest');
         $this->addTestSuite('VmsTest');
+        $this->addTestSuite('ContactsTest');
     }
 
     protected static function getHost()
