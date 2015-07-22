@@ -23,7 +23,7 @@ final class ContactList extends ContactsAction
 
     public function getResource()
     {
-        return '/contacts/';
+        return '/contacts';
     }
 
     protected function response($data)
@@ -40,8 +40,9 @@ final class ContactList extends ContactsAction
 
     public function setOffsetAndLimit($offset, $limit)
     {
-        $this->setParam(self::PARAM_OFFSET, $offset);
-        $this->setParam(self::PARAM_LIMIT, $limit);
+        $this
+            ->setParam(self::PARAM_OFFSET, $offset)
+            ->setParam(self::PARAM_LIMIT, $limit);
 
         return $this;
     }
@@ -104,7 +105,14 @@ final class ContactList extends ContactsAction
 
     public function setBirthDayDate(DateTime $birthdayDate)
     {
-        $this->params[ContactResponse::FIELD_BIRTHDAY_DATE] = $birthdayDate->format('Y-m-d');
+        $this->setParam(ContactResponse::FIELD_BIRTHDAY_DATE, $birthdayDate->format('Y-m-d'));
+
+        return $this;
+    }
+
+    public function setIds(array $ids)
+    {
+        $this->params[ContactResponse::FIELD_ID] = $ids;
 
         return $this;
     }

@@ -34,6 +34,8 @@ abstract class ContactsAction extends AbstractAction
     protected function setParam($name, $value)
     {
         $this->params[$name] = urlencode($value);
+
+        return $this;
     }
 
     /**

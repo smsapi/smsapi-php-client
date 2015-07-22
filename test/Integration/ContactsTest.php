@@ -378,6 +378,31 @@ final class ContactsTest extends SmsapiTestCase
 
     /**
      * @test
+     * @depends it_should_find_all_contact_by_first_name
+     * @param ContactResponse $contactResponse
+     */
+    public function it_should_find_all_contact_by_id(ContactResponse $contactResponse)
+    {
+        // todo skipped because of API bug
+        if (!($this->proxy instanceof Native)) {
+            $this->assertTrue(true);
+
+            return;
+        }
+
+        $actionContactList = $this->contactsFactory->actionContactList();
+        $id = $contactResponse->getId();
+
+        $result = $actionContactList->setIds(array($id))->execute();
+
+        $this->assertInstanceOf('\SMSApi\Api\Response\Contacts\ContactsResponse', $result);
+        $this->assertEquals(1, $result->getSize());
+        $collection = $result->getCollection();
+        $this->assertEquals($id, $collection[0]->getId());
+    }
+
+    /**
+     * @test
      * @depends it_should_find_all_contact_by_last_name
      */
     public function it_should_add_group()
