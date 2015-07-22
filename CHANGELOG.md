@@ -1,6 +1,9 @@
 # SMSAPI PHP Client
 
-## 1.4.0 - 2015-06-24
+## 1.4.1 - 2015-07-22
+* cURL fixes
+
+## 1.4.0 - 2015-07-21
 * add contacts support
 
 ## 1.3.5 - 2015-07-01
