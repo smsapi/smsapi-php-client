@@ -45,42 +45,42 @@ final class GroupPermissionEdit extends ContactsAction
 
     public function enableRead()
     {
-        $this->setParam(PermissionResponse::FIELD_READ, true);
+        $this->setParamValue(PermissionResponse::FIELD_READ, true);
 
         return $this;
     }
 
     public function disableRead()
     {
-        $this->setParam(PermissionResponse::FIELD_READ, false);
+        $this->setParamValue(PermissionResponse::FIELD_READ, false);
 
         return $this;
     }
 
     public function enableWrite()
     {
-        $this->setParam(PermissionResponse::FIELD_WRITE, true);
+        $this->setParamValue(PermissionResponse::FIELD_WRITE, true);
 
         return $this;
     }
 
     public function disableWrite()
     {
-        $this->setParam(PermissionResponse::FIELD_WRITE, false);
+        $this->setParamValue(PermissionResponse::FIELD_WRITE, false);
 
         return $this;
     }
 
     public function enableSend()
     {
-        $this->setParam(PermissionResponse::FIELD_SEND, true);
+        $this->setParamValue(PermissionResponse::FIELD_SEND, true);
 
         return $this;
     }
 
     public function disableSend()
     {
-        $this->setParam(PermissionResponse::FIELD_SEND, false);
+        $this->setParamValue(PermissionResponse::FIELD_SEND, false);
 
         return $this;
     }

@@ -245,9 +245,9 @@ final class ContactsTest extends SmsapiTestCase
      * @param ContactResponse $contactResponse
      * @return ContactResponse
      */
-    public function it_should_find_all_contact_by_email(ContactResponse $contactResponse)
+    public function it_should_find_contact_by_email(ContactResponse $contactResponse)
     {
-        // todo skipped because of API bug
+        // todo skipped because of cURL/API bug
         if (!($this->proxy instanceof Native)) {
             $this->assertTrue(true);
 
@@ -269,13 +269,13 @@ final class ContactsTest extends SmsapiTestCase
 
     /**
      * @test
-     * @depends it_should_find_all_contact_by_email
+     * @depends it_should_find_contact_by_email
      * @param ContactResponse $contactResponse
      * @return ContactResponse
      */
-    public function it_should_find_all_contact_by_phone_number(ContactResponse $contactResponse)
+    public function it_should_find_contact_by_phone_number(ContactResponse $contactResponse)
     {
-        // todo skipped because of API bug
+        // todo skipped because of cURL/API bug
         if (!($this->proxy instanceof Native)) {
             $this->assertTrue(true);
 
@@ -297,13 +297,13 @@ final class ContactsTest extends SmsapiTestCase
 
     /**
      * @test
-     * @depends it_should_find_all_contact_by_phone_number
+     * @depends it_should_find_contact_by_phone_number
      * @param ContactResponse $contactResponse
      * @return ContactResponse
      */
-    public function it_should_find_all_contact_by_birthday_date(ContactResponse $contactResponse)
+    public function it_should_find_contact_by_birthday_date(ContactResponse $contactResponse)
     {
-        // todo skipped because of API bug
+        // todo skipped because of cURL/API bug
         if (!($this->proxy instanceof Native)) {
             $this->assertTrue(true);
 
@@ -325,13 +325,13 @@ final class ContactsTest extends SmsapiTestCase
 
     /**
      * @test
-     * @depends it_should_find_all_contact_by_birthday_date
+     * @depends it_should_find_contact_by_birthday_date
      * @param ContactResponse $contactResponse
      * @return ContactResponse
      */
-    public function it_should_find_all_contact_by_first_name(ContactResponse $contactResponse)
+    public function it_should_find_contact_by_first_name(ContactResponse $contactResponse)
     {
-        // todo skipped because of API bug
+        // todo skipped because of cURL/API bug
         if (!($this->proxy instanceof Native)) {
             $this->assertTrue(true);
 
@@ -353,16 +353,16 @@ final class ContactsTest extends SmsapiTestCase
 
     /**
      * @test
-     * @depends it_should_find_all_contact_by_first_name
+     * @depends it_should_find_contact_by_first_name
      * @param ContactResponse $contactResponse
      */
-    public function it_should_find_all_contact_by_last_name(ContactResponse $contactResponse)
+    public function it_should_find_contact_by_last_name(ContactResponse $contactResponse)
     {
-        // todo skipped because of API bug
+        // todo skipped because of cURL/API bug
         if (!($this->proxy instanceof Native)) {
             $this->assertTrue(true);
 
-            return;
+            return $contactResponse;
         }
 
         $actionContactList = $this->contactsFactory->actionContactList();
@@ -378,16 +378,16 @@ final class ContactsTest extends SmsapiTestCase
 
     /**
      * @test
-     * @depends it_should_find_all_contact_by_first_name
+     * @depends it_should_find_contact_by_last_name
      * @param ContactResponse $contactResponse
      */
-    public function it_should_find_all_contact_by_id(ContactResponse $contactResponse)
+    public function it_should_find_contact_by_id(ContactResponse $contactResponse)
     {
-        // todo skipped because of API bug
+        // todo skipped because of cURL/API bug
         if (!($this->proxy instanceof Native)) {
             $this->assertTrue(true);
 
-            return;
+            return $contactResponse;
         }
 
         $actionContactList = $this->contactsFactory->actionContactList();
@@ -403,7 +403,7 @@ final class ContactsTest extends SmsapiTestCase
 
     /**
      * @test
-     * @depends it_should_find_all_contact_by_last_name
+     * @depends it_should_find_contact_by_id
      */
     public function it_should_add_group()
     {
@@ -491,6 +491,54 @@ final class ContactsTest extends SmsapiTestCase
     /**
      * @test
      * @depends it_should_get_contact_group
+     */
+    public function it_should_find_contact_by_group_id()
+    {
+        // todo skipped because of cURL/API bug
+        if (!($this->proxy instanceof Native)) {
+            $this->assertTrue(true);
+
+            return;
+        }
+
+        $actionContactList = $this->contactsFactory->actionContactList();
+        $groupId = self::$groupId;
+
+        $result = $actionContactList->setGroupId($groupId)->execute();
+
+        $this->assertInstanceOf('\SMSApi\Api\Response\Contacts\ContactsResponse', $result);
+        $this->assertEquals(1, $result->getSize());
+        $collection = $result->getCollection();
+        $this->assertEquals(self::$contactId, $collection[0]->getId());
+    }
+
+    /**
+     * @test
+     * @depends it_should_find_contact_by_group_id
+     */
+    public function it_should_find_contact_by_group_ids()
+    {
+        // todo skipped because of cURL/API bug
+        if (!($this->proxy instanceof Native)) {
+            $this->assertTrue(true);
+
+            return;
+        }
+
+        $actionContactList = $this->contactsFactory->actionContactList();
+        $groupIds = array(self::$groupId);
+
+        $result = $actionContactList->setGroupIds($groupIds)->execute();
+
+        $this->assertInstanceOf('\SMSApi\Api\Response\Contacts\ContactsResponse', $result);
+        $this->assertEquals(1, $result->getSize());
+        $collection = $result->getCollection();
+        $this->assertEquals(self::$contactId, $collection[0]->getId());
+    }
+
+    /**
+     * @test
+     * @depends it_should_find_contact_by_group_ids
      */
     public function it_should_add_group_permission()
     {

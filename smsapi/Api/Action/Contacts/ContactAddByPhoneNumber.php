@@ -17,12 +17,12 @@ final class ContactAddByPhoneNumber extends ContactAdd
     {
         parent::__construct($client, $proxy);
 
-        $this->setParam(ContactResponse::FIELD_PHONE_NUMBER, $phoneNumber);
+        $this->setParamValue(ContactResponse::FIELD_PHONE_NUMBER, $phoneNumber);
     }
 
     public function setEmail($email)
     {
-        $this->setParam(ContactResponse::FIELD_EMAIL, $email);
+        $this->setParamValue(ContactResponse::FIELD_EMAIL, $email);
 
         return $this;
     }

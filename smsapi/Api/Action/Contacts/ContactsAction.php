@@ -31,9 +31,16 @@ abstract class ContactsAction extends AbstractAction
         );
     }
 
-    protected function setParam($name, $value)
+    protected function setParamValue($name, $value)
     {
         $this->params[$name] = urlencode($value);
+
+        return $this;
+    }
+
+    protected function setParamArray($name, array $values)
+    {
+        $this->params[$name] = array_map('urlencode', $values);
 
         return $this;
     }

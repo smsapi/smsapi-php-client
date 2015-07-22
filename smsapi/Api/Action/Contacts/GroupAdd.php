@@ -37,14 +37,14 @@ final class GroupAdd extends ContactsAction
 
     public function setDescription($description)
     {
-        $this->setParam(GroupResponse::FIELD_DESCRIPTION, $description);
+        $this->setParamValue(GroupResponse::FIELD_DESCRIPTION, $description);
 
         return $this;
     }
 
     public function setIdx($idx)
     {
-        $this->setParam(GroupResponse::FIELD_IDX, $idx);
+        $this->setParamValue(GroupResponse::FIELD_IDX, $idx);
 
         return $this;
     }

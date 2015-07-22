@@ -15,7 +15,7 @@ final class FieldAdd extends ContactsAction
     {
         parent::__construct($client, $proxy);
 
-        $this->setParam(FieldResponse::FIELD_NAME, $name);
+        $this->setParamValue(FieldResponse::FIELD_NAME, $name);
     }
 
     public function getMethod()
@@ -35,35 +35,35 @@ final class FieldAdd extends ContactsAction
 
     public function setTypeAsText()
     {
-        $this->setParam(FieldResponse::FIELD_TYPE, FieldResponse::TYPE_TEXT);
+        $this->setParamValue(FieldResponse::FIELD_TYPE, FieldResponse::TYPE_TEXT);
 
         return $this;
     }
 
     public function setTypeAsDate()
     {
-        $this->setParam(FieldResponse::FIELD_TYPE, FieldResponse::TYPE_DATE);
+        $this->setParamValue(FieldResponse::FIELD_TYPE, FieldResponse::TYPE_DATE);
 
         return $this;
     }
 
     public function setTypeAsEmail()
     {
-        $this->setParam(FieldResponse::FIELD_TYPE, FieldResponse::TYPE_EMAIL);
+        $this->setParamValue(FieldResponse::FIELD_TYPE, FieldResponse::TYPE_EMAIL);
 
         return $this;
     }
 
     public function setTypeAsNumber()
     {
-        $this->setParam(FieldResponse::FIELD_TYPE, FieldResponse::TYPE_NUMBER);
+        $this->setParamValue(FieldResponse::FIELD_TYPE, FieldResponse::TYPE_NUMBER);
 
         return $this;
     }
 
     public function setTypeAsPhoneNumber()
     {
-        $this->setParam(FieldResponse::FIELD_TYPE, FieldResponse::TYPE_PHONE_NUMBER);
+        $this->setParamValue(FieldResponse::FIELD_TYPE, FieldResponse::TYPE_PHONE_NUMBER);
 
         return $this;
     }

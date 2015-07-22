@@ -38,49 +38,49 @@ class ContactEdit extends ContactsAction
 
     public function setPhoneNumber($phoneNumber)
     {
-        $this->setParam(ContactResponse::FIELD_PHONE_NUMBER, $phoneNumber);
+        $this->setParamValue(ContactResponse::FIELD_PHONE_NUMBER, $phoneNumber);
 
         return $this;
     }
 
     public function setEmail($email)
     {
-        $this->setParam(ContactResponse::FIELD_EMAIL, $email);
+        $this->setParamValue(ContactResponse::FIELD_EMAIL, $email);
 
         return $this;
     }
 
     public function setFirstName($firstName)
     {
-        $this->setParam(ContactResponse::FIELD_FIRST_NAME, $firstName);
+        $this->setParamValue(ContactResponse::FIELD_FIRST_NAME, $firstName);
 
         return $this;
     }
 
     public function setLastName($lastName)
     {
-        $this->setParam(ContactResponse::FIELD_LAST_NAME, $lastName);
+        $this->setParamValue(ContactResponse::FIELD_LAST_NAME, $lastName);
 
         return $this;
     }
 
     public function setGenderAsMale()
     {
-        $this->setParam(ContactResponse::FIELD_GENDER, ContactResponse::GENDER_MALE);
+        $this->setParamValue(ContactResponse::FIELD_GENDER, ContactResponse::GENDER_MALE);
 
         return $this;
     }
 
     public function setGenderAsFemale()
     {
-        $this->setParam(ContactResponse::FIELD_GENDER, ContactResponse::GENDER_FEMALE);
+        $this->setParamValue(ContactResponse::FIELD_GENDER, ContactResponse::GENDER_FEMALE);
 
         return $this;
     }
 
     public function setGenderAsUndefined()
     {
-        $this->setParam(ContactResponse::FIELD_GENDER, ContactResponse::GENDER_UNDEFINED);
+        $this->setParamValue(ContactResponse::FIELD_GENDER, ContactResponse::GENDER_UNDEFINED);
 
         return $this;
     }
@@ -94,21 +94,21 @@ class ContactEdit extends ContactsAction
 
     public function setDescription($description)
     {
-        $this->setParam(ContactResponse::FIELD_DESCRIPTION, $description);
+        $this->setParamValue(ContactResponse::FIELD_DESCRIPTION, $description);
 
         return $this;
     }
 
     public function setCity($city)
     {
-        $this->setParam(ContactResponse::FIELD_CITY, $city);
+        $this->setParamValue(ContactResponse::FIELD_CITY, $city);
 
         return $this;
     }
 
     public function setSource($source)
     {
-        $this->setParam(ContactResponse::FIELD_SOURCE, $source);
+        $this->setParamValue(ContactResponse::FIELD_SOURCE, $source);
 
         return $this;
     }
