@@ -37,42 +37,42 @@ final class FieldEdit extends ContactsAction
 
     public function setName($name)
     {
-        $this->params[FieldResponse::FIELD_NAME] = $name;
+        $this->setParam(FieldResponse::FIELD_NAME, $name);
 
         return $this;
     }
 
     public function setTypeAsText()
     {
-        $this->params[FieldResponse::FIELD_TYPE] = FieldResponse::TYPE_TEXT;
+        $this->setParam(FieldResponse::FIELD_TYPE, FieldResponse::TYPE_TEXT);
 
         return $this;
     }
 
     public function setTypeAsDate()
     {
-        $this->params[FieldResponse::FIELD_TYPE] = FieldResponse::TYPE_DATE;
+        $this->setParam(FieldResponse::FIELD_TYPE, FieldResponse::TYPE_DATE);
 
         return $this;
     }
 
     public function setTypeAsEmail()
     {
-        $this->params[FieldResponse::FIELD_TYPE] = FieldResponse::TYPE_EMAIL;
+        $this->setParam(FieldResponse::FIELD_TYPE, FieldResponse::TYPE_EMAIL);
 
         return $this;
     }
 
     public function setTypeAsNumber()
     {
-        $this->params[FieldResponse::FIELD_TYPE] = FieldResponse::TYPE_NUMBER;
+        $this->setParam(FieldResponse::FIELD_TYPE, FieldResponse::TYPE_NUMBER);
 
         return $this;
     }
 
     public function setTypeAsPhoneNumber()
     {
-        $this->params[FieldResponse::FIELD_TYPE] = FieldResponse::TYPE_PHONE_NUMBER;
+        $this->setParam(FieldResponse::FIELD_TYPE, FieldResponse::TYPE_PHONE_NUMBER);
 
         return $this;
     }

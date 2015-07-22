@@ -27,8 +27,13 @@ abstract class ContactsAction extends AbstractAction
             $this->proxy->getHost(),
             $this->proxy->getPort(),
             $this->getResource(),
-            $this->setJson(false)->paramsOther()
+            ltrim($this->setJson(false)->paramsOther(), '&')
         );
+    }
+
+    protected function setParam($name, $value)
+    {
+        $this->params[$name] = urlencode($value);
     }
 
     /**

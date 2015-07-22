@@ -41,7 +41,7 @@ class Curl extends AbstractHttp
 
         switch ($method) {
             case AbstractAction::METHOD_GET:
-                curl_setopt( $curl, CURLOPT_URL, $url . '?' . $query);
+                curl_setopt( $curl, CURLOPT_URL, $url . ($query ? '?' . $query : ''));
                 break;
             case AbstractAction::METHOD_POST:
                 curl_setopt( $curl, CURLOPT_URL, $url);

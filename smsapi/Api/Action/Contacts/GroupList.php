@@ -27,14 +27,14 @@ final class GroupList extends ContactsAction
 
     public function setIds(array $ids)
     {
-        $this->params[GroupResponse::FIELD_ID] = $ids;
+        $this->setParam(GroupResponse::FIELD_ID, $ids);
 
         return $this;
     }
 
     public function setNames(array $names)
     {
-        $this->params[GroupResponse::FIELD_NAME] = $names;
+        $this->setParam(GroupResponse::FIELD_NAME, $names);
 
         return $this;
     }

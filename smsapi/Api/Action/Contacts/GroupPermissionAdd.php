@@ -18,7 +18,7 @@ final class GroupPermissionAdd extends ContactsAction
         parent::__construct($client, $proxy);
 
         $this->groupId = $groupId;
-        $this->params[PermissionResponse::FIELD_USERNAME] = $username;
+        $this->setParam(PermissionResponse::FIELD_USERNAME, $username);
     }
 
     public function getMethod()
@@ -38,42 +38,42 @@ final class GroupPermissionAdd extends ContactsAction
 
     public function enableRead()
     {
-        $this->params[PermissionResponse::FIELD_READ] = true;
+        $this->setParam(PermissionResponse::FIELD_READ, true);
 
         return $this;
     }
 
     public function disableRead()
     {
-        $this->params[PermissionResponse::FIELD_READ] = false;
+        $this->setParam(PermissionResponse::FIELD_READ, false);
 
         return $this;
     }
 
     public function enableWrite()
     {
-        $this->params[PermissionResponse::FIELD_WRITE] = true;
+        $this->setParam(PermissionResponse::FIELD_WRITE, true);
 
         return $this;
     }
 
     public function disableWrite()
     {
-        $this->params[PermissionResponse::FIELD_WRITE] = false;
+        $this->setParam(PermissionResponse::FIELD_WRITE, false);
 
         return $this;
     }
 
     public function enableSend()
     {
-        $this->params[PermissionResponse::FIELD_SEND] = true;
+        $this->setParam(PermissionResponse::FIELD_SEND, true);
 
         return $this;
     }
 
     public function disableSend()
     {
-        $this->params[PermissionResponse::FIELD_SEND] = false;
+        $this->setParam(PermissionResponse::FIELD_SEND, false);
 
         return $this;
     }

@@ -37,21 +37,21 @@ final class GroupEdit extends ContactsAction
 
     public function setName($name)
     {
-        $this->params[GroupResponse::FIELD_NAME] = $name;
+        $this->setParam(GroupResponse::FIELD_NAME, $name);
 
         return $this;
     }
 
     public function setDescription($description)
     {
-        $this->params[GroupResponse::FIELD_DESCRIPTION] = $description;
+        $this->setParam(GroupResponse::FIELD_DESCRIPTION, $description);
 
         return $this;
     }
 
     public function setIdx($idx)
     {
-        $this->params[GroupResponse::FIELD_IDX] = $idx;
+        $this->setParam(GroupResponse::FIELD_IDX, $idx);
 
         return $this;
     }

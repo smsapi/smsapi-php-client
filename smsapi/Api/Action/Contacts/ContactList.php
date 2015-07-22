@@ -23,7 +23,7 @@ final class ContactList extends ContactsAction
 
     public function getResource()
     {
-        return '/contacts';
+        return '/contacts/';
     }
 
     protected function response($data)
@@ -33,71 +33,71 @@ final class ContactList extends ContactsAction
 
     public function setSearch($search)
     {
-        $this->params[self::PARAM_SEARCH] = $search;
+        $this->setParam(self::PARAM_SEARCH, $search);
 
         return $this;
     }
 
     public function setOffsetAndLimit($offset, $limit)
     {
-        $this->params[self::PARAM_OFFSET] = $offset;
-        $this->params[self::PARAM_LIMIT] = $limit;
+        $this->setParam(self::PARAM_OFFSET, $offset);
+        $this->setParam(self::PARAM_LIMIT, $limit);
 
         return $this;
     }
 
     public function setOrderBy($orderBy)
     {
-        $this->params[self::PARAM_ORDER_BY] = $orderBy;
+        $this->setParam(self::PARAM_ORDER_BY, $orderBy);
 
         return $this;
     }
 
     public function setPhoneNumber($phoneNumber)
     {
-        $this->params[ContactResponse::FIELD_PHONE_NUMBER] = $phoneNumber;
+        $this->setParam(ContactResponse::FIELD_PHONE_NUMBER, $phoneNumber);
 
         return $this;
     }
 
     public function setEmail($email)
     {
-        $this->params[ContactResponse::FIELD_EMAIL] = $email;
+        $this->setParam(ContactResponse::FIELD_EMAIL, $email);
 
         return $this;
     }
 
     public function setFirstName($firstName)
     {
-        $this->params[ContactResponse::FIELD_FIRST_NAME] = $firstName;
+        $this->setParam(ContactResponse::FIELD_FIRST_NAME, $firstName);
 
         return $this;
     }
 
     public function setLastName($lastName)
     {
-        $this->params[ContactResponse::FIELD_LAST_NAME] = $lastName;
+        $this->setParam(ContactResponse::FIELD_LAST_NAME, $lastName);
 
         return $this;
     }
 
     public function setGenderAsMale()
     {
-        $this->params[ContactResponse::FIELD_GENDER] = ContactResponse::GENDER_MALE;
+        $this->setParam(ContactResponse::FIELD_GENDER, ContactResponse::GENDER_MALE);
 
         return $this;
     }
 
     public function setGenderAsFemale()
     {
-        $this->params[ContactResponse::FIELD_GENDER] = ContactResponse::GENDER_FEMALE;
+        $this->setParam(ContactResponse::FIELD_GENDER, ContactResponse::GENDER_FEMALE);
 
         return $this;
     }
 
     public function setGenderAsUndefined()
     {
-        $this->params[ContactResponse::FIELD_GENDER] = ContactResponse::GENDER_UNDEFINED;
+        $this->setParam(ContactResponse::FIELD_GENDER, ContactResponse::GENDER_UNDEFINED);
 
         return $this;
     }
