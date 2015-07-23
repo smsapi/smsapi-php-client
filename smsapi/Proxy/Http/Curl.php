@@ -68,12 +68,16 @@ class Curl extends AbstractHttp
                 curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
         }
 
-        list($header, $body) = explode("\r\n\r\n", curl_exec($curl), 2);
+        list($headers, $body) = explode(
+            "\r\n\r\n",
+            preg_replace('#HTTP/1\.1 100 Continue\s+#', '', curl_exec($curl)),
+            2
+        );
 
         $response = array(
             'output' => $body,
             'code' => curl_getinfo($curl, CURLINFO_HTTP_CODE),
-            'size' => $this->getResultCount($header),
+            'size' => $this->getResultCount($headers),
         );
 
         curl_close( $curl );

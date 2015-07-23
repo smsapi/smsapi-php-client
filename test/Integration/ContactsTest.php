@@ -40,7 +40,7 @@ final class ContactsTest extends SmsapiTestCase
         } else {
             $proxy = new Curl($configuration['contacts_host']);
         }
-        
+
         $this->contactsFactory = new ContactsFactory($proxy, $this->getClient());
     }
 
