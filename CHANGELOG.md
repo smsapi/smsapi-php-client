@@ -1,5 +1,10 @@
 # SMSAPI PHP Client
 
+## 1.5.0 - 2015-07-22
+* add fetching contacts by ids
+* add fetching contacts by group
+* add counting contacts
+
 ## 1.4.1 - 2015-07-22
 * cURL fixes
 
