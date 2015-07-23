@@ -40,7 +40,7 @@ final class ContactsTest extends SmsapiTestCase
         } else {
             $proxy = new Curl($configuration['contacts_host']);
         }
-
+        $this->proxy = new Curl($configuration['contacts_host']);
         $this->contactsFactory = new ContactsFactory($proxy, $this->getClient());
     }
 
@@ -247,7 +247,7 @@ final class ContactsTest extends SmsapiTestCase
      */
     public function it_should_find_contact_by_email(ContactResponse $contactResponse)
     {
-        // todo skipped because of cURL/API bug
+        // todo request does not work for cURL
         if (!($this->proxy instanceof Native)) {
             $this->assertTrue(true);
 
@@ -275,7 +275,7 @@ final class ContactsTest extends SmsapiTestCase
      */
     public function it_should_find_contact_by_phone_number(ContactResponse $contactResponse)
     {
-        // todo skipped because of cURL/API bug
+        // todo request does not work for cURL
         if (!($this->proxy instanceof Native)) {
             $this->assertTrue(true);
 
@@ -303,7 +303,7 @@ final class ContactsTest extends SmsapiTestCase
      */
     public function it_should_find_contact_by_birthday_date(ContactResponse $contactResponse)
     {
-        // todo skipped because of cURL/API bug
+        // todo request does not work for cURL
         if (!($this->proxy instanceof Native)) {
             $this->assertTrue(true);
 
@@ -331,7 +331,7 @@ final class ContactsTest extends SmsapiTestCase
      */
     public function it_should_find_contact_by_first_name(ContactResponse $contactResponse)
     {
-        // todo skipped because of cURL/API bug
+        // todo request does not work for cURL
         if (!($this->proxy instanceof Native)) {
             $this->assertTrue(true);
 
@@ -358,7 +358,7 @@ final class ContactsTest extends SmsapiTestCase
      */
     public function it_should_find_contact_by_last_name(ContactResponse $contactResponse)
     {
-        // todo skipped because of cURL/API bug
+        // todo request does not work for cURL
         if (!($this->proxy instanceof Native)) {
             $this->assertTrue(true);
 
@@ -374,6 +374,8 @@ final class ContactsTest extends SmsapiTestCase
         $this->assertEquals(1, $result->getSize());
         $collection = $result->getCollection();
         $this->assertEquals($lastName, $collection[0]->getLastName());
+
+        return $contactResponse;
     }
 
     /**
@@ -383,7 +385,7 @@ final class ContactsTest extends SmsapiTestCase
      */
     public function it_should_find_contact_by_id(ContactResponse $contactResponse)
     {
-        // todo skipped because of cURL/API bug
+        // todo request does not work for cURL
         if (!($this->proxy instanceof Native)) {
             $this->assertTrue(true);
 
@@ -399,11 +401,58 @@ final class ContactsTest extends SmsapiTestCase
         $this->assertEquals(1, $result->getSize());
         $collection = $result->getCollection();
         $this->assertEquals($id, $collection[0]->getId());
+
+        return $contactResponse;
     }
 
     /**
      * @test
      * @depends it_should_find_contact_by_id
+     * @param ContactResponse $contactResponse
+     */
+    public function it_should_count_contacts_by_id(ContactResponse $contactResponse)
+    {
+        // todo request does not work for cURL
+        if (!($this->proxy instanceof Native)) {
+            $this->assertTrue(true);
+
+            return;
+        }
+
+        $actionContactList = $this->contactsFactory->actionContactCount();
+        $id = $contactResponse->getId();
+
+        $result = $actionContactList->setIds(array($id))->execute();
+
+        $this->assertInstanceOf('\SMSApi\Api\Response\Contacts\SizeResponse', $result);
+        $this->assertEquals(1, $result->getSize());
+    }
+
+    /**
+     * @test
+     * @depends it_should_count_contacts_by_id
+     * @param ContactResponse $contactResponse
+     */
+    public function it_should_count_contacts()
+    {
+        // todo request does not work for cURL
+        if (!($this->proxy instanceof Native)) {
+            $this->assertTrue(true);
+
+            return;
+        }
+
+        $actionContactList = $this->contactsFactory->actionContactCount();
+
+        $result = $actionContactList->execute();
+
+        $this->assertInstanceOf('\SMSApi\Api\Response\Contacts\SizeResponse', $result);
+        $this->assertEquals(2, $result->getSize());
+    }
+
+    /**
+     * @test
+     * @depends it_should_count_contacts
      */
     public function it_should_add_group()
     {
@@ -494,7 +543,7 @@ final class ContactsTest extends SmsapiTestCase
      */
     public function it_should_find_contact_by_group_id()
     {
-        // todo skipped because of cURL/API bug
+        // todo request does not work for cURL
         if (!($this->proxy instanceof Native)) {
             $this->assertTrue(true);
 
@@ -518,7 +567,7 @@ final class ContactsTest extends SmsapiTestCase
      */
     public function it_should_find_contact_by_group_ids()
     {
-        // todo skipped because of cURL/API bug
+        // todo request does not work for cURL
         if (!($this->proxy instanceof Native)) {
             $this->assertTrue(true);
 

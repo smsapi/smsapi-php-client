@@ -22,6 +22,7 @@ abstract class AbstractAction
     const METHOD_POST = 'POST';
     const METHOD_DELETE = 'DELETE';
     const METHOD_PUT = 'PUT';
+    const METHOD_HEAD = 'HEAD';
 
     /**
 	 * @var Client
@@ -238,7 +239,11 @@ abstract class AbstractAction
 
             $this->handleError($data, $this->isContacts);
 
-            return $this->response($data['output']);
+            if ($this->getMethod() === self::METHOD_HEAD and $data['size']) {
+                return $this->response(json_encode(array('size' => $data['size'])));
+            } else {
+                return $this->response($data['output']);
+            }
 		}
 		catch ( Exception $ex )
 		{

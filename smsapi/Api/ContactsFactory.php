@@ -4,6 +4,7 @@ namespace SMSApi\Api;
 
 use SMSApi\Api\Action\Contacts\ContactAddByEmail;
 use SMSApi\Api\Action\Contacts\ContactAddByPhoneNumber;
+use SMSApi\Api\Action\Contacts\ContactCount;
 use SMSApi\Api\Action\Contacts\ContactDelete;
 use SMSApi\Api\Action\Contacts\ContactEdit;
 use SMSApi\Api\Action\Contacts\ContactGet;
@@ -35,6 +36,11 @@ final class ContactsFactory extends ActionFactory
     public function actionContactList()
     {
         return new ContactList($this->client, $this->proxy);
+    }
+
+    public function actionContactCount()
+    {
+        return new ContactCount($this->client, $this->proxy);
     }
 
     public function actionContactGet($contactId)

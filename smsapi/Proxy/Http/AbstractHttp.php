@@ -93,7 +93,8 @@ abstract class AbstractHttp implements Proxy
                 $this->checkCode($response['code']);
             }
 
-            if ($method !== AbstractAction::METHOD_DELETE and empty($response['output'])) {
+            $notDeleteOrHead = !in_array($method, array(AbstractAction::METHOD_DELETE, AbstractAction::METHOD_HEAD));
+            if ($notDeleteOrHead and empty($response['output'])) {
                 throw new ProxyException('Error fetching remote content empty');
             }
         } catch (\Exception $e) {

@@ -17,7 +17,7 @@ class Curl extends AbstractHttp
 
         curl_setopt( $curl, CURL_HTTP_VERSION_1_1, true );
 
-        curl_setopt( $curl, CURLOPT_HEADER, false );
+        curl_setopt($curl, CURLOPT_HEADER, true);
 
         curl_setopt( $curl, CURLOPT_SSL_VERIFYPEER, false );
 
@@ -39,37 +39,56 @@ class Curl extends AbstractHttp
 
         $data = $this->renderQueryByBody($query, $body);
 
-        switch ($method) {
-            case AbstractAction::METHOD_GET:
-                curl_setopt( $curl, CURLOPT_URL, $url . ($query ? '?' . $query : ''));
-                break;
-            case AbstractAction::METHOD_POST:
-                curl_setopt( $curl, CURLOPT_URL, $url);
-                curl_setopt($curl, CURLOPT_POST, true);
-                curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-                break;
-            default:
-                curl_setopt( $curl, CURLOPT_URL, $url);
-                curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
-                curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-        }
-
         $curlHeaders = array( );
         foreach ( $headers as $key => $value ) {
             $curlHeaders[ ] = $key . ': ' . $value;
         }
 
         curl_setopt( $curl, CURLOPT_HTTPHEADER, $curlHeaders );
-
         curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
 
+        switch ($method) {
+            case AbstractAction::METHOD_GET:
+                curl_setopt($curl, CURLOPT_URL, $url . ($query ? '?' . $query : ''));
+                break;
+            case AbstractAction::METHOD_POST:
+                curl_setopt($curl, CURLOPT_URL, $url);
+                curl_setopt($curl, CURLOPT_POST, true);
+                curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+                break;
+            case AbstractAction::METHOD_HEAD:
+                curl_setopt($curl, CURLOPT_URL, $url . ($query ? '?' . $query : ''));
+                curl_setopt($curl, CURLOPT_NOBODY, true);
+                //curl_setopt($curl, CURLOPT_CUSTOMREQUEST, AbstractAction::METHOD_HEAD);
+                //curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+                break;
+            default:
+                curl_setopt($curl, CURLOPT_URL, $url);
+                curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
+                curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+        }
+
+        list($header, $body) = explode("\r\n\r\n", curl_exec($curl), 2);
+
         $response = array(
-            'output' => curl_exec( $curl ),
-            'code' => curl_getinfo( $curl, CURLINFO_HTTP_CODE )
+            'output' => $body,
+            'code' => curl_getinfo($curl, CURLINFO_HTTP_CODE),
+            'size' => $this->getResultCount($header),
         );
 
         curl_close( $curl );
 
         return $response;
 	}
+
+    protected function getResultCount($headers)
+    {
+        foreach (explode("\n", $headers) as $header) {
+            if (preg_match('#X-Result-Count:\s+(\d+)#i', $header, $code)) {
+                return (int)next($code);
+            }
+        }
+
+        return null;
+    }
 }

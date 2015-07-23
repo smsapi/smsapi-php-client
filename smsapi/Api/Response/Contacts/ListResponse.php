@@ -2,9 +2,8 @@
 
 namespace SMSApi\Api\Response\Contacts;
 
-abstract class ListResponse extends AbstractContactsResponse
+abstract class ListResponse extends AbstractContactsResponse implements CountableResponse
 {
-    const FIELD_SIZE = 'size';
     const FIELD_COLLECTION = 'collection';
 
     /** @var IdentifiableResponse[] */

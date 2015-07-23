@@ -19,10 +19,10 @@ class Native extends AbstractHttp
 	protected function makeRequest($method, $url, $query, $file, $isContacts)
     {
         $body = $this->prepareRequestBody($file);
-
         $headers = $this->prepareRequestHeaders($file);
+        $getOrHead = in_array($method, array(AbstractAction::METHOD_GET, AbstractAction::METHOD_HEAD));
 
-        if (!empty($body) or ($query and $method === AbstractAction::METHOD_GET)) {
+        if (!empty($body) or ($query and $getOrHead)) {
             $url .= '?' . $query;
         }
 
@@ -41,8 +41,11 @@ class Native extends AbstractHttp
 
         $fp = fopen($url, 'r', false, $context);
 
-        $response['code'] = $this->getStatusCode(stream_get_meta_data($fp));
+        $metaData = stream_get_meta_data($fp);
+
+        $response['code'] = $this->getStatusCode($metaData);
         $response['output'] = stream_get_contents($fp);
+        $response['size'] = $this->getResultCount($metaData);
 
         if ($fp) {
             fclose($fp);
@@ -51,25 +54,39 @@ class Native extends AbstractHttp
         return $response;
 	}
 
-    private function getStatusCode($metaData)
+    private function getHeaders(array $metaData)
     {
-        $statusCode = null;
-
-        if ( isset( $metaData[ 'wrapper_data' ] ) AND is_array( $metaData[ 'wrapper_data' ] ) ) {
+        if (isset($metaData['wrapper_data']) and is_array($metaData['wrapper_data'])) {
             if (isset($metaData['wrapper_data']['headers']) and is_array($metaData['wrapper_data']['headers'])) {
-                $headers = $metaData['wrapper_data']['headers'];
+                return $metaData['wrapper_data']['headers'];
             } else {
-                $headers = $metaData['wrapper_data'];
-            }
-
-            foreach ($headers as $wrapperRow) {
-                if (preg_match('/^\s*HTTP\/1\.[01]\s([\d]+)\s/i', $wrapperRow, $code)) {
-                    $statusCode = next($code);
-                }
+                return $metaData['wrapper_data'];
             }
         }
 
-        return $statusCode;
+        return array();
+    }
+
+    private function getStatusCode(array $metaData)
+    {
+        foreach ($this->getHeaders($metaData) as $wrapperRow) {
+            if (preg_match('#HTTP/1\.[01]\s+([\d]+)#i', $wrapperRow, $code)) {
+                return next($code);
+            }
+        }
+
+        return null;
+    }
+
+    private function getResultCount(array $metaData)
+    {
+        foreach ($this->getHeaders($metaData) as $wrapperRow) {
+            if (preg_match('#X-Result-Count:\s+(\d+)#i', $wrapperRow, $code)) {
+                return (int)next($code);
+            }
+        }
+
+        return null;
     }
 
     /**

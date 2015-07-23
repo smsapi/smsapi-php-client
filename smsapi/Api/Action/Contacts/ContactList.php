@@ -9,9 +9,8 @@ use SMSApi\Api\Response\Contacts\ContactsResponse;
 /**
  * @method ContactsResponse execute()
  */
-final class ContactList extends ContactsAction
+final class ContactList extends ContactCount
 {
-    const PARAM_SEARCH = 'q';
     const PARAM_OFFSET = 'offset';
     const PARAM_LIMIT = 'limit';
     const PARAM_ORDER_BY = 'order_by';
@@ -21,21 +20,9 @@ final class ContactList extends ContactsAction
         return self::METHOD_GET;
     }
 
-    public function getResource()
-    {
-        return '/contacts';
-    }
-
     protected function response($data)
     {
         return ContactsResponse::fromJsonString($data);
-    }
-
-    public function setSearch($search)
-    {
-        $this->setParamValue(self::PARAM_SEARCH, $search);
-
-        return $this;
     }
 
     public function setOffsetAndLimit($offset, $limit)
@@ -50,83 +37,6 @@ final class ContactList extends ContactsAction
     public function setOrderBy($orderBy)
     {
         $this->setParamValue(self::PARAM_ORDER_BY, $orderBy);
-
-        return $this;
-    }
-
-    public function setPhoneNumber($phoneNumber)
-    {
-        $this->setParamValue(ContactResponse::FIELD_PHONE_NUMBER, $phoneNumber);
-
-        return $this;
-    }
-
-    public function setEmail($email)
-    {
-        $this->setParamValue(ContactResponse::FIELD_EMAIL, $email);
-
-        return $this;
-    }
-
-    public function setFirstName($firstName)
-    {
-        $this->setParamValue(ContactResponse::FIELD_FIRST_NAME, $firstName);
-
-        return $this;
-    }
-
-    public function setLastName($lastName)
-    {
-        $this->setParamValue(ContactResponse::FIELD_LAST_NAME, $lastName);
-
-        return $this;
-    }
-
-    public function setGenderAsMale()
-    {
-        $this->setParamValue(ContactResponse::FIELD_GENDER, ContactResponse::GENDER_MALE);
-
-        return $this;
-    }
-
-    public function setGenderAsFemale()
-    {
-        $this->setParamValue(ContactResponse::FIELD_GENDER, ContactResponse::GENDER_FEMALE);
-
-        return $this;
-    }
-
-    public function setGenderAsUndefined()
-    {
-        $this->setParamValue(ContactResponse::FIELD_GENDER, ContactResponse::GENDER_UNDEFINED);
-
-        return $this;
-    }
-
-    public function setBirthDayDate(DateTime $birthdayDate)
-    {
-        $this->setParamValue(ContactResponse::FIELD_BIRTHDAY_DATE, $birthdayDate->format('Y-m-d'));
-
-        return $this;
-    }
-
-    public function setIds(array $ids)
-    {
-        $this->setParamArray(ContactResponse::FIELD_ID, $ids);
-
-        return $this;
-    }
-
-    public function setGroupId($groupId)
-    {
-        $this->setParamValue('group_id', $groupId);
-
-        return $this;
-    }
-
-    public function setGroupIds(array $groupIds)
-    {
-        $this->setParamArray('group_id', $groupIds);
 
         return $this;
     }
