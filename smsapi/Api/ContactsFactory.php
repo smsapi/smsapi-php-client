@@ -2,6 +2,7 @@
 
 namespace SMSApi\Api;
 
+use SMSApi\Api\Action\Contacts\ContactDeleteMultiple;
 use SMSApi\Api\Action\Contacts\ContactAddByEmail;
 use SMSApi\Api\Action\Contacts\ContactAddByPhoneNumber;
 use SMSApi\Api\Action\Contacts\ContactCount;
@@ -66,6 +67,11 @@ final class ContactsFactory extends ActionFactory
     public function actionContactDelete($contactId)
     {
         return new ContactDelete($contactId, $this->client, $this->proxy);
+    }
+
+    public function actionContactDeleteMultiple()
+    {
+        return new ContactDeleteMultiple($this->client, $this->proxy);
     }
 
     public function actionContactGroupList($contactId)

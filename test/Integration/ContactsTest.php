@@ -47,21 +47,18 @@ final class ContactsTest extends SmsapiTestCase
     /**
      * @test
      */
-    public function it_should_find_all_contacts_and_delete()
+    public function it_should_find_delete_all_contacts()
     {
-        foreach ($this->contactsFactory->actionContactList()->execute()->getCollection() as $contact) {
-            $this->assertInstanceOf(
-                '\SMSApi\Api\Response\Contacts\DeleteResponse',
-                $this->contactsFactory->actionContactDelete($contact->getId())->execute()
-            );
-        }
-
-        $this->assertTrue(true);
+        $this->assertInstanceOf(
+            '\SMSApi\Api\Response\Contacts\DeleteResponse',
+            $this->contactsFactory->actionContactDeleteMultiple()->execute()
+        );
+        $this->assertEquals(0, $this->contactsFactory->actionContactList()->execute()->getSize());
     }
 
     /**
      * @test
-     * @depends it_should_find_all_contacts_and_delete
+     * @depends it_should_find_delete_all_contacts
      */
     public function it_should_find_all_groups_and_delete()
     {
