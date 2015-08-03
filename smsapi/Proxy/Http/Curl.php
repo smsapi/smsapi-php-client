@@ -62,7 +62,11 @@ class Curl extends AbstractHttp
                 //curl_setopt($curl, CURLOPT_CUSTOMREQUEST, AbstractAction::METHOD_HEAD);
                 //curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
                 break;
-            default:
+            case AbstractAction::METHOD_DELETE:
+                curl_setopt($curl, CURLOPT_URL, $url . ($query ? '?' . $query : ''));
+                curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
+                break;
+            case AbstractAction::METHOD_PUT:
                 curl_setopt($curl, CURLOPT_URL, $url);
                 curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
                 curl_setopt($curl, CURLOPT_POSTFIELDS, $data);

@@ -20,9 +20,12 @@ class Native extends AbstractHttp
     {
         $body = $this->prepareRequestBody($file);
         $headers = $this->prepareRequestHeaders($file);
-        $getOrHead = in_array($method, array(AbstractAction::METHOD_GET, AbstractAction::METHOD_HEAD));
+        $getHeadOrDelete = in_array(
+            $method,
+            array(AbstractAction::METHOD_GET, AbstractAction::METHOD_HEAD, AbstractAction::METHOD_DELETE)
+        );
 
-        if (!empty($body) or ($query and $getOrHead)) {
+        if (!empty($body) or ($query and $getHeadOrDelete)) {
             $url .= '?' . $query;
         }
 

@@ -1,5 +1,8 @@
 # SMSAPI PHP Client
 
+## 1.6.1 - 2015-08-03
+* send DELETE query instead of body
+
 ## 1.6.0 - 2015-07-24
 * add deleting multiple contacts
 
