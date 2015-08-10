@@ -49,11 +49,31 @@ final class ContactsFactory extends ActionFactory
         return new ContactGet($contactId, $this->client, $this->proxy);
     }
 
+    public function actionContactAddByEmail($email)
+    {
+        return new ContactAddByEmail($email, $this->client, $this->proxy);
+    }
+
+    /**
+     * @param $email
+     * @return ContactAddByEmail
+     * @deprecated use actionContactAddByEmail
+     */
     public function actionContactAddFromEmail($email)
     {
         return new ContactAddByEmail($email, $this->client, $this->proxy);
     }
 
+    public function actionContactAddByPhoneNumber($phoneNumber)
+    {
+        return new ContactAddByPhoneNumber($phoneNumber, $this->client, $this->proxy);
+    }
+
+    /**
+     * @param $phoneNumber
+     * @return ContactAddByPhoneNumber
+     * @deprecated use actionContactAddByPhoneNumber
+     */
     public function actionContactAddFromPhoneNumber($phoneNumber)
     {
         return new ContactAddByPhoneNumber($phoneNumber, $this->client, $this->proxy);

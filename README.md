@@ -12,7 +12,7 @@ use SMSApi\Exception\SmsapiException;
 require_once 'vendor/autoload.php';
 
 $client = new Client('login');
-$client->setPasswordHash( md5('super tajne haslo') );
+$client->setPasswordHash(md5('super tajne haslo'));
 
 $smsapi = new SmsFactory;
 $smsapi->setClient($client);
@@ -31,6 +31,36 @@ try {
 	}
 } catch (SmsapiException $exception) {
 	echo 'ERROR: ' . $exception->getMessage();
+}
+```
+
+Przykład zmiany adresu serwera na zapasowy:
+
+```php
+<?php
+
+use SMSApi\Client;
+use SMSApi\Api\SmsFactory;
+use SMSApi\Proxy\Http\Native;
+
+require_once 'vendor/autoload.php';
+
+$client = new Client('login');
+$client->setPasswordHash(md5('haslo'));
+
+$proxy = new Native('https://api2.smsapi.pl'); // zapasowy serwer
+
+$smsapi = new SmsFactory($proxy);
+$smsapi->setClient($client);
+
+$actionSend = $smsapi->actionSend();
+
+$actionSend->setTo('600xxxxxx');
+$actionSend->setText('Hello World!!');
+$actionSend->setSender('Info');
+
+foreach ($actionSend->execute()->getList() as $status) {
+    echo $status->getNumber() . ' ' . $status->getPoints() . ' ' . $status->getStatus();
 }
 ```
 

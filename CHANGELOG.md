@@ -1,5 +1,10 @@
 # SMSAPI PHP Client
 
+## 1.6.2 - 2015-08-10
+* improved README.md
+* fixed method names
+* removed useless assertions
+
 ## 1.6.1 - 2015-08-03
 * send DELETE query instead of body
 
