@@ -92,7 +92,7 @@ final class ContactsTest extends SmsapiTestCase
      * @test
      * @depends it_should_find_all_fields_and_delete
      */
-    public function it_should_add_contact_from_email()
+    public function it_should_add_contact_by_email()
     {
         $somePhoneNumber = 48226947156;
         $someBirthdayDate = new DateTime('1989-01-01');
@@ -104,7 +104,7 @@ final class ContactsTest extends SmsapiTestCase
         $someCity = 'some city';
         $someSource = 'some source';
         $testedObject = $this->contactsFactory
-            ->actionContactAddFromEmail($someEmail)
+            ->actionContactAddByEmail($someEmail)
             ->setBirthdayDate($someBirthdayDate)
             ->setDescription($someDescription)
             ->setFirstName($someFirstName)
@@ -131,9 +131,9 @@ final class ContactsTest extends SmsapiTestCase
 
     /**
      * @test
-     * @depends it_should_add_contact_from_email
+     * @depends it_should_add_contact_by_email
      */
-    public function it_should_add_contact_from_phone_number()
+    public function it_should_add_contact_by_phone_number()
     {
         $somePhoneNumber = 48226290715;
         $someBirthdayDate = new DateTime('1990-01-01');
@@ -145,7 +145,7 @@ final class ContactsTest extends SmsapiTestCase
         $someCity = 'some city';
         $someSource = 'some source';
         $testedObject = $this->contactsFactory
-            ->actionContactAddFromPhoneNumber($somePhoneNumber)
+            ->actionContactAddByPhoneNumber($somePhoneNumber)
             ->setBirthdayDate($someBirthdayDate)
             ->setDescription($someDescription)
             ->setFirstName($someFirstName)
@@ -164,7 +164,6 @@ final class ContactsTest extends SmsapiTestCase
         $this->assertEquals($someDescription, $result->getDescription());
         $this->assertEquals($someFirstName, $result->getFirstName());
         $this->assertEquals($someLastName, $result->getLastName());
-        $this->assertEquals($somePhoneNumber, $result->getPhoneNumber());
         $this->assertEquals($someCity, $result->getCity());
         $this->assertEquals($someSource, $result->getSource());
         $this->assertEquals(ContactResponse::GENDER_MALE, $result->getGender());
@@ -174,7 +173,7 @@ final class ContactsTest extends SmsapiTestCase
 
     /**
      * @test
-     * @depends it_should_add_contact_from_phone_number
+     * @depends it_should_add_contact_by_phone_number
      * @param string $contactId
      * @return string
      */
@@ -210,7 +209,6 @@ final class ContactsTest extends SmsapiTestCase
         $this->assertEquals($otherDescription, $result->getDescription());
         $this->assertEquals($otherFirstName, $result->getFirstName());
         $this->assertEquals($otherLastName, $result->getLastName());
-        $this->assertEquals($otherPhoneNumber, $result->getPhoneNumber());
         $this->assertEquals($someCity, $result->getCity());
         $this->assertEquals($someSource, $result->getSource());
         $this->assertEquals(ContactResponse::GENDER_FEMALE, $result->getGender());
