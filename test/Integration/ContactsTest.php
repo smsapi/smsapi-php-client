@@ -308,7 +308,7 @@ final class ContactsTest extends SmsapiTestCase
         $actionContactList = $this->contactsFactory->actionContactList();
         $birthdayDate = $contactResponse->getBirthdayDate();
 
-        $result = $actionContactList->setBirthDayDate($birthdayDate)->execute();
+        $result = $actionContactList->setBirthdayDate($birthdayDate)->execute();
 
         $this->assertInstanceOf('\SMSApi\Api\Response\Contacts\ContactsResponse', $result);
         $this->assertEquals(1, $result->getSize());
