@@ -47,7 +47,7 @@ final class ContactsTest extends SmsapiTestCase
     /**
      * @test
      */
-    public function it_should_find_delete_all_contacts()
+    public function it_should_find_all_contacts_and_delete()
     {
         $this->assertInstanceOf(
             '\SMSApi\Api\Response\Contacts\DeleteResponse',
@@ -58,7 +58,7 @@ final class ContactsTest extends SmsapiTestCase
 
     /**
      * @test
-     * @depends it_should_find_delete_all_contacts
+     * @depends it_should_find_all_contacts_and_delete
      */
     public function it_should_find_all_groups_and_delete()
     {
@@ -308,7 +308,7 @@ final class ContactsTest extends SmsapiTestCase
         $actionContactList = $this->contactsFactory->actionContactList();
         $birthdayDate = $contactResponse->getBirthdayDate();
 
-        $result = $actionContactList->setBirthDayDate($birthdayDate)->execute();
+        $result = $actionContactList->setBirthdayDate($birthdayDate)->execute();
 
         $this->assertInstanceOf('\SMSApi\Api\Response\Contacts\ContactsResponse', $result);
         $this->assertEquals(1, $result->getSize());

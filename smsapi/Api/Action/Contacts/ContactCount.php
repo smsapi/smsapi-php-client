@@ -85,7 +85,7 @@ class ContactCount extends ContactsAction
         return $this;
     }
 
-    public function setBirthDayDate(DateTime $birthdayDate)
+    public function setBirthdayDate(DateTime $birthdayDate)
     {
         $this->setParamValue(ContactResponse::FIELD_BIRTHDAY_DATE, $birthdayDate->format('Y-m-d'));
 
