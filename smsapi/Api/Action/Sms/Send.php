@@ -190,7 +190,7 @@ class Send extends AbstractAction
 	 * @return $this
 	 */
 	public function setSender( $sender ) {
-		$this->params[ "from" ] = $sender;
+		$this->params[ "from" ] = urlencode($sender);
 		return $this;
 	}
 
