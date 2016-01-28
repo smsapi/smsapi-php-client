@@ -1,5 +1,7 @@
 <?php
 
+use SMSApi\Api\Response\UserResponse;
+
 class UserTest extends SmsapiTestCase
 {
 	private static $userTest;
@@ -16,10 +18,10 @@ class UserTest extends SmsapiTestCase
 
     protected function setUp()
     {
-        $this->userFactory = new \SMSApi\Api\UserFactory($this->proxy, $this->client());
+        $this->userFactory = new \SMSApi\Api\UserFactory($this->proxy(), $this->client());
     }
 
-	private function renderUserItem($item)
+	private function renderUserItem(UserResponse $item = null)
 	{
 		if( $item ) {
 			print("Username: " . $item->getUsername()
@@ -47,12 +49,12 @@ class UserTest extends SmsapiTestCase
 			->setPassword(md5("100costma100"))
 			->setPasswordApi(md5("200costam200"))
 			->setActive(true)
-			->setLimit("5.5")
+			->setLimit(5.5)
 			->setPhonebook(true);
 
 		$result = $action->execute();
 
-		/* @var $result \SMSApi\Api\Response\UserResponse */
+		/* @var $result UserResponse */
 
 		if( empty($result) ) {
 			$error++;
@@ -98,12 +100,12 @@ class UserTest extends SmsapiTestCase
 		$error = 0;
 
 		$action = $this->userFactory->actionEdit(self::$userTest)
-			->setLimit("10")
+			->setLimit(10)
 			->setInfo("to jest test");
 
 		$result = $action->execute();
 
-		/* @var $result \SMSApi\Api\Response\UserResponse */
+		/* @var $result UserResponse */
 
 		echo "\nUserEdit:\n";
 
@@ -124,7 +126,7 @@ class UserTest extends SmsapiTestCase
 		$action = $this->userFactory->actionList();
 
 		/* @var $result \SMSApi\Api\Response\UsersResponse */
-		/* @var $item \SMSApi\Api\Response\UserResponse */
+		/* @var $item UserResponse */
 
 		$result = $action->execute();
 
@@ -148,11 +150,11 @@ class UserTest extends SmsapiTestCase
 		$result = $action->execute();
 
 		$this->assertInstanceOf(\SMSApi\Api\Response\PointsResponse::className, $result);
-		$this->greaterThanOrEqual($result->getPoints(), 0);
+		$this->assertGreaterThanOrEqual(0, $result->getPoints());
 	}
 
     /**
-     * @return \SMSApi\Api\Response\UserResponse
+     * @return UserResponse
      */
     private function getApiUser()
     {

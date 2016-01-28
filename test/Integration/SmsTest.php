@@ -9,7 +9,7 @@ class SmsTest extends SmsapiTestCase
 
     protected function setUp()
     {
-        $this->smsFactory = new \SMSApi\Api\SmsFactory($this->proxy, $this->client());
+        $this->smsFactory = new \SMSApi\Api\SmsFactory($this->proxy(), $this->client());
     }
 
 	public function testSend()
@@ -24,6 +24,7 @@ class SmsTest extends SmsapiTestCase
 				->setTo($this->getNumberTest())
 				->SetParam(0, 'asd')
 				->setDateSent($dateSend)
+                ->setNotifyUrl('http://example.com')
 				->execute();
 
 		echo "SmsSend:\n";

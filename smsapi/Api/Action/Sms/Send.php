@@ -346,4 +346,20 @@ class Send extends AbstractAction
 
         return $this;
     }
+
+	/**
+	 * Set callback url
+	 * @param string $url
+	 * @return $this
+	 */
+	public function setNotifyUrl($url)
+	{
+		if ($url) {
+			$this->params['notify_url'] = $url;
+		} else {
+			unset($this->params['notify_url']);
+		}
+
+		return $this;
+	}
 }
