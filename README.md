@@ -75,14 +75,10 @@ Sprawdź na przykładach, w jaki sposób można korzystać z biblioteki ([exampl
 
 ## Instalacja
 
-W swoim projekcie dodaj do `composer.json` pakiet :
+Otwórz konsolę poleceń, przejdź do katalog projektu i wykonać następujące polecenie, aby pobrać najnowszą stabilną wersję:
 
-```json
-{
-    "require": {
-        "smsapi/php-client": "1.4.*"
-    }
-}
+```
+composer require smsapi.pl/php-client
 ```
 
 ## Licencja
