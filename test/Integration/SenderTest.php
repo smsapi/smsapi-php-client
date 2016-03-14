@@ -1,5 +1,7 @@
 <?php
 
+use SMSApi\Api\Response\SenderResponse;
+
 class SenderTest extends SmsapiTestCase
 {
     /**
@@ -11,10 +13,10 @@ class SenderTest extends SmsapiTestCase
 
     protected function setUp()
     {
-        $this->senderFactory = new \SMSApi\Api\SenderFactory($this->proxy, $this->client());
+        $this->senderFactory = new \SMSApi\Api\SenderFactory($this->proxy(), $this->client());
     }
 
-	private function renderSenderItem( $item ) {
+	private function renderSenderItem(SenderResponse $item = null) {
 
 		if ( $item ) {
 			print("Sendername: " . $item->getName()

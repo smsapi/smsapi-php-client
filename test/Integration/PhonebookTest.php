@@ -1,5 +1,7 @@
 <?php
 
+use SMSApi\Api\Response\GroupResponse;
+
 class PhonebookTest extends SmsapiTestCase
 {
 
@@ -15,10 +17,10 @@ class PhonebookTest extends SmsapiTestCase
 
     protected function setUp()
     {
-        $this->phoneBookFactory = new \SMSApi\Api\PhonebookFactory($this->proxy, $this->client());
+        $this->phoneBookFactory = new \SMSApi\Api\PhonebookFactory($this->proxy(), $this->client());
     }
 
-	private function renderGroupItem( $item ) {
+	private function renderGroupItem(GroupResponse $item = null) {
 
 		if ( $item ) {
 			print("GroupName: "
@@ -58,7 +60,7 @@ class PhonebookTest extends SmsapiTestCase
 
 		$action = $this->phoneBookFactory->actionGroupAdd($this->groupTest);
 
-		/* @var $result \SMSApi\Api\Response\GroupResponse */
+		/* @var $result GroupResponse */
 
 		$result = $action->execute();
 
@@ -80,7 +82,7 @@ class PhonebookTest extends SmsapiTestCase
 
 		$action = $this->phoneBookFactory->actionGroupEdit($this->groupTest);
 
-		/* @var $result \SMSApi\Api\Response\GroupResponse */
+		/* @var $result GroupResponse */
 
 		$result = $action->setName( $this->groupTestEdit )->setInfo( "to jest grupa testowa" )->execute();
 

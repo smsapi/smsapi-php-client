@@ -28,7 +28,6 @@ abstract class SmsapiTestCase extends PHPUnit_Framework_TestCase
 			echo $ex->getMessage();
 			die();
 		}
-		return null;
 	}
 
     private function getApiLogin()
@@ -43,6 +42,26 @@ abstract class SmsapiTestCase extends PHPUnit_Framework_TestCase
         $configuration = $this->getConfiguration();
 
         return $configuration['api_password'];
+    }
+
+    /**
+     * @return null|\SMSApi\Proxy\Http\Curl
+     */
+    protected function proxy()
+    {
+        if (!$this->proxy && $this->getHost())
+        {
+            $this->proxy = new \SMSApi\Proxy\Http\Curl($this->getHost());
+        }
+
+        return $this->proxy;
+    }
+
+    private function getHost()
+    {
+        $configuration = $this->getConfiguration();
+
+        return $configuration['host'];
     }
 
     private function getConfiguration()

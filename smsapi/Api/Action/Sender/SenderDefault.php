@@ -42,7 +42,7 @@ class SenderDefault extends AbstractAction {
 	 * @return $this
 	 */
 	public function setSender( $senderName ) {
-		$this->params[ "default" ] = $senderName;
+		$this->params[ "default" ] = urlencode($senderName);
 		return $this;
 	}
 
