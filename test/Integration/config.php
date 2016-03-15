@@ -8,6 +8,7 @@ if (is_file($distFilePath)) {
     return array(
         'api_login' => '',
         'api_password' => '',
+        'api_token' => '',
         'number_test' => '',
         'sms_template_name' => '',
         'host' => '',

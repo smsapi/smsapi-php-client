@@ -17,6 +17,11 @@ class PhonebookTest extends SmsapiTestCase
 
     protected function setUp()
     {
+        $configuration = $this->getConfiguration();
+        if (!empty($configuration['contacts_login'])) {
+            $this->markTestSkipped('Phonebook disabled');
+        }
+
         $this->phoneBookFactory = new \SMSApi\Api\PhonebookFactory($this->proxy(), $this->client());
     }
 

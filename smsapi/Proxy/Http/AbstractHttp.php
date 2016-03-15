@@ -10,7 +10,7 @@ use SMSApi\Proxy\Uri;
 
 abstract class AbstractHttp implements Proxy
 {
-	protected $protocol;
+    protected $protocol;
 	protected $host;
 	protected $port;
     protected $boundary = '**RGRG87VFSGF86796GSD**';
@@ -39,6 +39,8 @@ abstract class AbstractHttp implements Proxy
 
     /** @var Client */
     private $basicAuthentication;
+
+    private $token;
 
     public function __construct( $host ) {
 
@@ -86,9 +88,7 @@ abstract class AbstractHttp implements Proxy
             $method = $action->getMethod();
             $url = $this->prepareRequestUrl($uri);
             $query = $uri->getQuery();
-
             $response = $this->makeRequest($method, $url, $query, $file, $action->isContacts());
-
             if (!$action->isContacts()) {
                 $this->checkCode($response['code']);
             }
@@ -104,9 +104,26 @@ abstract class AbstractHttp implements Proxy
         return $response;
     }
 
+    /**
+     * @internal
+     * @param Client $client
+     * @return $this
+     */
     public function setBasicAuthentication(Client $client)
     {
         $this->basicAuthentication = $client;
+
+        return $this;
+    }
+
+    /**
+     * @internal
+     * @param string $token
+     * @return $this
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
 
         return $this;
     }
@@ -224,7 +241,7 @@ abstract class AbstractHttp implements Proxy
     }
 
     /**
-     * @param $file
+     * @param string $file
      * @return array
      */
     protected function prepareRequestHeaders($file)
@@ -244,9 +261,10 @@ abstract class AbstractHttp implements Proxy
             $headers['Authorization'] =
                 'Basic '
                 . base64_encode(
-                    $this->basicAuthentication->getUsername()
-                    . ':' . $this->basicAuthentication->getPassword()
+                    $this->basicAuthentication->getUsername() . ':' . $this->basicAuthentication->getPassword()
                 );
+        } elseif ($this->token) {
+            $headers['Authorization'] = 'Bearer ' . $this->token;
         }
 
         return $headers;

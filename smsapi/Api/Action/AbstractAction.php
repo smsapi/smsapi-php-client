@@ -219,8 +219,15 @@ abstract class AbstractAction
 	/**
 	 * @return string
 	 */
-	protected function paramsLoginToQuery() {
-		return "username=" . $this->client->getUsername() . "&password=" . $this->client->getPassword();
+	protected function paramsLoginToQuery()
+    {
+        if ($this->client->getToken()) {
+            $this->proxy->setToken($this->client->getToken());
+
+            return '';
+        }
+
+		return 'username=' . urlencode($this->client->getUsername()) . '&password=' . $this->client->getPassword();
 	}
 
 	/**
@@ -239,7 +246,7 @@ abstract class AbstractAction
 
             $this->handleError($data, $this->isContacts);
 
-            if ($this->getMethod() === self::METHOD_HEAD and $data['size']) {
+            if ($this->getMethod() === self::METHOD_HEAD and is_int($data['size'])) {
                 return $this->response(json_encode(array('size' => $data['size'])));
             } else {
                 return $this->response($data['output']);

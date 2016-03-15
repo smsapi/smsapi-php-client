@@ -15,9 +15,11 @@ abstract class ContactsAction extends AbstractAction
     {
         parent::__construct();
 
+        $proxy->setBasicAuthentication($client);
+
         $this
             ->client($client)
-            ->proxy($proxy->setBasicAuthentication($client));
+            ->proxy($proxy);
     }
 
     public function uri()
