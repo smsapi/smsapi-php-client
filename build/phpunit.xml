@@ -25,5 +25,8 @@
         <testsuite name="SMSAPI - Integration Tests with Curl Proxy">
             <file>../test/Integration/CurlProxySuiteTest.php</file>
         </testsuite>
+        <testsuite name="SMSAPI - Integration Tests with token auth">
+            <file>../test/Integration/TokenSuiteTest.php</file>
+        </testsuite>
     </testsuites>
 </phpunit>

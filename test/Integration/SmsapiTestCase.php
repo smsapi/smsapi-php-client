@@ -1,4 +1,5 @@
 <?php
+use SMSApi\Client;
 
 abstract class SmsapiTestCase extends PHPUnit_Framework_TestCase
 {
@@ -7,13 +8,25 @@ abstract class SmsapiTestCase extends PHPUnit_Framework_TestCase
      */
     protected $proxy;
 
+    /** @var Client|null */
+    protected $client;
+
     public function setProxy(\SMSApi\Proxy\Proxy $proxy)
     {
         $this->proxy = $proxy;
     }
 
+    public function setClient(Client $client)
+    {
+        $this->client = $client;
+    }
+
 	protected function client()
     {
+        if ($this->client) {
+            return $this->client;
+        }
+
 		try {
 			$client = new \SMSApi\Client($this->getApiLogin());
 			$client->setPasswordHash($this->getApiPassword());
@@ -64,7 +77,7 @@ abstract class SmsapiTestCase extends PHPUnit_Framework_TestCase
         return $configuration['host'];
     }
 
-    private function getConfiguration()
+    protected function getConfiguration()
     {
         return include __DIR__ . '/config.php';
     }

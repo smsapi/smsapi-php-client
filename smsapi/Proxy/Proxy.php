@@ -30,5 +30,15 @@ interface Proxy
      */
 	public function getPort();
 
+    /**
+     * @param Client $client
+     * @return $this
+     */
     public function setBasicAuthentication(Client $client);
+
+    /**
+     * @param string $token
+     * @return $this
+     */
+    public function setToken($token);
 }

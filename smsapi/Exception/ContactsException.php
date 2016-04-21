@@ -7,14 +7,19 @@ use Exception;
 class ContactsException extends SmsapiException
 {
     private $error;
-    private $errors;
+    private $errors = array();
     private $shortMessage;
 
     public function __construct(array $data, Exception $exception = null)
     {
         $output = json_decode($data['output'], true);
+
         $this->error = $output['error'];
-        $this->errors = $output['errors'];
+
+        if (isset($output['errors'])) {
+            $this->errors = $output['errors'];
+        }
+
         $this->shortMessage = $output['message'];
         $message = '';
 
@@ -30,7 +35,7 @@ class ContactsException extends SmsapiException
         }
 
         parent::__construct(
-            '[' . $output['error'] . '] '
+            '[' . $this->error . '] '
             . $output['message']
             . ($message ? ': ' . $message : ''),
             $data['code'],

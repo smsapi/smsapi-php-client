@@ -19,7 +19,7 @@ class CurlProxySuiteTest extends \ProxyTestSuite
 
         $curlProxy = new \SMSApi\Proxy\Http\Curl(self::getHost());
 
-        $suite->injectProxy($curlProxy);
+        $suite->injectProxyAndClient($curlProxy);
 
         return $suite;
     }

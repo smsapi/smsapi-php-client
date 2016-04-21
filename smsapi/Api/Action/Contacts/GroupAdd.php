@@ -17,7 +17,7 @@ final class GroupAdd extends ContactsAction
     {
         parent::__construct($client, $proxy);
 
-        $this->params['name'] = $name;
+        $this->params['name'] = urlencode($name);
     }
 
     public function getMethod()

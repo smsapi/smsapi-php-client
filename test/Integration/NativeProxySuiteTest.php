@@ -15,7 +15,7 @@ class NativeProxySuiteTest extends \ProxyTestSuite
 
         $nativeProxy = new \SMSApi\Proxy\Http\Native(self::getHost());
 
-        $suite->injectProxy($nativeProxy);
+        $suite->injectProxyAndClient($nativeProxy);
 
         return $suite;
     }

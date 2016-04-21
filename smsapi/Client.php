@@ -20,6 +20,9 @@ class Client {
 	 */
 	private $password;
 
+    /** @var string */
+    private $token;
+
 	/**
 	 * @param $username
 	 */
@@ -91,4 +94,15 @@ class Client {
 		return $this->password;
 	}
 
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    public function setToken($token)
+    {
+        $this->token = $token;
+
+        return $this;
+    }
 }
