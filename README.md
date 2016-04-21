@@ -80,7 +80,7 @@ W swoim projekcie dodaj do `composer.json` pakiet :
 ```json
 {
     "require": {
-        "smsapi/php-client": "1.4.*"
+        "smsapi/php-client": "^1.7.*"
     }
 }
 ```

@@ -14,9 +14,7 @@ class ContactsException extends SmsapiException
     {
         $output = json_decode($data['output'], true);
 
-        if (isset($output['error'])) {
-            $this->error = $output['error'];
-        }
+        $this->error = $output['error'];
 
         if (isset($output['errors'])) {
             $this->errors = $output['errors'];

@@ -33,7 +33,7 @@ class ContactsTest extends SmsapiTestCase
         $configuration = $this->getConfiguration();
 
         if (empty($configuration['contacts_login'])) {
-            $this->markTestSkipped('Contacts disabled');
+            $this->markTestSkipped('Skipping contacts test, no contacts configuration provided');
         }
 
         $client = new Client($configuration['contacts_login']);
@@ -254,11 +254,6 @@ class ContactsTest extends SmsapiTestCase
      */
     public function it_should_find_contact_by_email(ContactResponse $contactResponse)
     {
-        // todo broken api
-        $this->assertTrue(true);
-
-        return $contactResponse;
-
         $actionContactList = $this->contactsFactory->actionContactList();
         $email = $contactResponse->getEmail();
 

@@ -13,6 +13,10 @@ class SenderTest extends SmsapiTestCase
 
     protected function setUp()
     {
+        if ($this->client()->getToken()) {
+            $this->markTestSkipped('Does not work for OAuth');
+        }
+
         $this->senderFactory = new \SMSApi\Api\SenderFactory($this->proxy(), $this->client());
     }
 
