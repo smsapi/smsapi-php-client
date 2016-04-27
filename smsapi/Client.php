@@ -23,6 +23,14 @@ class Client {
     /** @var string */
     private $token;
 
+    public static function createFromToken($token)
+    {
+        $client = new static('no username');
+        $client->setToken($token);
+
+        return $client;
+    }
+
 	/**
 	 * @param $username
 	 */
@@ -43,6 +51,7 @@ class Client {
 			throw new ClientException( "Username can not be empty" );
 		}
 
+        $this->token = null;
 		$this->username = $username;
 		return $this;
 	}
@@ -60,6 +69,7 @@ class Client {
 			throw new ClientException( "Password can not be empty" );
 		}
 
+        $this->token = null;
 		$this->password = $password;
 		return $this;
 	}
@@ -101,6 +111,8 @@ class Client {
 
     public function setToken($token)
     {
+        $this->username = null;
+        $this->password = null;
         $this->token = $token;
 
         return $this;

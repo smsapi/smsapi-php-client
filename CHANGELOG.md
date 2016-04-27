@@ -1,8 +1,13 @@
 # SMSAPI PHP Client
 
+## 1.7.1 - 2016-04-27
+* improve Client class
+
 ## 1.7.0 - 2016-04-21
 * OAuth token support
 * fixed tests
+
+## 1.6.3
 
 ## 1.6.2 - 2015-08-10
 * improved README.md
