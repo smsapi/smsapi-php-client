@@ -11,8 +11,11 @@ use SMSApi\Exception\SmsapiException;
 
 require_once 'vendor/autoload.php';
 
-$client = new Client('login');
-$client->setPasswordHash(md5('super tajne haslo'));
+$client = new Client::createFromToken('wygenerowany_token');
+
+//Lub wykorzystując login oraz hasło w md5
+//$client = new Client('login');
+//$client->setPasswordHash(md5('super tajne haslo'));
 
 $smsapi = new SmsFactory;
 $smsapi->setClient($client);
@@ -45,8 +48,11 @@ use SMSApi\Proxy\Http\Native;
 
 require_once 'vendor/autoload.php';
 
-$client = new Client('login');
-$client->setPasswordHash(md5('haslo'));
+$client = new Client::createFromToken('wygenerowany_token');
+
+//Lub wykorzystując login oraz hasło w md5
+//$client = new Client('login');
+//$client->setPasswordHash(md5('super tajne haslo'));
 
 $proxy = new Native('https://api2.smsapi.pl'); // zapasowy serwer
 
