@@ -30,6 +30,7 @@ abstract class SmsapiTestCase extends PHPUnit_Framework_TestCase
 		try {
 			$client = new \SMSApi\Client($this->getApiLogin());
 			$client->setPasswordHash($this->getApiPassword());
+            $client = Client::createFromToken($this->getToken());
 
 			return $client;
 		} catch ( \SMSApi\Exception\ClientException $ex ) {
@@ -55,6 +56,13 @@ abstract class SmsapiTestCase extends PHPUnit_Framework_TestCase
         $configuration = $this->getConfiguration();
 
         return $configuration['api_password'];
+    }
+
+    private function getToken()
+    {
+        $configuration = $this->getConfiguration();
+
+        return $configuration['api_token'];
     }
 
     /**

@@ -6,9 +6,6 @@ use SMSApi\Api\Response\Contacts\FieldResponse;
 use SMSApi\Api\Response\Contacts\ListResponse;
 use SMSApi\Api\Response\UserResponse;
 use SMSApi\Api\UserFactory;
-use SMSApi\Client;
-use SMSApi\Proxy\Http\Curl;
-use SMSApi\Proxy\Http\Native;
 
 class ContactsTest extends SmsapiTestCase
 {
@@ -18,16 +15,6 @@ class ContactsTest extends SmsapiTestCase
     /** @var ContactsFactory */
     private $contactsFactory;
 
-    private function getClient()
-    {
-        $configuration = $this->getConfiguration();
-
-        $client = new Client($configuration['contacts_login']);
-        $client->setPasswordHash($configuration['contacts_password']);
-
-        return $client;
-    }
-
     public function setUp()
     {
         $configuration = $this->getConfiguration();
@@ -36,16 +23,7 @@ class ContactsTest extends SmsapiTestCase
             $this->markTestSkipped('Skipping contacts test, no contacts configuration provided');
         }
 
-        $client = new Client($configuration['contacts_login']);
-        $client->setPasswordHash($configuration['contacts_password']);
-        $this->proxy = new Native($configuration['contacts_host']);
-        if ($this->proxy instanceof Native) {
-            $proxy = new Native($configuration['contacts_host']);
-        } else {
-            $proxy = new Curl($configuration['contacts_host']);
-        }
-
-        $this->contactsFactory = new ContactsFactory($proxy, $this->getClient());
+        $this->contactsFactory = new ContactsFactory($this->proxy(), $this->client());
     }
 
     /**
@@ -275,13 +253,6 @@ class ContactsTest extends SmsapiTestCase
      */
     public function it_should_find_contact_by_phone_number(ContactResponse $contactResponse)
     {
-        // todo request does not work for cURL
-        if (!($this->proxy instanceof Native)) {
-            $this->assertTrue(true);
-
-            return $contactResponse;
-        }
-
         $actionContactList = $this->contactsFactory->actionContactList();
         $phoneNumber = $contactResponse->getPhoneNumber();
 
@@ -303,13 +274,6 @@ class ContactsTest extends SmsapiTestCase
      */
     public function it_should_find_contact_by_birthday_date(ContactResponse $contactResponse)
     {
-        // todo request does not work for cURL
-        if (!($this->proxy instanceof Native)) {
-            $this->assertTrue(true);
-
-            return $contactResponse;
-        }
-
         $actionContactList = $this->contactsFactory->actionContactList();
         $birthdayDate = $contactResponse->getBirthdayDate();
 
@@ -331,13 +295,6 @@ class ContactsTest extends SmsapiTestCase
      */
     public function it_should_find_contact_by_first_name(ContactResponse $contactResponse)
     {
-        // todo request does not work for cURL
-        if (!($this->proxy instanceof Native)) {
-            $this->assertTrue(true);
-
-            return $contactResponse;
-        }
-
         $actionContactList = $this->contactsFactory->actionContactList();
         $firstName = $contactResponse->getFirstName();
 
@@ -358,13 +315,6 @@ class ContactsTest extends SmsapiTestCase
      */
     public function it_should_find_contact_by_last_name(ContactResponse $contactResponse)
     {
-        // todo request does not work for cURL
-        if (!($this->proxy instanceof Native)) {
-            $this->assertTrue(true);
-
-            return $contactResponse;
-        }
-
         $actionContactList = $this->contactsFactory->actionContactList();
         $lastName = $contactResponse->getLastName();
 
@@ -385,13 +335,6 @@ class ContactsTest extends SmsapiTestCase
      */
     public function it_should_find_contact_by_id(ContactResponse $contactResponse)
     {
-        // todo request does not work for cURL
-        if (!($this->proxy instanceof Native)) {
-            $this->assertTrue(true);
-
-            return $contactResponse;
-        }
-
         $actionContactList = $this->contactsFactory->actionContactList();
         $id = $contactResponse->getId();
 
@@ -412,13 +355,6 @@ class ContactsTest extends SmsapiTestCase
      */
     public function it_should_count_contacts_by_id(ContactResponse $contactResponse)
     {
-        // todo request does not work for cURL
-        if (!($this->proxy instanceof Native)) {
-            $this->assertTrue(true);
-
-            return;
-        }
-
         $actionContactList = $this->contactsFactory->actionContactCount();
         $id = $contactResponse->getId();
 
@@ -435,13 +371,6 @@ class ContactsTest extends SmsapiTestCase
      */
     public function it_should_count_contacts()
     {
-        // todo request does not work for cURL
-        if (!($this->proxy instanceof Native)) {
-            $this->assertTrue(true);
-
-            return;
-        }
-
         $actionContactList = $this->contactsFactory->actionContactCount();
 
         $result = $actionContactList->execute();
@@ -543,13 +472,6 @@ class ContactsTest extends SmsapiTestCase
      */
     public function it_should_find_contact_by_group_id()
     {
-        // todo request does not work for cURL
-        if (!($this->proxy instanceof Native)) {
-            $this->assertTrue(true);
-
-            return;
-        }
-
         $actionContactList = $this->contactsFactory->actionContactList();
         $groupId = self::$groupId;
 
@@ -567,13 +489,6 @@ class ContactsTest extends SmsapiTestCase
      */
     public function it_should_find_contact_by_group_ids()
     {
-        // todo request does not work for cURL
-        if (!($this->proxy instanceof Native)) {
-            $this->assertTrue(true);
-
-            return;
-        }
-
         $actionContactList = $this->contactsFactory->actionContactList();
         $groupIds = array(self::$groupId);
 
@@ -756,7 +671,7 @@ class ContactsTest extends SmsapiTestCase
 
     private function getSubuserUsername()
     {
-        $userFactory = new UserFactory($this->proxy, $this->getClient());
+        $userFactory = new UserFactory($this->client(), $this->client());
 
         /** @var UserResponse[] $subusers */
         $subusers = $userFactory->actionList()->execute()->getList();

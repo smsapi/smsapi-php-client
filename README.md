@@ -11,7 +11,7 @@ use SMSApi\Exception\SmsapiException;
 
 require_once 'vendor/autoload.php';
 
-$client = new Client::createFromToken('wygenerowany_token');
+$client = Client::createFromToken('wygenerowany_token');
 
 //Lub wykorzystując login oraz hasło w md5
 //$client = new Client('login');
@@ -86,7 +86,7 @@ W swoim projekcie dodaj do `composer.json` pakiet :
 ```json
 {
     "require": {
-        "smsapi/php-client": "^1.7.*"
+        "smsapi/php-client": "^1.7"
     }
 }
 ```

@@ -15,7 +15,11 @@ abstract class ContactsAction extends AbstractAction
     {
         parent::__construct();
 
-        $proxy->setBasicAuthentication($client);
+        if ($client->getToken()) {
+            $proxy->setToken($client->getToken());
+        } else {
+            $proxy->setBasicAuthentication($client);
+        }
 
         $this
             ->client($client)
