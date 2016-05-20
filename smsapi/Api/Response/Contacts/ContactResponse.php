@@ -52,6 +52,21 @@ final class ContactResponse extends AbstractContactsResponse implements Identifi
 
     public function __construct(array $data)
     {
+        $data = array_merge(
+            array(
+                self::FIELD_PHONE_NUMBER => null,
+                self::FIELD_EMAIL => null,
+                self::FIELD_FIRST_NAME => null,
+                self::FIELD_LAST_NAME => null,
+                self::FIELD_DESCRIPTION => null,
+                self::FIELD_CITY => null,
+                self::FIELD_SOURCE => null,
+                self::FIELD_GENDER => null,
+                self::FIELD_BIRTHDAY_DATE => null,
+            ),
+            $data
+        );
+
         $this->id = $data[self::FIELD_ID];
         $this->phoneNumber = $data[self::FIELD_PHONE_NUMBER];
         $this->email = $data[self::FIELD_EMAIL];

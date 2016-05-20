@@ -1,5 +1,9 @@
 # SMSAPI PHP Client
 
+## 1.7.3 - 2016-05-20
+* fix ContactResponse
+* add x-request-id header
+
 ## 1.7.2 - 2016-05-16
 * fix Contacts authorization by token
 

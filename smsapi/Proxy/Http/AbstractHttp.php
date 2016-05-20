@@ -40,7 +40,11 @@ abstract class AbstractHttp implements Proxy
     /** @var Client */
     private $basicAuthentication;
 
+    /** @var string */
     private $token;
+
+    /** @var string */
+    private $requestId;
 
     public function __construct( $host ) {
 
@@ -250,6 +254,7 @@ abstract class AbstractHttp implements Proxy
 
         $headers['User-Agent'] = 'smsapi-php-client';
         $headers['Accept'] = '';
+        $headers['x-request-id'] = $this->getRequestId();
 
         if ($this->isFileValid($file)) {
             $headers['Content-Type'] = 'multipart/form-data; boundary=' . $this->boundary;
@@ -268,5 +273,14 @@ abstract class AbstractHttp implements Proxy
         }
 
         return $headers;
+    }
+
+    private function getRequestId()
+    {
+        if (!$this->requestId) {
+            $this->requestId = uniqid();
+        }
+
+        return $this->requestId;
     }
 }
