@@ -2,7 +2,6 @@
     "name": "smsapi.pl/php-client",
     "description": "Library for communicating with provider",
     "homepage": "http://smsapi.pl",
-    "version": "1.7.3",
     "type": "library",
     "license": "Apache-2.0",
     "keywords": ["sms", "mms", "vms"],
@@ -19,7 +18,7 @@
         }
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.1",
-        "apigen/apigen": "~4"
+        "phpunit/phpunit": "^4.1",
+        "apigen/apigen": "^4"
     }
 }

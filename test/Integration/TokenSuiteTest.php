@@ -23,7 +23,7 @@ class TokenSuiteTest extends \ProxyTestSuite
         $client = new Client($config['api_login']);
         $client->setToken($config['api_token']);
 
-        $suite->injectProxyAndClient($nativeProxy, $client);
+        $suite->injectProxyAndClient($nativeProxy, new Native(self::getContactsHost()), $client);
 
         return $suite;
     }

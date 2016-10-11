@@ -1,5 +1,7 @@
 <?php
 use SMSApi\Client;
+use SMSApi\Proxy\Http\Curl;
+use SMSApi\Proxy\Proxy;
 
 abstract class SmsapiTestCase extends PHPUnit_Framework_TestCase
 {
@@ -8,12 +10,22 @@ abstract class SmsapiTestCase extends PHPUnit_Framework_TestCase
      */
     protected $proxy;
 
+    /**
+     * @var Proxy|null
+     */
+    protected $contactsProxy;
+
     /** @var Client|null */
     protected $client;
 
-    public function setProxy(\SMSApi\Proxy\Proxy $proxy)
+    public function setProxy(Proxy $proxy)
     {
         $this->proxy = $proxy;
+    }
+
+    public function setContactsProxy(Proxy $proxy)
+    {
+        $this->contactsProxy = $proxy;
     }
 
     public function setClient(Client $client)
@@ -30,7 +42,6 @@ abstract class SmsapiTestCase extends PHPUnit_Framework_TestCase
 		try {
 			$client = new \SMSApi\Client($this->getApiLogin());
 			$client->setPasswordHash($this->getApiPassword());
-            $client = Client::createFromToken($this->getToken());
 
 			return $client;
 		} catch ( \SMSApi\Exception\ClientException $ex ) {
@@ -58,13 +69,6 @@ abstract class SmsapiTestCase extends PHPUnit_Framework_TestCase
         return $configuration['api_password'];
     }
 
-    private function getToken()
-    {
-        $configuration = $this->getConfiguration();
-
-        return $configuration['api_token'];
-    }
-
     /**
      * @return null|\SMSApi\Proxy\Http\Curl
      */
@@ -78,11 +82,27 @@ abstract class SmsapiTestCase extends PHPUnit_Framework_TestCase
         return $this->proxy;
     }
 
+    protected function contactsProxy()
+    {
+        if (!$this->contactsProxy && $this->getContactsHost()) {
+            $this->contactsProxy = new Curl($this->getContactsHost());
+        }
+
+        return $this->contactsProxy;
+    }
+
     private function getHost()
     {
         $configuration = $this->getConfiguration();
 
         return $configuration['host'];
+    }
+
+    private function getContactsHost()
+    {
+        $configuration = $this->getConfiguration();
+
+        return $configuration['contacts_host'];
     }
 
     protected function getConfiguration()

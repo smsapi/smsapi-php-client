@@ -1,4 +1,5 @@
 <?php
+use SMSApi\Proxy\Http\Curl;
 
 class CurlProxySuiteTest extends \ProxyTestSuite
 {
@@ -17,9 +18,9 @@ class CurlProxySuiteTest extends \ProxyTestSuite
 
         $suite->addTestsToSuite();
 
-        $curlProxy = new \SMSApi\Proxy\Http\Curl(self::getHost());
+        $curlProxy = new Curl(self::getHost());
 
-        $suite->injectProxyAndClient($curlProxy);
+        $suite->injectProxyAndClient($curlProxy, new Curl(self::getContactsHost()));
 
         return $suite;
     }

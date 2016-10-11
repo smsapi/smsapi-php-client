@@ -1,5 +1,9 @@
 # SMSAPI PHP Client
 
+## 1.7.4 - 2016-10-11
+* improve tests
+* improve composer.json
+
 ## 1.7.3 - 2016-05-20
 * fix ContactResponse
 * add x-request-id header

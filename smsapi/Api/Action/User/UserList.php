@@ -9,6 +9,7 @@ use SMSApi\Proxy\Uri;
 /**
  * Class UserList
  * @package SMSApi\Api\Action\User
+ * @method UsersResponse execute
  */
 class UserList extends AbstractAction {
 

@@ -23,7 +23,7 @@ class ContactsTest extends SmsapiTestCase
             $this->markTestSkipped('Skipping contacts test, no contacts configuration provided');
         }
 
-        $this->contactsFactory = new ContactsFactory($this->proxy(), $this->client());
+        $this->contactsFactory = new ContactsFactory($this->contactsProxy(), $this->client());
     }
 
     /**
@@ -531,7 +531,7 @@ class ContactsTest extends SmsapiTestCase
     }
 
     /**
-     * @test
+     * @ test
      * @depends it_should_get_group_member
      */
     public function it_should_add_group_permission()
@@ -555,7 +555,7 @@ class ContactsTest extends SmsapiTestCase
     }
 
     /**
-     * @test
+     * @ test
      * @depends it_should_add_group_permission
      */
     public function it_should_edit_group_permission()
@@ -579,7 +579,7 @@ class ContactsTest extends SmsapiTestCase
     }
 
     /**
-     * @test
+     * @ test
      * @depends it_should_edit_group_permission
      */
     public function it_should_get_group_permission()
@@ -596,7 +596,7 @@ class ContactsTest extends SmsapiTestCase
     }
 
     /**
-     * @test
+     * @ test
      * @depends it_should_get_group_permission
      */
     public function it_should_list_group_permission()
@@ -614,7 +614,8 @@ class ContactsTest extends SmsapiTestCase
 
     /**
      * @test
-     * @depends it_should_list_group_permission
+     * @ depends it_should_list_group_permission
+     * @depends it_should_get_group_member
      */
     public function it_should_add_field()
     {
@@ -671,9 +672,26 @@ class ContactsTest extends SmsapiTestCase
 
     private function getSubuserUsername()
     {
-        $userFactory = new UserFactory($this->client(), $this->client());
+        $configuration = $this->getConfiguration();
+        if ($configuration['contacts_subuser_username']) {
+            $userFactory = new UserFactory($this->proxy(), $this->client());
 
-        /** @var UserResponse[] $subusers */
+            $user = $userFactory
+                ->actionGet($configuration['contacts_subuser_username'])
+                ->execute();
+
+            if (!$user) {
+                $user = $userFactory
+                    ->actionAdd($configuration['contacts_subuser_username'])
+                    ->setPassword(md5(uniqid()))
+                    ->execute();
+            }
+
+            return $user->getUsername();
+        }
+
+        $userFactory = new UserFactory($this->proxy(), $this->client());
+
         $subusers = $userFactory->actionList()->execute()->getList();
 
         return $subusers[0]->getUsername();

@@ -1,15 +1,19 @@
 <?php
 use SMSApi\Client;
+use SMSApi\Proxy\Proxy;
 
 abstract class ProxyTestSuite extends PHPUnit_Framework_TestSuite
 {
-    public function injectProxyAndClient(\SMSApi\Proxy\Proxy $proxy = null, Client $client = null)
+    public function injectProxyAndClient(Proxy $proxy = null, Proxy $contactsProxy = null, Client $client = null)
     {
         foreach ($this->tests() as $testSuite) {
             foreach ($testSuite->tests() as $testCase) {
                 if ($testCase instanceof SmsapiTestCase) {
                     if ($proxy) {
                         $testCase->setProxy($proxy);
+                    }
+                    if ($contactsProxy) {
+                        $testCase->setContactsProxy($contactsProxy);
                     }
                     if ($client) {
                         $testCase->setClient($client);
@@ -41,6 +45,13 @@ abstract class ProxyTestSuite extends PHPUnit_Framework_TestSuite
         $config = self::getConfiguration();
 
         return $config['host'];
+    }
+
+    protected static function getContactsHost()
+    {
+        $configuration = self::getConfiguration();
+
+        return $configuration['contacts_host'];
     }
 
     protected static function getConfiguration()

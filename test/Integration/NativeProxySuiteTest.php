@@ -1,4 +1,5 @@
 <?php
+use SMSApi\Proxy\Http\Native;
 
 class NativeProxySuiteTest extends \ProxyTestSuite
 {
@@ -13,9 +14,9 @@ class NativeProxySuiteTest extends \ProxyTestSuite
 
         $suite->addTestsToSuite();
 
-        $nativeProxy = new \SMSApi\Proxy\Http\Native(self::getHost());
+        $nativeProxy = new Native(self::getHost());
 
-        $suite->injectProxyAndClient($nativeProxy);
+        $suite->injectProxyAndClient($nativeProxy, new Native(self::getContactsHost()));
 
         return $suite;
     }
