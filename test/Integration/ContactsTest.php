@@ -4,7 +4,6 @@ use SMSApi\Api\ContactsFactory;
 use SMSApi\Api\Response\Contacts\ContactResponse;
 use SMSApi\Api\Response\Contacts\FieldResponse;
 use SMSApi\Api\Response\Contacts\ListResponse;
-use SMSApi\Api\Response\UserResponse;
 use SMSApi\Api\UserFactory;
 
 class ContactsTest extends SmsapiTestCase
