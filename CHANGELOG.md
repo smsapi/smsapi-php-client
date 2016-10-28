@@ -1,5 +1,8 @@
 # SMSAPI PHP Client
 
+## 1.7.5 - 2016-10-28
+* fix package name
+
 ## 1.7.4 - 2016-10-11
 * improve tests
 * improve composer.json
