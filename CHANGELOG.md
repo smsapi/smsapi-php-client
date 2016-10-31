@@ -1,5 +1,8 @@
 # SMSAPI PHP Client
 
+## 1.7.6 - 2016-10-31
+* fix contacts bug
+
 ## 1.7.5 - 2016-10-28
 * fix package name
 
