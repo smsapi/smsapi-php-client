@@ -48,7 +48,7 @@ use SMSApi\Proxy\Http\Native;
 
 require_once 'vendor/autoload.php';
 
-$client = new Client::createFromToken('wygenerowany_token');
+$client = Client::createFromToken('wygenerowany_token');
 
 //Lub wykorzystując login oraz hasło w md5
 //$client = new Client('login');
@@ -86,10 +86,14 @@ W swoim projekcie dodaj do `composer.json` pakiet :
 ```json
 {
     "require": {
-        "smsapi/php-client": "^1.7"
+        "smsapi/php-client": "^1.8"
     }
 }
 ```
+
+## Integracje
+
+* [Monolog](https://github.com/Seldaek/monolog): [monolog-smsapi](https://github.com/smsapi/monolog-smsapi)
 
 ## Licencja
 [Apache 2.0 License](LICENSE)

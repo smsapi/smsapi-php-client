@@ -11,7 +11,7 @@ class Curl extends AbstractHttp
     {
         $body = $this->prepareRequestBody($file);
 
-        $headers = $this->prepareRequestHeaders($file);
+        $headers = $this->prepareRequestHeaders($method, $file);
 
         $curl = curl_init();
 

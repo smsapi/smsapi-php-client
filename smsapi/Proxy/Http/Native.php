@@ -19,7 +19,7 @@ class Native extends AbstractHttp
 	protected function makeRequest($method, $url, $query, $file, $isContacts)
     {
         $body = $this->prepareRequestBody($file);
-        $headers = $this->prepareRequestHeaders($file);
+        $headers = $this->prepareRequestHeaders($method, $file);
         $getHeadOrDelete = in_array(
             $method,
             array(AbstractAction::METHOD_GET, AbstractAction::METHOD_HEAD, AbstractAction::METHOD_DELETE)

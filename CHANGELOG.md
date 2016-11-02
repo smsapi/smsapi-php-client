@@ -1,5 +1,11 @@
 # SMSAPI PHP Client
 
+## 1.8.0 - 2016-11-02
+* fix Content-Type header usage
+* add Client::VERSION
+* update User-Agent header
+* update README
+
 ## 1.7.6 - 2016-10-31
 * fix contacts bug
 

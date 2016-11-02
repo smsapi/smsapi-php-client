@@ -245,20 +245,21 @@ abstract class AbstractHttp implements Proxy
     }
 
     /**
+     * @param string $method
      * @param string $file
      * @return array
      */
-    protected function prepareRequestHeaders($file)
+    protected function prepareRequestHeaders($method, $file)
     {
-        $headers = array();
-
-        $headers['User-Agent'] = 'smsapi-php-client';
-        $headers['Accept'] = '';
-        $headers['x-request-id'] = $this->getRequestId();
+        $headers = array(
+            'User-Agent' => sprintf('smsapi-php-client v%s; PHP v%s', Client::VERSION, PHP_VERSION),
+            'Accept' => '',
+            'x-request-id' => $this->getRequestId(),
+        );
 
         if ($this->isFileValid($file)) {
             $headers['Content-Type'] = 'multipart/form-data; boundary=' . $this->boundary;
-        } else {
+        } elseif (in_array($method, array(AbstractAction::METHOD_POST, AbstractAction::METHOD_PUT))) {
             $headers['Content-Type'] = 'application/x-www-form-urlencoded';
         }
 
