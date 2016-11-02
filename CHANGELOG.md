@@ -1,5 +1,9 @@
 # SMSAPI PHP Client
 
+## 1.8.1 - 2016-11-02
+* fix fopen problem with Content-Type
+* improve HTTP headers
+
 ## 1.8.0 - 2016-11-02
 * fix Content-Type header usage
 * add Client::VERSION

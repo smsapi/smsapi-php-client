@@ -239,28 +239,31 @@ abstract class AbstractHttp implements Proxy
         return $body;
     }
 
-    private function isFileValid($file)
+    protected function isFileValid($file)
     {
         return !empty($file) && file_exists($file);
     }
 
     /**
-     * @param string $method
-     * @param string $file
+     * @param string $contentType
      * @return array
      */
-    protected function prepareRequestHeaders($method, $file)
+    protected function prepareRequestHeaders($contentType)
     {
+        $userAgent = sprintf(
+            'smsapi-php-client v%s; php v%s; proxy %s',
+            Client::VERSION,
+            PHP_VERSION,
+            $this->getProxyName()
+        );
         $headers = array(
-            'User-Agent' => sprintf('smsapi-php-client v%s; PHP v%s', Client::VERSION, PHP_VERSION),
+            'User-Agent' => $userAgent,
             'Accept' => '',
             'x-request-id' => $this->getRequestId(),
         );
 
-        if ($this->isFileValid($file)) {
-            $headers['Content-Type'] = 'multipart/form-data; boundary=' . $this->boundary;
-        } elseif (in_array($method, array(AbstractAction::METHOD_POST, AbstractAction::METHOD_PUT))) {
-            $headers['Content-Type'] = 'application/x-www-form-urlencoded';
+        if ($contentType) {
+            $headers['Content-Type'] = $contentType;
         }
 
         if ($this->basicAuthentication) {
@@ -275,6 +278,11 @@ abstract class AbstractHttp implements Proxy
 
         return $headers;
     }
+
+    /**
+     * @return string
+     */
+    abstract protected function getProxyName();
 
     private function getRequestId()
     {

@@ -9,7 +9,7 @@ use SMSApi\Exception\ClientException;
  * @package SMSApi
  */
 class Client {
-    const VERSION = '1.8.0';
+    const VERSION = '1.8.1';
 
 	/**
 	 * @var string

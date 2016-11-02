@@ -16,10 +16,20 @@ class Native extends AbstractHttp
      */
 	const CONNECT_SOCKET = 2;
 
-	protected function makeRequest($method, $url, $query, $file, $isContacts)
+    protected function getProxyName()
+    {
+        return 'native';
+    }
+
+    protected function makeRequest($method, $url, $query, $file, $isContacts)
     {
         $body = $this->prepareRequestBody($file);
-        $headers = $this->prepareRequestHeaders($method, $file);
+        if ($this->isFileValid($file)) {
+            $contentType = 'multipart/form-data; boundary=' . $this->boundary;
+        } else {
+            $contentType = 'application/x-www-form-urlencoded';
+        }
+        $headers = $this->prepareRequestHeaders($contentType);
         $getHeadOrDelete = in_array(
             $method,
             array(AbstractAction::METHOD_GET, AbstractAction::METHOD_HEAD, AbstractAction::METHOD_DELETE)

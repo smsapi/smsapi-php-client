@@ -7,11 +7,22 @@ use SMSApi\Exception\ProxyException;
 
 class Curl extends AbstractHttp
 {
+    protected function getProxyName()
+    {
+        return 'curl';
+    }
+
     protected function makeRequest($method, $url, $query, $file, $isContacts)
     {
         $body = $this->prepareRequestBody($file);
 
-        $headers = $this->prepareRequestHeaders($method, $file);
+        $contentType = null;
+        if ($this->isFileValid($file)) {
+            $contentType = 'multipart/form-data; boundary=' . $this->boundary;
+        } elseif (in_array($method, array(AbstractAction::METHOD_POST, AbstractAction::METHOD_PUT))) {
+            $contentType = 'application/x-www-form-urlencoded';
+        }
+        $headers = $this->prepareRequestHeaders($contentType);
 
         $curl = curl_init();
 
