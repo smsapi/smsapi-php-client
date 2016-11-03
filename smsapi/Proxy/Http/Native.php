@@ -24,20 +24,14 @@ class Native extends AbstractHttp
     protected function makeRequest($method, $url, $query, $file, $isContacts)
     {
         $body = $this->prepareRequestBody($file);
+        $postOrPut = in_array($method, array(AbstractAction::METHOD_POST, AbstractAction::METHOD_PUT));
+        $contentType='';
         if ($this->isFileValid($file)) {
             $contentType = 'multipart/form-data; boundary=' . $this->boundary;
-        } else {
+        } elseif ($postOrPut) {
             $contentType = 'application/x-www-form-urlencoded';
         }
         $headers = $this->prepareRequestHeaders($contentType);
-        $getHeadOrDelete = in_array(
-            $method,
-            array(AbstractAction::METHOD_GET, AbstractAction::METHOD_HEAD, AbstractAction::METHOD_DELETE)
-        );
-
-        if (!empty($body) or ($query and $getHeadOrDelete)) {
-            $url .= '?' . $query;
-        }
 
         $headersString = $this->preparePlainTextHeaders($headers);
 
@@ -45,10 +39,17 @@ class Native extends AbstractHttp
             'http' => array(
                 'method'	 => $method,
                 'header'	 => $headersString,
-                'content'	 => empty($body) ? $query : $body,
                 'ignore_errors' => $isContacts,
             )
         );
+
+        if ($query) {
+            $url .= '?' . $query;
+        }
+
+        if ($postOrPut) {
+            $options['http']['content'] = $body ?: $query;
+        }
 
         $context = stream_context_create($options);
 
@@ -60,9 +61,7 @@ class Native extends AbstractHttp
         $response['output'] = stream_get_contents($fp);
         $response['size'] = $this->getResultCount($metaData);
 
-        if ($fp) {
-            fclose($fp);
-        }
+        fclose($fp);
 
         return $response;
 	}

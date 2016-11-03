@@ -1,5 +1,8 @@
 # SMSAPI PHP Client
 
+## 1.8.2 - 2016-11-03
+* improve Native proxy implementation
+
 ## 1.8.1 - 2016-11-02
 * fix fopen problem with Content-Type
 * improve HTTP headers
