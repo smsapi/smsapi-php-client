@@ -45,7 +45,7 @@ class ContactsException extends SmsapiException
 
     public function getShortMessage()
     {
-        return $this->error;
+        return $this->shortMessage;
     }
 
     public function getError()
