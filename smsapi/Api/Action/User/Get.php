@@ -13,49 +13,60 @@ use SMSApi\Proxy\Uri;
  */
 class Get extends AbstractAction {
 
-	/**
-	 * @param $data
-	 * @return UserResponse
-	 */
-	protected function response( $data ) {
+    /**
+     * @param $data
+     * @return UserResponse
+     */
+    protected function response( $data ) {
 
-		return new UserResponse( $data );
-	}
+        return new UserResponse( $data );
+    }
 
-	/**
-	 * @return Uri
-	 */
-	public function uri() {
+    /**
+     * @return Uri
+     */
+    public function uri() {
 
-		$query = "";
+        $query = "";
 
-		$query .= $this->paramsLoginToQuery();
+        $query .= $this->paramsLoginToQuery();
 
-		$query .= $this->paramsOther();
+        $query .= $this->paramsOther();
 
-		return new Uri( $this->proxy->getProtocol(), $this->proxy->getHost(), $this->proxy->getPort(), "/api/user.do", $query );
-	}
+        return new Uri( $this->proxy->getProtocol(), $this->proxy->getHost(), $this->proxy->getPort(), "/api/user.do", $query );
+    }
 
-	/**
-	 * @deprecated since v1.0.0
-	 * @param $username
-	 * @return $this
-	 */
-	public function setUsername( $username ) {
-		$this->params[ "get_user" ] = $username;
-		return $this;
-	}
+    /**
+     * @deprecated since v1.0.0
+     * @param $username
+     * @return $this
+     */
+    public function setUsername( $username ) {
+        $this->params[ "get_user" ] = $username;
+        return $this;
+    }
 
-	/**
-	 * Set username to edit account.
-	 *
-	 * @param string $username username
-	 * @return $this
-	 */
-	public function filterByUserName( $username ) {
-		$this->params[ "get_user" ] = $username;
-		return $this;
-	}
+    /**
+     * Set when subuser is without main account username prefix
+     *
+     * @return $this
+     */
+    public function withoutPrefix()
+    {
+        $this->params['without_prefix'] = 1;
+        return $this;
+    }
+
+    /**
+     * Set username to edit account.
+     *
+     * @param string $username username
+     * @return $this
+     */
+    public function filterByUserName( $username ) {
+        $this->params[ "get_user" ] = $username;
+        return $this;
+    }
 
 }
 
