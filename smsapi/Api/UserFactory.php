@@ -39,13 +39,18 @@ class UserFactory extends ActionFactory {
 	 * @param null $username
 	 * @return Action\User\Edit
 	 */
-	public function actionEdit( $username = null ) {
+    public function actionEdit($username = null, $withoutPrefix = false)
+    {
 		$action = new \SMSApi\Api\Action\User\Edit();
 		$action->client( $this->client );
 		$action->proxy( $this->proxy );
 
 		if ( !empty( $username ) ) {
-			$action->filterByUsername( $username );
+            if ($withoutPrefix) {
+                $action->setUsernamewithoutPrefix($username);
+            } else {
+                $action->filterByUsername($username);
+            }
 		}
 
 		return $action;
