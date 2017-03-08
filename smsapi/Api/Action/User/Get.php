@@ -49,10 +49,12 @@ class Get extends AbstractAction {
     /**
      * Set when subuser is without main account username prefix
      *
+     * @param string $username username
      * @return $this
      */
-    public function withoutPrefix()
+    public function filterByUserNameWithoutPrefix( $username )
     {
+        $this->params[ "get_user" ] = $username;
         $this->params['without_prefix'] = 1;
         return $this;
     }

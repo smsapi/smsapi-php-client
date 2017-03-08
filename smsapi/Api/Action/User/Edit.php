@@ -21,10 +21,12 @@ class Edit extends Add {
     /**
      * Set when subuser has no main account username prefix
      *
+     * @param $username string
      * @return $this
      */
-    public function withoutPrefix()
+    public function setUsernamewithoutPrefix( $username )
     {
+        $this->params[ "set_user" ] = $username;
         $this->params['without_prefix'] = 1;
         return $this;
     }

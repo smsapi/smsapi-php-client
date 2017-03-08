@@ -49,10 +49,12 @@ class Add extends AbstractAction {
     /**
      * Set when subuser has to be created without main account username prefix
      *
+     * @param string $username account name
      * @return $this
      */
-    public function withoutPrefix()
+    public function setUsernamewithoutPrefix( $username )
     {
+        $this->params[ "add_user" ] = $username;
         $this->params['without_prefix'] = 1;
         return $this;
     }

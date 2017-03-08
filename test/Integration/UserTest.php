@@ -4,7 +4,7 @@ use SMSApi\Api\Response\UserResponse;
 
 class UserTest extends SmsapiTestCase
 {
-    private static $userTest;
+    private static $userTest, $password;
 
     /**
      * @var \SMSApi\Api\UserFactory
@@ -14,6 +14,7 @@ class UserTest extends SmsapiTestCase
     public static function setUpBeforeClass()
     {
         self::$userTest = "test-smsapi-client-" . md5(microtime(true));
+        self::$password = "example142password121";
     }
 
     protected function setUp()
@@ -45,12 +46,12 @@ class UserTest extends SmsapiTestCase
         $result = null;
         $error = 0;
 
-        $action = $this->userFactory->actionAdd(self::$userTest)
-            ->setPassword(md5("100costma100"))
-            ->setPasswordApi(md5("200costam200"))
+        $action = $this->userFactory->actionAdd()
+            ->setUsernamewithoutPrefix(self::$userTest)
+            ->setPassword(md5(self::$password))
+            ->setPasswordApi(md5(self::$password))
             ->setActive(true)
             ->setLimit(5.5)
-            ->withoutPrefix()
             ->setPhonebook(true);
 
         $result = $action->execute();
@@ -78,8 +79,8 @@ class UserTest extends SmsapiTestCase
         $error = 0;
 
         $action = $this->userFactory->actionAdd(self::$userTest)
-            ->setPassword(md5("100costma100"))
-            ->setPasswordApi(md5("200costam200"))
+            ->setPassword(md5(self::$password))
+            ->setPasswordApi(md5(self::$password))
             ->setActive(true)
             ->setLimit(5.5)
             ->setPhonebook(true);
@@ -126,6 +127,23 @@ class UserTest extends SmsapiTestCase
         $this->assertEquals(0, $error);
     }
 
+    public function testGetWithoutPrefix()
+    {
+        $result = $this->getApiUser(true);
+
+        echo "\nUserGet:\n";
+
+        $error = 0;
+
+        if (empty($result)) {
+            $error++;
+        }
+
+        $this->renderUserItem($result);
+
+        $this->assertEquals(0, $error);
+    }
+
     public function testEdit()
     {
         $result = null;
@@ -133,7 +151,31 @@ class UserTest extends SmsapiTestCase
 
         $action = $this->userFactory->actionEdit(self::$userTest)
             ->setLimit(10)
-            ->setInfo("to jest test");
+            ->setInfo(urlencode('to jest test'));
+
+        $result = $action->execute();
+
+        /* @var $result UserResponse */
+
+        echo "\nUserEdit:\n";
+
+        if (empty($result)) {
+            $error++;
+        }
+
+        $this->renderUserItem($result);
+
+        $this->assertEquals(0, $error);
+    }
+
+    public function testEditWithoutPrefix()
+    {
+        $result = null;
+        $error = 0;
+
+        $action = $this->userFactory->actionEdit(self::$userTest, true)
+            ->setLimit(10)
+            ->setInfo(urlencode('to jest test'));
 
         $result = $action->execute();
 
@@ -188,9 +230,13 @@ class UserTest extends SmsapiTestCase
     /**
      * @return UserResponse
      */
-    private function getApiUser()
+    private function getApiUser($withoutPrefix = false)
     {
-        $action = $this->userFactory->actionGet(self::$userTest);
+        if ($withoutPrefix) {
+            $action = $this->userFactory->actionGet()->filterByUserNameWithoutPrefix(self::$userTest);
+        } else {
+            $action = $this->userFactory->actionGet(self::$userTest);
+        }
 
         $result = $action->execute();
 
