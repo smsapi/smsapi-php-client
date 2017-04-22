@@ -24,6 +24,7 @@ class VmsTest extends SmsapiTestCase
             $action->setFile($audioFilePath)
                 ->setTo($this->getNumberTest())
                 ->setDateSent($dateToSend)
+                ->setNotifyUrl('http://example.com')
                 ->execute();
 
 		echo "VmsSendFile:\n";
@@ -50,6 +51,7 @@ class VmsTest extends SmsapiTestCase
 			->setTo($this->getNumberTest())
 			->setDateSent($dateToSend)
 			->setTtsLector(\SMSApi\Api\Action\Vms\Send::LECTOR_JACEK)
+			->setNotifyUrl('http://example.com')
 			->execute();
 
 		echo "VmsSendTts:\n";
