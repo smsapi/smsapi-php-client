@@ -1,5 +1,8 @@
 # SMSAPI PHP Client
 
+## 1.8.4 - 2017-05-29
+* fix fopen problem with connection
+
 ## 1.8.3 - 2017-01-09
 * fix ContactsException's `getShortMessage()` method to return the `shortMessage` field instead of the `error` field
 

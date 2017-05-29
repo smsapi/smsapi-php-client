@@ -3,6 +3,7 @@
 namespace SMSApi\Proxy\Http;
 
 use SMSApi\Api\Action\AbstractAction;
+use SMSApi\Exception\ProxyException;
 
 class Native extends AbstractHttp
 {
@@ -54,6 +55,10 @@ class Native extends AbstractHttp
         $context = stream_context_create($options);
 
         $fp = fopen($url, 'r', false, $context);
+
+        if (!$fp) {
+            throw new ProxyException('Unable to connect');
+        }
 
         $metaData = stream_get_meta_data($fp);
 
