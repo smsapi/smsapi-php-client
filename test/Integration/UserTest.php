@@ -101,7 +101,7 @@ class UserTest extends SmsapiTestCase
 
 		$action = $this->userFactory->actionEdit(self::$userTest)
 			->setLimit(10)
-			->setInfo("to jest test");
+			->setInfo(urlencode("to jest test"));
 
 		$result = $action->execute();
 

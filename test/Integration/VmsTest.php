@@ -42,7 +42,7 @@ class VmsTest extends SmsapiTestCase
     {
 		$dateToSend = $this->prepareDateToSend();
 
-		$tts = "Wiadomość w formacie TTS";
+		$tts = urlencode("Wiadomość w formacie TTS");
 
 		$action = $this->vmsFactory->actionSend();
 

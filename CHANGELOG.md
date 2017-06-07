@@ -1,5 +1,8 @@
 # SMSAPI PHP Client
 
+## 1.8.5 - 2017-06-07
+* fix unstable tests
+
 ## 1.8.4 - 2017-05-29
 * fix fopen problem with connection
 

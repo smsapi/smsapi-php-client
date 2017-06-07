@@ -21,7 +21,7 @@ class MmsTest extends SmsapiTestCase
         $action = $this->mmsFactory->actionSend();
 
 		$result =
-            $action->setSubject("test mms")
+            $action->setSubject(urlencode("test mms"))
                     ->setTo($this->getNumberTest())
                     ->setDateSent($dateSend)
                     ->setSmil($smil)
