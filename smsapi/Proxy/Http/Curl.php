@@ -44,6 +44,10 @@ class Curl extends AbstractHttp
             curl_setopt( $curl, CURLOPT_MAXREDIRS, $this->maxRedirects );
         }
 
+        if ( isset( $this->httpProxy ) ) {
+            curl_setopt( $curl, CURLOPT_PROXY, $this->httpProxy );
+        }
+
         if ( !$curl ) {
             throw new ProxyException( 'Unable to connect' );
         }
@@ -83,11 +87,16 @@ class Curl extends AbstractHttp
                 curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
         }
 
-        list($headers, $body) = explode(
+        $curlResponse = explode(
             "\r\n\r\n",
             preg_replace('#HTTP/1\.1 100 Continue\s+#', '', curl_exec($curl)),
-            2
+            3
         );
+
+        // reverse curl response to get body first, then headers, and optional proxy headers (ignored)
+        $curlResponse = array_reverse($curlResponse);
+        $body = $curlResponse[0];
+        $headers = $curlResponse[1];
 
         $response = array(
             'output' => $body,

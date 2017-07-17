@@ -44,6 +44,9 @@ class Native extends AbstractHttp
             )
         );
 
+        if ( isset( $this->httpProxy ))
+            $options['http']['proxy'] = 'tcp://'.$this->httpProxy;
+
         if ($query) {
             $url .= '?' . $query;
         }

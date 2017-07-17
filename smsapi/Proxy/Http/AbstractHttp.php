@@ -46,6 +46,9 @@ abstract class AbstractHttp implements Proxy
     /** @var string */
     private $requestId;
 
+    /** @var string */
+    protected $httpProxy;
+
     public function __construct( $host ) {
 
 		$tmp = explode( "://", $host );
@@ -291,5 +294,15 @@ abstract class AbstractHttp implements Proxy
         }
 
         return $this->requestId;
+    }
+
+    /**
+     * Set address of HTTP transport proxy, to be used when calling API from behind a firewall
+     * 
+     * @param string $address
+     */
+    public function setHttpProxy($address)
+    {
+        $this->httpProxy = $address;
     }
 }
