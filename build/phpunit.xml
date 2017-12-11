@@ -16,6 +16,9 @@
         verbose="true"
         >
     <testsuites>
+        <testsuite name="SMSAPI - Client Tests Suite">
+            <file>../test/Integration/ClientTest.php</file>
+        </testsuite>
         <testsuite name="SMSAPI - Unit Tests Suite">
             <directory>../test/Unit</directory>
         </testsuite>

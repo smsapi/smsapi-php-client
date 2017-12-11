@@ -1,5 +1,9 @@
 # SMSAPI PHP Client
 
+## 1.8.6 - 2017-12-11
+* add `setNotifyUrl` to `SMSApi\Api\Action\Vms\Send`
+* make `ClientTest` executed by default
+
 ## 1.8.5 - 2017-06-07
 * fix unstable tests
 
