@@ -44,12 +44,15 @@ class Native extends AbstractHttp
             )
         );
 
-        if ($query) {
-            $url .= '?' . $query;
-        }
-
         if ($postOrPut) {
-            $options['http']['content'] = $body ?: $query;
+            if ($body) {
+                $options['http']['content'] = $body;
+                $url .= '?' . trim($query, '&');
+            } else {
+                $options['http']['content'] = $query;
+            }
+        } elseif ($query) {
+            $url .= '?' . trim($query, '&');
         }
 
         $context = stream_context_create($options);

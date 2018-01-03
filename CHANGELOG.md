@@ -1,5 +1,8 @@
 # SMSAPI PHP Client
 
+## 1.8.7 - 2018-01-03
+* improve POST and PUT requests
+
 ## 1.8.6 - 2017-12-11
 * add `setNotifyUrl` to `SMSApi\Api\Action\Vms\Send`
 * make `ClientTest` executed by default
