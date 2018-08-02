@@ -1,0 +1,12 @@
+{
+  "size": 1,
+  "collection": [
+    {
+      "username": "someone",
+      "group_id": "any",
+      "write": true,
+      "read": true,
+      "send": true
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+Service name: "SMSAPI.PL" OR "SMSAPI.COM"
+API token: 40-characters length string generated in SMSAPI Panel
+API URI: "https://api.smsapi.pl", "https://api.smsapi.com", "https://api2.smsapi.pl" or "https://api2.smsapi.com"
+logger: true

@@ -1,51 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="smsapi-php-client" default="build" basedir=".">
-    <target name="build" depends="clean,composer,lint,phpunit,apigen"/>
-    <target name="clean" description="Cleanup build artifacts">
-        <delete file="${basedir}/composer.lock"/>
-        <delete dir="${basedir}/docs"/>
+
+<project name="smsapi/php-client" default="test">
+    <target name="test">
+        <exec command="composer self-update" passthru="true" />
+        <exec command="composer install" passthru="true" />
+        <exec command="./vendor/bin/phpunit" passthru="true" />
     </target>
-    <target name="composer" description="Install dependencies">
-        <exec executable="wget" failonerror="true">
-            <arg value="-nc" />
-            <arg value="http://getcomposer.org/composer.phar" />
-        </exec>
-        <exec executable="php">
-            <arg value="composer.phar" />
-            <arg value="self-update" />
-        </exec>
-        <exec executable="php" failonerror="true">
-            <arg value="composer.phar" />
-            <arg value="install" />
-        </exec>
+    <target name="phpcbf-src">
+        <exec command="./vendor/bin/phpcbf --standard=PSR1,PSR2,PHPCompatibility --runtime-set testVersion 7.0 src" passthru="true" />
     </target>
-    <target name="lint" description="Perform syntax check of sourcecode files">
-        <apply executable="php" failonerror="true">
-            <arg value="-l" />
-            <fileset dir="${basedir}">
-                <include name="smsapi/*.php" />
-                <include name="test/*.php" />
-                <modified />
-            </fileset>
-        </apply>
+    <target name="phpcbf-tests">
+        <exec command="./vendor/bin/phpcbf --standard=PSR1,PSR2,PHPCompatibility --runtime-set testVersion 7.0 tests" passthru="true" />
     </target>
-    <target name="phpunit" description="Run unit tests with PHPUnit">
-        <exec executable="php" failonerror="true">
-            <arg value="${basedir}/vendor/bin/phpunit" />
-            <arg value="--configuration" />
-            <arg path="${basedir}/build/phpunit.xml" />
-        </exec>
+    <target name="phpcs-src">
+        <exec command="./vendor/bin/phpcs --standard=PSR1,PSR2,PHPCompatibility --runtime-set testVersion 7.0 src" passthru="true" />
     </target>
-    <target name="apigen" description="Generate docs">
-        <exec executable="php" failonerror="false">
-            <arg value="${basedir}/vendor/bin/apigen" />
-            <arg value="generate" />
-            <arg value="--source" />
-            <arg path="${basedir}/smsapi" />
-            <arg value="--destination" />
-            <arg path="${basedir}/docs" />
-            <arg value="--title" />
-            <arg value="SMSAPI Api Client" />
-        </exec>
+    <target name="phpcs-tests">
+        <exec command="./vendor/bin/phpcs --standard=PSR1,PSR2,PHPCompatibility --runtime-set testVersion 7.0 tests" passthru="true" />
+    </target>
+    <target name="phpcbf">
+        <phingcall target="phpcbf-src" />
+        <phingcall target="phpcbf-tests" />
+    </target>
+    <target name="phpcs">
+        <phingcall target="phpcs-src" />
+        <phingcall target="phpcs-tests" />
+    </target>
+    <target name="build">
+        <available property="is_composer_installed" file="composer" filepath="${env.PATH}" value="true" />
+        <if>
+            <equals arg1="${is_composer_installed}" arg2="1" />
+            <then>
+                <exec command="composer self-update" passthru="true" />
+                <exec command="composer update --prefer-lowest" passthru="true" />
+            </then>
+            <else>
+                <exec command="wget -nc http://getcomposer.org/composer.phar" passthru="true" />
+                <exec command="composer.phar self-update" passthru="true" />
+                <exec command="composer.phar update --prefer-lowest" passthru="true" />
+            </else>
+        </if>
+        <phingcall target="phpcbf" />
+        <phingcall target="phpcs" />
+        <phingcall target="test" />
+        <if>
+            <equals arg1="${is_composer_installed}" arg2="1" />
+            <then>
+                <exec command="composer self-update" passthru="true" />
+                <exec command="composer update" passthru="true" />
+            </then>
+            <else>
+                <exec command="wget -nc http://getcomposer.org/composer.phar" passthru="true" />
+                <exec command="composer.phar self-update" passthru="true" />
+                <exec command="composer.phar update" passthru="true" />
+            </else>
+        </if>
+        <phingcall target="test" />
     </target>
 </project>

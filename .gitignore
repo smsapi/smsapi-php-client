@@ -1,6 +1,5 @@
-/test/Integration/config.dist.php
+/tests-resources/config/config.yml
 /vendor
 /composer.lock
-/cache.properties
+/phpunit.xml
 /composer.phar
-/docs

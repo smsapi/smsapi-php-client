@@ -1,99 +1,155 @@
-﻿# SMSAPI PHP Client
+# SMSAPI PHP Client
 
-Klient PHP pozwalający na wysyłanie wiadomości SMS, MMS, VMS oraz zarządzanie kontem w serwisie SMSAPI.pl
+## Requirements
 
-```php
-<?php
+* [composer](https://getcomposer.org/)
 
-use SMSApi\Client;
-use SMSApi\Api\SmsFactory;
-use SMSApi\Exception\SmsapiException;
+## Install package with dependencies
 
-require_once 'vendor/autoload.php';
+Execute: `composer require smsapi/php-client`
 
-$client = Client::createFromToken('wygenerowany_token');
+## How to use *SMSAPI.COM* client?
 
-//Lub wykorzystując login oraz hasło w md5
-//$client = new Client('login');
-//$client->setPasswordHash(md5('super tajne haslo'));
-
-$smsapi = new SmsFactory;
-$smsapi->setClient($client);
-
-try {
-	$actionSend = $smsapi->actionSend();
-
-	$actionSend->setTo('600xxxxxx');
-	$actionSend->setText('Hello World!!');
-	$actionSend->setSender('Info'); //Pole nadawcy, lub typ wiadomości: 'ECO', '2Way'
-
-	$response = $actionSend->execute();
-
-	foreach ($response->getList() as $status) {
-		echo $status->getNumber() . ' ' . $status->getPoints() . ' ' . $status->getStatus();
-	}
-} catch (SmsapiException $exception) {
-	echo 'ERROR: ' . $exception->getMessage();
-}
-```
-
-Przykład zmiany adresu serwera na zapasowy:
+### How to ping service?
 
 ```php
 <?php
 
-use SMSApi\Client;
-use SMSApi\Api\SmsFactory;
-use SMSApi\Proxy\Http\Native;
+declare(strict_types=1);
 
 require_once 'vendor/autoload.php';
 
-$client = Client::createFromToken('wygenerowany_token');
+use Smsapi\Client\SmsapiHttpClient;
 
-//Lub wykorzystując login oraz hasło w md5
-//$client = new Client('login');
-//$client->setPasswordHash(md5('super tajne haslo'));
+$apiToken = '0000000000000000000000000000000000000000';
 
-$proxy = new Native('https://api2.smsapi.pl'); // zapasowy serwer
+$result = (new SmsapiHttpClient)
+    ->smsapiComService($apiToken)
+    ->pingFeature()
+    ->ping();
 
-$smsapi = new SmsFactory($proxy);
-$smsapi->setClient($client);
-
-$actionSend = $smsapi->actionSend();
-
-$actionSend->setTo('600xxxxxx');
-$actionSend->setText('Hello World!!');
-$actionSend->setSender('Info');
-
-foreach ($actionSend->execute()->getList() as $status) {
-    echo $status->getNumber() . ' ' . $status->getPoints() . ' ' . $status->getStatus();
+if ($result->smsapi) {
+    echo 'SMSAPI active';
+} else {
+    echo 'SMSAPI not active';
 }
 ```
 
-[Dokumentacja API biblioteki.](https://github.com/smsapi/smsapi-php-client/wiki)
+### How to use custom URI?
 
-Sprawdź na przykładach, w jaki sposób można korzystać z biblioteki ([examples](https://github.com/smsapi/smsapi-php-client/wiki/Examples)).
+```php
+<?php
 
-## Wymagania
+declare(strict_types=1);
 
-* PHP >= 5.3
-* allow_url_fopen lub rozszerzenie curl
+require_once 'vendor/autoload.php';
 
-## Instalacja
+use Smsapi\Client\SmsapiHttpClient;
 
-W swoim projekcie dodaj do `composer.json` pakiet :
+$apiToken = '0000000000000000000000000000000000000000';
+$uri = 'http://example.com';
 
-```json
+(new SmsapiHttpClient)->smsapiComServiceWithUri($apiToken, $uri);
+```
+
+## How to use *SMSAPI.PL* client?
+
+### How to ping service?
+
+```php
+<?php
+
+declare(strict_types=1);
+
+require_once 'vendor/autoload.php';
+
+use Smsapi\Client\SmsapiHttpClient;
+
+$apiToken = '0000000000000000000000000000000000000000';
+
+$result = (new SmsapiHttpClient)
+    ->smsapiPlService($apiToken)
+    ->pingFeature()
+    ->ping();
+
+if ($result->smsapi) {
+    echo 'SMSAPI active';
+} else {
+    echo 'SMSAPI not active';
+}
+```
+
+### How to use custom URI?
+
+```php
+<?php
+
+declare(strict_types=1);
+
+require_once 'vendor/autoload.php';
+
+use Smsapi\Client\SmsapiHttpClient;
+
+$apiToken = '0000000000000000000000000000000000000000';
+$uri = 'http://example.com';
+
+(new SmsapiHttpClient)->smsapiPlServiceWithUri($apiToken, $uri);
+```
+
+## Additional features
+
+### How to use proxy server?
+
+```php
+<?php
+
+declare(strict_types=1);
+
+require_once 'vendor/autoload.php';
+
+use Smsapi\Client\SmsapiHttpClient;
+
+$proxyUrl = 'https://example.org';
+
+(new SmsapiHttpClient)->setProxy($proxyUrl);
+```
+
+### How to log requests and responses?
+
+Set logger to `SmsapiHttpClient` instance.
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use Psr\Log\LoggerInterface;
+use Psr\Log\LoggerTrait;
+
+require_once 'vendor/autoload.php';
+
+use Smsapi\Client\SmsapiHttpClient;
+
+$logger = new class() implements LoggerInterface
 {
-    "require": {
-        "smsapi/php-client": "^1.8"
+    use LoggerTrait;
+    
+    public function log($level, $message, array $context = [])
+    {
+        var_dump($level, $message, $context);
     }
-}
+};
+
+(new SmsapiHttpClient)->setLogger($logger);
 ```
 
-## Integracje
+## Test package
+1. Download package: `composer create-project smsapi/php-client`
+2. Execute tests: `./vendor/bin/phing`
 
-* [Monolog](https://github.com/Seldaek/monolog): [monolog-smsapi](https://github.com/smsapi/monolog-smsapi)
-
-## Licencja
-[Apache 2.0 License](LICENSE)
+## More info
+* [SMSAPI.COM API documentation](https://docs.smsapi.com)
+* [Repository on GitHub](https://github.com/smsapi/php-sms-client)
+* [Package on Packagist](https://packagist.org/packages/smsapi/sms-client)
+* [SMSAPI.COM web page](https://smsapi.com)
+* [SMSAPI.PL web page](https://smsapi.pl)

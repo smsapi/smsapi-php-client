@@ -1,0 +1,12 @@
+{
+  "id": 1,
+  "name": "any",
+  "url": "www.example.com",
+  "short_url": "http:\/\/idz.do\/any",
+  "filename": null,
+  "type": "URL",
+  "expire": "2018-02-11T12:02:23+00:00",
+  "hits": 0,
+  "hits_unique": 0,
+  "description": ""
+}
