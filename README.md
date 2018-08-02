@@ -1,5 +1,7 @@
 # SMSAPI PHP Client
 
+[![Build Status](https://travis-ci.org/smsapi/smsapi-php-client.svg?branch=master)](https://travis-ci.org/smsapi/smsapi-php-client)
+
 ## Requirements
 
 * [composer](https://getcomposer.org/)
