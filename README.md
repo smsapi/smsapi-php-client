@@ -149,7 +149,7 @@ $logger = new class() implements LoggerInterface
 
 ## More info
 * [SMSAPI.COM API documentation](https://docs.smsapi.com)
-* [Repository on GitHub](https://github.com/smsapi/php-sms-client)
-* [Package on Packagist](https://packagist.org/packages/smsapi/sms-client)
+* [Repository on GitHub](https://github.com/smsapi/smsapi-php-client)
+* [Package on Packagist](https://packagist.org/packages/smsapi/php-client)
 * [SMSAPI.COM web page](https://smsapi.com)
 * [SMSAPI.PL web page](https://smsapi.pl)
