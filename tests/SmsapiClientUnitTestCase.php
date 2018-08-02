@@ -28,7 +28,7 @@ class SmsapiClientUnitTestCase extends SmsapiClientTestCase
     /**
      * @before
      */
-    public function prepare(): void
+    public function prepare()
     {
         $this->mockHandler = new MockHandler();
         $guzzleHttp = new Client(['handler' => HandlerStack::create($this->mockHandler)]);
@@ -60,7 +60,7 @@ class SmsapiClientUnitTestCase extends SmsapiClientTestCase
         self::$smsapiService = new SmsapiPlHttpService($requestExecutorFactory->reveal(), new DataFactoryProvider());
     }
 
-    protected function mockResponse(int $statusCode, string $body): void
+    protected function mockResponse(int $statusCode, string $body)
     {
         $this->mockHandler->append(new Response($statusCode, [], $body));
     }
