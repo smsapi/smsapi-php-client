@@ -4,3 +4,4 @@ php:
 before_script:
 - composer self-update
 - composer install
+script: ./vendor/bin/phpunit --configuration phpunit.dist.xml --testsuite unit
