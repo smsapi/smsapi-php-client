@@ -10,53 +10,11 @@
 
 Execute: `composer require smsapi/php-client`
 
-## How to use *SMSAPI.COM* client?
+## How to pick a service
 
-### How to ping service?
+Depending on which of SMSAPI service your account is, you should pick it calling one of a method from examples below:
 
-```php
-<?php
-
-declare(strict_types=1);
-
-require_once 'vendor/autoload.php';
-
-use Smsapi\Client\SmsapiHttpClient;
-
-$apiToken = '0000000000000000000000000000000000000000';
-
-$result = (new SmsapiHttpClient)
-    ->smsapiComService($apiToken)
-    ->pingFeature()
-    ->ping();
-
-if ($result->smsapi) {
-    echo 'SMSAPI active';
-} else {
-    echo 'SMSAPI not active';
-}
-```
-
-### How to use custom URI?
-
-```php
-<?php
-
-declare(strict_types=1);
-
-require_once 'vendor/autoload.php';
-
-use Smsapi\Client\SmsapiHttpClient;
-
-$apiToken = '0000000000000000000000000000000000000000';
-$uri = 'http://example.com';
-
-(new SmsapiHttpClient)->smsapiComServiceWithUri($apiToken, $uri);
-```
-
-## How to use *SMSAPI.PL* client?
-
-### How to ping service?
+### How to use *SMSAPI.COM* client?
 
 ```php
 <?php
@@ -69,19 +27,30 @@ use Smsapi\Client\SmsapiHttpClient;
 
 $apiToken = '0000000000000000000000000000000000000000';
 
-$result = (new SmsapiHttpClient)
-    ->smsapiPlService($apiToken)
-    ->pingFeature()
-    ->ping();
-
-if ($result->smsapi) {
-    echo 'SMSAPI active';
-} else {
-    echo 'SMSAPI not active';
-}
+$service = (new SmsapiHttpClient())
+    ->smsapiComService($apiToken);
 ```
 
-### How to use custom URI?
+### How to use *SMSAPI.PL* client?
+
+```php
+<?php
+
+declare(strict_types=1);
+
+require_once 'vendor/autoload.php';
+
+use Smsapi\Client\SmsapiHttpClient;
+
+$apiToken = '0000000000000000000000000000000000000000';
+
+$service = (new SmsapiHttpClient())
+    ->smsapiPlService($apiToken);
+```
+
+All following examples consider you have a account on SMSAPI.COM. 
+
+## How to use a custom URI?
 
 ```php
 <?php
@@ -95,10 +64,62 @@ use Smsapi\Client\SmsapiHttpClient;
 $apiToken = '0000000000000000000000000000000000000000';
 $uri = 'http://example.com';
 
-(new SmsapiHttpClient)->smsapiPlServiceWithUri($apiToken, $uri);
+$service = (new SmsapiHttpClient())
+    ->smsapiComServiceWithUri($apiToken, $uri);
 ```
 
-## Additional features
+## How to use service business features?
+
+### How to use ping feature?
+
+```php
+<?php
+
+declare(strict_types=1);
+
+require_once 'vendor/autoload.php';
+
+use Smsapi\Client\SmsapiHttpClient;
+
+$apiToken = '0000000000000000000000000000000000000000';
+
+$service = (new SmsapiHttpClient())
+    ->smsapiComService($apiToken);
+$result = $service->pingFeature()
+    ->ping();
+
+if ($result->smsapi) {
+    echo 'SMSAPI active';
+} else {
+    echo 'SMSAPI not active';
+}
+```
+
+### How to send a SMS?
+
+```php
+<?php
+
+declare(strict_types=1);
+
+require_once 'vendor/autoload.php';
+
+use Smsapi\Client\SmsapiHttpClient;
+use Smsapi\Client\Feature\Sms\Bag\SendSmsBag;
+
+$apiToken = '0000000000000000000000000000000000000000';
+
+$sms = SendSmsBag::withMessage('someone phone number', 'some message');
+
+$service = (new SmsapiHttpClient())
+    ->smsapiComService($apiToken);
+$service->smsFeature()
+    ->sendSms($sms);
+```
+
+For more usage examples take a look at client test suite. 
+
+## How to use additional features?
 
 ### How to use proxy server?
 
@@ -113,7 +134,7 @@ use Smsapi\Client\SmsapiHttpClient;
 
 $proxyUrl = 'https://example.org';
 
-(new SmsapiHttpClient)->setProxy($proxyUrl);
+(new SmsapiHttpClient())->setProxy($proxyUrl);
 ```
 
 ### How to log requests and responses?
@@ -142,7 +163,7 @@ $logger = new class() implements LoggerInterface
     }
 };
 
-(new SmsapiHttpClient)->setLogger($logger);
+(new SmsapiHttpClient())->setLogger($logger);
 ```
 
 ## Test package
