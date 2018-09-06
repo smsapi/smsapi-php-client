@@ -6,6 +6,7 @@ namespace Smsapi\Client;
 
 use Psr\Log\LoggerAwareTrait;
 use Smsapi\Client\Feature\Data\DataFactoryProvider;
+use Smsapi\Client\Infrastructure\RequestExecutor\GuzzleClientFactory;
 use Smsapi\Client\Infrastructure\RequestExecutor\RequestExecutorFactory;
 use Smsapi\Client\Service\SmsapiComService;
 use Smsapi\Client\Service\SmsapiComHttpService;
@@ -64,10 +65,11 @@ class SmsapiHttpClient implements SmsapiClient
 
     private function createRequestExecutorFactory(string $apiToken, string $uri): RequestExecutorFactory
     {
-        $requestExecutorFactory = new RequestExecutorFactory($apiToken, $uri, $this->proxy);
+        $guzzleClientFactory = new GuzzleClientFactory($apiToken, $uri, $this->proxy);
+        $requestExecutorFactory = new RequestExecutorFactory($guzzleClientFactory);
 
         if ($this->logger) {
-            $requestExecutorFactory->setLogger($this->logger);
+            $guzzleClientFactory->setLogger($this->logger);
         }
 
         return $requestExecutorFactory;
