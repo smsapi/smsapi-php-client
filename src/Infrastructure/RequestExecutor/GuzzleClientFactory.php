@@ -6,14 +6,7 @@ namespace Smsapi\Client\Infrastructure\RequestExecutor;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Promise\PromiseInterface;
-use function GuzzleHttp\Promise\rejection_for;
-use GuzzleHttp\Psr7\Stream;
 use GuzzleHttp\RequestOptions;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\NullLogger;
 use Smsapi\Client\SmsapiClient;
@@ -37,17 +30,18 @@ class GuzzleClientFactory
         $this->proxy = $proxy;
     }
 
-    public function createGuzzle(): ClientInterface
+    public function createClient(): ClientInterface
     {
-        return new Client(
+        $client = new Client(
             [
                 'base_uri' => $this->createBaseUri(),
                 RequestOptions::HTTP_ERRORS => false,
                 RequestOptions::PROXY => $this->proxy,
                 RequestOptions::HEADERS => $this->createHeaders(),
-                'handler' => $this->createHandler(),
             ]
         );
+
+        return new GuzzleClientLoggerDecorator($client, $this->logger);
     }
 
     private function createBaseUri(): string
@@ -78,70 +72,5 @@ class GuzzleClientFactory
             ClientInterface::VERSION,
             PHP_VERSION
         );
-    }
-
-    private function createHandler(): HandlerStack
-    {
-        $handlerStack = HandlerStack::create();
-        $handlerStack->push($this->createLoggerMiddleware());
-
-        return $handlerStack;
-    }
-
-    private function createLoggerMiddleware(): callable
-    {
-        return function (callable $handler) {
-            return function (RequestInterface $request, array $options) use ($handler) {
-                /** @var PromiseInterface $promise */
-                $promise = $handler($request, $options);
-
-                return $promise->then(
-                    function (ResponseInterface $response) use ($request) {
-                        $this->log($request, $response);
-
-                        return $response;
-                    },
-                    function (PromiseInterface $reason) use ($request) {
-                        $response = $reason instanceof RequestException ? $reason->getResponse() : null;
-
-                        $this->log($request, $response);
-
-                        return rejection_for($reason);
-                    }
-                );
-            };
-        };
-    }
-
-    private function log(RequestInterface $request, ResponseInterface $response = null)
-    {
-        $statusCode = null;
-        $responseCopy = null;
-        if ($response) {
-            $statusCode = $response->getStatusCode();
-            $responseCopy = $this->copyResponse($response);
-        }
-
-        $message = sprintf(
-            'Request: %s %s HTTP/%s. Response: %s',
-            $request->getMethod(),
-            $request->getRequestTarget(),
-            $request->getProtocolVersion(),
-            $statusCode
-        );
-
-        $this->logger->info($message, ['request' => $request, 'response' => $responseCopy]);
-    }
-
-    private function copyResponse(ResponseInterface $response): ResponseInterface
-    {
-        $resource = fopen('php://temp', 'r+');
-        fwrite($resource, $response->getBody()->__toString());
-        $response->getBody()->rewind();
-        fseek($resource, 0);
-        $options = ['metadata' => $response->getBody()->getMetadata(), 'size' => $response->getBody()->getSize()];
-        $body = new Stream($resource, $options);
-
-        return $response->withBody($body);
     }
 }

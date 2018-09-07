@@ -13,7 +13,6 @@ use Smsapi\Client\Infrastructure\RequestMapper\Query\QueryParametersData;
  */
 class RestRequestMapper
 {
-    /** @var ComplexParametersQueryFormatter */
     private $queryFormatter;
 
     public function __construct(ComplexParametersQueryFormatter $queryFormatter)
@@ -23,8 +22,9 @@ class RestRequestMapper
 
     public function mapCreate(string $path, array $builtInParameters, array $userParameters = []): Request
     {
-        return $this->createRequest(RequestHttpMethod::POST, $path, $builtInParameters, $userParameters)
-            ->withHeader('Content-Type', 'application/x-www-form-urlencoded');
+        $request = $this->createRequest(RequestHttpMethod::POST, $path, $builtInParameters, $userParameters);
+
+        return $request->withHeader('Content-Type', 'application/x-www-form-urlencoded');
     }
 
     public function mapRead(string $path, array $builtInParameters, array $userParameters = []): Request
@@ -43,8 +43,9 @@ class RestRequestMapper
 
     public function mapUpdate(string $path, array $builtInParameters, array $userParameters = []): Request
     {
-        return $this->createRequest(RequestHttpMethod::PUT, $path, $builtInParameters, $userParameters)
-            ->withHeader('Content-Type', 'application/x-www-form-urlencoded');
+        $request = $this->createRequest(RequestHttpMethod::PUT, $path, $builtInParameters, $userParameters);
+
+        return $request->withHeader('Content-Type', 'application/x-www-form-urlencoded');
     }
 
     private function createPathQuery(array $builtInParameters, array $userParameters): string
@@ -54,11 +55,16 @@ class RestRequestMapper
             $parameters = new QueryParametersData($builtInParameters, $userParameters);
             $pathQuery .= '?' . $this->queryFormatter->format($parameters);
         }
+
         return $pathQuery;
     }
 
-    private function createRequest(string $method, string $path, array $builtInParameters, array $userParameters = []): Request
-    {
+    private function createRequest(
+        string $method,
+        string $path,
+        array $builtInParameters,
+        array $userParameters = []
+    ): Request {
         $parameters = new QueryParametersData($builtInParameters, $userParameters);
 
         return new Request($method, $path, $this->queryFormatter->format($parameters));

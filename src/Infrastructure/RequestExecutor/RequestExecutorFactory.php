@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Smsapi\Client\Infrastructure\RequestExecutor;
 
+use GuzzleHttp\ClientInterface;
+use Psr\Log\LoggerAwareTrait;
+use Psr\Log\NullLogger;
 use Smsapi\Client\Infrastructure\RequestAssembler\GuzzleRequestAssembler;
 use Smsapi\Client\Infrastructure\RequestMapper\Query\Formatter\ComplexParametersQueryFormatter;
 use Smsapi\Client\Infrastructure\ResponseMapper\LegacyResponseMapper;
@@ -17,6 +20,8 @@ use Smsapi\Client\Infrastructure\RequestMapper\LegacyRequestMapper;
  */
 class RequestExecutorFactory
 {
+    use LoggerAwareTrait;
+
     private $queryFormatter;
     private $jsonDecode;
     private $requestAssembler;
@@ -24,6 +29,7 @@ class RequestExecutorFactory
 
     public function __construct(GuzzleClientFactory $guzzleClientFactory)
     {
+        $this->logger = new NullLogger();
         $this->queryFormatter = new ComplexParametersQueryFormatter();
         $this->jsonDecode = new JsonDecode();
         $this->requestAssembler = new GuzzleRequestAssembler();
@@ -34,17 +40,35 @@ class RequestExecutorFactory
     {
         $restRequestMapper = new RestRequestMapper($this->queryFormatter);
         $restResponseMapper = new RestResponseMapper($this->jsonDecode);
-        $guzzle = $this->guzzleClientFactory->createGuzzle();
+        $restResponseMapper->setLogger($this->logger);
 
-        return new RestRequestExecutor($restRequestMapper, $guzzle, $restResponseMapper, $this->requestAssembler);
+        return new RestRequestExecutor(
+            $restRequestMapper,
+            $this->createGuzzleClient(),
+            $restResponseMapper,
+            $this->requestAssembler
+        );
     }
 
     public function createLegacyRequestExecutor(): LegacyRequestExecutor
     {
         $legacyRequestMapper = new LegacyRequestMapper($this->queryFormatter);
         $legacyResponseMapper = new LegacyResponseMapper($this->jsonDecode);
-        $guzzle = $this->guzzleClientFactory->createGuzzle();
+        $legacyResponseMapper->setLogger($this->logger);
 
-        return new LegacyRequestExecutor($legacyRequestMapper, $guzzle, $legacyResponseMapper, $this->requestAssembler);
+        return new LegacyRequestExecutor(
+            $legacyRequestMapper,
+            $this->createGuzzleClient(),
+            $legacyResponseMapper,
+            $this->requestAssembler
+        );
+    }
+
+    private function createGuzzleClient(): ClientInterface
+    {
+        $this->guzzleClientFactory->setLogger($this->logger);
+        $guzzle = $this->guzzleClientFactory->createClient();
+
+        return $guzzle;
     }
 }

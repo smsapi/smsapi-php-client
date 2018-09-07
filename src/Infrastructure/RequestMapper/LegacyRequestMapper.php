@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Smsapi\Client\Infrastructure\RequestMapper;
@@ -13,7 +14,6 @@ use Smsapi\Client\Infrastructure\RequestMapper\Query\QueryParametersData;
  */
 class LegacyRequestMapper
 {
-    /** @var ComplexParametersQueryFormatter  */
     private $queryFormatter;
 
     public function __construct(ComplexParametersQueryFormatter $queryFormatter)
@@ -23,12 +23,17 @@ class LegacyRequestMapper
 
     public function map(string $path, array $builtInParameters, array $userParameters = []): Request
     {
-        return $this->createRequest(RequestHttpMethod::POST, $path, $builtInParameters, $userParameters)
-            ->withHeader('Content-Type', 'application/x-www-form-urlencoded');
+        $request = $this->createRequest(RequestHttpMethod::POST, $path, $builtInParameters, $userParameters);
+
+        return $request->withHeader('Content-Type', 'application/x-www-form-urlencoded');
     }
 
-    private function createRequest(string $method, string $path, array $builtInParameters, array $userParameters): Request
-    {
+    private function createRequest(
+        string $method,
+        string $path,
+        array $builtInParameters,
+        array $userParameters
+    ): Request {
         $builtInParameters['format'] = 'json';
 
         $parameters = new QueryParametersData($builtInParameters, $userParameters);

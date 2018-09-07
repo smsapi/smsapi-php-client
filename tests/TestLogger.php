@@ -24,12 +24,10 @@ class TestLogger implements LoggerInterface
                     'contents' => $value->getBody()->__toString(),
                 ];
             } elseif ($value instanceof ResponseInterface) {
-                $contents = $value->getBody()->__toString();
-                $value->getBody()->rewind();
                 $context[$item] = [
                     'headers' => $value->getHeaders(),
                     'status_code' => $value->getStatusCode(),
-                    'contents' => $contents,
+                    'contents' => $value->getBody()->__toString(),
                 ];
             }
         }

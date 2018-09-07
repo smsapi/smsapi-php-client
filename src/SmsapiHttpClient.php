@@ -67,10 +67,7 @@ class SmsapiHttpClient implements SmsapiClient
     {
         $guzzleClientFactory = new GuzzleClientFactory($apiToken, $uri, $this->proxy);
         $requestExecutorFactory = new RequestExecutorFactory($guzzleClientFactory);
-
-        if ($this->logger) {
-            $guzzleClientFactory->setLogger($this->logger);
-        }
+        $requestExecutorFactory->setLogger($this->logger);
 
         return $requestExecutorFactory;
     }

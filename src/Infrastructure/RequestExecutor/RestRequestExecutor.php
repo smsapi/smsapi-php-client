@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Smsapi\Client\Infrastructure\RequestExecutor;
@@ -7,7 +8,6 @@ use GuzzleHttp\ClientInterface;
 use Smsapi\Client\Infrastructure\Request;
 use Smsapi\Client\Infrastructure\RequestAssembler\GuzzleRequestAssembler;
 use Smsapi\Client\Infrastructure\RequestMapper\RestRequestMapper;
-use Smsapi\Client\Infrastructure\ResponseMapper\ApiErrorException;
 use Smsapi\Client\Infrastructure\ResponseMapper\RestResponseMapper;
 use stdClass;
 
@@ -16,58 +16,55 @@ use stdClass;
  */
 class RestRequestExecutor
 {
-    private $restRequestMapper;
-    private $guzzle;
+    private $requestMapper;
+    private $client;
     private $restResponseMapper;
-
-    /** @var GuzzleRequestAssembler */
     private $requestAssembler;
 
     public function __construct(
-        RestRequestMapper $restRequestMapper,
-        ClientInterface $guzzleHttp,
+        RestRequestMapper $requestMapper,
+        ClientInterface $client,
         RestResponseMapper $restResponseMapper,
-        GuzzleRequestAssembler $requestAssembler
+        GuzzleRequestAssembler $guzzleRequestAssembler
     ) {
-        $this->restRequestMapper = $restRequestMapper;
-        $this->guzzle = $guzzleHttp;
+        $this->requestMapper = $requestMapper;
+        $this->client = $client;
         $this->restResponseMapper = $restResponseMapper;
-        $this->requestAssembler = $requestAssembler;
+        $this->requestAssembler = $guzzleRequestAssembler;
     }
 
     public function create(string $path, array $builtInParameters, array $userParameters = []): stdClass
     {
-        return $this->sendRequestAndMapResponse(
-            $this->restRequestMapper->mapCreate($path, $builtInParameters, $userParameters)
-        );
+        $request = $this->requestMapper->mapCreate($path, $builtInParameters, $userParameters);
+
+        return $this->sendRequestAndMapResponse($request);
     }
 
     public function read(string $path, array $builtInParameters, array $userParameters = []): stdClass
     {
-        return $this->sendRequestAndMapResponse(
-            $this->restRequestMapper->mapRead($path, $builtInParameters, $userParameters)
-        );
+        $request = $this->requestMapper->mapRead($path, $builtInParameters, $userParameters);
+
+        return $this->sendRequestAndMapResponse($request);
     }
 
     public function delete(string $path, array $builtInParameters, array $userParameters = [])
     {
-        $this->sendRequestAndMapResponse(
-            $this->restRequestMapper->mapDelete($path, $builtInParameters, $userParameters)
-        );
+        $this->sendRequestAndMapResponse($this->requestMapper->mapDelete($path, $builtInParameters, $userParameters));
     }
 
     public function update(string $path, array $builtInParameters, array $userParameters = []): stdClass
     {
-        return $this->sendRequestAndMapResponse(
-            $this->restRequestMapper->mapUpdate($path, $builtInParameters, $userParameters)
-        );
+        $request = $this->requestMapper->mapUpdate($path, $builtInParameters, $userParameters);
+
+        return $this->sendRequestAndMapResponse($request);
     }
 
-    /**
-     * @throws ApiErrorException
-     */
     private function sendRequestAndMapResponse(Request $request): stdClass
     {
-        return $this->restResponseMapper->map($this->guzzle->send($this->requestAssembler->assemble($request)));
+        $assembledRequest = $this->requestAssembler->assemble($request);
+
+        $response = $this->client->send($assembledRequest);
+
+        return $this->restResponseMapper->map($response);
     }
 }

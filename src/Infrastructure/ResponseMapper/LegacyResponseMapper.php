@@ -1,11 +1,13 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Smsapi\Client\Infrastructure\ResponseMapper;
 
 use Psr\Http\Message\ResponseInterface;
+use Psr\Log\LoggerAwareTrait;
+use Psr\Log\NullLogger;
 use Smsapi\Client\Infrastructure\ResponseHttpCode;
-use Smsapi\Client\SmsapiClientException;
 use stdClass;
 
 /**
@@ -13,31 +15,31 @@ use stdClass;
  */
 class LegacyResponseMapper
 {
+    use LoggerAwareTrait;
+
     private $jsonDecode;
 
     public function __construct(JsonDecode $jsonDecode)
     {
+        $this->logger = new NullLogger();
         $this->jsonDecode = $jsonDecode;
     }
 
-    /**
-     * @param ResponseInterface $response
-     * @return stdClass
-     * @throws SmsapiClientException
-     */
     public function map(ResponseInterface $response): stdClass
     {
         $statusCode = $response->getStatusCode();
-        $contents = $response->getBody()->getContents();
+        $contents = $response->getBody()->__toString();
 
         if ($statusCode === ResponseHttpCode::OK) {
-            $result = $this->jsonDecode->decode($contents);
+            $object = $this->jsonDecode->decode($contents);
 
-            if (isset($result->message, $result->error)) {
-                throw ApiErrorException::withMessageAndError($result->message, $result->error);
+            $this->logger->info('Decoded response', ['response' => $object]);
+
+            if (isset($object->message, $object->error)) {
+                throw ApiErrorException::withMessageAndError($object->message, $object->error);
             }
 
-            return $result;
+            return $object;
         }
 
         throw ApiErrorException::withStatusCode($statusCode);
