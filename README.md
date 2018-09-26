@@ -4,7 +4,7 @@
 [![Packagist - latest version](https://img.shields.io/packagist/v/smsapi/php-client.svg)](https://packagist.org/packages/smsapi/php-client)
 [![Packagist - downloads](https://img.shields.io/packagist/dt/smsapi/php-client.svg)](https://packagist.org/packages/smsapi/php-client)
 [![Packagist - license](https://img.shields.io/packagist/l/smsapi/php-client.svg)](https://packagist.org/packages/smsapi/php-client)
-## Developer version:
+## [Old version available here](https://github.com/smsapi/smsapi-php-client/tree/v1.8.7)
 ## Requirements
 
 * [composer](https://getcomposer.org/)
