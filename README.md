@@ -11,7 +11,7 @@
 
 ## Install package with dependencies
 
-Execute: `composer require smsapi/php-client`
+Execute: `composer require smsapi/php-client:master@dev`
 
 ## How to pick a service
 
