@@ -12,8 +12,8 @@
 ## Install package with dependencies
 
 Execute: 
-stable version: `composer require smsapi/php-client`
-developer version: `composer require smsapi/php-client:master@dev`
+* stable version: `composer require smsapi/php-client`
+* developer version: `composer require smsapi/php-client:master@dev`
 
 ## How to pick a service
 
