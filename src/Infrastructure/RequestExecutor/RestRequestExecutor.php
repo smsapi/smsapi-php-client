@@ -4,67 +4,28 @@ declare(strict_types=1);
 
 namespace Smsapi\Client\Infrastructure\RequestExecutor;
 
-use GuzzleHttp\ClientInterface;
-use Smsapi\Client\Infrastructure\Request;
-use Smsapi\Client\Infrastructure\RequestAssembler\GuzzleRequestAssembler;
-use Smsapi\Client\Infrastructure\RequestMapper\RestRequestMapper;
-use Smsapi\Client\Infrastructure\ResponseMapper\RestResponseMapper;
-use stdClass;
+use Psr\Http\Client\ClientInterface;
+use Smsapi\Client\Infrastructure\Request\Mapper\AcceptJsonRequestMapper;
+use Smsapi\Client\Infrastructure\Request\Mapper\AuthorizationRequestMapper;
+use Smsapi\Client\Infrastructure\Request\Mapper\ContentTypeRequestMapper;
+use Smsapi\Client\Infrastructure\Request\Mapper\RequestIdRequestMapper;
+use Smsapi\Client\Infrastructure\Response\JsonDeserializer;
+use Smsapi\Client\Infrastructure\Response\RestResponseValidator;
 
-/**
- * @internal
- */
-class RestRequestExecutor
+final class RestRequestExecutor extends RequestExecutor
 {
-    private $requestMapper;
-    private $client;
-    private $restResponseMapper;
-    private $requestAssembler;
-
-    public function __construct(
-        RestRequestMapper $requestMapper,
-        ClientInterface $client,
-        RestResponseMapper $restResponseMapper,
-        GuzzleRequestAssembler $guzzleRequestAssembler
-    ) {
-        $this->requestMapper = $requestMapper;
-        $this->client = $client;
-        $this->restResponseMapper = $restResponseMapper;
-        $this->requestAssembler = $guzzleRequestAssembler;
-    }
-
-    public function create(string $path, array $builtInParameters, array $userParameters = []): stdClass
+    public function __construct(ClientInterface $client, JsonDeserializer $deserializer, RestResponseValidator $responseValidator, string $token)
     {
-        $request = $this->requestMapper->mapCreate($path, $builtInParameters, $userParameters);
-
-        return $this->sendRequestAndMapResponse($request);
-    }
-
-    public function read(string $path, array $builtInParameters, array $userParameters = []): stdClass
-    {
-        $request = $this->requestMapper->mapRead($path, $builtInParameters, $userParameters);
-
-        return $this->sendRequestAndMapResponse($request);
-    }
-
-    public function delete(string $path, array $builtInParameters, array $userParameters = [])
-    {
-        $this->sendRequestAndMapResponse($this->requestMapper->mapDelete($path, $builtInParameters, $userParameters));
-    }
-
-    public function update(string $path, array $builtInParameters, array $userParameters = []): stdClass
-    {
-        $request = $this->requestMapper->mapUpdate($path, $builtInParameters, $userParameters);
-
-        return $this->sendRequestAndMapResponse($request);
-    }
-
-    private function sendRequestAndMapResponse(Request $request): stdClass
-    {
-        $assembledRequest = $this->requestAssembler->assemble($request);
-
-        $response = $this->client->send($assembledRequest);
-
-        return $this->restResponseMapper->map($response);
+        parent::__construct(
+            $client,
+            $deserializer,
+            $responseValidator,
+            [
+                new AcceptJsonRequestMapper(),
+                new AuthorizationRequestMapper($token),
+                new ContentTypeRequestMapper(),
+                new RequestIdRequestMapper()
+            ]
+        );
     }
 }

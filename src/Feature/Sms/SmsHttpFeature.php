@@ -12,7 +12,11 @@ use Smsapi\Client\Feature\Sms\Bag\SendSmsToGroupBag;
 use Smsapi\Client\Feature\Sms\Data\Sms;
 use Smsapi\Client\Feature\Sms\Sendernames\SendernamesFeature;
 use Smsapi\Client\Feature\Sms\Sendernames\SendernamesHttpFeature;
+use Smsapi\Client\Infrastructure\Request\LegacyRequestBuilderFactory;
+use Smsapi\Client\Infrastructure\Request\RestRequestBuilderFactory;
+use Smsapi\Client\Infrastructure\RequestExecutor\LegacyRequestExecutor;
 use Smsapi\Client\Infrastructure\RequestExecutor\RequestExecutorFactory;
+use Smsapi\Client\Infrastructure\RequestExecutor\RestRequestExecutor;
 use Smsapi\Client\SmsapiClientException;
 use stdClass;
 
@@ -21,21 +25,50 @@ use stdClass;
  */
 class SmsHttpFeature implements SmsFeature
 {
-    private $requestExecutorFactory;
+    /**
+     * @var DataFactoryProvider
+     */
     private $dataFactoryProvider;
 
+    /**
+     * @var LegacyRequestExecutor
+     */
+    private $legacyRequestExecutor;
+
+    /**
+     * @var RestRequestExecutor
+     */
+    private $restRequestExecutor;
+
+    /**
+     * @var LegacyRequestBuilderFactory
+     */
+    private $legacyRequestBuilderFactory;
+
+    /**
+     * @var RestRequestBuilderFactory
+     */
+    private $restRequestBuilderFactory;
+
     public function __construct(
-        RequestExecutorFactory $requestExecutorFactory,
+        LegacyRequestExecutor $legacyRequestExecutor,
+        RestRequestExecutor $restRequestExecutor,
+        LegacyRequestBuilderFactory $legacyRequestBuilderFactory,
+        RestRequestBuilderFactory $restRequestBuilderFactory,
         DataFactoryProvider $dataFactoryProvider
     ) {
-        $this->requestExecutorFactory = $requestExecutorFactory;
+        $this->legacyRequestExecutor = $legacyRequestExecutor;
+        $this->restRequestExecutor = $restRequestExecutor;
+        $this->legacyRequestBuilderFactory = $legacyRequestBuilderFactory;
+        $this->restRequestBuilderFactory = $restRequestBuilderFactory;
         $this->dataFactoryProvider = $dataFactoryProvider;
     }
 
     public function sendernameFeature(): SendernamesFeature
     {
         return new SendernamesHttpFeature(
-            $this->requestExecutorFactory->createRestRequestExecutor(),
+            $this->restRequestExecutor,
+            $this->restRequestBuilderFactory,
             $this->dataFactoryProvider->provideSendernameFactory()
         );
     }
@@ -167,6 +200,13 @@ class SmsHttpFeature implements SmsFeature
      */
     private function makeRequest($data): stdClass
     {
-        return $this->requestExecutorFactory->createLegacyRequestExecutor()->request('sms.do', (array)$data);
+        $requestBuilder = $this->legacyRequestBuilderFactory->create();
+
+        $request = $requestBuilder
+            ->withPath('sms.do')
+            ->withBuiltInParameters((array) $data)
+            ->get();
+
+        return $this->legacyRequestExecutor->execute($request);
     }
 }

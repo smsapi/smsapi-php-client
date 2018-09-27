@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Smsapi\Client\Tests\Integration;
 
-use Smsapi\Client\Infrastructure\ResponseMapper\ApiErrorException;
+use Smsapi\Client\Infrastructure\Response\ApiErrorException;
 use Smsapi\Client\Feature\Sms\Sendernames\Bag\CreateSendernameBag;
 use Smsapi\Client\Feature\Sms\Sendernames\Bag\DeleteSendernameBag;
 use Smsapi\Client\Feature\Sms\Sendernames\Bag\FindSendernameBag;

@@ -4,42 +4,28 @@ declare(strict_types=1);
 
 namespace Smsapi\Client\Infrastructure\RequestExecutor;
 
-use GuzzleHttp\ClientInterface;
-use Smsapi\Client\Infrastructure\RequestAssembler\GuzzleRequestAssembler;
-use Smsapi\Client\Infrastructure\RequestMapper\LegacyRequestMapper;
-use Smsapi\Client\Infrastructure\ResponseMapper\LegacyResponseMapper;
-use stdClass;
+use Psr\Http\Client\ClientInterface;
+use Smsapi\Client\Infrastructure\Request\Mapper\AcceptJsonRequestMapper;
+use Smsapi\Client\Infrastructure\Request\Mapper\AuthorizationRequestMapper;
+use Smsapi\Client\Infrastructure\Request\Mapper\ContentTypeRequestMapper;
+use Smsapi\Client\Infrastructure\Request\Mapper\RequestIdRequestMapper;
+use Smsapi\Client\Infrastructure\Response\JsonDeserializer;
+use Smsapi\Client\Infrastructure\Response\LegacyResponseValidator;
 
-/**
- * @internal
- */
-class LegacyRequestExecutor
+final class LegacyRequestExecutor extends RequestExecutor
 {
-    private $requestMapper;
-    private $client;
-    private $legacyResponseMapper;
-    private $requestAssembler;
-
-    public function __construct(
-        LegacyRequestMapper $requestMapper,
-        ClientInterface $client,
-        LegacyResponseMapper $legacyResponseMapper,
-        GuzzleRequestAssembler $requestAssembler
-    ) {
-        $this->requestMapper = $requestMapper;
-        $this->client = $client;
-        $this->legacyResponseMapper = $legacyResponseMapper;
-        $this->requestAssembler = $requestAssembler;
-    }
-
-    public function request(string $path, array $builtInParameters, array $userParameters = []): stdClass
+    public function __construct(ClientInterface $client, JsonDeserializer $deserializer, LegacyResponseValidator $responseValidator, string $token)
     {
-        $request = $this->requestMapper->map($path, $builtInParameters, $userParameters);
-
-        $assembledRequest = $this->requestAssembler->assemble($request);
-
-        $response = $this->client->send($assembledRequest);
-
-        return $this->legacyResponseMapper->map($response);
+        parent::__construct(
+            $client,
+            $deserializer,
+            $responseValidator,
+            [
+                new AcceptJsonRequestMapper(),
+                new AuthorizationRequestMapper($token),
+                new ContentTypeRequestMapper(),
+                new RequestIdRequestMapper()
+            ]
+        );
     }
 }

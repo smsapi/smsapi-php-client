@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Smsapi\Client\Feature\Sms\Sendernames;
 
+use Fig\Http\Message\RequestMethodInterface;
 use Smsapi\Client\Feature\Sms\Sendernames\Bag\CreateSendernameBag;
 use Smsapi\Client\Feature\Sms\Sendernames\Bag\DeleteSendernameBag;
 use Smsapi\Client\Feature\Sms\Sendernames\Bag\FindSendernameBag;
@@ -10,6 +11,7 @@ use Smsapi\Client\Feature\Sms\Sendernames\Bag\FindSendernamesBag;
 use Smsapi\Client\Feature\Sms\Sendernames\Bag\MakeSendernameDefaultBag;
 use Smsapi\Client\Feature\Sms\Sendernames\Data\Sendername;
 use Smsapi\Client\Feature\Sms\Sendernames\Data\SendernameFactory;
+use Smsapi\Client\Infrastructure\Request\RestRequestBuilderFactory;
 use Smsapi\Client\Infrastructure\RequestExecutor\RestRequestExecutor;
 use Smsapi\Client\SmsapiClientException;
 
@@ -18,12 +20,28 @@ use Smsapi\Client\SmsapiClientException;
  */
 class SendernamesHttpFeature implements SendernamesFeature
 {
-    private $restRequestExecutor;
+    /**
+     * @var RestRequestExecutor
+     */
+    private $requestExecutor;
+
+    /**
+     * @var RestRequestBuilderFactory
+     */
+    private $requestBuilderFactory;
+
+    /**
+     * @var SendernameFactory
+     */
     private $sendernameFactory;
 
-    public function __construct(RestRequestExecutor $restRequestExecutor, SendernameFactory $sendernameFactory)
-    {
-        $this->restRequestExecutor = $restRequestExecutor;
+    public function __construct(
+        RestRequestExecutor $restRequestExecutor,
+        RestRequestBuilderFactory $requestBuilderFactory,
+        SendernameFactory $sendernameFactory
+    ) {
+        $this->requestExecutor = $restRequestExecutor;
+        $this->requestBuilderFactory = $requestBuilderFactory;
         $this->sendernameFactory = $sendernameFactory;
     }
 
@@ -34,10 +52,14 @@ class SendernamesHttpFeature implements SendernamesFeature
      */
     public function findSendername(FindSendernameBag $findSendernameBag): Sendername
     {
-        $result = $this->restRequestExecutor->read(
-            sprintf('sms/sendernames/%s', $findSendernameBag->sender),
-            []
-        );
+        $builder = $this->requestBuilderFactory->create();
+
+        $request = $builder
+            ->withMethod(RequestMethodInterface::METHOD_GET)
+            ->withPath(sprintf('sms/sendernames/%s', $findSendernameBag->sender))
+            ->get();
+
+        $result = $this->requestExecutor->execute($request);
 
         return $this->sendernameFactory->createFromObject($result);
     }
@@ -49,7 +71,15 @@ class SendernamesHttpFeature implements SendernamesFeature
      */
     public function findSendernames(FindSendernamesBag $findSendernamesBag = null): array
     {
-        $result = $this->restRequestExecutor->read('sms/sendernames', (array)$findSendernamesBag);
+        $builder = $this->requestBuilderFactory->create();
+
+        $request = $builder
+            ->withMethod(RequestMethodInterface::METHOD_GET)
+            ->withPath('sms/sendernames')
+            ->withBuiltInParameters((array) $findSendernamesBag)
+            ->get();
+
+        $result = $this->requestExecutor->execute($request);
 
         return array_map([$this->sendernameFactory, 'createFromObject'], $result->collection);
     }
@@ -61,7 +91,15 @@ class SendernamesHttpFeature implements SendernamesFeature
      */
     public function createSendername(CreateSendernameBag $createSendernameBag): Sendername
     {
-        $result = $this->restRequestExecutor->create('sms/sendernames', (array)$createSendernameBag);
+        $builder = $this->requestBuilderFactory->create();
+
+        $request = $builder
+            ->withMethod(RequestMethodInterface::METHOD_POST)
+            ->withPath('sms/sendernames')
+            ->withBuiltInParameters((array) $createSendernameBag)
+            ->get();
+
+        $result = $this->requestExecutor->execute($request);
 
         return $this->sendernameFactory->createFromObject($result);
     }
@@ -73,7 +111,14 @@ class SendernamesHttpFeature implements SendernamesFeature
      */
     public function deleteSendername(DeleteSendernameBag $deleteSendernameBag)
     {
-        $this->restRequestExecutor->delete(sprintf('sms/sendernames/%s', $deleteSendernameBag->sender), []);
+        $builder = $this->requestBuilderFactory->create();
+
+        $request = $builder
+            ->withMethod(RequestMethodInterface::METHOD_DELETE)
+            ->withPath(sprintf('sms/sendernames/%s', $deleteSendernameBag->sender))
+            ->get();
+
+        $this->requestExecutor->execute($request);
     }
 
     /**
@@ -83,9 +128,13 @@ class SendernamesHttpFeature implements SendernamesFeature
      */
     public function makeSendernameDefault(MakeSendernameDefaultBag $makeSendernameDefault)
     {
-        $this->restRequestExecutor->create(
-            sprintf('sms/sendernames/%s/commands/make_default', $makeSendernameDefault->sender),
-            []
-        );
+        $builder = $this->requestBuilderFactory->create();
+
+        $request = $builder
+            ->withMethod(RequestMethodInterface::METHOD_POST)
+            ->withPath(sprintf('sms/sendernames/%s/commands/make_default', $makeSendernameDefault->sender))
+            ->get();
+
+        $this->requestExecutor->execute($request);
     }
 }

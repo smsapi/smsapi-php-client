@@ -4,35 +4,33 @@ declare(strict_types=1);
 
 namespace Smsapi\Client\Tests\Unit;
 
-use Smsapi\Client\Infrastructure\RequestExecutor\LegacyRequestExecutor;
 use Smsapi\Client\Infrastructure\RequestExecutor\RequestExecutorFactory;
-use Smsapi\Client\Infrastructure\RequestExecutor\RestRequestExecutor;
-use Smsapi\Client\Tests\Fixture\GuzzleClientFactoryMother;
+use Smsapi\Client\Tests\Fixture\ClientInterfaceMother;
 use Smsapi\Client\Tests\SmsapiClientUnitTestCase;
 
 class RequestExecutorFactoryTest extends SmsapiClientUnitTestCase
 {
     /**
      * @test
+     *
+     * @doesNotPerformAssertions
      */
     public function it_should_create_rest_request_executor()
     {
-        $requestExecutorFactory = new RequestExecutorFactory(GuzzleClientFactoryMother::any());
+        $requestExecutorFactory = new RequestExecutorFactory(ClientInterfaceMother::any(), 'foo');
 
-        $result = $requestExecutorFactory->createRestRequestExecutor();
-
-        $this->assertInstanceOf(RestRequestExecutor::class, $result);
+        $requestExecutorFactory->createRestRequestExecutor();
     }
 
     /**
      * @test
+     *
+     * @doesNotPerformAssertions
      */
     public function it_should_create_legacy_request_executor()
     {
-        $requestExecutorFactory = new RequestExecutorFactory(GuzzleClientFactoryMother::any());
+        $requestExecutorFactory = new RequestExecutorFactory(ClientInterfaceMother::any(), 'foo');
 
-        $result = $requestExecutorFactory->createLegacyRequestExecutor();
-
-        $this->assertInstanceOf(LegacyRequestExecutor::class, $result);
+        $requestExecutorFactory->createLegacyRequestExecutor();
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Smsapi\Client\Tests\Unit;
 
 use DateTime;
+use Fig\Http\Message\StatusCodeInterface;
 use Smsapi\Client\Feature\Push\Data\PushApp;
 use Smsapi\Client\Feature\Push\Data\PushShipmentDispatchDetails;
 use Smsapi\Client\Feature\Push\Data\PushShipmentFallback;
@@ -11,7 +12,6 @@ use Smsapi\Client\Feature\Push\Data\PushShipmentPayload;
 use Smsapi\Client\Feature\Push\Data\PushShipmentSummary;
 use Smsapi\Client\Feature\Push\Bag\SendPushBag;
 use Smsapi\Client\Feature\Push\Data\PushShipment;
-use Smsapi\Client\Infrastructure\ResponseHttpCode;
 use Smsapi\Client\Tests\Fixture;
 use Smsapi\Client\Tests\SmsapiClientUnitTestCase;
 use stdClass;
@@ -25,7 +25,7 @@ class PushFeatureTest extends SmsapiClientUnitTestCase
     public function it_should_send_push()
     {
         $body = Fixture::getJson('send_push_response');
-        $this->mockResponse(ResponseHttpCode::OK, $body);
+        $this->mockResponse(StatusCodeInterface::STATUS_OK, $body);
         $pushShipment = json_decode($body);
         $pushFeature = self::$smsapiService->pushFeature();
         $sendPushBag = new SendPushBag('1', $pushShipment->payload->alert);

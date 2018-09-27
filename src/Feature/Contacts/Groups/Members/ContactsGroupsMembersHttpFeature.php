@@ -4,15 +4,19 @@ declare(strict_types=1);
 
 namespace Smsapi\Client\Feature\Contacts\Groups\Members;
 
-use Smsapi\Client\Infrastructure\RequestExecutor\RestRequestExecutor;
-use Smsapi\Client\Feature\Contacts\Data\Contact;
+use Fig\Http\Message\RequestMethodInterface;
 use Smsapi\Client\Feature\Contacts\Data\ContactFactory;
+use Smsapi\Client\Infrastructure\Request\RequestBuilderFactory;
+use Smsapi\Client\Infrastructure\Request\RestRequestBuilderFactory;
+use Smsapi\Client\Infrastructure\RequestExecutor\RequestExecutor;
+use Smsapi\Client\Feature\Contacts\Data\Contact;
 use Smsapi\Client\Feature\Contacts\Groups\Members\Bag\AddContactToGroupByQueryBag;
 use Smsapi\Client\Feature\Contacts\Groups\Members\Bag\FindContactInGroupBag;
 use Smsapi\Client\Feature\Contacts\Groups\Members\Bag\MoveContactToGroupByQueryBag;
 use Smsapi\Client\Feature\Contacts\Groups\Members\Bag\PinContactToGroupBag;
 use Smsapi\Client\Feature\Contacts\Groups\Members\Bag\UnpinContactFromGroupBag;
 use Smsapi\Client\Feature\Contacts\Groups\Members\Bag\UnpinContactFromGroupByQueryBag;
+use Smsapi\Client\Infrastructure\RequestExecutor\RestRequestExecutor;
 use Smsapi\Client\SmsapiClientException;
 
 /**
@@ -20,17 +24,29 @@ use Smsapi\Client\SmsapiClientException;
  */
 class ContactsGroupsMembersHttpFeature implements ContactsGroupsMembersFeature
 {
-
-    /** @var RestRequestExecutor */
-    private $restRequestExecutor;
-
-    /** @var ContactFactory */
+    /**
+     * @var ContactFactory
+     */
     private $contactFactory;
 
-    public function __construct(RestRequestExecutor $restRequestExecutor, ContactFactory $contactFactory)
-    {
-        $this->restRequestExecutor = $restRequestExecutor;
+    /**
+     * @var RestRequestExecutor
+     */
+    private $requestExecutor;
+
+    /**
+     * @var RestRequestBuilderFactory
+     */
+    private $requestBuilderFactory;
+
+    public function __construct(
+        RestRequestExecutor $restRequestExecutor,
+        RestRequestBuilderFactory $requestBuilderFactory,
+        ContactFactory $contactFactory
+    ) {
+        $this->requestExecutor = $restRequestExecutor;
         $this->contactFactory = $contactFactory;
+        $this->requestBuilderFactory = $requestBuilderFactory;
     }
 
     /**
@@ -41,10 +57,16 @@ class ContactsGroupsMembersHttpFeature implements ContactsGroupsMembersFeature
     {
         $groupId = $addContactToGroupByQueryBag->id;
         unset($addContactToGroupByQueryBag->id);
-        $this->restRequestExecutor->create(
-            'contacts/groups/' . $groupId . '/members',
-            (array)$addContactToGroupByQueryBag
-        );
+
+        $builder = $this->requestBuilderFactory->create();
+
+        $request = $builder
+            ->withMethod(RequestMethodInterface::METHOD_POST)
+            ->withPath(sprintf('contacts/groups/%s/members', $groupId))
+            ->withBuiltInParameters((array) $addContactToGroupByQueryBag)
+            ->get();
+
+        $this->requestExecutor->execute($request);
     }
 
     /**
@@ -54,14 +76,19 @@ class ContactsGroupsMembersHttpFeature implements ContactsGroupsMembersFeature
      */
     public function findContactInGroup(FindContactInGroupBag $findContactInGroupBag): Contact
     {
-        $result = $this->restRequestExecutor->read(
-            sprintf(
+        $builder = $this->requestBuilderFactory->create();
+
+        $request = $builder
+            ->withMethod(RequestMethodInterface::METHOD_POST)
+            ->withPath(sprintf(
                 'contacts/groups/%s/members/%s',
                 $findContactInGroupBag->groupId,
                 $findContactInGroupBag->contactId
-            ),
-            []
-        );
+            ))
+            ->get();
+
+        $result = $this->requestExecutor->execute($request);
+
         return $this->contactFactory->createFromObject($result);
     }
 
@@ -73,10 +100,16 @@ class ContactsGroupsMembersHttpFeature implements ContactsGroupsMembersFeature
     {
         $groupId = $moveContactToGroupByQueryBag->id;
         unset($moveContactToGroupByQueryBag->id);
-        $this->restRequestExecutor->update(
-            'contacts/groups/' . $groupId . '/members',
-            (array)$moveContactToGroupByQueryBag
-        );
+
+        $builder = $this->requestBuilderFactory->create();
+
+        $request = $builder
+            ->withMethod(RequestMethodInterface::METHOD_PUT)
+            ->withPath(sprintf('contacts/groups/%s/members', $groupId))
+            ->withBuiltInParameters((array) $moveContactToGroupByQueryBag)
+            ->get();
+
+        $this->requestExecutor->execute($request);
     }
 
     /**
@@ -86,10 +119,19 @@ class ContactsGroupsMembersHttpFeature implements ContactsGroupsMembersFeature
      */
     public function pinContactToGroup(PinContactToGroupBag $pinContactToGroupBag): Contact
     {
-        $result = $this->restRequestExecutor->update(
-            'contacts/groups/' . $pinContactToGroupBag->groupId . '/members/' . $pinContactToGroupBag->contactId,
-            []
-        );
+        $builder = $this->requestBuilderFactory->create();
+
+        $request = $builder
+            ->withMethod(RequestMethodInterface::METHOD_PUT)
+            ->withPath(sprintf(
+                'contacts/groups/%s/members/%s',
+                $pinContactToGroupBag->groupId,
+                $pinContactToGroupBag->contactId
+            ))
+            ->get();
+
+        $result = $this->requestExecutor->execute($request);
+
         return $this->contactFactory->createFromObject($result);
     }
 
@@ -101,10 +143,16 @@ class ContactsGroupsMembersHttpFeature implements ContactsGroupsMembersFeature
     {
         $groupId = $unpinContactFromGroupByQueryBag->id;
         unset($unpinContactFromGroupByQueryBag->id);
-        $this->restRequestExecutor->delete(
-            'contacts/groups/' . $groupId . '/members',
-            (array)$unpinContactFromGroupByQueryBag
-        );
+
+        $builder = $this->requestBuilderFactory->create();
+
+        $request = $builder
+            ->withMethod(RequestMethodInterface::METHOD_DELETE)
+            ->withPath(sprintf('contacts/groups/%s/members', $groupId))
+            ->withBuiltInParameters((array) $unpinContactFromGroupByQueryBag)
+            ->get();
+
+        $this->requestExecutor->execute($request);
     }
 
     /**
@@ -113,13 +161,17 @@ class ContactsGroupsMembersHttpFeature implements ContactsGroupsMembersFeature
      */
     public function unpinContactFromGroup(UnpinContactFromGroupBag $unpinContactFromGroupBag)
     {
-        $this->restRequestExecutor->delete(
-            sprintf(
+        $builder = $this->requestBuilderFactory->create();
+
+        $request = $builder
+            ->withMethod(RequestMethodInterface::METHOD_DELETE)
+            ->withPath(sprintf(
                 'contacts/groups/%s/members/%s',
                 $unpinContactFromGroupBag->groupId,
                 $unpinContactFromGroupBag->contactId
-            ),
-            []
-        );
+            ))
+            ->get();
+
+        $this->requestExecutor->execute($request);
     }
 }

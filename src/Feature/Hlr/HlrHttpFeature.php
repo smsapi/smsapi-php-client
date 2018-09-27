@@ -7,6 +7,7 @@ namespace Smsapi\Client\Feature\Hlr;
 use Smsapi\Client\Feature\Hlr\Bag\SendHlrBag;
 use Smsapi\Client\Feature\Hlr\Data\Hlr;
 use Smsapi\Client\Feature\Hlr\Data\HlrFactory;
+use Smsapi\Client\Infrastructure\Request\LegacyRequestBuilderFactory;
 use Smsapi\Client\Infrastructure\RequestExecutor\LegacyRequestExecutor;
 use Smsapi\Client\SmsapiClientException;
 use stdClass;
@@ -16,16 +17,28 @@ use stdClass;
  */
 class HlrHttpFeature implements HlrFeature
 {
-
-    /** @var LegacyRequestExecutor */
+    /**
+     * @var LegacyRequestExecutor
+     */
     private $legacyRequestExecutor;
 
-    /** @var HlrFactory */
+    /**
+     * @var LegacyRequestBuilderFactory
+     */
+    private $legacyRequestBuilderFactory;
+
+    /**
+     * @var HlrFactory
+     */
     private $hlrFactory;
 
-    public function __construct(LegacyRequestExecutor $legacyRequestExecutor, HlrFactory $hlrFactory)
-    {
+    public function __construct(
+        LegacyRequestExecutor $legacyRequestExecutor,
+        LegacyRequestBuilderFactory $legacyRequestBuilderFactory,
+        HlrFactory $hlrFactory
+    ) {
         $this->legacyRequestExecutor = $legacyRequestExecutor;
+        $this->legacyRequestBuilderFactory = $legacyRequestBuilderFactory;
         $this->hlrFactory = $hlrFactory;
     }
 
@@ -46,6 +59,13 @@ class HlrHttpFeature implements HlrFeature
      */
     private function makeRequest($data): stdClass
     {
-        return $this->legacyRequestExecutor->request('hlr.do', (array)$data);
+        $requestBuilder = $this->legacyRequestBuilderFactory->create();
+
+        $request = $requestBuilder
+            ->withPath('hlr.do')
+            ->withBuiltInParameters((array) $data)
+            ->get();
+
+        return $this->legacyRequestExecutor->execute($request);
     }
 }

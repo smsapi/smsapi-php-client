@@ -13,7 +13,7 @@ use Smsapi\Client\Feature\Contacts\Groups\Bag\FindGroupBag;
 use Smsapi\Client\Feature\Contacts\Groups\Bag\UnpinContactFromGroupBag;
 use Smsapi\Client\Feature\Contacts\Groups\Bag\UpdateGroupBag;
 use Smsapi\Client\Feature\Contacts\Groups\ContactsGroupsFeature;
-use Smsapi\Client\Infrastructure\ResponseMapper\ApiErrorException;
+use Smsapi\Client\Infrastructure\Response\ApiErrorException;
 use Smsapi\Client\Tests\Helper\ContactsHelper;
 use Smsapi\Client\Tests\SmsapiClientIntegrationTestCase;
 

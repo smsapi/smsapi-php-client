@@ -10,7 +10,7 @@ use Smsapi\Client\Feature\Contacts\Bag\FindContactBag;
 use Smsapi\Client\Feature\Contacts\Bag\FindContactsBag;
 use Smsapi\Client\Feature\Contacts\Bag\UpdateContactBag;
 use Smsapi\Client\Feature\Contacts\ContactsFeature;
-use Smsapi\Client\Infrastructure\ResponseMapper\ApiErrorException;
+use Smsapi\Client\Infrastructure\Response\ApiErrorException;
 use Smsapi\Client\Tests\SmsapiClientIntegrationTestCase;
 
 class ContactsFeatureTest extends SmsapiClientIntegrationTestCase

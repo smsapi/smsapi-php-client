@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Smsapi\Client\Tests;
 
+use Http\Adapter\Guzzle6\Client;
 use RuntimeException;
 use Smsapi\Client\Service\SmsapiComService;
 use Smsapi\Client\Service\SmsapiPlService;
@@ -31,7 +32,7 @@ class SmsapiClientIntegrationTestCase extends SmsapiClientTestCase
             throw new RuntimeException('Invalid API URI');
         }
 
-        $smsapiHttpClient = new SmsapiHttpClient();
+        $smsapiHttpClient = new SmsapiHttpClient(new Client(new \GuzzleHttp\Client()));
 
         if (Config::get('logger')) {
             $smsapiHttpClient->setLogger(new TestLogger());

@@ -4,14 +4,18 @@ declare(strict_types=1);
 
 namespace Smsapi\Client\Feature\Contacts\Groups\Permissions;
 
+use Fig\Http\Message\RequestMethodInterface;
 use Smsapi\Client\Feature\Contacts\Groups\Permissions\Data\GroupPermissionFactory;
-use Smsapi\Client\Infrastructure\RequestExecutor\RestRequestExecutor;
+use Smsapi\Client\Infrastructure\Request\RequestBuilderFactory;
+use Smsapi\Client\Infrastructure\Request\RestRequestBuilderFactory;
+use Smsapi\Client\Infrastructure\RequestExecutor\RequestExecutor;
 use Smsapi\Client\Feature\Contacts\Groups\Permissions\Bag\CreateGroupPermissionBag;
 use Smsapi\Client\Feature\Contacts\Groups\Permissions\Bag\DeleteGroupPermissionBag;
 use Smsapi\Client\Feature\Contacts\Groups\Permissions\Bag\FindGroupPermissionBag;
 use Smsapi\Client\Feature\Contacts\Groups\Permissions\Bag\FindGroupPermissionsBag;
 use Smsapi\Client\Feature\Contacts\Groups\Permissions\Bag\UpdateGroupPermissionBag;
 use Smsapi\Client\Feature\Contacts\Groups\Permissions\Data\GroupPermission;
+use Smsapi\Client\Infrastructure\RequestExecutor\RestRequestExecutor;
 use Smsapi\Client\SmsapiClientException;
 
 /**
@@ -19,18 +23,28 @@ use Smsapi\Client\SmsapiClientException;
  */
 class ContactsGroupsPermissionsHttpFeature implements ContactsGroupsPermissionsFeature
 {
+    /**
+     * @var RestRequestExecutor
+     */
+    private $requestExecutor;
 
-    /** @var RestRequestExecutor */
-    private $restRequestExecutor;
+    /**
+     * @var RestRequestBuilderFactory
+     */
+    private $requestBuilderFactory;
 
-    /** @var GroupPermissionFactory */
+    /**
+     * @var GroupPermissionFactory
+     */
     private $groupPermissionFactory;
 
     public function __construct(
         RestRequestExecutor $restRequestExecutor,
+        RestRequestBuilderFactory $requestBuilderFactory,
         GroupPermissionFactory $groupPermissionFactory
     ) {
-        $this->restRequestExecutor = $restRequestExecutor;
+        $this->requestExecutor = $restRequestExecutor;
+        $this->requestBuilderFactory = $requestBuilderFactory;
         $this->groupPermissionFactory = $groupPermissionFactory;
     }
 
@@ -45,10 +59,17 @@ class ContactsGroupsPermissionsHttpFeature implements ContactsGroupsPermissionsF
         $username = $createGroupPermissionBag->username;
         unset($createGroupPermissionBag->groupId);
         unset($createGroupPermissionBag->username);
-        $result = $this->restRequestExecutor->create(
-            'contacts/groups/' . $groupId . '/permissions/' . $username,
-            (array)$createGroupPermissionBag
-        );
+
+        $builder = $this->requestBuilderFactory->create();
+
+        $request = $builder
+            ->withMethod(RequestMethodInterface::METHOD_POST)
+            ->withPath(sprintf('contacts/groups/%s/permissions/%s', $groupId, $username))
+            ->withBuiltInParameters((array) $createGroupPermissionBag)
+            ->get();
+
+        $result = $this->requestExecutor->execute($request);
+
         return $this->groupPermissionFactory->createFromObject($result);
     }
 
@@ -58,14 +79,18 @@ class ContactsGroupsPermissionsHttpFeature implements ContactsGroupsPermissionsF
      */
     public function deletePermission(DeleteGroupPermissionBag $deleteGroupPermissionBag)
     {
-        $this->restRequestExecutor->delete(
-            sprintf(
+        $builder = $this->requestBuilderFactory->create();
+
+        $request = $builder
+            ->withMethod(RequestMethodInterface::METHOD_DELETE)
+            ->withPath(sprintf(
                 'contacts/groups/%s/permissions/%s',
                 $deleteGroupPermissionBag->groupId,
                 $deleteGroupPermissionBag->username
-            ),
-            []
-        );
+            ))
+            ->get();
+
+        $this->requestExecutor->execute($request);
     }
 
     /**
@@ -79,10 +104,21 @@ class ContactsGroupsPermissionsHttpFeature implements ContactsGroupsPermissionsF
         $username = $updateGroupPermissionBag->username;
         unset($updateGroupPermissionBag->groupId);
         unset($updateGroupPermissionBag->username);
-        $result = $this->restRequestExecutor->update(
-            sprintf('contacts/groups/%s/permissions/%s', $groupId, $username),
-            (array)$updateGroupPermissionBag
-        );
+
+        $builder = $this->requestBuilderFactory->create();
+
+        $request = $builder
+            ->withMethod(RequestMethodInterface::METHOD_PUT)
+            ->withPath(sprintf(
+                'contacts/groups/%s/permissions/%s',
+                $groupId,
+                $username
+            ))
+            ->withBuiltInParameters((array) $updateGroupPermissionBag)
+            ->get();
+
+        $result = $this->requestExecutor->execute($request);
+
         return $this->groupPermissionFactory->createFromObject($result);
     }
 
@@ -93,14 +129,19 @@ class ContactsGroupsPermissionsHttpFeature implements ContactsGroupsPermissionsF
      */
     public function findPermission(FindGroupPermissionBag $findGroupPermissionBag): GroupPermission
     {
-        $result = $this->restRequestExecutor->read(
-            sprintf(
+        $builder = $this->requestBuilderFactory->create();
+
+        $request = $builder
+            ->withMethod(RequestMethodInterface::METHOD_GET)
+            ->withPath(sprintf(
                 'contacts/groups/%s/permissions/%s',
                 $findGroupPermissionBag->groupId,
                 $findGroupPermissionBag->username
-            ),
-            []
-        );
+            ))
+            ->get();
+
+        $result = $this->requestExecutor->execute($request);
+
         return $this->groupPermissionFactory->createFromObject($result);
     }
 
@@ -111,10 +152,19 @@ class ContactsGroupsPermissionsHttpFeature implements ContactsGroupsPermissionsF
      */
     public function findPermissions(FindGroupPermissionsBag $findGroupPermissionsBag): array
     {
-        $result = $this->restRequestExecutor->read(
-            'contacts/groups/' . $findGroupPermissionsBag->groupId . '/permissions',
-            []
-        );
+
+        $builder = $this->requestBuilderFactory->create();
+
+        $request = $builder
+            ->withMethod(RequestMethodInterface::METHOD_PUT)
+            ->withPath(sprintf(
+                'contacts/groups/%s/permissions',
+                $findGroupPermissionsBag->groupId
+            ))
+            ->get();
+
+        $result = $this->requestExecutor->execute($request);
+
         return array_map(
             [$this->groupPermissionFactory, 'createFromObject'],
             $result->collection

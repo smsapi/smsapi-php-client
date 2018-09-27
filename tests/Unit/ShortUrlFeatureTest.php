@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Smsapi\Client\Tests\Unit;
 
+use Fig\Http\Message\StatusCodeInterface;
 use Smsapi\Client\Feature\ShortUrl\Bag\CreateShortUrlLinkBag;
 use Smsapi\Client\Feature\ShortUrl\ShortUrlFeature;
 use Smsapi\Client\Infrastructure\ResponseHttpCode;
@@ -35,7 +36,7 @@ class ShortUrlFeatureTest extends SmsapiClientUnitTestCase
     public function it_should_create_link()
     {
         $body = Fixture::getJson('short_url_link_response');
-        $this->mockResponse(ResponseHttpCode::CREATED, $body);
+        $this->mockResponse(StatusCodeInterface::STATUS_CREATED, $body);
         $expectedLink = json_decode($body);
         $createShortUrlLinkBag = CreateShortUrlLinkBag::withUrl($expectedLink->url);
 

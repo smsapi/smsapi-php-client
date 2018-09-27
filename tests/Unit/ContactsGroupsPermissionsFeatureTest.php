@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Smsapi\Client\Tests\Unit;
 
+use Fig\Http\Message\StatusCodeInterface;
 use Smsapi\Client\Feature\Contacts\Groups\Permissions\Bag\CreateGroupPermissionBag;
 use Smsapi\Client\Feature\Contacts\Groups\Permissions\Bag\DeleteGroupPermissionBag;
 use Smsapi\Client\Feature\Contacts\Groups\Permissions\Bag\FindGroupPermissionBag;
 use Smsapi\Client\Feature\Contacts\Groups\Permissions\Bag\FindGroupPermissionsBag;
 use Smsapi\Client\Feature\Contacts\Groups\Permissions\Bag\UpdateGroupPermissionBag;
 use Smsapi\Client\Feature\Contacts\Groups\Permissions\Data\GroupPermission;
-use Smsapi\Client\Infrastructure\ResponseHttpCode;
 use Smsapi\Client\Tests\Fixture;
 use Smsapi\Client\Tests\SmsapiClientUnitTestCase;
 use stdClass;
@@ -24,7 +24,7 @@ class ContactsGroupsPermissionsFeatureTest extends SmsapiClientUnitTestCase
     public function it_should_add_group_permission()
     {
         $body = Fixture::getJson('contact_group_permission_response');
-        $this->mockResponse(ResponseHttpCode::CREATED, $body);
+        $this->mockResponse(StatusCodeInterface::STATUS_CREATED, $body);
         $expectedPermission = json_decode($body);
 
         $permissionsFeature = self::$smsapiService->contactsFeature()->groupsFeature()->permissionsFeature();
@@ -38,7 +38,7 @@ class ContactsGroupsPermissionsFeatureTest extends SmsapiClientUnitTestCase
      */
     public function it_should_delete_user_group_permission()
     {
-        $this->mockResponse(ResponseHttpCode::NO_CONTENT, '');
+        $this->mockResponse(StatusCodeInterface::STATUS_NO_CONTENT, '');
 
         $permissionsFeature = self::$smsapiService->contactsFeature()->groupsFeature()->permissionsFeature();
         $response = $permissionsFeature->deletePermission(new DeleteGroupPermissionBag('any', 'any'));
@@ -52,7 +52,7 @@ class ContactsGroupsPermissionsFeatureTest extends SmsapiClientUnitTestCase
     public function it_should_update_user_group_permission()
     {
         $body = Fixture::getJson('contact_group_permission_response');
-        $this->mockResponse(ResponseHttpCode::OK, $body);
+        $this->mockResponse(StatusCodeInterface::STATUS_OK, $body);
         $expectedPermission = json_decode($body);
 
         $permissionsFeature = self::$smsapiService->contactsFeature()->groupsFeature()->permissionsFeature();
@@ -67,7 +67,7 @@ class ContactsGroupsPermissionsFeatureTest extends SmsapiClientUnitTestCase
     public function it_should_find_user_group_permission()
     {
         $body = Fixture::getJson('contact_group_permission_response');
-        $this->mockResponse(ResponseHttpCode::OK, $body);
+        $this->mockResponse(StatusCodeInterface::STATUS_OK, $body);
         $expectedPermission = json_decode($body);
 
         $permissionsFeature = self::$smsapiService->contactsFeature()->groupsFeature()->permissionsFeature();
@@ -82,7 +82,7 @@ class ContactsGroupsPermissionsFeatureTest extends SmsapiClientUnitTestCase
     public function it_should_find_user_group_permissions()
     {
         $body = Fixture::getJson('contact_group_permissions_response');
-        $this->mockResponse(ResponseHttpCode::OK, $body);
+        $this->mockResponse(StatusCodeInterface::STATUS_OK, $body);
         $expectedPermission = json_decode($body);
 
         $permissionsFeature = self::$smsapiService->contactsFeature()->groupsFeature()->permissionsFeature();

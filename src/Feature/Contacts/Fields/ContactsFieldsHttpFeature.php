@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace Smsapi\Client\Feature\Contacts\Fields;
 
+use Fig\Http\Message\RequestMethodInterface;
 use Smsapi\Client\Feature\Contacts\Fields\Bag\CreateContactFieldBag;
 use Smsapi\Client\Feature\Contacts\Fields\Bag\DeleteContactFieldBag;
 use Smsapi\Client\Feature\Contacts\Fields\Bag\FindContactFieldOptionsBag;
 use Smsapi\Client\Feature\Contacts\Fields\Bag\UpdateContactFieldBag;
 use Smsapi\Client\Feature\Contacts\Fields\Data\ContactField;
 use Smsapi\Client\Feature\Data\DataFactoryProvider;
+use Smsapi\Client\Infrastructure\Request\RequestBuilderFactory;
+use Smsapi\Client\Infrastructure\Request\RestRequestBuilderFactory;
+use Smsapi\Client\Infrastructure\RequestExecutor\RequestExecutor;
 use Smsapi\Client\Infrastructure\RequestExecutor\RestRequestExecutor;
 
 /**
@@ -17,18 +21,41 @@ use Smsapi\Client\Infrastructure\RequestExecutor\RestRequestExecutor;
  */
 class ContactsFieldsHttpFeature implements ContactsFieldsFeature
 {
-    private $restRequestExecutor;
+    /**
+     * @var DataFactoryProvider
+     */
     private $dataFactoryProvider;
 
-    public function __construct(RestRequestExecutor $restRequestExecutor, DataFactoryProvider $dataFactoryProvider)
-    {
-        $this->restRequestExecutor = $restRequestExecutor;
+    /**
+     * @var RestRequestExecutor
+     */
+    private $requestExecutor;
+
+    /**
+     * @var RestRequestBuilderFactory
+     */
+    private $requestBuilderFactory;
+
+    public function __construct(
+        RestRequestExecutor $restRequestExecutor,
+        RestRequestBuilderFactory $requestBuilderFactory,
+        DataFactoryProvider $dataFactoryProvider
+    ) {
+        $this->requestExecutor = $restRequestExecutor;
         $this->dataFactoryProvider = $dataFactoryProvider;
+        $this->requestBuilderFactory = $requestBuilderFactory;
     }
 
     public function findFields(): array
     {
-        $result = $this->restRequestExecutor->read('contacts/fields', []);
+        $builder = $this->requestBuilderFactory->create();
+
+        $request = $builder
+            ->withMethod(RequestMethodInterface::METHOD_GET)
+            ->withPath('contacts/fields')
+            ->get();
+
+        $result = $this->requestExecutor->execute($request);
 
         return array_map(
             [$this->dataFactoryProvider->provideContactFieldFactory(), 'createFromObject'],
@@ -38,7 +65,15 @@ class ContactsFieldsHttpFeature implements ContactsFieldsFeature
 
     public function createField(CreateContactFieldBag $createContactFieldBag): ContactField
     {
-        $result = $this->restRequestExecutor->create('contacts/fields', (array)$createContactFieldBag);
+        $builder = $this->requestBuilderFactory->create();
+
+        $request = $builder
+            ->withMethod(RequestMethodInterface::METHOD_POST)
+            ->withPath('contacts/fields')
+            ->withBuiltInParameters((array) $createContactFieldBag)
+            ->get();
+
+        $result = $this->requestExecutor->execute($request);
 
         return $this->dataFactoryProvider->provideContactFieldFactory()->createFromObject($result);
     }
@@ -49,10 +84,15 @@ class ContactsFieldsHttpFeature implements ContactsFieldsFeature
 
         unset($updateContactFieldBag->fieldId);
 
-        $result = $this->restRequestExecutor->update(
-            'contacts/fields/' . $fieldId,
-            (array)$updateContactFieldBag
-        );
+        $builder = $this->requestBuilderFactory->create();
+
+        $request = $builder
+            ->withMethod(RequestMethodInterface::METHOD_PUT)
+            ->withPath(sprintf('contacts/fields/%s', $fieldId))
+            ->withBuiltInParameters((array) $updateContactFieldBag)
+            ->get();
+
+        $result = $this->requestExecutor->execute($request);
 
         return $this->dataFactoryProvider->provideContactFieldFactory()->createFromObject($result);
     }
@@ -63,13 +103,27 @@ class ContactsFieldsHttpFeature implements ContactsFieldsFeature
 
         unset($deleteContactFieldBag->fieldId);
 
-        $this->restRequestExecutor->delete('contacts/fields/' . $fieldId, (array)$deleteContactFieldBag);
+        $builder = $this->requestBuilderFactory->create();
+
+        $request = $builder
+            ->withMethod(RequestMethodInterface::METHOD_DELETE)
+            ->withPath(sprintf('contacts/fields/%s', $fieldId))
+            ->withBuiltInParameters((array) $deleteContactFieldBag)
+            ->get();
+
+        $this->requestExecutor->execute($request);
     }
 
     public function findFieldOptions(FindContactFieldOptionsBag $findContactFieldOptionsBag): array
     {
-        $endpointPath = 'contacts/fields/' . $findContactFieldOptionsBag->fieldId . '/options';
-        $result = $this->restRequestExecutor->read($endpointPath, []);
+        $builder = $this->requestBuilderFactory->create();
+
+        $request = $builder
+            ->withMethod(RequestMethodInterface::METHOD_GET)
+            ->withPath(sprintf('contacts/fields/%s/options', $findContactFieldOptionsBag->fieldId))
+            ->get();
+
+        $result = $this->requestExecutor->execute($request);
 
         return array_map(
             [$this->dataFactoryProvider->provideContactFieldOptionFactory(), 'createFromObject'],

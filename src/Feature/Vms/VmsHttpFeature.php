@@ -7,6 +7,7 @@ namespace Smsapi\Client\Feature\Vms;
 use Smsapi\Client\Feature\Vms\Bag\SendVmsBag;
 use Smsapi\Client\Feature\Vms\Data\Vms;
 use Smsapi\Client\Feature\Vms\Data\VmsFactory;
+use Smsapi\Client\Infrastructure\Request\LegacyRequestBuilderFactory;
 use Smsapi\Client\Infrastructure\RequestExecutor\LegacyRequestExecutor;
 use Smsapi\Client\SmsapiClientException;
 use stdClass;
@@ -16,17 +17,29 @@ use stdClass;
  */
 class VmsHttpFeature implements VmsFeature
 {
-
-    /** @var LegacyRequestExecutor */
+    /**
+     * @var LegacyRequestExecutor
+     */
     private $legacyRequestExecutor;
 
-    /** @var VmsFactory */
+    /**
+     * @var VmsFactory
+     */
     private $vmsFactory;
 
-    public function __construct(LegacyRequestExecutor $legacyRequestExecutor, VmsFactory $vmsFactory)
-    {
+    /**
+     * @var LegacyRequestBuilderFactory
+     */
+    private $legacyRequestBuilderFactory;
+
+    public function __construct(
+        LegacyRequestExecutor $legacyRequestExecutor,
+        LegacyRequestBuilderFactory $legacyRequestBuilderFactory,
+        VmsFactory $vmsFactory
+    ) {
         $this->legacyRequestExecutor = $legacyRequestExecutor;
         $this->vmsFactory = $vmsFactory;
+        $this->legacyRequestBuilderFactory = $legacyRequestBuilderFactory;
     }
 
     /**
@@ -46,6 +59,13 @@ class VmsHttpFeature implements VmsFeature
      */
     private function makeRequest($data): stdClass
     {
-        return $this->legacyRequestExecutor->request('vms.do', (array)$data);
+        $requestBuilder = $this->legacyRequestBuilderFactory->create();
+
+        $request = $requestBuilder
+            ->withPath('vms.do')
+            ->withBuiltInParameters((array) $data)
+            ->get();
+
+        return $this->legacyRequestExecutor->execute($request);
     }
 }

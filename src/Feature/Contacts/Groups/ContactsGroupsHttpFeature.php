@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Smsapi\Client\Feature\Contacts\Groups;
 
+use Fig\Http\Message\RequestMethodInterface;
 use Smsapi\Client\Feature\Data\DataFactoryProvider;
-use Smsapi\Client\Infrastructure\RequestExecutor\RestRequestExecutor;
+use Smsapi\Client\Infrastructure\Request\RequestBuilderFactory;
+use Smsapi\Client\Infrastructure\Request\RestRequestBuilderFactory;
+use Smsapi\Client\Infrastructure\RequestExecutor\RequestExecutor;
 use Smsapi\Client\Feature\Contacts\Data\ContactGroup;
 use Smsapi\Client\Feature\Contacts\Groups\Bag\AssignContactToGroupBag;
 use Smsapi\Client\Feature\Contacts\Groups\Bag\CreateGroupBag;
@@ -19,24 +22,49 @@ use Smsapi\Client\Feature\Contacts\Groups\Members\ContactsGroupsMembersFeature;
 use Smsapi\Client\Feature\Contacts\Groups\Members\ContactsGroupsMembersHttpFeature;
 use Smsapi\Client\Feature\Contacts\Groups\Permissions\ContactsGroupsPermissionsFeature;
 use Smsapi\Client\Feature\Contacts\Groups\Permissions\ContactsGroupsPermissionsHttpFeature;
+use Smsapi\Client\Infrastructure\RequestExecutor\RestRequestExecutor;
 
 /**
  * @internal
  */
 class ContactsGroupsHttpFeature implements ContactsGroupsFeature
 {
-    private $restRequestExecutor;
+    /**
+     * @var DataFactoryProvider
+     */
     private $dataFactoryProvider;
 
-    public function __construct(RestRequestExecutor $restRequestExecutor, DataFactoryProvider $dataFactoryProvider)
-    {
-        $this->restRequestExecutor = $restRequestExecutor;
+    /**
+     * @var RestRequestExecutor
+     */
+    private $requestExecutor;
+
+    /**
+     * @var RestRequestBuilderFactory
+     */
+    private $requestBuilderFactory;
+
+    public function __construct(
+        RestRequestExecutor $restRequestExecutor,
+        RestRequestBuilderFactory $requestBuilderFactory,
+        DataFactoryProvider $dataFactoryProvider
+    ) {
+        $this->requestExecutor = $restRequestExecutor;
         $this->dataFactoryProvider = $dataFactoryProvider;
+        $this->requestBuilderFactory = $requestBuilderFactory;
     }
 
     public function createGroup(CreateGroupBag $createGroupBag): ContactGroup
     {
-        $result = $this->restRequestExecutor->create('contacts/groups', (array)$createGroupBag);
+        $builder = $this->requestBuilderFactory->create();
+
+        $request = $builder
+            ->withMethod(RequestMethodInterface::METHOD_POST)
+            ->withPath('contacts/groups')
+            ->withBuiltInParameters((array) $createGroupBag)
+            ->get();
+
+        $result = $this->requestExecutor->execute($request);
 
         return $this->dataFactoryProvider
             ->provideContactGroupFactory()
@@ -47,12 +75,28 @@ class ContactsGroupsHttpFeature implements ContactsGroupsFeature
     {
         $groupId = $deleteGroupBag->groupId;
         unset($deleteGroupBag->groupId);
-        $this->restRequestExecutor->delete('contacts/groups/' . $groupId, (array)$deleteGroupBag);
+
+        $builder = $this->requestBuilderFactory->create();
+
+        $request = $builder
+            ->withMethod(RequestMethodInterface::METHOD_DELETE)
+            ->withPath(sprintf('contacts/groups/%s', $groupId))
+            ->withBuiltInParameters((array) $deleteGroupBag)
+            ->get();
+
+        $this->requestExecutor->execute($request);
     }
 
     public function findGroup(FindGroupBag $findGroupBag): ContactGroup
     {
-        $result = $this->restRequestExecutor->read('contacts/groups/' . $findGroupBag->groupId, []);
+        $builder = $this->requestBuilderFactory->create();
+
+        $request = $builder
+            ->withMethod(RequestMethodInterface::METHOD_GET)
+            ->withPath(sprintf('contacts/groups/%s', $findGroupBag->groupId))
+            ->get();
+
+        $result = $this->requestExecutor->execute($request);
 
         return $this->dataFactoryProvider
             ->provideContactGroupFactory()
@@ -65,7 +109,15 @@ class ContactsGroupsHttpFeature implements ContactsGroupsFeature
 
         unset($updateGroupBag->groupId);
 
-        $result = $this->restRequestExecutor->update('contacts/groups/' . $groupId, (array)$updateGroupBag);
+        $builder = $this->requestBuilderFactory->create();
+
+        $request = $builder
+            ->withMethod(RequestMethodInterface::METHOD_POST)
+            ->withPath(sprintf('contacts/groups/%s', $groupId))
+            ->withBuiltInParameters((array) $updateGroupBag)
+            ->get();
+
+        $result = $this->requestExecutor->execute($request);
 
         return $this->dataFactoryProvider
             ->provideContactGroupFactory()
@@ -74,10 +126,15 @@ class ContactsGroupsHttpFeature implements ContactsGroupsFeature
 
     public function assignContactToGroup(AssignContactToGroupBag $assignContactToGroupBag): array
     {
-        $result = $this->restRequestExecutor->update(
-            'contacts/' . $assignContactToGroupBag->contactId . '/groups/' . $assignContactToGroupBag->groupId,
-            []
-        );
+        $builder = $this->requestBuilderFactory->create();
+
+        $request = $builder
+            ->withMethod(RequestMethodInterface::METHOD_PUT)
+            ->withPath(sprintf('contacts/%s/groups/%s', $assignContactToGroupBag->contactId, $assignContactToGroupBag->groupId))
+            ->get();
+
+        $result = $this->requestExecutor->execute($request);
+
         return array_map(
             [$this->dataFactoryProvider->provideContactGroupFactory(), 'createFromObjectWithPermissions'],
             $result->collection
@@ -86,10 +143,14 @@ class ContactsGroupsHttpFeature implements ContactsGroupsFeature
 
     public function findContactGroup(FindContactGroupBag $findContactGroupBag): ContactGroup
     {
-        $result = $this->restRequestExecutor->read(
-            'contacts/' . $findContactGroupBag->contactId . '/groups/' . $findContactGroupBag->groupId,
-            []
-        );
+        $builder = $this->requestBuilderFactory->create();
+
+        $request = $builder
+            ->withMethod(RequestMethodInterface::METHOD_POST)
+            ->withPath(sprintf('contacts/%s/groups/%s', $findContactGroupBag->contactId, $findContactGroupBag->groupId))
+            ->get();
+
+        $result = $this->requestExecutor->execute($request);
 
         return $this->dataFactoryProvider
             ->provideContactGroupFactory()
@@ -98,10 +159,15 @@ class ContactsGroupsHttpFeature implements ContactsGroupsFeature
 
     public function findContactGroups(FindContactGroupsBag $findContactGroupsBag): array
     {
-        $result = $this->restRequestExecutor->read(
-            'contacts/' . $findContactGroupsBag->contactId . '/groups',
-            []
-        );
+        $builder = $this->requestBuilderFactory->create();
+
+        $request = $builder
+            ->withMethod(RequestMethodInterface::METHOD_POST)
+            ->withPath(sprintf('contacts/%s/groups', $findContactGroupsBag->contactId))
+            ->get();
+
+        $result = $this->requestExecutor->execute($request);
+
         return array_map(
             [$this->dataFactoryProvider->provideContactGroupFactory(), 'createFromObjectWithPermissions'],
             $result->collection
@@ -110,16 +176,21 @@ class ContactsGroupsHttpFeature implements ContactsGroupsFeature
 
     public function unpinContactFromGroup(UnpinContactFromGroupBag $unpinContactFromGroupBag)
     {
-        $this->restRequestExecutor->delete(
-            'contacts/' . $unpinContactFromGroupBag->contactId . '/groups/' . $unpinContactFromGroupBag->groupId,
-            []
-        );
+        $builder = $this->requestBuilderFactory->create();
+
+        $request = $builder
+            ->withMethod(RequestMethodInterface::METHOD_DELETE)
+            ->withPath(sprintf('contacts/%s/groups/%s', $unpinContactFromGroupBag->contactId, $unpinContactFromGroupBag->groupId))
+            ->get();
+
+        $this->requestExecutor->execute($request);
     }
 
     public function membersFeature(): ContactsGroupsMembersFeature
     {
         return new ContactsGroupsMembersHttpFeature(
-            $this->restRequestExecutor,
+            $this->requestExecutor,
+            $this->requestBuilderFactory,
             $this->dataFactoryProvider->provideContactFactory()
         );
     }
@@ -127,7 +198,8 @@ class ContactsGroupsHttpFeature implements ContactsGroupsFeature
     public function permissionsFeature(): ContactsGroupsPermissionsFeature
     {
         return new ContactsGroupsPermissionsHttpFeature(
-            $this->restRequestExecutor,
+            $this->requestExecutor,
+            $this->requestBuilderFactory,
             $this->dataFactoryProvider->provideGroupPermissionFactory()
         );
     }

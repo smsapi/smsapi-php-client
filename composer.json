@@ -20,7 +20,10 @@
         "ext-json": "*",
         "psr/log": "^1",
         "psr/http-message": "^1",
-        "guzzlehttp/guzzle": "^6"
+        "psr/http-client": "@dev",
+        "psr/http-factory": "^1.0",
+        "fig/http-message-util": "^1.1",
+        "http-interop/http-factory-guzzle": "^1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^6",
@@ -31,6 +34,9 @@
         "phing/phing": "^2.5",
         "sebastian/phpcpd": "^3",
         "wimg/php-compatibility": "^8",
-        "dealerdirect/phpcodesniffer-composer-installer": "^0.4"
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.4",
+        "php-http/httplug": "2.x-dev@dev",
+        "php-http/guzzle6-adapter": "dev-patch-psr18@dev",
+        "guzzlehttp/guzzle": "^6"
     }
 }

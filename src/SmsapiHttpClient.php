@@ -4,9 +4,14 @@ declare(strict_types=1);
 
 namespace Smsapi\Client;
 
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
+use Psr\Http\Message\StreamFactoryInterface;
+use Psr\Http\Message\UriFactoryInterface;
 use Psr\Log\LoggerAwareTrait;
 use Smsapi\Client\Feature\Data\DataFactoryProvider;
-use Smsapi\Client\Infrastructure\RequestExecutor\GuzzleClientFactory;
+use Smsapi\Client\Infrastructure\Request\LegacyRequestBuilderFactory;
+use Smsapi\Client\Infrastructure\Request\RestRequestBuilderFactory;
 use Smsapi\Client\Infrastructure\RequestExecutor\RequestExecutorFactory;
 use Smsapi\Client\Service\SmsapiComService;
 use Smsapi\Client\Service\SmsapiComHttpService;
@@ -25,9 +30,37 @@ class SmsapiHttpClient implements SmsapiClient
     private $proxy = '';
     private $dataFactoryProvider;
 
-    public function __construct()
-    {
+    /**
+     * @var ClientInterface
+     */
+    private $client;
+
+    /**
+     * @var RequestFactoryInterface
+     */
+    private $requestFactory;
+
+    /**
+     * @var UriFactoryInterface
+     */
+    private $uriFactory;
+
+    /**
+     * @var StreamFactoryInterface
+     */
+    private $streamFactory;
+
+    public function __construct(
+        ClientInterface $client,
+        RequestFactoryInterface $requestFactory,
+        UriFactoryInterface $uriFactory,
+        StreamFactoryInterface $streamFactory
+    ) {
         $this->dataFactoryProvider = new DataFactoryProvider();
+        $this->client = $client;
+        $this->requestFactory = $requestFactory;
+        $this->uriFactory = $uriFactory;
+        $this->streamFactory = $streamFactory;
     }
 
     public function setProxy(string $proxy): SmsapiClient
@@ -45,7 +78,9 @@ class SmsapiHttpClient implements SmsapiClient
     public function smsapiPlServiceWithUri(string $apiToken, string $uri): SmsapiPlService
     {
         return new SmsapiPlHttpService(
-            $this->createRequestExecutorFactory($apiToken, $uri),
+            $this->createRequestExecutorFactory($apiToken),
+            $this->createRestRequestBuilderFactory($uri),
+            $this->createLegactRequestBuilderFactory($uri),
             $this->dataFactoryProvider
         );
     }
@@ -58,17 +93,38 @@ class SmsapiHttpClient implements SmsapiClient
     public function smsapiComServiceWithUri(string $apiToken, string $uri): SmsapiComService
     {
         return new SmsapiComHttpService(
-            $this->createRequestExecutorFactory($apiToken, $uri),
+            $this->createRequestExecutorFactory($apiToken),
+            $this->createRestRequestBuilderFactory($uri),
+            $this->createLegactRequestBuilderFactory($uri),
             $this->dataFactoryProvider
         );
     }
 
-    private function createRequestExecutorFactory(string $apiToken, string $uri): RequestExecutorFactory
+    private function createRequestExecutorFactory(string $apiToken): RequestExecutorFactory
     {
-        $guzzleClientFactory = new GuzzleClientFactory($apiToken, $uri, $this->proxy);
-        $requestExecutorFactory = new RequestExecutorFactory($guzzleClientFactory);
+        $requestExecutorFactory = new RequestExecutorFactory($this->client, $apiToken);
         $requestExecutorFactory->setLogger($this->logger);
 
         return $requestExecutorFactory;
+    }
+
+    private function createRestRequestBuilderFactory(string $baseUri): RestRequestBuilderFactory
+    {
+        return new RestRequestBuilderFactory(
+            $this->requestFactory,
+            $this->uriFactory,
+            $this->streamFactory,
+            $baseUri
+        );
+    }
+
+    private function createLegactRequestBuilderFactory(string $baseUri): LegacyRequestBuilderFactory
+    {
+        return new LegacyRequestBuilderFactory(
+            $this->requestFactory,
+            $this->uriFactory,
+            $this->streamFactory,
+            $baseUri
+        );
     }
 }
