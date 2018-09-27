@@ -12,8 +12,6 @@ class Config
         $distConfigFilePath = realpath(CONFIG_DIR . '/config.dist.yml');
         $configFilePath = realpath(CONFIG_DIR . '/config.yml');
 
-        var_dump($distConfigFilePath);
-
         $distConfig = Yaml::parse(file_get_contents($distConfigFilePath));
 
         if ($configFilePath) {
