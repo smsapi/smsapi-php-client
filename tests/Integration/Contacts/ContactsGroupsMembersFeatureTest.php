@@ -182,7 +182,6 @@ class ContactsGroupsMembersFeatureTest extends SmsapiClientIntegrationTestCase
                 $contactInGroup = null;
                 $timeout = 0;
             }
-
         } while ($timeout > 0);
 
         $this->assertNull($contactInGroup);
