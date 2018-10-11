@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Smsapi\Client;
 
 use Psr\Log\LoggerAwareTrait;
+use Psr\Log\NullLogger;
 use Smsapi\Client\Feature\Data\DataFactoryProvider;
 use Smsapi\Client\Infrastructure\RequestExecutor\GuzzleClientFactory;
 use Smsapi\Client\Infrastructure\RequestExecutor\RequestExecutorFactory;
@@ -28,6 +29,7 @@ class SmsapiHttpClient implements SmsapiClient
     public function __construct()
     {
         $this->dataFactoryProvider = new DataFactoryProvider();
+        $this->logger = new NullLogger();
     }
 
     public function setProxy(string $proxy): SmsapiClient
