@@ -4,16 +4,16 @@
 [![Packagist - latest version](https://img.shields.io/packagist/v/smsapi/php-client.svg)](https://packagist.org/packages/smsapi/php-client)
 [![Packagist - downloads](https://img.shields.io/packagist/dt/smsapi/php-client.svg)](https://packagist.org/packages/smsapi/php-client)
 [![Packagist - license](https://img.shields.io/packagist/l/smsapi/php-client.svg)](https://packagist.org/packages/smsapi/php-client)
-## [Old version available here](https://github.com/smsapi/smsapi-php-client/tree/v1.8.7)
+
 ## Requirements
 
 * [composer](https://getcomposer.org/)
 
+### [Version 1.8.7 available here](https://github.com/smsapi/smsapi-php-client/tree/v1.8.7)
+
 ## Install package with dependencies
 
-Execute: 
-* stable version: `composer require smsapi/php-client`
-* developer version: `composer require smsapi/php-client:master@dev`
+Execute: `composer require smsapi/php-client`
 
 ## How to pick a service
 
