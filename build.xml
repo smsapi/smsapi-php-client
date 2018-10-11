@@ -43,18 +43,5 @@
         <phingcall target="phpcbf" />
         <phingcall target="phpcs" />
         <phingcall target="test" />
-        <if>
-            <equals arg1="${is_composer_installed}" arg2="1" />
-            <then>
-                <exec command="composer self-update" passthru="true" />
-                <exec command="composer update" passthru="true" />
-            </then>
-            <else>
-                <exec command="wget -nc http://getcomposer.org/composer.phar" passthru="true" />
-                <exec command="composer.phar self-update" passthru="true" />
-                <exec command="composer.phar update" passthru="true" />
-            </else>
-        </if>
-        <phingcall target="test" />
     </target>
 </project>
