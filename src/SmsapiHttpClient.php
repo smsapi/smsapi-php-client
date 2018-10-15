@@ -9,6 +9,7 @@ use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\UriFactoryInterface;
 use Psr\Log\LoggerAwareTrait;
+use Psr\Log\NullLogger;
 use Smsapi\Client\Feature\Data\DataFactoryProvider;
 use Smsapi\Client\Infrastructure\Request\LegacyRequestBuilderFactory;
 use Smsapi\Client\Infrastructure\Request\RestRequestBuilderFactory;
@@ -61,6 +62,8 @@ class SmsapiHttpClient implements SmsapiClient
         $this->requestFactory = $requestFactory;
         $this->uriFactory = $uriFactory;
         $this->streamFactory = $streamFactory;
+
+        $this->logger = new NullLogger();
     }
 
     public function setProxy(string $proxy): SmsapiClient
