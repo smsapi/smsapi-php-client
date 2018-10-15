@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="smsapi/php-client" default="test">
-    <target name="test">
-        <exec command="composer self-update" passthru="true" />
-        <exec command="composer install" passthru="true" />
+    <target name="test" depends="composer-update">
         <exec command="./vendor/bin/phpunit" passthru="true" />
     </target>
-    <target name="phpcbf-src">
+    <target name="phpcbf-src" depends="composer-update">
         <exec command="./vendor/bin/phpcbf --standard=PSR1,PSR2,PHPCompatibility --runtime-set testVersion 7.0 src" passthru="true" />
     </target>
-    <target name="phpcbf-tests">
+    <target name="phpcbf-tests" depends="composer-update">
         <exec command="./vendor/bin/phpcbf --standard=PSR1,PSR2,PHPCompatibility --runtime-set testVersion 7.0 tests" passthru="true" />
     </target>
-    <target name="phpcs-src">
+    <target name="phpcs-src" depends="composer-update">
         <exec command="./vendor/bin/phpcs --standard=PSR1,PSR2,PHPCompatibility --runtime-set testVersion 7.0 src" passthru="true" />
     </target>
-    <target name="phpcs-tests">
+    <target name="phpcs-tests" depends="composer-update">
         <exec command="./vendor/bin/phpcs --standard=PSR1,PSR2,PHPCompatibility --runtime-set testVersion 7.0 tests" passthru="true" />
     </target>
     <target name="phpcbf">
@@ -27,21 +25,20 @@
         <phingcall target="phpcs-tests" />
     </target>
     <target name="build">
-        <available property="is_composer_installed" file="composer" filepath="${env.PATH}" value="true" />
-        <if>
-            <equals arg1="${is_composer_installed}" arg2="1" />
-            <then>
-                <exec command="composer self-update" passthru="true" />
-                <exec command="composer update --prefer-lowest" passthru="true" />
-            </then>
-            <else>
-                <exec command="wget -nc http://getcomposer.org/composer.phar" passthru="true" />
-                <exec command="composer.phar self-update" passthru="true" />
-                <exec command="composer.phar update --prefer-lowest" passthru="true" />
-            </else>
-        </if>
         <phingcall target="phpcbf" />
         <phingcall target="phpcs" />
         <phingcall target="test" />
+    </target>
+    <target name="composer">
+        <available property="is_composer_installed" file="composer" filepath="${env.PATH}" value="true" />
+        <if>
+            <equals arg1="${is_composer_installed}" arg2="0" />
+            <then>
+                <exec command="wget -nc http://getcomposer.org/composer.phar" passthru="true" />
+            </then>
+        </if>
+    </target>
+    <target name="composer-update" depends="composer">
+        <exec command="composer update --prefer-lowest" passthru="true" />
     </target>
 </project>
