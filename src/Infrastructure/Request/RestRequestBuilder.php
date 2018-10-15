@@ -7,6 +7,9 @@ namespace Smsapi\Client\Infrastructure\Request;
 use Fig\Http\Message\RequestMethodInterface;
 use Psr\Http\Message\RequestInterface;
 
+/**
+ * @internal
+ */
 class RestRequestBuilder extends RequestBuilder
 {
     const QUERY_STRING_SUPPORTED_METHODS = [

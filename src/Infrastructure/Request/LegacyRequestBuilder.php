@@ -6,6 +6,9 @@ namespace Smsapi\Client\Infrastructure\Request;
 
 use Psr\Http\Message\RequestInterface;
 
+/**
+ * @internal
+ */
 class LegacyRequestBuilder extends RequestBuilder
 {
     public function get(): RequestInterface

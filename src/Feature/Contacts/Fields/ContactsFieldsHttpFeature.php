@@ -11,9 +11,7 @@ use Smsapi\Client\Feature\Contacts\Fields\Bag\FindContactFieldOptionsBag;
 use Smsapi\Client\Feature\Contacts\Fields\Bag\UpdateContactFieldBag;
 use Smsapi\Client\Feature\Contacts\Fields\Data\ContactField;
 use Smsapi\Client\Feature\Data\DataFactoryProvider;
-use Smsapi\Client\Infrastructure\Request\RequestBuilderFactory;
 use Smsapi\Client\Infrastructure\Request\RestRequestBuilderFactory;
-use Smsapi\Client\Infrastructure\RequestExecutor\RequestExecutor;
 use Smsapi\Client\Infrastructure\RequestExecutor\RestRequestExecutor;
 
 /**

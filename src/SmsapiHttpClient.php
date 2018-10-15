@@ -83,7 +83,7 @@ class SmsapiHttpClient implements SmsapiClient
         return new SmsapiPlHttpService(
             $this->createRequestExecutorFactory($apiToken),
             $this->createRestRequestBuilderFactory($uri),
-            $this->createLegactRequestBuilderFactory($uri),
+            $this->createLegacyRequestBuilderFactory($uri),
             $this->dataFactoryProvider
         );
     }
@@ -98,7 +98,7 @@ class SmsapiHttpClient implements SmsapiClient
         return new SmsapiComHttpService(
             $this->createRequestExecutorFactory($apiToken),
             $this->createRestRequestBuilderFactory($uri),
-            $this->createLegactRequestBuilderFactory($uri),
+            $this->createLegacyRequestBuilderFactory($uri),
             $this->dataFactoryProvider
         );
     }
@@ -121,7 +121,7 @@ class SmsapiHttpClient implements SmsapiClient
         );
     }
 
-    private function createLegactRequestBuilderFactory(string $baseUri): LegacyRequestBuilderFactory
+    private function createLegacyRequestBuilderFactory(string $baseUri): LegacyRequestBuilderFactory
     {
         return new LegacyRequestBuilderFactory(
             $this->requestFactory,

@@ -6,9 +6,7 @@ namespace Smsapi\Client\Feature\Contacts\Groups\Permissions;
 
 use Fig\Http\Message\RequestMethodInterface;
 use Smsapi\Client\Feature\Contacts\Groups\Permissions\Data\GroupPermissionFactory;
-use Smsapi\Client\Infrastructure\Request\RequestBuilderFactory;
 use Smsapi\Client\Infrastructure\Request\RestRequestBuilderFactory;
-use Smsapi\Client\Infrastructure\RequestExecutor\RequestExecutor;
 use Smsapi\Client\Feature\Contacts\Groups\Permissions\Bag\CreateGroupPermissionBag;
 use Smsapi\Client\Feature\Contacts\Groups\Permissions\Bag\DeleteGroupPermissionBag;
 use Smsapi\Client\Feature\Contacts\Groups\Permissions\Bag\FindGroupPermissionBag;

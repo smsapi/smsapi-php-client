@@ -14,6 +14,9 @@ use Psr\Http\Message\UriInterface;
 use Smsapi\Client\Infrastructure\Request\Query\Formatter\ComplexParametersQueryFormatter;
 use Smsapi\Client\Infrastructure\Request\Query\QueryParametersData;
 
+/**
+ * @internal
+ */
 abstract class RequestBuilder
 {
     /**

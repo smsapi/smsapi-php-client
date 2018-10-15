@@ -7,6 +7,9 @@ namespace Smsapi\Client\Infrastructure\Request\Mapper;
 use Psr\Http\Message\RequestInterface;
 use Smsapi\Client\Infrastructure\Request\Mapper\RequestMapper;
 
+/**
+ * @internal
+ */
 final class AuthorizationRequestMapper implements RequestMapper
 {
     /**

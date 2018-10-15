@@ -8,6 +8,9 @@ use Fig\Http\Message\RequestMethodInterface;
 use Psr\Http\Message\RequestInterface;
 use Smsapi\Client\Infrastructure\Request\Mapper\RequestMapper;
 
+/**
+ * @internal
+ */
 final class ContentTypeRequestMapper implements RequestMapper
 {
     const FORM_METHODS = [

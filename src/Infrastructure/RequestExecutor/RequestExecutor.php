@@ -10,6 +10,9 @@ use Smsapi\Client\Infrastructure\Response\JsonDeserializer;
 use Smsapi\Client\Infrastructure\Request\Mapper\RequestMapper;
 use Smsapi\Client\Infrastructure\Response\ResponseValidator;
 
+/**
+ * @internal
+ */
 abstract class RequestExecutor
 {
     /**

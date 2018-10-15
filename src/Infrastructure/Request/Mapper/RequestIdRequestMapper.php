@@ -7,6 +7,9 @@ namespace Smsapi\Client\Infrastructure\Request\Mapper;
 use Psr\Http\Message\RequestInterface;
 use Smsapi\Client\Infrastructure\Request\Mapper\RequestMapper;
 
+/**
+ * @internal
+ */
 final class RequestIdRequestMapper implements RequestMapper
 {
     public function map(RequestInterface $request): RequestInterface

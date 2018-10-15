@@ -12,7 +12,10 @@ use Smsapi\Client\Infrastructure\Request\Mapper\RequestIdRequestMapper;
 use Smsapi\Client\Infrastructure\Response\JsonDeserializer;
 use Smsapi\Client\Infrastructure\Response\LegacyResponseValidator;
 
-final class LegacyRequestExecutor extends RequestExecutor
+/**
+ * @internal
+ */
+class LegacyRequestExecutor extends RequestExecutor
 {
     public function __construct(ClientInterface $client, JsonDeserializer $deserializer, LegacyResponseValidator $responseValidator, string $token)
     {

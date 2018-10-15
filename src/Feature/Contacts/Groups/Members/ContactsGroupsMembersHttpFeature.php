@@ -6,9 +6,7 @@ namespace Smsapi\Client\Feature\Contacts\Groups\Members;
 
 use Fig\Http\Message\RequestMethodInterface;
 use Smsapi\Client\Feature\Contacts\Data\ContactFactory;
-use Smsapi\Client\Infrastructure\Request\RequestBuilderFactory;
 use Smsapi\Client\Infrastructure\Request\RestRequestBuilderFactory;
-use Smsapi\Client\Infrastructure\RequestExecutor\RequestExecutor;
 use Smsapi\Client\Feature\Contacts\Data\Contact;
 use Smsapi\Client\Feature\Contacts\Groups\Members\Bag\AddContactToGroupByQueryBag;
 use Smsapi\Client\Feature\Contacts\Groups\Members\Bag\FindContactInGroupBag;

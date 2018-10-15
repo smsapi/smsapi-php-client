@@ -12,7 +12,10 @@ use Smsapi\Client\Infrastructure\Request\Mapper\RequestIdRequestMapper;
 use Smsapi\Client\Infrastructure\Response\JsonDeserializer;
 use Smsapi\Client\Infrastructure\Response\RestResponseValidator;
 
-final class RestRequestExecutor extends RequestExecutor
+/**
+ * @internal
+ */
+class RestRequestExecutor extends RequestExecutor
 {
     public function __construct(ClientInterface $client, JsonDeserializer $deserializer, RestResponseValidator $responseValidator, string $token)
     {

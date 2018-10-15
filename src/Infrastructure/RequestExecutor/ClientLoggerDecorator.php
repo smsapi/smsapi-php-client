@@ -9,6 +9,9 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @internal
+ */
 class ClientLoggerDecorator implements ClientInterface
 {
     private $client;
