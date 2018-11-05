@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Smsapi\Client\Tests\Integration\Contacts;
+namespace Smsapi\Client\Tests\Integration\Feature\Contacts\Groups;
 
 use Smsapi\Client\Feature\Contacts\Groups\Bag\AssignContactToGroupBag;
 use Smsapi\Client\Feature\Contacts\Groups\Bag\CreateGroupBag;

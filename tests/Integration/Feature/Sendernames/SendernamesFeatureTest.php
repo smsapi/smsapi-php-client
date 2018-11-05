@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Smsapi\Client\Tests\Integration;
+namespace Smsapi\Client\Tests\Integration\Feature\Sendernames;
 
 use Smsapi\Client\Infrastructure\ResponseMapper\ApiErrorException;
 use Smsapi\Client\Feature\Sms\Sendernames\Bag\CreateSendernameBag;

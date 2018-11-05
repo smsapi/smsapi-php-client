@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Smsapi\Client\Tests\Integration;
+namespace Smsapi\Client\Tests\Integration\Feature\Hlr;
 
 use Smsapi\Client\Feature\Hlr\Bag\SendHlrBag;
 use Smsapi\Client\Feature\Hlr\HlrFeature;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Smsapi\Client\Tests\Integration\Contacts;
+namespace Smsapi\Client\Tests\Integration\Feature\Contacts\Groups\Members;
 
 use Smsapi\Client\Feature\Contacts\Data\Contact;
 use Smsapi\Client\Feature\Contacts\Data\ContactGroup;

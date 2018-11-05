@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Smsapi\Client\Tests\Integration;
+namespace Smsapi\Client\Tests\Integration\Feature\Subusers;
 
 use Smsapi\Client\Feature\Subusers\Bag\DeleteSubuserBag;
 use Smsapi\Client\Tests\Assert\SubuserAssert;

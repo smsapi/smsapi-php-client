@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Smsapi\Client\Tests\Integration;
+namespace Smsapi\Client\Tests\Integration\Feature\Vms;
 
 use Smsapi\Client\Feature\Vms\Bag\SendVmsBag;
 use Smsapi\Client\Feature\Vms\VmsFeature;

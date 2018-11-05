@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Smsapi\Client\Tests\Integration;
+namespace Smsapi\Client\Tests\Integration\Feature\Sms;
 
 use DateTime;
 use Smsapi\Client\Feature\Contacts\Bag\CreateContactBag;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Smsapi\Client\Tests\Integration;
+namespace Smsapi\Client\Tests\Integration\Feature\Profile;
 
 use Smsapi\Client\Feature\Profile\SmsapiPlProfileFeature;
 use Smsapi\Client\Feature\Profile\ProfileFeature;

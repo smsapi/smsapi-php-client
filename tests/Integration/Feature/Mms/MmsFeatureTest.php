@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Smsapi\Client\Tests\Integration;
+namespace Smsapi\Client\Tests\Integration\Feature\Mms;
 
 use Smsapi\Client\Feature\Mms\Bag\SendMmsBag;
 use Smsapi\Client\Tests\Fixture\PhoneNumberFixture;
