@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="smsapi/php-client" default="test">
-    <target name="test" depends="composer-update">
+    <target name="test">
         <exec command="./vendor/bin/phpunit" passthru="true" />
     </target>
-    <target name="phpcbf-src" depends="composer-update">
+    <target name="phpcbf-src">
         <exec command="./vendor/bin/phpcbf --standard=PSR1,PSR2,PHPCompatibility --runtime-set testVersion 7.0 src" passthru="true" />
     </target>
-    <target name="phpcbf-tests" depends="composer-update">
+    <target name="phpcbf-tests">
         <exec command="./vendor/bin/phpcbf --standard=PSR1,PSR2,PHPCompatibility --runtime-set testVersion 7.0 tests" passthru="true" />
     </target>
-    <target name="phpcs-src" depends="composer-update">
+    <target name="phpcs-src">
         <exec command="./vendor/bin/phpcs --standard=PSR1,PSR2,PHPCompatibility --runtime-set testVersion 7.0 src" passthru="true" />
     </target>
-    <target name="phpcs-tests" depends="composer-update">
+    <target name="phpcs-tests">
         <exec command="./vendor/bin/phpcs --standard=PSR1,PSR2,PHPCompatibility --runtime-set testVersion 7.0 tests" passthru="true" />
     </target>
     <target name="phpcbf">
@@ -27,7 +27,6 @@
     <target name="build">
         <phingcall target="phpcbf" />
         <phingcall target="phpcs" />
-        <phingcall target="test" />
     </target>
     <target name="composer">
         <available property="is_composer_installed" file="composer" filepath="${env.PATH}" value="true" />
