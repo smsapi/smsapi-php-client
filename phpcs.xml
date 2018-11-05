@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<ruleset name="SMSAPI_Coding_Standard">
+    <description>SMSAPI Coding Standard</description>
+
+    <config name="testVersion" value="7.0"/>
+    <arg name="colors"/>
+
+    <exclude-pattern>*/Standards/*/Tests/*\.(inc|css|js)</exclude-pattern>
+
+    <rule ref="PSR1"/>
+    <rule ref="PSR2"/>
+
+    <rule ref="PSR1.Methods.CamelCapsMethodName.NotCamelCaps">
+        <exclude-pattern>**/tests/Unit/**</exclude-pattern>
+        <exclude-pattern>**/tests/Integration/**</exclude-pattern>
+    </rule>
+</ruleset>
