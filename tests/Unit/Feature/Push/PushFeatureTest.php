@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Smsapi\Client\Tests\Unit;
+namespace Smsapi\Client\Tests\Unit\Feature\Push;
 
 use DateTime;
 use Smsapi\Client\Feature\Push\Data\PushApp;

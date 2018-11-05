@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Smsapi\Client\Tests\Unit;
+namespace Smsapi\Client\Tests\Unit\Infrastructure\ResponseMapper;
 
 use GuzzleHttp\Psr7\Response;
 use Smsapi\Client\Infrastructure\ResponseHttpCode;

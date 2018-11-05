@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Smsapi\Client\Tests\Unit;
+namespace Smsapi\Client\Tests\Unit\Feature\Contacts\Groups\Permissions;
 
 use Smsapi\Client\Feature\Contacts\Groups\Permissions\Bag\CreateGroupPermissionBag;
 use Smsapi\Client\Feature\Contacts\Groups\Permissions\Bag\DeleteGroupPermissionBag;

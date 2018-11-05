@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Smsapi\Client\Tests\Unit;
+namespace Smsapi\Client\Tests\Unit\Feature\ShortUrl;
 
 use Smsapi\Client\Feature\ShortUrl\Bag\CreateShortUrlLinkBag;
 use Smsapi\Client\Feature\ShortUrl\ShortUrlFeature;
