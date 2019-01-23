@@ -68,9 +68,13 @@ class SendSmsBag
 
     /**
      * @deprecated
+     * @see SendSmsBag::setExternalId()
      */
     public function setIdx(array $idx, bool $checkIdx = null): self
     {
-        return $this->setExternalId(array_shift($idx), $checkIdx);
+        $this->idx = $idx;
+        $this->checkIdx = $checkIdx;
+
+        return $this;
     }
 }
