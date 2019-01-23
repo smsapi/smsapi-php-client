@@ -36,6 +36,24 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
     /**
      * @test
      */
+    public function it_should_send_sms_with_external_id()
+    {
+        $smsFeature = self::$smsapiService->smsFeature();
+        $someReceiver = PhoneNumberFixture::anyPhoneNumber();
+        $externalId = 'any';
+        $sendSmsBag = SendSmsBag::withMessage($someReceiver, 'some message');
+        $sendSmsBag->setExternalId($externalId);
+        $sendSmsBag->test = true;
+
+        $result = $smsFeature->sendSms($sendSmsBag);
+
+        $this->assertEquals($someReceiver, $result->number);
+        $this->assertEquals($externalId, $result->idx);
+    }
+
+    /**
+     * @test
+     */
     public function it_should_send_flash_sms()
     {
         $smsFeature = self::$smsapiService->smsFeature();
