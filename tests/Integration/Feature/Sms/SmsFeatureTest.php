@@ -11,6 +11,7 @@ use Smsapi\Client\Feature\Contacts\Groups\Bag\CreateGroupBag;
 use Smsapi\Client\Feature\Sms\Bag\ScheduleSmsBag;
 use Smsapi\Client\Feature\Sms\Bag\ScheduleSmsToGroupBag;
 use Smsapi\Client\Feature\Sms\Bag\SendSmsBag;
+use Smsapi\Client\Feature\Sms\Bag\SendSmssBag;
 use Smsapi\Client\Feature\Sms\Bag\SendSmsToGroupBag;
 use Smsapi\Client\Tests\Fixture\PhoneNumberFixture;
 use Smsapi\Client\Tests\Helper\ContactsHelper;
@@ -98,6 +99,42 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
 
         $this->assertEquals($somePhoneNumber, $result[0]->number);
         $this->deleteGroup($createdGroup->id);
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_send_smss()
+    {
+        $smsFeature = self::$smsapiService->smsFeature();
+        $receivers = [
+            PhoneNumberFixture::anyPhoneNumber(),
+            PhoneNumberFixture::anotherPhoneNumber(),
+        ];
+        $sendSmsesBag = SendSmssBag::withMessage($receivers, 'some message');
+        $sendSmsesBag->test = true;
+
+        $results = $smsFeature->sendSmss($sendSmsesBag);
+
+        $this->assertCount(2, $results);
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_send_flash_smss()
+    {
+        $smsFeature = self::$smsapiService->smsFeature();
+        $receivers = [
+            PhoneNumberFixture::anyPhoneNumber(),
+            PhoneNumberFixture::anotherPhoneNumber(),
+        ];
+        $sendSmsesBag = SendSmssBag::withMessage($receivers, 'some message');
+        $sendSmsesBag->test = true;
+
+        $results = $smsFeature->sendFlashSmss($sendSmsesBag);
+
+        $this->assertCount(2, $results);
     }
 
     /**

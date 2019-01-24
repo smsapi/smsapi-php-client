@@ -7,6 +7,7 @@ use Smsapi\Client\Feature\Sms\Bag\DeleteSmsBag;
 use Smsapi\Client\Feature\Sms\Bag\ScheduleSmsBag;
 use Smsapi\Client\Feature\Sms\Bag\ScheduleSmsToGroupBag;
 use Smsapi\Client\Feature\Sms\Bag\SendSmsBag;
+use Smsapi\Client\Feature\Sms\Bag\SendSmssBag;
 use Smsapi\Client\Feature\Sms\Bag\SendSmsToGroupBag;
 use Smsapi\Client\Feature\Sms\Data\Sms;
 use Smsapi\Client\Feature\Sms\Sendernames\SendernamesFeature;
@@ -25,6 +26,10 @@ interface SmsFeature
     public function sendSmsToGroup(SendSmsToGroupBag $sendSmsToGroupBag): array;
 
     public function sendFlashSmsToGroup(SendSmsToGroupBag $sendSmsToGroupBag): array;
+
+    public function sendSmss(SendSmssBag $sendSmssBag): array;
+
+    public function sendFlashSmss(SendSmssBag $sendSmssBag): array;
 
     public function scheduleSms(ScheduleSmsBag $scheduleSmsBag): Sms;
 

@@ -8,6 +8,7 @@ use Smsapi\Client\Feature\Sms\Bag\DeleteSmsBag;
 use Smsapi\Client\Feature\Sms\Bag\ScheduleSmsBag;
 use Smsapi\Client\Feature\Sms\Bag\ScheduleSmsToGroupBag;
 use Smsapi\Client\Feature\Sms\Bag\SendSmsBag;
+use Smsapi\Client\Feature\Sms\Bag\SendSmssBag;
 use Smsapi\Client\Feature\Sms\Bag\SendSmsToGroupBag;
 use Smsapi\Client\Feature\Sms\Data\Sms;
 use Smsapi\Client\Feature\Sms\Sendernames\SendernamesFeature;
@@ -86,6 +87,22 @@ class SmsHttpFeature implements SmsFeature
         return array_map(
             [$this->dataFactoryProvider->provideSmsFactory(), 'createFromObject'],
             $this->makeRequest($sendSmsToGroupBag)->list
+        );
+    }
+
+    public function sendSmss(SendSmssBag $sendSmssBag): array
+    {
+        return array_map(
+            [$this->dataFactoryProvider->provideSmsFactory(), 'createFromObject'],
+            $this->makeRequest($sendSmssBag)->list
+        );
+    }
+
+    public function sendFlashSmss(SendSmssBag $sendSmssBag): array
+    {
+        return array_map(
+            [$this->dataFactoryProvider->provideSmsFactory(), 'createFromObject'],
+            $this->makeRequest($sendSmssBag)->list
         );
     }
 
