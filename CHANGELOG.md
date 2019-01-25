@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 ### Added
 - sending sms to many recipients at once
 ### Fixed
+- sms params
 - sending sms with external id (idx)
 
 ## [2.0.0] - 2018-10-30

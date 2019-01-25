@@ -22,10 +22,10 @@ use DateTimeInterface;
  * @property string $notifyUrl
  * @property bool $test
  * @property bool $fast
- * @property string $param1
- * @property string $param2
- * @property string $param3
- * @property string $param4
+ * @property array $param1
+ * @property array $param2
+ * @property array $param3
+ * @property array $param4
  */
 class ScheduleSmssBag
 {
@@ -57,8 +57,8 @@ class ScheduleSmssBag
 
     public function setParams(array $params): self
     {
-        for ($i = 1; $i <= 4; $i++) {
-            $this->{'param' . $i} = $params;
+        foreach ($params as $index => $indexParams) {
+            $this->{'param' . $index} = $indexParams;
         }
 
         return $this;

@@ -51,8 +51,8 @@ class SendSmsBag
 
     public function setParams(array $params): self
     {
-        for ($i = 1; $i <= 4; $i++) {
-            $this->{'param' . $i} = $params;
+        foreach ($params as $index => $indexParam) {
+            $this->{'param' . $index} = $indexParam;
         }
 
         return $this;
