@@ -44,6 +44,18 @@ class SendSmsToGroupBag
         return $bag;
     }
 
+    public function setExternalId(string $idx, bool $checkIdx = null): self
+    {
+        $this->idx = [$idx];
+        $this->checkIdx = $checkIdx;
+
+        return $this;
+    }
+
+    /**
+     * @deprecated
+     * @see SendSmsToGroupBag::setExternalId()
+     */
     public function setIdx(array $idx, bool $checkIdx = null): self
     {
         $this->idx = $idx;

@@ -11,7 +11,7 @@ use DateTimeInterface;
  * @property string $message
  * @property string $template
  * @property string $encoding
- * @property string $idx
+ * @property array $idx
  * @property bool $checkIdx
  * @property string $partnerId
  * @property DateTimeInterface $expirationDate
@@ -60,7 +60,7 @@ class SendSmsBag
 
     public function setExternalId(string $idx, bool $checkIdx = null): self
     {
-        $this->idx = $idx;
+        $this->idx = [$idx];
         $this->checkIdx = $checkIdx;
 
         return $this;
