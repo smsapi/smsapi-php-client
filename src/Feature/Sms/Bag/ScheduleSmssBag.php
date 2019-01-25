@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Smsapi\Client\Feature\Sms\Bag;
@@ -26,15 +27,15 @@ use DateTimeInterface;
  * @property string $param3
  * @property string $param4
  */
-class ScheduleSmsBag
+class ScheduleSmssBag
 {
-    /** @var string */
+    /** @var array */
     public $to;
 
     /** @var DateTimeInterface */
     public $date;
 
-    public static function withMessage(DateTimeInterface $scheduleAt, string $receiver, string $message): self
+    public static function withMessage(DateTimeInterface $scheduleAt, array $receiver, string $message): self
     {
         $bag = new self();
         $bag->date = $scheduleAt;
@@ -44,7 +45,7 @@ class ScheduleSmsBag
         return $bag;
     }
 
-    public static function withTemplateName(DateTimeInterface $scheduleAt, string $receiver, string $templateName): self
+    public static function withTemplateName(DateTimeInterface $scheduleAt, array $receiver, string $templateName): self
     {
         $bag = new self();
         $bag->date = $scheduleAt;
@@ -63,19 +64,7 @@ class ScheduleSmsBag
         return $this;
     }
 
-    public function setExternalId(string $idx, bool $checkIdx = null): self
-    {
-        $this->idx = [$idx];
-        $this->checkIdx = $checkIdx;
-
-        return $this;
-    }
-
-    /**
-     * @deprecated
-     * @see ScheduleSmsBag::setExternalId()
-     */
-    public function setIdx(array $idx, bool $checkIdx = null): self
+    public function setExternalId(array $idx, bool $checkIdx = null): self
     {
         $this->idx = $idx;
         $this->checkIdx = $checkIdx;

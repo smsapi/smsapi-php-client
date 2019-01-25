@@ -5,6 +5,7 @@ namespace Smsapi\Client\Feature\Sms;
 
 use Smsapi\Client\Feature\Sms\Bag\DeleteSmsBag;
 use Smsapi\Client\Feature\Sms\Bag\ScheduleSmsBag;
+use Smsapi\Client\Feature\Sms\Bag\ScheduleSmssBag;
 use Smsapi\Client\Feature\Sms\Bag\ScheduleSmsToGroupBag;
 use Smsapi\Client\Feature\Sms\Bag\SendSmsBag;
 use Smsapi\Client\Feature\Sms\Bag\SendSmssBag;
@@ -38,6 +39,8 @@ interface SmsFeature
     public function scheduleSmsToGroup(ScheduleSmsToGroupBag $scheduleSmsToGroupBag): array;
 
     public function scheduleFlashSmsToGroup(ScheduleSmsToGroupBag $sendSmsToGroupBag): array;
+
+    public function scheduleSmss(ScheduleSmssBag $scheduleSmssBag): array;
 
     public function deleteScheduledSms(DeleteSmsBag $deleteScheduledSmsBag);
 }

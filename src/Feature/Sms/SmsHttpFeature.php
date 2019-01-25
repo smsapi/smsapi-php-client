@@ -6,6 +6,7 @@ namespace Smsapi\Client\Feature\Sms;
 use Smsapi\Client\Feature\Data\DataFactoryProvider;
 use Smsapi\Client\Feature\Sms\Bag\DeleteSmsBag;
 use Smsapi\Client\Feature\Sms\Bag\ScheduleSmsBag;
+use Smsapi\Client\Feature\Sms\Bag\ScheduleSmssBag;
 use Smsapi\Client\Feature\Sms\Bag\ScheduleSmsToGroupBag;
 use Smsapi\Client\Feature\Sms\Bag\SendSmsBag;
 use Smsapi\Client\Feature\Sms\Bag\SendSmssBag;
@@ -118,6 +119,16 @@ class SmsHttpFeature implements SmsFeature
         return $this->dataFactoryProvider
             ->provideSmsFactory()
             ->createFromObject(current($this->makeRequest($scheduleSmsBag)->list));
+    }
+
+    public function scheduleSmss(ScheduleSmssBag $scheduleSmssBag): array
+    {
+        $scheduleSmssBag->dateValidate = true;
+
+        return array_map(
+            [$this->dataFactoryProvider->provideSmsFactory(), 'createFromObject'],
+            $this->makeRequest($scheduleSmssBag)->list
+        );
     }
 
     /**

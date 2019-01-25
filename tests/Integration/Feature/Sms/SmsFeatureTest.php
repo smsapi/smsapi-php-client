@@ -9,6 +9,7 @@ use Smsapi\Client\Feature\Contacts\Data\ContactGroup;
 use Smsapi\Client\Feature\Contacts\Groups\Bag\AssignContactToGroupBag;
 use Smsapi\Client\Feature\Contacts\Groups\Bag\CreateGroupBag;
 use Smsapi\Client\Feature\Sms\Bag\ScheduleSmsBag;
+use Smsapi\Client\Feature\Sms\Bag\ScheduleSmssBag;
 use Smsapi\Client\Feature\Sms\Bag\ScheduleSmsToGroupBag;
 use Smsapi\Client\Feature\Sms\Bag\SendSmsBag;
 use Smsapi\Client\Feature\Sms\Bag\SendSmssBag;
@@ -152,6 +153,25 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
 
         $this->assertEquals($someDate, $result->dateSent);
         $this->assertEquals($someReceiver, $result->number);
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_schedule_smss()
+    {
+        $smsFeature = self::$smsapiService->smsFeature();
+        $someDate = new DateTime('+1 day noon');
+        $receivers = [
+            PhoneNumberFixture::anyPhoneNumber(),
+            PhoneNumberFixture::anotherPhoneNumber(),
+        ];
+        $scheduleSmsBag = ScheduleSmssBag::withMessage($someDate, $receivers, 'some message');
+        $scheduleSmsBag->test = true;
+
+        $results = $smsFeature->scheduleSmss($scheduleSmsBag);
+
+        $this->assertCount(2, $results);
     }
 
     /**
