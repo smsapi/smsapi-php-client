@@ -35,21 +35,21 @@ class ScheduleSmssBag
     /** @var DateTimeInterface */
     public $date;
 
-    public static function withMessage(DateTimeInterface $scheduleAt, array $receiver, string $message): self
+    public static function withMessage(DateTimeInterface $scheduleAt, array $receivers, string $message): self
     {
         $bag = new self();
         $bag->date = $scheduleAt;
-        $bag->to = $receiver;
+        $bag->to = $receivers;
         $bag->message = $message;
 
         return $bag;
     }
 
-    public static function withTemplateName(DateTimeInterface $scheduleAt, array $receiver, string $templateName): self
+    public static function withTemplateName(DateTimeInterface $scheduleAt, array $receivers, string $templateName): self
     {
         $bag = new self();
         $bag->date = $scheduleAt;
-        $bag->to = $receiver;
+        $bag->to = $receivers;
         $bag->template = $templateName;
 
         return $bag;
