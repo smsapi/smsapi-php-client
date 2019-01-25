@@ -6,7 +6,7 @@ help:
 .DEFAULT_GOAL := help
 
 prepare: ## load dependencies
-	docker run --rm -i -t -v '$(PWD)':/app composer:1.6.5 /usr/bin/composer update --prefer-lowest
+	docker run --rm -i -t -v '$(PWD)':/app composer:1.6.5 /usr/bin/composer update
 
 build: prepare ## build library
 	docker run --rm -t -v '$(PWD)':/app php:7-alpine php app/vendor/bin/phing -f app/build.xml build

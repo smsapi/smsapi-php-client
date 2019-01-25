@@ -38,6 +38,6 @@
         </if>
     </target>
     <target name="composer-update" depends="composer">
-        <exec command="composer update --prefer-lowest" passthru="true" />
+        <exec command="composer update" passthru="true" />
     </target>
 </project>
