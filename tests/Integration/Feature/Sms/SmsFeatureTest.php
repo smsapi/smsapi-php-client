@@ -56,6 +56,25 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
     /**
      * @test
      */
+    public function it_should_receive_details_for_single_sms()
+    {
+        $message = 'some message';
+        $smsFeature = self::$smsapiService->smsFeature();
+        $someReceiver = PhoneNumberFixture::anyPhoneNumber();
+        $sendSmsBag = SendSmsBag::withMessage($someReceiver, $message);
+        $sendSmsBag->test = true;
+
+        $result = $smsFeature->sendSms($sendSmsBag);
+
+        $this->assertNotNull($result->details);
+        $this->assertEquals($message, $result->details->message);
+        $this->assertEquals(mb_strlen($message), $result->details->length);
+        $this->assertEquals(1, $result->details->parts);
+    }
+
+    /**
+     * @test
+     */
     public function it_should_send_flash_sms()
     {
         $smsFeature = self::$smsapiService->smsFeature();
@@ -136,6 +155,26 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
         $results = $smsFeature->sendFlashSmss($sendSmsesBag);
 
         $this->assertCount(2, $results);
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_not_receive_details_for_smss()
+    {
+        $smsFeature = self::$smsapiService->smsFeature();
+        $receivers = [
+            PhoneNumberFixture::anyPhoneNumber(),
+            PhoneNumberFixture::anotherPhoneNumber(),
+        ];
+        $sendSmsesBag = SendSmssBag::withMessage($receivers, 'some message');
+        $sendSmsesBag->test = true;
+
+        $results = $smsFeature->sendSmss($sendSmsesBag);
+
+        foreach ($results as $result) {
+            $this->assertNull($result->details);
+        }
     }
 
     /**

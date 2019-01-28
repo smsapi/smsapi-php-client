@@ -44,9 +44,16 @@ class SmsHttpFeature implements SmsFeature
 
     public function sendSms(SendSmsBag $sendSmsBag): Sms
     {
-        return $this->dataFactoryProvider
-            ->provideSmsFactory()
-            ->createFromObject(current($this->makeRequest($sendSmsBag)->list));
+        $sendSmsBag->details = true;
+
+        $response = $this->makeRequest($sendSmsBag);
+
+        return $this->dataFactoryProvider->provideSmsFactory()->createFromObjectWithDetails(
+            current($response->list),
+            $response->message,
+            $response->length,
+            $response->parts
+        );
     }
 
     /**
@@ -57,10 +64,16 @@ class SmsHttpFeature implements SmsFeature
     public function sendFlashSms(SendSmsBag $sendSmsBag): Sms
     {
         $sendSmsBag->flash = true;
+        $sendSmsBag->details = true;
 
-        return $this->dataFactoryProvider
-            ->provideSmsFactory()
-            ->createFromObject(current($this->makeRequest($sendSmsBag)->list));
+        $response = $this->makeRequest($sendSmsBag);
+
+        return $this->dataFactoryProvider->provideSmsFactory()->createFromObjectWithDetails(
+            current($response->list),
+            $response->message,
+            $response->length,
+            $response->parts
+        );
     }
 
     /**
@@ -115,10 +128,16 @@ class SmsHttpFeature implements SmsFeature
     public function scheduleSms(ScheduleSmsBag $scheduleSmsBag): Sms
     {
         $scheduleSmsBag->dateValidate = true;
+        $scheduleSmsBag->details = true;
 
-        return $this->dataFactoryProvider
-            ->provideSmsFactory()
-            ->createFromObject(current($this->makeRequest($scheduleSmsBag)->list));
+        $response = $this->makeRequest($scheduleSmsBag);
+
+        return $this->dataFactoryProvider->provideSmsFactory()->createFromObjectWithDetails(
+            current($response->list),
+            $response->message,
+            $response->length,
+            $response->parts
+        );
     }
 
     public function scheduleSmss(ScheduleSmssBag $scheduleSmssBag): array

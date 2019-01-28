@@ -27,4 +27,7 @@ class Sms
 
     /** @var string|null */
     public $idx;
+
+    /** @var SmsDetails|null */
+    public $details;
 }
