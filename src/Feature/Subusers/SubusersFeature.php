@@ -5,6 +5,7 @@ namespace Smsapi\Client\Feature\Subusers;
 
 use Smsapi\Client\Feature\Subusers\Bag\CreateSubuserBag;
 use Smsapi\Client\Feature\Subusers\Bag\DeleteSubuserBag;
+use Smsapi\Client\Feature\Subusers\Bag\UpdateSubuserBag;
 use Smsapi\Client\Feature\Subusers\Data\Subuser;
 
 /**
@@ -23,4 +24,6 @@ interface SubusersFeature
      * @return void
      */
     public function deleteSubuser(DeleteSubuserBag $deleteSubuser);
+
+    public function updateSubuser(UpdateSubuserBag $updateSubuser): Subuser;
 }

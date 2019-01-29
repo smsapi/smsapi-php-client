@@ -7,6 +7,7 @@ use Smsapi\Client\Feature\Subusers\Bag\DeleteSubuserBag;
 use Smsapi\Client\Tests\Assert\SubuserAssert;
 use Smsapi\Client\Tests\Fixture\Subusers\CreateSubuserBagMother;
 use Smsapi\Client\Tests\Fixture\Subusers\SubuserMother;
+use Smsapi\Client\Tests\Fixture\Subusers\UpdateSubuserBagMother;
 use Smsapi\Client\Tests\SmsapiClientIntegrationTestCase;
 
 class SubusersFeatureTest extends SmsapiClientIntegrationTestCase
@@ -50,6 +51,24 @@ class SubusersFeatureTest extends SmsapiClientIntegrationTestCase
         $result = $subusersFeature->findSubusers();
 
         $this->subUserAssert->assertContainsSubuser(SubuserMother::createAnySubuser(), $result);
+    }
+
+    /**
+     * @test
+     * @depends it_should_create_subuser
+     */
+    public function it_should_update_subuser(string $subuserId)
+    {
+        $subusersFeature = self::$smsapiService->subusersFeature();
+
+        $updateSubuserBag = UpdateSubuserBagMother::createWithId($subuserId);
+
+        $result = $subusersFeature->updateSubuser($updateSubuserBag);
+
+        $this->assertEquals($updateSubuserBag->description, $result->description);
+        $this->assertEquals($updateSubuserBag->active, $result->active);
+        $this->assertEquals($updateSubuserBag->points['from_account'], $result->points->fromAccount);
+        $this->assertEquals($updateSubuserBag->points['per_month'], $result->points->perMonth);
     }
 
     /**

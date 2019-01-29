@@ -5,6 +5,7 @@ namespace Smsapi\Client\Feature\Subusers;
 
 use Smsapi\Client\Feature\Subusers\Bag\CreateSubuserBag;
 use Smsapi\Client\Feature\Subusers\Bag\DeleteSubuserBag;
+use Smsapi\Client\Feature\Subusers\Bag\UpdateSubuserBag;
 use Smsapi\Client\Feature\Subusers\Data\Subuser;
 use Smsapi\Client\Feature\Subusers\Data\SubuserFactory;
 use Smsapi\Client\Infrastructure\RequestExecutor\RestRequestExecutor;
@@ -54,5 +55,15 @@ class SubusersHttpFeature implements SubusersFeature
     public function deleteSubuser(DeleteSubuserBag $deleteSubuser)
     {
         $this->restRequestExecutor->delete(sprintf('subusers/%s', $deleteSubuser->id), []);
+    }
+
+    public function updateSubuser(UpdateSubuserBag $updateSubuser): Subuser
+    {
+        $subuserId = $updateSubuser->id;
+        unset($updateSubuser->id);
+
+        $result = $this->restRequestExecutor->update(sprintf('subusers/%s', $subuserId), (array)$updateSubuser);
+
+        return $this->subuserFactory->createFromObject($result);
     }
 }
