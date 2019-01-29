@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 ### Fixed
 - sms params
 - sending sms with external id (idx)
+- decimal subuser points
 
 ## [2.0.0] - 2018-10-30
 ### Added

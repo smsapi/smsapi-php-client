@@ -5,7 +5,6 @@ namespace Smsapi\Client\Feature\Subusers\Bag;
 
 /**
  * @api
- * @property array $points
  * @property bool $active
  * @property string $description
  */
@@ -34,7 +33,7 @@ class CreateSubuserBag
         $this->credentials['password'] = $panelPassword;
     }
 
-    public function setPoints(int $fromAccount, int $perMonth)
+    public function setPoints(float $fromAccount, float $perMonth)
     {
         $this->points = ['from_account' => $fromAccount, 'per_month' => $perMonth];
     }
