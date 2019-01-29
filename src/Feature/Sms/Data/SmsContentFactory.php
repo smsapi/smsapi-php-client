@@ -7,11 +7,11 @@ namespace Smsapi\Client\Feature\Sms\Data;
 /**
  * @internal
  */
-class SmsDetailsFactory
+class SmsContentFactory
 {
-    public function create(string $message, int $length, int $parts): SmsDetails
+    public function create(string $message, int $length, int $parts): SmsContent
     {
-        $smsDetails = new SmsDetails();
+        $smsDetails = new SmsContent();
 
         $smsDetails->message = $message;
         $smsDetails->length = $length;

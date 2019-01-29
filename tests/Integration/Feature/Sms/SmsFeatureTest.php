@@ -66,10 +66,10 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
 
         $result = $smsFeature->sendSms($sendSmsBag);
 
-        $this->assertNotNull($result->details);
-        $this->assertEquals($message, $result->details->message);
-        $this->assertEquals(mb_strlen($message), $result->details->length);
-        $this->assertEquals(1, $result->details->parts);
+        $this->assertNotNull($result->content);
+        $this->assertEquals($message, $result->content->message);
+        $this->assertEquals(mb_strlen($message), $result->content->length);
+        $this->assertEquals(1, $result->content->parts);
     }
 
     /**

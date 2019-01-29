@@ -28,7 +28,7 @@ class SmsFactory
     {
         $sms = $this->createFromObject($object);
 
-        $sms->details = (new SmsDetailsFactory())->create($message, $length, $parts);
+        $sms->content = (new SmsContentFactory())->create($message, $length, $parts);
 
         return $sms;
     }

@@ -7,7 +7,7 @@ namespace Smsapi\Client\Feature\Sms\Data;
 /**
  * @api
  */
-class SmsDetails
+class SmsContent
 {
     /** @var string */
     public $message;
