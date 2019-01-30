@@ -71,6 +71,19 @@ class ContactsFeatureTest extends SmsapiClientIntegrationTestCase
      * @test
      * @depends it_should_create_contact
      */
+    public function it_should_find_all_contacts()
+    {
+        $contactsFindBag = new FindContactsBag();
+
+        $foundContacts = $this->feature->findContacts($contactsFindBag);
+
+        $this->assertGreaterThanOrEqual(1, count($foundContacts));
+    }
+
+    /**
+     * @test
+     * @depends it_should_create_contact
+     */
     public function it_should_find_contact_by_phone_number()
     {
         $contactFindBag = new FindContactsBag();
