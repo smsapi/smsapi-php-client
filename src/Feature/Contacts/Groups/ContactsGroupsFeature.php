@@ -11,6 +11,7 @@ use Smsapi\Client\Feature\Contacts\Groups\Bag\DeleteGroupBag;
 use Smsapi\Client\Feature\Contacts\Groups\Bag\FindContactGroupBag;
 use Smsapi\Client\Feature\Contacts\Groups\Bag\FindContactGroupsBag;
 use Smsapi\Client\Feature\Contacts\Groups\Bag\FindGroupBag;
+use Smsapi\Client\Feature\Contacts\Groups\Bag\FindGroupsBag;
 use Smsapi\Client\Feature\Contacts\Groups\Bag\UnpinContactFromGroupBag;
 use Smsapi\Client\Feature\Contacts\Groups\Bag\UpdateGroupBag;
 use Smsapi\Client\Feature\Contacts\Groups\Members\ContactsGroupsMembersFeature;
@@ -37,6 +38,8 @@ interface ContactsGroupsFeature
     public function findContactGroups(FindContactGroupsBag $findContactGroupsBag): array;
 
     public function unpinContactFromGroup(UnpinContactFromGroupBag $unpinContactFromGroupBag);
+
+    public function findGroups(FindGroupsBag $findGroupsBag): array;
 
     public function membersFeature(): ContactsGroupsMembersFeature;
 

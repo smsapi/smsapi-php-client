@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Smsapi\Client\Feature\Contacts\Groups;
 
+use Smsapi\Client\Feature\Contacts\Groups\Bag\FindGroupsBag;
 use Smsapi\Client\Feature\Data\DataFactoryProvider;
 use Smsapi\Client\Infrastructure\RequestExecutor\RestRequestExecutor;
 use Smsapi\Client\Feature\Contacts\Data\ContactGroup;
@@ -113,6 +114,19 @@ class ContactsGroupsHttpFeature implements ContactsGroupsFeature
         $this->restRequestExecutor->delete(
             'contacts/' . $unpinContactFromGroupBag->contactId . '/groups/' . $unpinContactFromGroupBag->groupId,
             []
+        );
+    }
+
+    public function findGroups(FindGroupsBag $findGroupsBag): array
+    {
+        $result = $this->restRequestExecutor->read(
+            'contacts/groups/',
+            []
+        );
+
+        return array_map(
+            [$this->dataFactoryProvider->provideContactGroupFactory(), 'createFromObjectWithPermissions'],
+            $result->collection
         );
     }
 

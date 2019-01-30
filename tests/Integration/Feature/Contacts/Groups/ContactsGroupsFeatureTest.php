@@ -10,6 +10,7 @@ use Smsapi\Client\Feature\Contacts\Groups\Bag\DeleteGroupBag;
 use Smsapi\Client\Feature\Contacts\Groups\Bag\FindContactGroupBag;
 use Smsapi\Client\Feature\Contacts\Groups\Bag\FindContactGroupsBag;
 use Smsapi\Client\Feature\Contacts\Groups\Bag\FindGroupBag;
+use Smsapi\Client\Feature\Contacts\Groups\Bag\FindGroupsBag;
 use Smsapi\Client\Feature\Contacts\Groups\Bag\UnpinContactFromGroupBag;
 use Smsapi\Client\Feature\Contacts\Groups\Bag\UpdateGroupBag;
 use Smsapi\Client\Feature\Contacts\Groups\ContactsGroupsFeature;
@@ -156,5 +157,18 @@ class ContactsGroupsFeatureTest extends SmsapiClientIntegrationTestCase
 
         $this->feature->deleteGroup($groupDeleteBag);
         $this->feature->findGroup($groupFindBag);
+    }
+
+    /**
+     * @test
+     * @depends it_should_create_group
+     */
+    public function it_should_find_all_groups()
+    {
+        $findGroupsBag = new FindGroupsBag();
+
+        $groups = $this->feature->findGroups($findGroupsBag);
+
+        $this->assertGreaterThanOrEqual(1, count($groups));
     }
 }
