@@ -28,12 +28,10 @@ class SubusersFeatureTest extends SmsapiClientIntegrationTestCase
      */
     public function it_should_create_subuser(): string
     {
-        $subusersFeature = self::$smsapiService->subusersFeature();
-
         $subuser = SubuserMother::createAnySubuser();
         $createSubuserBag = CreateSubuserBagMother::createWithSubuserName($subuser->username);
 
-        $result = $subusersFeature->createSubuser($createSubuserBag);
+        $result = self::$smsapiService->subusersFeature()->createSubuser($createSubuserBag);
 
         $this->subUserAssert->assertSubuser($subuser, $result);
 
@@ -46,9 +44,7 @@ class SubusersFeatureTest extends SmsapiClientIntegrationTestCase
      */
     public function it_should_find_subusers()
     {
-        $subusersFeature = self::$smsapiService->subusersFeature();
-
-        $result = $subusersFeature->findSubusers();
+        $result = self::$smsapiService->subusersFeature()->findSubusers();
 
         $this->subUserAssert->assertContainsSubuser(SubuserMother::createAnySubuser(), $result);
     }
@@ -59,11 +55,9 @@ class SubusersFeatureTest extends SmsapiClientIntegrationTestCase
      */
     public function it_should_update_subuser(string $subuserId)
     {
-        $subusersFeature = self::$smsapiService->subusersFeature();
-
         $updateSubuserBag = UpdateSubuserBagMother::createWithId($subuserId);
 
-        $result = $subusersFeature->updateSubuser($updateSubuserBag);
+        $result = self::$smsapiService->subusersFeature()->updateSubuser($updateSubuserBag);
 
         $this->assertEquals($updateSubuserBag->description, $result->description);
         $this->assertEquals($updateSubuserBag->active, $result->active);
@@ -77,10 +71,9 @@ class SubusersFeatureTest extends SmsapiClientIntegrationTestCase
      */
     public function it_should_delete_subuser(string $subuserId)
     {
-        $subusersFeature = self::$smsapiService->subusersFeature();
         $deleteSubuserBag = new DeleteSubuserBag($subuserId);
 
-        $subusersFeature->deleteSubuser($deleteSubuserBag);
+        self::$smsapiService->subusersFeature()->deleteSubuser($deleteSubuserBag);
 
         $this->assertTrue(true);
     }
