@@ -42,14 +42,9 @@ class SendernamesHttpFeature implements SendernamesFeature
         return $this->sendernameFactory->createFromObject($result);
     }
 
-    /**
-     * @param FindSendernamesBag|null $findSendernamesBag
-     * @return array
-     * @throws SmsapiClientException
-     */
-    public function findSendernames(FindSendernamesBag $findSendernamesBag = null): array
+    public function findSendernames(): array
     {
-        $result = $this->restRequestExecutor->read('sms/sendernames', (array)$findSendernamesBag);
+        $result = $this->restRequestExecutor->read('sms/sendernames', []);
 
         return array_map([$this->sendernameFactory, 'createFromObject'], $result->collection);
     }

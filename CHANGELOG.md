@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - sms params
 - sending sms with external id (idx)
 - decimal subuser points
+- marks `FindSendernamesBag` as deprecated
 
 ## [2.0.0] - 2018-10-30
 ### Added

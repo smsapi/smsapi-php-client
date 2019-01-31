@@ -34,9 +34,8 @@ class SendernamesFeatureTest extends SmsapiClientIntegrationTestCase
     public function it_should_find_sendernames()
     {
         $sendernameFeature = self::$smsapiService->smsFeature()->sendernameFeature();
-        $findSendernamesBag = new FindSendernamesBag();
 
-        $result = $sendernameFeature->findSendernames($findSendernamesBag);
+        $result = $sendernameFeature->findSendernames();
 
         $senders = array_column(array_map('get_object_vars', $result), 'sender');
         $this->assertContains(self::SENDERNAME, $senders);

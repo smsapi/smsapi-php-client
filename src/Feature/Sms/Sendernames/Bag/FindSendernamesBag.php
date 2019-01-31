@@ -5,6 +5,7 @@ namespace Smsapi\Client\Feature\Sms\Sendernames\Bag;
 
 /**
  * @api
+ * @deprecated
  */
 class FindSendernamesBag
 {
