@@ -59,10 +59,7 @@ class SubusersFeatureTest extends SmsapiClientIntegrationTestCase
 
         $result = self::$smsapiService->subusersFeature()->updateSubuser($updateSubuserBag);
 
-        $this->assertEquals($updateSubuserBag->description, $result->description);
-        $this->assertEquals($updateSubuserBag->active, $result->active);
-        $this->assertEquals($updateSubuserBag->points['from_account'], $result->points->fromAccount);
-        $this->assertEquals($updateSubuserBag->points['per_month'], $result->points->perMonth);
+        $this->subUserAssert->assertSubuserUpdated($updateSubuserBag, $result);
     }
 
     /**
