@@ -117,7 +117,7 @@ class ContactsGroupsHttpFeature implements ContactsGroupsFeature
         );
     }
 
-    public function findGroups(FindGroupsBag $findGroupsBag): array
+    public function findGroups(): array
     {
         $result = $this->restRequestExecutor->read(
             'contacts/groups/',
