@@ -24,8 +24,10 @@ class SmsFactory
         return $sms;
     }
 
-    public function createFromObjectWithDetails(stdClass $object, string $message, int $length, int $parts): Sms
+    public function createFromObjectWithDetails(stdClass $object, string $message, int $length, $parts): Sms
     {
+        $parts = (int)$parts;
+
         $sms = $this->createFromObject($object);
 
         $sms->content = (new SmsContentFactory())->create($message, $length, $parts);
