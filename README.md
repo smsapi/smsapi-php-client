@@ -122,7 +122,29 @@ $service->smsFeature()
     ->sendSms($sms);
 ```
 
-For more usage examples take a look at client test suite. 
+For more usage examples take a look at client test suite.
+
+### How to use optional request parameters?
+
+Request parameters are represented in a form of data transfer object.
+DTOs can be found by searching for 'bag' postfixed classes.
+Each bag may contain required and optional parameters.
+Required parameters are that class public properties, usually accessible via some form of a setter or named constructor.
+Optional parameters are described by docblock's '@property' annotation.
+
+Each parameter can be also set directly by setting bag property, as in example:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use Smsapi\Client\Feature\Sms\Bag\SendSmsBag;
+
+$sms = SendSmsBag::withMessage('someone phone number', 'some message');
+$sms->encoding = 'utf-8';
+
+```
 
 ## How to use additional features?
 
