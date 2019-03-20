@@ -10,18 +10,37 @@ use Smsapi\Client\SmsapiClientException;
  */
 class ApiErrorException extends SmsapiClientException
 {
-    public static function withMessageErrorAndStatusCode(string $message, string $error, int $statusCode)
+    /** @var string */
+    private $tag;
+
+    public static function withMessageTagAndStatusCode(string $message, string $tag, int $statusCode): self
     {
-        return new self(sprintf('[%s] %s', $error, $message), $statusCode);
+        $exception = new self($message, $statusCode);
+        $exception->tag = $tag;
+
+        return $exception;
     }
 
-    public static function withStatusCode($statusCode)
+    public static function withStatusCode($statusCode): self
     {
         return new self('Api error', $statusCode);
     }
 
-    public static function withMessageAndError(string $message, int $error)
+    public static function withMessageAndTag(string $message, int $tag): self
     {
-        return new self(sprintf('[%u] %s', $error, $message));
+        $exception = new self($message);
+        $exception->tag = (string)$tag;
+
+        return $exception;
+    }
+
+    public static function withMessageAndStatusCode(string $message, int $statusCode): self
+    {
+        return new self($message, $statusCode);
+    }
+
+    public function getTag(): string
+    {
+        return $this->tag;
     }
 }

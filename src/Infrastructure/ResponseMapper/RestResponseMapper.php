@@ -39,14 +39,14 @@ class RestResponseMapper
         } elseif (in_array($statusCode, [ResponseHttpCode::ACCEPTED, ResponseHttpCode::NO_CONTENT])) {
             return new stdClass();
         } elseif ($statusCode == ResponseHttpCode::SERVICE_UNAVAILABLE) {
-            throw ApiErrorException::withMessageAndError('Service unavailable', $statusCode);
+            throw ApiErrorException::withMessageAndStatusCode('Service unavailable', $statusCode);
         } elseif ($contents) {
             $object = $this->jsonDecode->decode($contents);
 
             $this->logDecodedResponse($object);
 
             if (isset($object->message, $object->error)) {
-                throw ApiErrorException::withMessageErrorAndStatusCode($object->message, $object->error, $statusCode);
+                throw ApiErrorException::withMessageTagAndStatusCode($object->message, $object->error, $statusCode);
             }
         }
 
