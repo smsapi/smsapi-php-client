@@ -7,7 +7,6 @@ use Smsapi\Client\Infrastructure\ResponseMapper\ApiErrorException;
 use Smsapi\Client\Feature\Sms\Sendernames\Bag\CreateSendernameBag;
 use Smsapi\Client\Feature\Sms\Sendernames\Bag\DeleteSendernameBag;
 use Smsapi\Client\Feature\Sms\Sendernames\Bag\FindSendernameBag;
-use Smsapi\Client\Feature\Sms\Sendernames\Bag\FindSendernamesBag;
 use Smsapi\Client\Feature\Sms\Sendernames\Bag\MakeSendernameDefaultBag;
 use Smsapi\Client\Tests\SmsapiClientIntegrationTestCase;
 
@@ -30,6 +29,7 @@ class SendernamesFeatureTest extends SmsapiClientIntegrationTestCase
 
     /**
      * @test
+     * @depends it_should_create_sendername
      */
     public function it_should_find_sendernames()
     {
@@ -43,6 +43,7 @@ class SendernamesFeatureTest extends SmsapiClientIntegrationTestCase
 
     /**
      * @test
+     * @depends it_should_create_sendername
      */
     public function it_should_find_sendername()
     {
@@ -56,6 +57,7 @@ class SendernamesFeatureTest extends SmsapiClientIntegrationTestCase
 
     /**
      * @test
+     * @depends it_should_create_sendername
      */
     public function it_should_delete_sendername()
     {
