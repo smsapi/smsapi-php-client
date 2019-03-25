@@ -36,7 +36,7 @@ class LegacyResponseMapper
             $this->logger->info('Decoded response', ['response' => $object]);
 
             if (isset($object->message, $object->error)) {
-                throw ApiErrorException::withMessageAndTag($object->message, $object->error);
+                throw ApiErrorException::withMessageAndError($object->message, $object->error);
             }
 
             return $object;

@@ -46,7 +46,7 @@ class RestResponseMapper
             $this->logDecodedResponse($object);
 
             if (isset($object->message, $object->error)) {
-                throw ApiErrorException::withMessageTagAndStatusCode($object->message, $object->error, $statusCode);
+                throw ApiErrorException::withMessageErrorAndStatusCode($object->message, $object->error, $statusCode);
             }
         }
 
