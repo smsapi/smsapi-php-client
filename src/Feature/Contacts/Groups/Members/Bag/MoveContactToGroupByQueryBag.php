@@ -7,7 +7,7 @@ namespace Smsapi\Client\Feature\Contacts\Groups\Members\Bag;
 /**
  * @api
  * @property string $q
- * @property integer $phoneNumber
+ * @property string $phoneNumber
  * @property string $email
  * @property string $firstName
  * @property string $lastName

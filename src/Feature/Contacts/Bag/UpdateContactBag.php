@@ -6,7 +6,7 @@ namespace Smsapi\Client\Feature\Contacts\Bag;
 
 /**
  * @api
- * @property integer $phoneNumber
+ * @property string $phoneNumber
  * @property string $email
  * @property string $firstName
  * @property string $lastName

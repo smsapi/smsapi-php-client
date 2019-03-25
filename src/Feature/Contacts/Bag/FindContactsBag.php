@@ -10,7 +10,7 @@ use Smsapi\Client\Feature\Bag\SortBag;
 /**
  * @api
  * @property string $q
- * @property integer $phoneNumber
+ * @property string $phoneNumber
  * @property string $email
  * @property string $firstName
  * @property string $lastName

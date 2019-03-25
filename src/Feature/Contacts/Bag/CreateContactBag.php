@@ -6,7 +6,7 @@ namespace Smsapi\Client\Feature\Contacts\Bag;
 
 /**
  * @api
- * @property integer $phoneNumber
+ * @property string $phoneNumber
  * @property string $email
  * @property string $firstName
  * @property string $lastName
@@ -18,11 +18,20 @@ namespace Smsapi\Client\Feature\Contacts\Bag;
  */
 class CreateContactBag
 {
-    public function withPhoneNumber(int $phoneNumber): self
+    public function withPhone(string $phoneNumber): self
     {
         $bag = new self();
         $bag->phoneNumber = $phoneNumber;
         return $bag;
+    }
+
+    /**
+     * @deprecated
+     * @see withPhone
+     */
+    public function withPhoneNumber(int $phoneNumber): self
+    {
+        return self::withPhone((string)$phoneNumber);
     }
 
     public static function withEmail(string $email): self
