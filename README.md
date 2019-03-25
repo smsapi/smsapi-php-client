@@ -5,11 +5,19 @@
 [![Packagist - downloads](https://img.shields.io/packagist/dt/smsapi/php-client.svg)](https://packagist.org/packages/smsapi/php-client)
 [![Packagist - license](https://img.shields.io/packagist/l/smsapi/php-client.svg)](https://packagist.org/packages/smsapi/php-client)
 
+## [Version 1.8.7 available here](https://github.com/smsapi/smsapi-php-client/tree/v1.8.7)
+
+## Docs & Infos
+* [SMSAPI.COM API documentation](www.smsapi.com/docs)
+* [SMSAPI.PL API documentation](www.smsapi.pl/docs)
+* [Repository on GitHub](https://github.com/smsapi/smsapi-php-client)
+* [Package on Packagist](https://packagist.org/packages/smsapi/php-client)
+* [SMSAPI.COM web page](https://smsapi.com)
+* [SMSAPI.PL web page](https://smsapi.pl)
+
 ## Requirements
 
 * [composer](https://getcomposer.org/)
-
-### [Version 1.8.7 available here](https://github.com/smsapi/smsapi-php-client/tree/v1.8.7)
 
 ## Install package with dependencies
 
@@ -196,10 +204,3 @@ $logger = new class() implements LoggerInterface
 ## Test package
 1. Download package: `composer create-project smsapi/php-client`
 2. Execute tests: `./vendor/bin/phing`
-
-## More info
-* [SMSAPI.COM API documentation](https://docs.smsapi.com)
-* [Repository on GitHub](https://github.com/smsapi/smsapi-php-client)
-* [Package on Packagist](https://packagist.org/packages/smsapi/php-client)
-* [SMSAPI.COM web page](https://smsapi.com)
-* [SMSAPI.PL web page](https://smsapi.pl)
