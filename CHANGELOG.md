@@ -9,7 +9,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 ### Changed
 - api error exception messages
 ### Fixed
-- phone numbers is `ContectsFeature` related bags annotated as strings
 - `CreateContactBag::withPhoneNumber` method is deprecated, use `CreateContactBag::withPhone` instead
 
 ## [2.1.1] - 2019-02-19
