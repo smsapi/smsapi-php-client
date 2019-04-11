@@ -10,6 +10,6 @@ class CreateSubuserBagMother
 {
     public static function createWithSubuserName(string $subuserName): CreateSubuserBag
     {
-        return new CreateSubuserBag($subuserName, 'some_password');
+        return new CreateSubuserBag($subuserName, PasswordFixture::valid());
     }
 }

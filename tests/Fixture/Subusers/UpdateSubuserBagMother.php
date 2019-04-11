@@ -14,8 +14,8 @@ class UpdateSubuserBagMother
         $updateSubuserBag->active = true;
         $updateSubuserBag->description = uniqid('description');
         $updateSubuserBag->setPoints(10.0, 20.0);
-        $updateSubuserBag->setPassword(uniqid('test'));
-        $updateSubuserBag->setApiPassword(uniqid('test'));
+        $updateSubuserBag->setPassword(PasswordFixture::valid());
+        $updateSubuserBag->setApiPassword(PasswordFixture::valid());
 
         return $updateSubuserBag;
     }
