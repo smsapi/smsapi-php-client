@@ -13,3 +13,6 @@ build: prepare ## build library
 
 test: prepare ## run test
 	docker run --rm -t -v '$(PWD)':/app --network host php:7-alpine php app/vendor/bin/phing -f app/build.xml test
+
+test-suite: prepare ## run test against suite, ex: make test-suite SUITE="unit"
+	docker run --rm -t -v '$(PWD)':/app --network host php:7-alpine php app/vendor/bin/phing -f app/build.xml test -Dsuite=$(SUITE)

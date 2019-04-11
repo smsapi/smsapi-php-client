@@ -2,7 +2,8 @@
 
 <project name="smsapi/php-client" default="test">
     <target name="test">
-        <exec command="./vendor/bin/phpunit" passthru="true" />
+        <property name="suite" value="all"/>
+        <exec command="./vendor/bin/phpunit --testsuite=${suite}" passthru="true" />
     </target>
     <target name="phpcbf-src">
         <exec command="./vendor/bin/phpcbf --standard=./phpcs.xml src" passthru="true" />

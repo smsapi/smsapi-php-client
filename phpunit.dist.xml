@@ -25,5 +25,40 @@
         <testsuite name="integration">
             <directory>tests/Integration</directory>
         </testsuite>
+        <testsuite name="feature-contacts">
+            <directory>tests/Integration/Feature/Contacts</directory>
+            <directory>tests/Unit/Feature/Contacts</directory>
+        </testsuite>
+        <testsuite name="feature-hlr">
+            <directory>tests/Integration/Feature/Hlr</directory>
+        </testsuite>
+        <testsuite name="feature-mms">
+            <directory>tests/Integration/Feature/Mms</directory>
+        </testsuite>
+        <testsuite name="feature-ping">
+            <directory>tests/Integration/Feature/Ping</directory>
+        </testsuite>
+        <testsuite name="feature-profile">
+            <directory>tests/Integration/Feature/Profile</directory>
+        </testsuite>
+        <testsuite name="feature-push">
+            <directory>tests/Unit/Feature/Push</directory>
+        </testsuite>
+        <testsuite name="feature-sendernames">
+            <directory>tests/Integration/Feature/Sendernames</directory>
+        </testsuite>
+        <testsuite name="feature-shorturl">
+            <directory>tests/Integration/Feature/ShortUrl</directory>
+        </testsuite>
+        <testsuite name="feature-sms">
+            <directory>tests/Integration/Feature/Sms</directory>
+            <directory>tests/Unit/Feature/Sms</directory>
+        </testsuite>
+        <testsuite name="feature-subusers">
+            <directory>tests/Integration/Feature/Subusers</directory>
+        </testsuite>
+        <testsuite name="feature-vms">
+            <directory>tests/Integration/Feature/Vms</directory>
+        </testsuite>
     </testsuites>
 </phpunit>
