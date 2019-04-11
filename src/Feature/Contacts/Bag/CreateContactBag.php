@@ -18,7 +18,7 @@ namespace Smsapi\Client\Feature\Contacts\Bag;
  */
 class CreateContactBag
 {
-    public function withPhone(string $phoneNumber): self
+    public static function withPhone(string $phoneNumber): self
     {
         $bag = new self();
         $bag->phoneNumber = $phoneNumber;
@@ -29,7 +29,7 @@ class CreateContactBag
      * @deprecated
      * @see withPhone
      */
-    public function withPhoneNumber(int $phoneNumber): self
+    public static function withPhoneNumber(int $phoneNumber): self
     {
         return self::withPhone((string)$phoneNumber);
     }
