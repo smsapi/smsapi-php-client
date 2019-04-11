@@ -33,10 +33,6 @@ class ContactsHttpFeature implements ContactsFeature
 
     public function findContacts(FindContactsBag $findContactsBag): array
     {
-        if (isset($findContactsBag->groupId)) {
-            $findContactsBag->groupId = implode(',', $findContactsBag->groupId);
-        }
-
         $result = $this->restRequestExecutor->read('contacts', (array)$findContactsBag);
 
         return array_map(
