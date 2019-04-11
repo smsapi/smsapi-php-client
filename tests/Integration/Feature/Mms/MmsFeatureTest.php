@@ -15,7 +15,7 @@ class MmsFeatureTest extends SmsapiClientIntegrationTestCase
     public function it_should_send_mms()
     {
         $smsFeature = self::$smsapiService->mmsFeature();
-        $someReceiver = PhoneNumberFixture::anyPhoneNumber();
+        $someReceiver = PhoneNumberFixture::validMobile();
         $sendSmsBag = new SendMmsBag($someReceiver, 'some message', '<smil></smil>');
         $sendSmsBag->test = true;
 

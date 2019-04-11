@@ -8,18 +8,13 @@ class PhoneNumberFixture
     /** @var int */
     private static $i = 0;
 
-    public static function anyPhoneNumber(): string
-    {
-        return '48781441345';
-    }
-
-    public static function anotherPhoneNumber(): string
-    {
-        return '48781441346';
-    }
-
     public static function valid(): string
     {
         return (string)(48327201200 + self::$i++);
+    }
+
+    public static function validMobile(): string
+    {
+        return (string)(48781441345 + self::$i++);
     }
 }
