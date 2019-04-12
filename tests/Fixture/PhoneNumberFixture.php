@@ -13,11 +13,11 @@ class PhoneNumberFixture
 
     public static function anyValid(): string
     {
-        return (string)((int)self::$valid + self::$i);
+        return (string)((int)self::$valid + self::$i++);
     }
 
     public static function anyValidMobile(): string
     {
-        return (string)((int)self::$validMobile + self::$i);
+        return (string)((int)self::$validMobile + self::$i++);
     }
 }
