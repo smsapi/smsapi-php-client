@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace Smsapi\Client\Tests\Integration\Contacts;
 
+use Smsapi\Client\Feature\Contacts\Bag\CreateContactBag;
+use Smsapi\Client\Feature\Contacts\Bag\DeleteContactBag;
 use Smsapi\Client\Feature\Contacts\Fields\Bag\CreateContactFieldBag;
 use Smsapi\Client\Feature\Contacts\Fields\Bag\DeleteContactFieldBag;
 use Smsapi\Client\Feature\Contacts\Fields\Bag\FindContactFieldOptionsBag;
 use Smsapi\Client\Feature\Contacts\Fields\Bag\UpdateContactFieldBag;
 use Smsapi\Client\Feature\Contacts\Fields\ContactsFieldsFeature;
 use Smsapi\Client\Tests\Assert\ContactFieldsAssert;
+use Smsapi\Client\Tests\Fixture\PhoneNumberFixture;
 use Smsapi\Client\Tests\SmsapiClientIntegrationTestCase;
 
 class ContactsFieldsFeatureTest extends SmsapiClientIntegrationTestCase
@@ -90,10 +93,17 @@ class ContactsFieldsFeatureTest extends SmsapiClientIntegrationTestCase
      */
     public function it_should_find_contact_field_options()
     {
+        $createContactBag = new CreateContactBag();
+        $createContactBag->gender = 'male';
+        $createContactBag->phoneNumber = PhoneNumberFixture::$validMobile;
+        $contact = self::$smsapiService->contactsFeature()->createContact($createContactBag);
+
         $findContactFieldOptionsBag = new FindContactFieldOptionsBag('gender');
 
         $options = $this->feature->findFieldOptions($findContactFieldOptionsBag);
 
         $this->assertNotEmpty($options);
+
+        self::$smsapiService->contactsFeature()->deleteContact(new DeleteContactBag($contact->id));
     }
 }
