@@ -76,13 +76,18 @@ class SendernamesFeatureTest extends SmsapiClientIntegrationTestCase
      */
     public function it_should_make_sendername_default()
     {
+        $sender = 'INFOSMS';
         $sendernameFeature = self::$smsapiService->smsFeature()->sendernameFeature();
-        $sender = '2WAY';
+        $createSendernameBag = new CreateSendernameBag($sender);
         $makeSenderNameDefaultBag = new MakeSendernameDefaultBag($sender);
+        $deleteSendernameBag = new DeleteSendernameBag($sender);
 
+        $sendernameFeature->createSendername($createSendernameBag);
         $sendernameFeature->makeSendernameDefault($makeSenderNameDefaultBag);
 
         $sendername = $sendernameFeature->findSendername(new FindSendernameBag($sender));
         $this->assertTrue($sendername->isDefault);
+
+        $sendernameFeature->deleteSendername($deleteSendernameBag);
     }
 }
