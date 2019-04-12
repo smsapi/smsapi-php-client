@@ -26,7 +26,7 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
     public function it_should_send_sms()
     {
         $smsFeature = self::$smsapiService->smsFeature();
-        $someReceiver = PhoneNumberFixture::validMobile();
+        $someReceiver = PhoneNumberFixture::anyValidMobile();
         $sendSmsBag = SendSmsBag::withMessage($someReceiver, 'some message');
         $sendSmsBag->test = true;
 
@@ -41,7 +41,7 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
     public function it_should_send_sms_with_external_id()
     {
         $smsFeature = self::$smsapiService->smsFeature();
-        $someReceiver = PhoneNumberFixture::validMobile();
+        $someReceiver = PhoneNumberFixture::anyValidMobile();
         $externalId = 'any';
         $sendSmsBag = SendSmsBag::withMessage($someReceiver, 'some message');
         $sendSmsBag->setExternalId($externalId);
@@ -60,7 +60,7 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
     {
         $message = 'some message';
         $smsFeature = self::$smsapiService->smsFeature();
-        $someReceiver = PhoneNumberFixture::validMobile();
+        $someReceiver = PhoneNumberFixture::anyValidMobile();
         $sendSmsBag = SendSmsBag::withMessage($someReceiver, $message);
         $sendSmsBag->test = true;
 
@@ -78,7 +78,7 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
     public function it_should_send_flash_sms()
     {
         $smsFeature = self::$smsapiService->smsFeature();
-        $someReceiver = PhoneNumberFixture::validMobile();
+        $someReceiver = PhoneNumberFixture::anyValidMobile();
         $sendFlashSmsBag = SendSmsBag::withMessage($someReceiver, 'some message');
         $sendFlashSmsBag->test = true;
 
@@ -92,7 +92,7 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
      */
     public function it_should_send_sms_to_group()
     {
-        $somePhoneNumber = PhoneNumberFixture::validMobile();
+        $somePhoneNumber = PhoneNumberFixture::anyValidMobile();
         $createdGroup = $this->createGroupWithContact($somePhoneNumber);
         $smsFeature = self::$smsapiService->smsFeature();
         $sendSmsToGroup = SendSmsToGroupBag::withMessage($createdGroup->name, 'some message');
@@ -109,7 +109,7 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
      */
     public function it_should_send_flash_sms_to_group()
     {
-        $somePhoneNumber = PhoneNumberFixture::validMobile();
+        $somePhoneNumber = PhoneNumberFixture::anyValidMobile();
         $createdGroup = $this->createGroupWithContact($somePhoneNumber);
         $smsFeature = self::$smsapiService->smsFeature();
         $sendFlashSmsToGroup = SendSmsToGroupBag::withMessage($createdGroup->name, 'some message');
@@ -128,8 +128,8 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
     {
         $smsFeature = self::$smsapiService->smsFeature();
         $receivers = [
-            PhoneNumberFixture::validMobile(),
-            PhoneNumberFixture::validMobile(),
+            PhoneNumberFixture::anyValidMobile(),
+            PhoneNumberFixture::anyValidMobile(),
         ];
         $sendSmsesBag = SendSmssBag::withMessage($receivers, 'some message');
         $sendSmsesBag->test = true;
@@ -146,8 +146,8 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
     {
         $smsFeature = self::$smsapiService->smsFeature();
         $receivers = [
-            PhoneNumberFixture::validMobile(),
-            PhoneNumberFixture::validMobile(),
+            PhoneNumberFixture::anyValidMobile(),
+            PhoneNumberFixture::anyValidMobile(),
         ];
         $sendSmsesBag = SendSmssBag::withMessage($receivers, 'some message');
         $sendSmsesBag->test = true;
@@ -164,8 +164,8 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
     {
         $smsFeature = self::$smsapiService->smsFeature();
         $receivers = [
-            PhoneNumberFixture::validMobile(),
-            PhoneNumberFixture::validMobile(),
+            PhoneNumberFixture::anyValidMobile(),
+            PhoneNumberFixture::anyValidMobile(),
         ];
         $sendSmsesBag = SendSmssBag::withMessage($receivers, 'some message');
         $sendSmsesBag->test = true;
@@ -184,7 +184,7 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
     {
         $smsFeature = self::$smsapiService->smsFeature();
         $someDate = new DateTime('+1 day noon');
-        $someReceiver = PhoneNumberFixture::validMobile();
+        $someReceiver = PhoneNumberFixture::anyValidMobile();
         $scheduleSmsBag = ScheduleSmsBag::withMessage($someDate, $someReceiver, 'some message');
         $scheduleSmsBag->test = true;
 
@@ -202,8 +202,8 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
         $smsFeature = self::$smsapiService->smsFeature();
         $someDate = new DateTime('+1 day noon');
         $receivers = [
-            PhoneNumberFixture::validMobile(),
-            PhoneNumberFixture::validMobile(),
+            PhoneNumberFixture::anyValidMobile(),
+            PhoneNumberFixture::anyValidMobile(),
         ];
         $scheduleSmsBag = ScheduleSmssBag::withMessage($someDate, $receivers, 'some message');
         $scheduleSmsBag->test = true;
@@ -220,7 +220,7 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
     {
         $smsFeature = self::$smsapiService->smsFeature();
         $someDate = new DateTime('+1 day noon');
-        $someReceiver = PhoneNumberFixture::validMobile();
+        $someReceiver = PhoneNumberFixture::anyValidMobile();
         $scheduleFlashSmsBag = ScheduleSmsBag::withMessage($someDate, $someReceiver, 'some message');
         $scheduleFlashSmsBag->test = true;
 
@@ -235,7 +235,7 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
      */
     public function it_should_schedule_sms_to_group()
     {
-        $somePhoneNumber = PhoneNumberFixture::validMobile();
+        $somePhoneNumber = PhoneNumberFixture::anyValidMobile();
         $someDate = new DateTime('+1 day noon');
         $createdGroup = $this->createGroupWithContact($somePhoneNumber);
         $smsFeature = self::$smsapiService->smsFeature();
@@ -258,7 +258,7 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
      */
     public function it_should_schedule_flash_sms_to_group()
     {
-        $somePhoneNumber = PhoneNumberFixture::validMobile();
+        $somePhoneNumber = PhoneNumberFixture::anyValidMobile();
         $someDate = new DateTime('+1 day noon');
         $createdGroup = $this->createGroupWithContact($somePhoneNumber);
         $smsFeature = self::$smsapiService->smsFeature();

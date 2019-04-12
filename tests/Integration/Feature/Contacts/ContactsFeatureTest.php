@@ -17,7 +17,7 @@ use Smsapi\Client\Tests\SmsapiClientIntegrationTestCase;
 class ContactsFeatureTest extends SmsapiClientIntegrationTestCase
 {
     /** @var string */
-    private $phoneNumber;
+    private static $phoneNumber;
 
     /** @var ContactsFeature */
     private $feature;
@@ -27,6 +27,7 @@ class ContactsFeatureTest extends SmsapiClientIntegrationTestCase
      */
     public function before()
     {
+        self::$phoneNumber = PhoneNumberFixture::$valid;
         $this->feature = self::$smsapiService->contactsFeature();
     }
 
@@ -35,7 +36,7 @@ class ContactsFeatureTest extends SmsapiClientIntegrationTestCase
      */
     public function after()
     {
-        self::cleanupContact($this->phoneNumber);
+        self::cleanupContact(self::$phoneNumber);
     }
 
     /**
@@ -43,14 +44,12 @@ class ContactsFeatureTest extends SmsapiClientIntegrationTestCase
      */
     public function it_should_create_contact(): string
     {
-        $this->phoneNumber = PhoneNumberFixture::valid();
-
         $contactCreateBag = new CreateContactBag();
-        $contactCreateBag->phoneNumber = $this->phoneNumber;
+        $contactCreateBag->phoneNumber = self::$phoneNumber;
 
         $contact = $this->feature->createContact($contactCreateBag);
 
-        $this->assertEquals($this->phoneNumber, $contact->phoneNumber);
+        $this->assertEquals(self::$phoneNumber, $contact->phoneNumber);
 
         return $contact->id;
     }
@@ -65,7 +64,7 @@ class ContactsFeatureTest extends SmsapiClientIntegrationTestCase
 
         $foundContact = $this->feature->findContact($contactFindBag);
 
-        $this->assertEquals($this->phoneNumber, $foundContact->phoneNumber);
+        $this->assertEquals(self::$phoneNumber, $foundContact->phoneNumber);
     }
 
     /**
@@ -88,11 +87,11 @@ class ContactsFeatureTest extends SmsapiClientIntegrationTestCase
     public function it_should_find_contact_by_phone_number()
     {
         $contactFindBag = new FindContactsBag();
-        $contactFindBag->phoneNumber = $this->phoneNumber;
+        $contactFindBag->phoneNumber = self::$phoneNumber;
 
         $foundContacts = $this->feature->findContacts($contactFindBag);
 
-        $this->assertEquals($this->phoneNumber, $foundContacts[0]->phoneNumber);
+        $this->assertEquals(self::$phoneNumber, $foundContacts[0]->phoneNumber);
     }
 
     /**
@@ -102,7 +101,7 @@ class ContactsFeatureTest extends SmsapiClientIntegrationTestCase
     public function it_should_update_contact(string $contactId)
     {
         $contactUpdateBag = new UpdateContactBag($contactId);
-        $contactUpdateBag->phoneNumber = PhoneNumberFixture::valid();
+        $contactUpdateBag->phoneNumber = PhoneNumberFixture::anyValid();
 
         $contact = $this->feature->updateContact($contactUpdateBag);
 
