@@ -146,6 +146,17 @@ class ContactsGroupsFeatureTest extends SmsapiClientIntegrationTestCase
      * @test
      * @depends it_should_create_group
      */
+    public function it_should_find_all_groups()
+    {
+        $groups = $this->feature->findGroups();
+
+        $this->assertGreaterThanOrEqual(1, count($groups));
+    }
+
+    /**
+     * @test
+     * @depends it_should_create_group
+     */
     public function it_should_delete_group(string $groupId)
     {
         $groupDeleteBag = new DeleteGroupBag($groupId);
@@ -156,16 +167,5 @@ class ContactsGroupsFeatureTest extends SmsapiClientIntegrationTestCase
 
         $this->feature->deleteGroup($groupDeleteBag);
         $this->feature->findGroup($groupFindBag);
-    }
-
-    /**
-     * @test
-     * @depends it_should_create_group
-     */
-    public function it_should_find_all_groups()
-    {
-        $groups = $this->feature->findGroups();
-
-        $this->assertGreaterThanOrEqual(1, count($groups));
     }
 }
