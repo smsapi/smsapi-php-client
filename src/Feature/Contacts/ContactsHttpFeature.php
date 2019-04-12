@@ -31,7 +31,7 @@ class ContactsHttpFeature implements ContactsFeature
         $this->dataFactoryProvider = $dataFactoryProvider;
     }
 
-    public function findContacts(FindContactsBag $findContactsBag): array
+    public function findContacts(FindContactsBag $findContactsBag = null): array
     {
         $result = $this->restRequestExecutor->read('contacts', (array)$findContactsBag);
 

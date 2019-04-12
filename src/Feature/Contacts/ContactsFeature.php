@@ -18,10 +18,9 @@ use Smsapi\Client\Feature\Contacts\Groups\ContactsGroupsFeature;
 interface ContactsFeature
 {
     /**
-     * @param FindContactsBag $findContactsBag
      * @return Contact[]
      */
-    public function findContacts(FindContactsBag $findContactsBag): array;
+    public function findContacts(FindContactsBag $findContactsBag = null): array;
 
     public function findContact(FindContactBag $findContactBag): Contact;
 
