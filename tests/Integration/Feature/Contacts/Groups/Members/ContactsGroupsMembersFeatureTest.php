@@ -151,7 +151,7 @@ class ContactsGroupsMembersFeatureTest extends SmsapiClientIntegrationTestCase
                 $contactInGroup = $this->feature->findContactInGroup($findContactInGroupBag);
                 $timeout = 0;
             } catch (ApiErrorException $exception) {
-                if ($exception->getMessage() !== '[contact_not_found] Contact not found') {
+                if ($exception->getError() !== 'contact_not_found') {
                     throw $exception;
                 }
                 $timeout -= $sleepTime;
@@ -176,7 +176,7 @@ class ContactsGroupsMembersFeatureTest extends SmsapiClientIntegrationTestCase
                 $timeout -= $sleepTime;
                 usleep($sleepTime);
             } catch (ApiErrorException $exception) {
-                if ($exception->getMessage() !== '[contact_not_found] Contact not found') {
+                if ($exception->getError() !== 'contact_not_found') {
                     throw $exception;
                 }
                 $contactInGroup = null;
