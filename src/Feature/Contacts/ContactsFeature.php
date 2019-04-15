@@ -30,6 +30,8 @@ interface ContactsFeature
 
     public function deleteContact(DeleteContactBag $deleteContactBag);
 
+    public function deleteContacts();
+
     public function groupsFeature(): ContactsGroupsFeature;
 
     public function fieldsFeature(): ContactsFieldsFeature;

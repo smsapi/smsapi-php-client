@@ -124,6 +124,20 @@ class ContactsFeatureTest extends SmsapiClientIntegrationTestCase
         $this->feature->findContact($contactFindBag);
     }
 
+    /**
+     * @test
+     */
+    public function it_should_delete_all_contacts()
+    {
+        $this->feature->createContact(CreateContactBag::withPhone(PhoneNumberFixture::anyValid()));
+        $this->feature->createContact(CreateContactBag::withPhone(PhoneNumberFixture::anyValid()));
+
+        $this->feature->deleteContacts();
+
+        $foundContacts = $this->feature->findContacts();
+        $this->assertEmpty($foundContacts);
+    }
+
     private static function cleanupContact(string $phoneNumber)
     {
         $feature = self::$smsapiService->contactsFeature();

@@ -71,6 +71,11 @@ class ContactsHttpFeature implements ContactsFeature
         $this->restRequestExecutor->delete('contacts/' . $deleteContactBag->contactId, []);
     }
 
+    public function deleteContacts()
+    {
+        $this->restRequestExecutor->delete('contacts', []);
+    }
+
     public function groupsFeature(): ContactsGroupsFeature
     {
         return new ContactsGroupsHttpFeature($this->restRequestExecutor, $this->dataFactoryProvider);
