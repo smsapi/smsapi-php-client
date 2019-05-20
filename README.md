@@ -126,6 +126,29 @@ $service->smsFeature()
     ->sendSms($sms);
 ```
 
+### How to send a SMS with optional from field?
+
+```php
+<?php
+
+declare(strict_types=1);
+
+require_once 'vendor/autoload.php';
+
+use Smsapi\Client\SmsapiHttpClient;
+use Smsapi\Client\Feature\Sms\Bag\SendSmsBag;
+
+$apiToken = '0000000000000000000000000000000000000000';
+
+$sms = SendSmsBag::withMessage('someone phone number', 'some message');
+$sms->from = 'Test';
+
+$service = (new SmsapiHttpClient())
+    ->smsapiComService($apiToken);
+$service->smsFeature()
+    ->sendSms($sms);
+```
+
 For more usage examples take a look at client test suite.
 
 ### How to use optional request parameters?
