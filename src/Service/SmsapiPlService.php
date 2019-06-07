@@ -33,6 +33,7 @@ interface SmsapiPlService
 
     public function contactsFeature(): ContactsFeature;
 
+    /** @deprecated */
     public function pushFeature(): PushFeature;
 
     public function mmsFeature(): MmsFeature;

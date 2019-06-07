@@ -32,5 +32,6 @@ interface SmsapiComService
 
     public function contactsFeature(): ContactsFeature;
 
+    /** @deprecated */
     public function pushFeature(): PushFeature;
 }

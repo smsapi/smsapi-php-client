@@ -17,6 +17,9 @@ use Smsapi\Client\Tests\SmsapiClientUnitTestCase;
 use stdClass;
 use function theodorejb\polycast\to_float;
 
+/**
+ * @deprecated
+ */
 class PushFeatureTest extends SmsapiClientUnitTestCase
 {
     /**

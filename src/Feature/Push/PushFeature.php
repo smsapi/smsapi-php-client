@@ -8,6 +8,7 @@ use Smsapi\Client\Feature\Push\Data\PushShipment;
 
 /**
  * @api
+ * @deprecated
  */
 interface PushFeature
 {
