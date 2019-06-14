@@ -8,11 +8,11 @@ namespace Smsapi\Client\Feature\Sms\Bag;
  */
 class DeleteSmsBag
 {
-    /** @var array */
-    public $smsIds;
+    /** @var string */
+    public $smsId;
 
-    public function __construct(array $smsIds)
+    public function __construct(string $smsId)
     {
-        $this->smsIds = $smsIds;
+        $this->smsId = $smsId;
     }
 }
