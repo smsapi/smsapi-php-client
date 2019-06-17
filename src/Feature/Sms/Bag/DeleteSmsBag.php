@@ -5,14 +5,9 @@ namespace Smsapi\Client\Feature\Sms\Bag;
 
 /**
  * @api
+ * @deprecated
+ * @see DeleteScheduledSmssBag
  */
-class DeleteSmsBag
+class DeleteSmsBag extends DeleteScheduledSmssBag
 {
-    /** @var array */
-    public $smsIds;
-
-    public function __construct(array $smsIds)
-    {
-        $this->smsIds = $smsIds;
-    }
 }

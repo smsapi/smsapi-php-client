@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Smsapi\Client\Tests\Integration\Feature\Sms;
 
 use DateTime;
-use Smsapi\Client\Feature\Sms\Bag\DeleteSmsBag;
+use Smsapi\Client\Feature\Sms\Bag\DeleteScheduledSmssBag;
 use Smsapi\Client\Feature\Sms\Bag\ScheduleSmsBag;
 use Smsapi\Client\Feature\Sms\Bag\ScheduleSmssBag;
 use Smsapi\Client\Feature\Sms\Bag\SendSmsBag;
@@ -177,7 +177,7 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
             return $sms->id;
         }, $results);
 
-        $deleteScheduledSmssBag = new DeleteSmsBag($smsIds);
+        $deleteScheduledSmssBag = new DeleteScheduledSmssBag($smsIds);
         $smsFeature->deleteScheduledSms($deleteScheduledSmssBag);
 
         $this->assertTrue(true);

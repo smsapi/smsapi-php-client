@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Smsapi\Client\Feature\Sms;
 
-use Smsapi\Client\Feature\Sms\Bag\DeleteSmsBag;
+use Smsapi\Client\Feature\Sms\Bag\DeleteScheduledSmssBag;
 use Smsapi\Client\Feature\Sms\Bag\ScheduleSmsBag;
 use Smsapi\Client\Feature\Sms\Bag\ScheduleSmssBag;
 use Smsapi\Client\Feature\Sms\Bag\ScheduleSmsToGroupBag;
@@ -42,5 +42,5 @@ interface SmsFeature
 
     public function scheduleSmss(ScheduleSmssBag $scheduleSmssBag): array;
 
-    public function deleteScheduledSms(DeleteSmsBag $deleteScheduledSmsBag);
+    public function deleteScheduledSms(DeleteScheduledSmssBag $deleteScheduledSmsBag);
 }
