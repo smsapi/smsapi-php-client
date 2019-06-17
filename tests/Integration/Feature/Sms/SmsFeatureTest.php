@@ -4,10 +4,12 @@ declare(strict_types=1);
 namespace Smsapi\Client\Tests\Integration\Feature\Sms;
 
 use DateTime;
+use Smsapi\Client\Feature\Sms\Bag\DeleteSmsBag;
 use Smsapi\Client\Feature\Sms\Bag\ScheduleSmsBag;
 use Smsapi\Client\Feature\Sms\Bag\ScheduleSmssBag;
 use Smsapi\Client\Feature\Sms\Bag\SendSmsBag;
 use Smsapi\Client\Feature\Sms\Bag\SendSmssBag;
+use Smsapi\Client\Feature\Sms\Data\Sms;
 use Smsapi\Client\Tests\Fixture\PhoneNumberFixture;
 use Smsapi\Client\Tests\SmsapiClientIntegrationTestCase;
 
@@ -160,6 +162,25 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
 
         $this->assertEquals($scheduleFlashSmsBag->date, $result->dateSent);
         $this->assertEquals($scheduleFlashSmsBag->to, $result->number);
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_delete_scheduled_smss()
+    {
+        $smsFeature = self::$smsapiService->smsFeature();
+        $scheduleSmssBag = $this->givenSmssToSchedule();
+
+        $results = $smsFeature->scheduleSmss($scheduleSmssBag);
+        $smsIds = array_map(function (Sms $sms) {
+            return $sms->id;
+        }, $results);
+
+        $deleteScheduledSmssBag = new DeleteSmsBag($smsIds);
+        $smsFeature->deleteScheduledSms($deleteScheduledSmssBag);
+
+        $this->assertTrue(true);
     }
 
     private function givenSmsToSend(): SendSmsBag

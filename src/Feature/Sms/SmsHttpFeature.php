@@ -202,7 +202,7 @@ class SmsHttpFeature implements SmsFeature
      */
     public function deleteScheduledSms(DeleteSmsBag $deleteScheduledSmsBag)
     {
-        $deleteScheduledSmsBag->schDel = $deleteScheduledSmsBag->smsIds;
+        $deleteScheduledSmsBag->schDel = implode(',', $deleteScheduledSmsBag->smsIds);
         unset($deleteScheduledSmsBag->smsIds);
         $this->makeRequest($deleteScheduledSmsBag);
     }
