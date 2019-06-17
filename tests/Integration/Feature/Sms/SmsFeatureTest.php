@@ -19,13 +19,12 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
     public function it_should_send_sms()
     {
         $smsFeature = self::$smsapiService->smsFeature();
-        $someReceiver = PhoneNumberFixture::anyValidMobile();
-        $sendSmsBag = SendSmsBag::withMessage($someReceiver, 'some message');
+        $sendSmsBag = $this->givenSmsToSend();
         $sendSmsBag->test = true;
 
         $result = $smsFeature->sendSms($sendSmsBag);
 
-        $this->assertEquals($someReceiver, $result->number);
+        $this->assertEquals($sendSmsBag->to, $result->number);
     }
 
     /**
@@ -34,16 +33,14 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
     public function it_should_send_sms_with_external_id()
     {
         $smsFeature = self::$smsapiService->smsFeature();
-        $someReceiver = PhoneNumberFixture::anyValidMobile();
-        $externalId = 'any';
-        $sendSmsBag = SendSmsBag::withMessage($someReceiver, 'some message');
-        $sendSmsBag->setExternalId($externalId);
+        $sendSmsBag = $this->givenSmsToSend();
+        $sendSmsBag->setExternalId('any');
         $sendSmsBag->test = true;
 
         $result = $smsFeature->sendSms($sendSmsBag);
 
-        $this->assertEquals($someReceiver, $result->number);
-        $this->assertEquals($externalId, $result->idx);
+        $this->assertEquals($sendSmsBag->to, $result->number);
+        $this->assertEquals($sendSmsBag->idx[0], $result->idx);
     }
 
     /**
@@ -51,17 +48,15 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
      */
     public function it_should_receive_details_for_single_sms()
     {
-        $message = 'some message';
         $smsFeature = self::$smsapiService->smsFeature();
-        $someReceiver = PhoneNumberFixture::anyValidMobile();
-        $sendSmsBag = SendSmsBag::withMessage($someReceiver, $message);
+        $sendSmsBag = $this->givenSmsToSend();
         $sendSmsBag->test = true;
 
         $result = $smsFeature->sendSms($sendSmsBag);
 
         $this->assertNotNull($result->content);
-        $this->assertEquals($message, $result->content->message);
-        $this->assertEquals(mb_strlen($message), $result->content->length);
+        $this->assertEquals($sendSmsBag->message, $result->content->message);
+        $this->assertEquals(mb_strlen($sendSmsBag->message), $result->content->length);
         $this->assertEquals(1, $result->content->parts);
     }
 
@@ -71,13 +66,12 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
     public function it_should_send_flash_sms()
     {
         $smsFeature = self::$smsapiService->smsFeature();
-        $someReceiver = PhoneNumberFixture::anyValidMobile();
-        $sendFlashSmsBag = SendSmsBag::withMessage($someReceiver, 'some message');
+        $sendFlashSmsBag = $this->givenSmsToSend();
         $sendFlashSmsBag->test = true;
 
         $result = $smsFeature->sendFlashSms($sendFlashSmsBag);
 
-        $this->assertEquals($someReceiver, $result->number);
+        $this->assertEquals($sendFlashSmsBag->to, $result->number);
     }
 
     /**
@@ -86,16 +80,12 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
     public function it_should_send_smss()
     {
         $smsFeature = self::$smsapiService->smsFeature();
-        $receivers = [
-            PhoneNumberFixture::anyValidMobile(),
-            PhoneNumberFixture::anyValidMobile(),
-        ];
-        $sendSmsesBag = SendSmssBag::withMessage($receivers, 'some message');
-        $sendSmsesBag->test = true;
+        $sendSmssBag = $this->givenSmssToSend();
+        $sendSmssBag->test = true;
 
-        $results = $smsFeature->sendSmss($sendSmsesBag);
+        $results = $smsFeature->sendSmss($sendSmssBag);
 
-        $this->assertCount(2, $results);
+        $this->assertCount(count($sendSmssBag->to), $results);
     }
 
     /**
@@ -104,16 +94,12 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
     public function it_should_send_flash_smss()
     {
         $smsFeature = self::$smsapiService->smsFeature();
-        $receivers = [
-            PhoneNumberFixture::anyValidMobile(),
-            PhoneNumberFixture::anyValidMobile(),
-        ];
-        $sendSmsesBag = SendSmssBag::withMessage($receivers, 'some message');
-        $sendSmsesBag->test = true;
+        $sendSmssBag = $this->givenSmssToSend();
+        $sendSmssBag->test = true;
 
-        $results = $smsFeature->sendFlashSmss($sendSmsesBag);
+        $results = $smsFeature->sendFlashSmss($sendSmssBag);
 
-        $this->assertCount(2, $results);
+        $this->assertCount(count($sendSmssBag->to), $results);
     }
 
     /**
@@ -122,11 +108,7 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
     public function it_should_not_receive_details_for_smss()
     {
         $smsFeature = self::$smsapiService->smsFeature();
-        $receivers = [
-            PhoneNumberFixture::anyValidMobile(),
-            PhoneNumberFixture::anyValidMobile(),
-        ];
-        $sendSmsesBag = SendSmssBag::withMessage($receivers, 'some message');
+        $sendSmsesBag = $this->givenSmssToSend();
         $sendSmsesBag->test = true;
 
         $results = $smsFeature->sendSmss($sendSmsesBag);
@@ -142,15 +124,13 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
     public function it_should_schedule_sms()
     {
         $smsFeature = self::$smsapiService->smsFeature();
-        $someDate = new DateTime('+1 day noon');
-        $someReceiver = PhoneNumberFixture::anyValidMobile();
-        $scheduleSmsBag = ScheduleSmsBag::withMessage($someDate, $someReceiver, 'some message');
+        $scheduleSmsBag = $this->givenSmsToSchedule();
         $scheduleSmsBag->test = true;
 
         $result = $smsFeature->scheduleSms($scheduleSmsBag);
 
-        $this->assertEquals($someDate, $result->dateSent);
-        $this->assertEquals($someReceiver, $result->number);
+        $this->assertEquals($scheduleSmsBag->date, $result->dateSent);
+        $this->assertEquals($scheduleSmsBag->to, $result->number);
     }
 
     /**
@@ -159,17 +139,12 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
     public function it_should_schedule_smss()
     {
         $smsFeature = self::$smsapiService->smsFeature();
-        $someDate = new DateTime('+1 day noon');
-        $receivers = [
-            PhoneNumberFixture::anyValidMobile(),
-            PhoneNumberFixture::anyValidMobile(),
-        ];
-        $scheduleSmsBag = ScheduleSmssBag::withMessage($someDate, $receivers, 'some message');
-        $scheduleSmsBag->test = true;
+        $scheduleSmssBag = $this->givenSmssToSchedule();
+        $scheduleSmssBag->test = true;
 
-        $results = $smsFeature->scheduleSmss($scheduleSmsBag);
+        $results = $smsFeature->scheduleSmss($scheduleSmssBag);
 
-        $this->assertCount(2, $results);
+        $this->assertCount(count($scheduleSmssBag->to), $results);
     }
 
     /**
@@ -178,14 +153,44 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
     public function it_should_schedule_flash_sms()
     {
         $smsFeature = self::$smsapiService->smsFeature();
-        $someDate = new DateTime('+1 day noon');
-        $someReceiver = PhoneNumberFixture::anyValidMobile();
-        $scheduleFlashSmsBag = ScheduleSmsBag::withMessage($someDate, $someReceiver, 'some message');
+        $scheduleFlashSmsBag = $this->givenSmsToSchedule();
         $scheduleFlashSmsBag->test = true;
 
         $result = $smsFeature->scheduleFlashSms($scheduleFlashSmsBag);
 
-        $this->assertEquals($someDate, $result->dateSent);
-        $this->assertEquals($someReceiver, $result->number);
+        $this->assertEquals($scheduleFlashSmsBag->date, $result->dateSent);
+        $this->assertEquals($scheduleFlashSmsBag->to, $result->number);
+    }
+
+    private function givenSmsToSend(): SendSmsBag
+    {
+        $someReceiver = PhoneNumberFixture::anyValidMobile();
+        return SendSmsBag::withMessage($someReceiver, 'some message');
+    }
+
+    private function givenSmssToSend(): SendSmssBag
+    {
+        $receivers = [
+            PhoneNumberFixture::anyValidMobile(),
+            PhoneNumberFixture::anyValidMobile(),
+        ];
+        return SendSmssBag::withMessage($receivers, 'some message');
+    }
+
+    private function givenSmsToSchedule(): ScheduleSmsBag
+    {
+        $someDate = new DateTime('+1 day noon');
+        $someReceiver = PhoneNumberFixture::anyValidMobile();
+        return ScheduleSmsBag::withMessage($someDate, $someReceiver, 'some message');
+    }
+
+    private function givenSmssToSchedule(): ScheduleSmssBag
+    {
+        $someDate = new DateTime('+1 day noon');
+        $receivers = [
+            PhoneNumberFixture::anyValidMobile(),
+            PhoneNumberFixture::anyValidMobile(),
+        ];
+        return ScheduleSmssBag::withMessage($someDate, $receivers, 'some message');
     }
 }
