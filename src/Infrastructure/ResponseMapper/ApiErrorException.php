@@ -11,7 +11,7 @@ use Smsapi\Client\SmsapiClientException;
 class ApiErrorException extends SmsapiClientException
 {
     /** @var string */
-    private $error;
+    private $error = '';
 
     public static function withMessageErrorAndStatusCode(string $message, string $error, int $statusCode): self
     {
