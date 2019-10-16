@@ -12,7 +12,7 @@ use Smsapi\Client\Service\SmsapiPlService;
  */
 interface SmsapiClient extends LoggerAwareInterface
 {
-    const VERSION = 'Unreleased';
+    const VERSION = '2.3.4';
 
     public function setProxy(string $proxy): self;
 
