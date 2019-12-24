@@ -60,5 +60,8 @@
         <testsuite name="feature-vms">
             <directory>tests/Integration/Feature/Vms</directory>
         </testsuite>
+        <testsuite name="feature-blacklist">
+            <directory>tests/Integration/Feature/Blacklist</directory>
+        </testsuite>
     </testsuites>
 </phpunit>
