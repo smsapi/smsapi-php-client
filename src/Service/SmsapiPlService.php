@@ -1,8 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Smsapi\Client\Service;
 
+use Smsapi\Client\Feature\Blacklist\BlacklistFeature;
 use Smsapi\Client\Feature\Contacts\ContactsFeature;
 use Smsapi\Client\Feature\Hlr\HlrFeature;
 use Smsapi\Client\Feature\Mms\MmsFeature;
@@ -39,4 +41,6 @@ interface SmsapiPlService
     public function mmsFeature(): MmsFeature;
 
     public function vmsFeature(): VmsFeature;
+
+    public function blacklistFeature(): BlacklistFeature;
 }

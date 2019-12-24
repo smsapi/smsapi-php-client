@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Smsapi\Client\Service;
 
+use Smsapi\Client\Feature\Blacklist\BlacklistFeature;
+use Smsapi\Client\Feature\Blacklist\BlacklistHttpFeature;
 use Smsapi\Client\Feature\Contacts\ContactsFeature;
 use Smsapi\Client\Feature\Contacts\ContactsHttpFeature;
 use Smsapi\Client\Feature\Data\DataFactoryProvider;
@@ -78,6 +80,14 @@ trait HttpDefaultFeatures
         return new PushHttpFeature(
             $this->requestExecutorFactory->createRestRequestExecutor(),
             $this->dataFactoryProvider->providePushShipmentFactory()
+        );
+    }
+
+    public function blacklistFeature(): BlacklistFeature
+    {
+        return new BlacklistHttpFeature(
+            $this->requestExecutorFactory->createRestRequestExecutor(),
+            $this->dataFactoryProvider->provideBlacklistedPhoneNumberFactory()
         );
     }
 }

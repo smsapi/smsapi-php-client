@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Smsapi\Client\Service;
 
+use Smsapi\Client\Feature\Blacklist\BlacklistFeature;
 use Smsapi\Client\Feature\Contacts\ContactsFeature;
 use Smsapi\Client\Feature\Hlr\HlrFeature;
 use Smsapi\Client\Feature\Ping\PingFeature;
@@ -34,4 +35,6 @@ interface SmsapiComService
 
     /** @deprecated */
     public function pushFeature(): PushFeature;
+
+    public function blacklistFeature(): BlacklistFeature;
 }

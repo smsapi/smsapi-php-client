@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Smsapi\Client\Feature\Data;
 
+use Smsapi\Client\Feature\Blacklist\Data\BlacklistedPhoneNumberFactory;
 use Smsapi\Client\Feature\Contacts\Data\ContactFactory;
 use Smsapi\Client\Feature\Contacts\Data\ContactGroupFactory;
 use Smsapi\Client\Feature\Contacts\Fields\Data\ContactFieldFactory;
@@ -116,5 +117,10 @@ class DataFactoryProvider
     public function provideContactFieldOptionFactory(): ContactFieldOptionFactory
     {
         return new ContactFieldOptionFactory();
+    }
+
+    public function provideBlacklistedPhoneNumberFactory(): BlacklistedPhoneNumberFactory
+    {
+        return new BlacklistedPhoneNumberFactory();
     }
 }
