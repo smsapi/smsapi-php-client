@@ -17,7 +17,7 @@ use Smsapi\Client\Tests\SmsapiClientIntegrationTestCase;
 class ContactsFeatureTest extends SmsapiClientIntegrationTestCase
 {
     /** @var string */
-    private static $phoneNumber;
+    private static $contactId;
 
     /** @var ContactsFeature */
     private $feature;
@@ -27,7 +27,6 @@ class ContactsFeatureTest extends SmsapiClientIntegrationTestCase
      */
     public function before()
     {
-        self::$phoneNumber = PhoneNumberFixture::$valid;
         $this->feature = self::$smsapiService->contactsFeature();
     }
 
@@ -36,7 +35,7 @@ class ContactsFeatureTest extends SmsapiClientIntegrationTestCase
      */
     public function after()
     {
-        self::cleanupContact(self::$phoneNumber);
+        self::cleanupContact(self::$contactId);
     }
 
     /**
@@ -45,11 +44,11 @@ class ContactsFeatureTest extends SmsapiClientIntegrationTestCase
     public function it_should_create_contact(): string
     {
         $contactCreateBag = new CreateContactBag();
-        $contactCreateBag->phoneNumber = self::$phoneNumber;
+        $contactCreateBag->phoneNumber = PhoneNumberFixture::$valid;
 
         $contact = $this->feature->createContact($contactCreateBag);
 
-        $this->assertEquals(self::$phoneNumber, $contact->phoneNumber);
+        $this->assertEquals($contactCreateBag->phoneNumber, $contact->phoneNumber);
 
         return $contact->id;
     }
@@ -58,13 +57,15 @@ class ContactsFeatureTest extends SmsapiClientIntegrationTestCase
      * @test
      * @depends it_should_create_contact
      */
-    public function it_should_find_contact(string $contactId)
+    public function it_should_find_contact(string $contactId): string
     {
         $contactFindBag = new FindContactBag($contactId);
 
         $foundContact = $this->feature->findContact($contactFindBag);
 
-        $this->assertEquals(self::$phoneNumber, $foundContact->phoneNumber);
+        $this->assertEquals($contactId, $foundContact->id);
+
+        return $foundContact->phoneNumber;
     }
 
     /**
@@ -80,16 +81,16 @@ class ContactsFeatureTest extends SmsapiClientIntegrationTestCase
 
     /**
      * @test
-     * @depends it_should_create_contact
+     * @depends it_should_find_contact
      */
-    public function it_should_find_contact_by_phone_number()
+    public function it_should_find_contact_by_phone_number(string $contactPhoneNumber)
     {
         $contactFindBag = new FindContactsBag();
-        $contactFindBag->phoneNumber = self::$phoneNumber;
+        $contactFindBag->phoneNumber = $contactPhoneNumber;
 
         $foundContacts = $this->feature->findContacts($contactFindBag);
 
-        $this->assertEquals(self::$phoneNumber, $foundContacts[0]->phoneNumber);
+        $this->assertEquals($contactPhoneNumber, $foundContacts[0]->phoneNumber);
     }
 
     /**
@@ -104,8 +105,6 @@ class ContactsFeatureTest extends SmsapiClientIntegrationTestCase
         $contact = $this->feature->updateContact($contactUpdateBag);
 
         $this->assertEquals($contactUpdateBag->phoneNumber, $contact->phoneNumber);
-
-        self::cleanupContact($contactUpdateBag->phoneNumber);
     }
 
     /**
@@ -138,18 +137,12 @@ class ContactsFeatureTest extends SmsapiClientIntegrationTestCase
         $this->assertEmpty($foundContacts);
     }
 
-    private static function cleanupContact(string $phoneNumber)
+    private static function cleanupContact(string $contactId)
     {
-        $feature = self::$smsapiService->contactsFeature();
-
-        $contactFindBag = new FindContactsBag();
-        $contactFindBag->phoneNumber = $phoneNumber;
-
-        $foundContacts = $feature->findContacts($contactFindBag);
-
-        if (count($foundContacts) > 0) {
-            $contactDeleteBag = new DeleteContactBag($foundContacts[0]->id);
-            $feature->deleteContact($contactDeleteBag);
-        }
+        self::$smsapiService
+            ->contactsFeature()
+            ->deleteContact(
+                new DeleteContactBag($contactId)
+            );
     }
 }
