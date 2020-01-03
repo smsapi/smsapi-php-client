@@ -59,6 +59,13 @@ class RestRequestExecutor
         return $this->sendRequestAndMapResponse($request);
     }
 
+    public function info(string $path, array $builtInParameters, array $userParameters = []): stdClass
+    {
+        $request = $this->requestMapper->mapHead($path, $builtInParameters, $userParameters);
+
+        return $this->sendRequestAndMapResponse($request);
+    }
+
     private function sendRequestAndMapResponse(Request $request): stdClass
     {
         $assembledRequest = $this->requestAssembler->assemble($request);

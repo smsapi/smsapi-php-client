@@ -13,4 +13,5 @@ class RequestHttpMethod
     const GET = 'GET';
     const PUT = 'PUT';
     const DELETE = 'DELETE';
+    const HEAD = 'HEAD';
 }

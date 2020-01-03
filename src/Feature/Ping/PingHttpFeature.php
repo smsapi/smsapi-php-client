@@ -6,7 +6,6 @@ namespace Smsapi\Client\Feature\Ping;
 use Smsapi\Client\Infrastructure\ResponseMapper\ApiErrorException;
 use Smsapi\Client\Feature\Ping\Data\Ping;
 use Smsapi\Client\Infrastructure\RequestExecutor\RestRequestExecutor;
-use Smsapi\Client\SmsapiClientException;
 
 /**
  * @internal
@@ -20,18 +19,14 @@ class PingHttpFeature implements PingFeature
         $this->restRequestExecutor = $restRequestExecutor;
     }
 
-    /**
-     * @return Ping
-     * @throws SmsapiClientException
-     */
     public function ping(): Ping
     {
         $ping = new Ping();
-        $ping->smsapi = false;
         try {
-            $this->restRequestExecutor->read('', []);
+            $this->restRequestExecutor->info('ping', []);
+            $ping->smsapi = true;
         } catch (ApiErrorException $apiErrorException) {
-            $ping->smsapi = $apiErrorException->getCode() === 404;
+            $ping->smsapi = false;
         }
 
         return $ping;

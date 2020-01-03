@@ -48,6 +48,13 @@ class RestRequestMapper
         return $request->withHeader('Content-Type', 'application/x-www-form-urlencoded');
     }
 
+    public function mapHead(string $path, array $builtInParameters, array $userParameters): Request
+    {
+        $path .= $this->createPathQuery($builtInParameters, $userParameters);
+
+        return $this->createRequest(RequestHttpMethod::HEAD, $path, []);
+    }
+
     private function createPathQuery(array $builtInParameters, array $userParameters): string
     {
         $pathQuery = '';
