@@ -47,13 +47,26 @@ class ContactFactory
             $object->groups
         );
 
-        $objectCustomFieldsProperties = array_filter(get_object_vars($object), [$this, 'isCustomFieldProperty'], ARRAY_FILTER_USE_KEY);
-        $contact->customFields = array_map(
-            [$this->contactCustomFieldFactory, 'createFromObjectProperty'],
-            array_keys($objectCustomFieldsProperties), $objectCustomFieldsProperties
-        );
+        $contact->customFields = $this->createCustomFieldsFromObject($object);
 
         return $contact;
+    }
+
+    private function createCustomFieldsFromObject(stdClass $object): array
+    {
+        $objectCustomFieldsProperties = array_filter(
+            get_object_vars($object),
+            [$this, 'isCustomFieldProperty'],
+            ARRAY_FILTER_USE_KEY
+        );
+
+        $customFields = [];
+
+        foreach ($objectCustomFieldsProperties as $name => $value) {
+            $customFields[] = $this->contactCustomFieldFactory->create($name, $value);
+        }
+
+        return $customFields;
     }
 
     public function isCustomFieldProperty(string $propertyName): bool

@@ -9,8 +9,8 @@ namespace Smsapi\Client\Feature\Contacts\Data;
  */
 class ContactCustomFieldFactory
 {
-    public function createFromObjectProperty(string $propertyName, string $propertyValue): ContactCustomField
+    public function create(string $name, string $value): ContactCustomField
     {
-        return new ContactCustomField($propertyName, $propertyValue);
+        return new ContactCustomField($name, $value);
     }
 }
