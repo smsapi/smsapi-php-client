@@ -14,9 +14,12 @@ class ContactFactory
 {
     private $contactGroupFactory;
 
-    public function __construct(ContactGroupFactory $contactGroupFactory)
+    private $contactCustomFieldFactory;
+
+    public function __construct(ContactGroupFactory $contactGroupFactory, ContactCustomFieldFactory $contactCustomFieldsFactory)
     {
         $this->contactGroupFactory = $contactGroupFactory;
+        $this->contactCustomFieldFactory = $contactCustomFieldsFactory;
     }
 
     public function createFromObject(stdClass $object): Contact
@@ -44,6 +47,19 @@ class ContactFactory
             $object->groups
         );
 
+        $objectCustomFieldsProperties = array_filter(get_object_vars($object), [$this, 'isCustomFieldProperty'], ARRAY_FILTER_USE_KEY);
+        $contact->customFields = array_map(
+            [$this->contactCustomFieldFactory, 'createFromObjectProperty'],
+            array_keys($objectCustomFieldsProperties), $objectCustomFieldsProperties
+        );
+
         return $contact;
+    }
+
+    public function isCustomFieldProperty(string $propertyName): bool
+    {
+        return !in_array($propertyName, [
+            'id', 'date_created', 'date_updated', 'gender', 'email', 'phone_number', 'country', 'groups'
+        ]);
     }
 }

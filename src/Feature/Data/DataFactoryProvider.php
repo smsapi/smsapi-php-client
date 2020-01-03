@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Smsapi\Client\Feature\Data;
 
 use Smsapi\Client\Feature\Blacklist\Data\BlacklistedPhoneNumberFactory;
+use Smsapi\Client\Feature\Contacts\Data\ContactCustomFieldFactory;
 use Smsapi\Client\Feature\Contacts\Data\ContactFactory;
 use Smsapi\Client\Feature\Contacts\Data\ContactGroupFactory;
 use Smsapi\Client\Feature\Contacts\Fields\Data\ContactFieldFactory;
@@ -96,7 +97,7 @@ class DataFactoryProvider
 
     public function provideContactFactory(): ContactFactory
     {
-        return new ContactFactory($this->provideContactGroupFactory());
+        return new ContactFactory($this->provideContactGroupFactory(), $this->provideConntactCustomFieldFactory());
     }
 
     public function provideContactGroupFactory(): ContactGroupFactory
@@ -122,5 +123,10 @@ class DataFactoryProvider
     public function provideBlacklistedPhoneNumberFactory(): BlacklistedPhoneNumberFactory
     {
         return new BlacklistedPhoneNumberFactory();
+    }
+
+    public function provideConntactCustomFieldFactory(): ContactCustomFieldFactory
+    {
+        return new ContactCustomFieldFactory();
     }
 }

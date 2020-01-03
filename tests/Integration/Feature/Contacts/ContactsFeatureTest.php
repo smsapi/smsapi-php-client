@@ -10,7 +10,11 @@ use Smsapi\Client\Feature\Contacts\Bag\FindContactBag;
 use Smsapi\Client\Feature\Contacts\Bag\FindContactsBag;
 use Smsapi\Client\Feature\Contacts\Bag\UpdateContactBag;
 use Smsapi\Client\Feature\Contacts\ContactsFeature;
+use Smsapi\Client\Feature\Contacts\Fields\Bag\CreateContactFieldBag;
+use Smsapi\Client\Feature\Contacts\Fields\Bag\DeleteContactFieldBag;
+use Smsapi\Client\Feature\Contacts\Fields\Data\ContactField;
 use Smsapi\Client\Infrastructure\ResponseMapper\ApiErrorException;
+use Smsapi\Client\Tests\Assert\ContactCustomFieldAssert;
 use Smsapi\Client\Tests\Fixture\PhoneNumberFixture;
 use Smsapi\Client\Tests\SmsapiClientIntegrationTestCase;
 
@@ -111,6 +115,27 @@ class ContactsFeatureTest extends SmsapiClientIntegrationTestCase
      * @test
      * @depends it_should_create_contact
      */
+    public function it_should_set_custom_field(string $contactId)
+    {
+        $customField = $this->feature->fieldsFeature()->createField(
+            new CreateContactFieldBag(uniqid('any'))
+        );
+
+        $customFieldValue = 'any';
+        $updateContactBag = new UpdateContactBag($contactId);
+        $updateContactBag->setCustomField($customField->name, $customFieldValue);
+
+        $updatedContact = $this->feature->updateContact($updateContactBag);
+
+        (new ContactCustomFieldAssert($updatedContact))->assertHasCustomFieldWithValue($customField, $customFieldValue);
+
+        $this->cleanupContactField($customField);
+    }
+
+    /**
+     * @test
+     * @depends it_should_create_contact
+     */
     public function it_should_delete_contact(string $contactId)
     {
         $contactDeleteBag = new DeleteContactBag($contactId);
@@ -143,6 +168,16 @@ class ContactsFeatureTest extends SmsapiClientIntegrationTestCase
             ->contactsFeature()
             ->deleteContact(
                 new DeleteContactBag($contactId)
+            );
+    }
+
+    private static function cleanupContactField(ContactField $contactField)
+    {
+        self::$smsapiService
+            ->contactsFeature()
+            ->fieldsFeature()
+            ->deleteField(
+                new DeleteContactFieldBag($contactField->id)
             );
     }
 }

@@ -33,4 +33,10 @@ class UpdateContactBag
         $this->lastName = $lastName;
         return $this;
     }
+
+    public function setCustomField(string $name, string $value): self
+    {
+        $this->$name = $value;
+        return $this;
+    }
 }

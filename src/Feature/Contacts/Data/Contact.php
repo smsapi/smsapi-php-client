@@ -35,4 +35,7 @@ class Contact
 
     /** @var ContactGroup[] */
     public $groups;
+
+    /** @var ContactCustomField[] */
+    public $customFields;
 }
