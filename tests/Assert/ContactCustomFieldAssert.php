@@ -27,13 +27,11 @@ class ContactCustomFieldAssert
 
     private function hasContactCustomFieldSet(ContactField $expectedCustomField, string $expectedValue): bool
     {
-        $contactHasCustomFieldSet = false;
         foreach ($this->contact->customFields as $customField) {
             if ($customField->name === $expectedCustomField->name && $customField->value === $expectedValue) {
-                $contactHasCustomFieldSet = true;
-                break;
+                return true;
             }
         }
-        return $contactHasCustomFieldSet;
+        return false;
     }
 }
