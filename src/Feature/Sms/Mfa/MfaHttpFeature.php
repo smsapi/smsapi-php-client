@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Smsapi\Client\Feature\Sms\Mfa;
 
 use Smsapi\Client\Feature\Sms\Mfa\Bag\CreateMfaBag;
+use Smsapi\Client\Feature\Sms\Mfa\Bag\VerificationMfaBag;
 use Smsapi\Client\Feature\Sms\Mfa\Data\Mfa;
 use Smsapi\Client\Feature\Sms\Mfa\Data\MfaFactory;
 use Smsapi\Client\Infrastructure\RequestExecutor\RestRequestExecutor;
@@ -33,5 +34,14 @@ class MfaHttpFeature implements MfaFeature
     {
         $result = $this->restRequestExecutor->create('mfa/codes', (array)$createMfaBag);
         return $this->mfaFactory->createFromObject($result);
+    }
+
+    /**
+     * @param VerificationMfaBag $verificationMfaBag
+     * @throws SmsapiClientException
+     */
+    public function verificationMfa(VerificationMfaBag $verificationMfaBag)
+    {
+        $this->restRequestExecutor->create('mfa/codes/verifications', (array)$verificationMfaBag);
     }
 }

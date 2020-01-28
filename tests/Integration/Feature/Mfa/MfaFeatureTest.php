@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Smsapi\Client\Tests\Integration\Feature\Mfa;
 
 use Smsapi\Client\Feature\Sms\Mfa\Bag\CreateMfaBag;
+use Smsapi\Client\Feature\Sms\Mfa\Bag\VerificationMfaBag;
+use Smsapi\Client\Feature\Sms\Mfa\Data\Mfa;
 use Smsapi\Client\SmsapiClientException;
 use Smsapi\Client\Tests\Fixture\PhoneNumberFixture;
 use Smsapi\Client\Tests\SmsapiClientIntegrationTestCase;
@@ -20,9 +22,11 @@ class MfaFeatureTest extends SmsapiClientIntegrationTestCase
         $mfaFeature = self::$smsapiService->smsFeature()->mfaFeature();
         $createMfaBag = new CreateMfaBag($someReceiver = PhoneNumberFixture::anyValidMobile());
         //when
-        $result = $mfaFeature->createMfa($createMfaBag);
+        $mfa = $mfaFeature->createMfa($createMfaBag);
         //then
-        $this->assertEquals($createMfaBag->phone_number, $result->phoneNumber);
+        $this->assertEquals($createMfaBag->phone_number, $mfa->phoneNumber);
+
+        return $mfa;
     }
 
     /**
@@ -35,7 +39,69 @@ class MfaFeatureTest extends SmsapiClientIntegrationTestCase
         $createMfaBag = new CreateMfaBag($someReceiver = PhoneNumberFixture::anyValid());
         //expect
         $this->expectException(SmsapiClientException::class);
+        $this->expectExceptionMessage('The value is not valid mobile number.');
         //when
         $mfaFeature->createMfa($createMfaBag);
+    }
+
+    /**
+     * @test
+     * @depends it_should_create_mfa
+     * @param Mfa $mfa
+     */
+    public function it_should_verify_correct_code(Mfa $mfa)
+    {
+        //given
+        $mfaFeature = self::$smsapiService->smsFeature()->mfaFeature();
+        $verificationMfaBag = new VerificationMfaBag($mfa->code, $mfa->phoneNumber);
+        //when
+        $mfaFeature->verificationMfa($verificationMfaBag);
+        //then
+        $this->assertTrue(true);
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_not_verify_incorrect_code()
+    {
+        //given
+        $mfaFeature = self::$smsapiService->smsFeature()->mfaFeature();
+        $verificationMfaBag = new VerificationMfaBag('123456', PhoneNumberFixture::anyValidMobile());
+        //expect
+        $this->expectException(SmsapiClientException::class);
+        $this->expectExceptionMessage('Not found');
+        //when
+        $mfaFeature->verificationMfa($verificationMfaBag);
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_not_verify_empty_code()
+    {
+        //given
+        $mfaFeature = self::$smsapiService->smsFeature()->mfaFeature();
+        $verificationMfaBag = new VerificationMfaBag('', PhoneNumberFixture::anyValidMobile());
+        //expect
+        $this->expectException(SmsapiClientException::class);
+        $this->expectExceptionMessage('MFA code cannot be empty');
+        //when
+        $mfaFeature->verificationMfa($verificationMfaBag);
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_not_verify_invalid_code()
+    {
+        //given
+        $mfaFeature = self::$smsapiService->smsFeature()->mfaFeature();
+        $verificationMfaBag = new VerificationMfaBag('123 456', PhoneNumberFixture::anyValidMobile());
+        //expect
+        $this->expectException(SmsapiClientException::class);
+        $this->expectExceptionMessage('MFA code has invalid format');
+        //when
+        $mfaFeature->verificationMfa($verificationMfaBag);
     }
 }
