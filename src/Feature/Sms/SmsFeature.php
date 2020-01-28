@@ -11,6 +11,7 @@ use Smsapi\Client\Feature\Sms\Bag\SendSmsBag;
 use Smsapi\Client\Feature\Sms\Bag\SendSmssBag;
 use Smsapi\Client\Feature\Sms\Bag\SendSmsToGroupBag;
 use Smsapi\Client\Feature\Sms\Data\Sms;
+use Smsapi\Client\Feature\Sms\Mfa\MfaFeature;
 use Smsapi\Client\Feature\Sms\Sendernames\SendernamesFeature;
 
 /**
@@ -19,6 +20,8 @@ use Smsapi\Client\Feature\Sms\Sendernames\SendernamesFeature;
 interface SmsFeature
 {
     public function sendernameFeature(): SendernamesFeature;
+
+    public function mfaFeature(): MfaFeature;
 
     public function sendSms(SendSmsBag $sendSmsBag): Sms;
 

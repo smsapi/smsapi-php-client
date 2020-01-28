@@ -26,6 +26,7 @@ use Smsapi\Client\Feature\Push\Data\PushShipmentPayloadFactory;
 use Smsapi\Client\Feature\Push\Data\PushShipmentSummaryFactory;
 use Smsapi\Client\Feature\ShortUrl\Data\ShortUrlLinkFactory;
 use Smsapi\Client\Feature\Sms\Data\SmsFactory;
+use Smsapi\Client\Feature\Sms\Mfa\Data\MfaFactory;
 use Smsapi\Client\Feature\Sms\Sendernames\Data\SendernameFactory;
 use Smsapi\Client\Feature\Subusers\Data\SubuserFactory;
 use Smsapi\Client\Feature\Vms\Data\VmsFactory;
@@ -72,6 +73,11 @@ class DataFactoryProvider
     public function provideSendernameFactory(): SendernameFactory
     {
         return new SendernameFactory();
+    }
+
+    public function provideMfaFactory(): MfaFactory
+    {
+        return new MfaFactory();
     }
 
     public function provideSubuserFactory(): SubuserFactory

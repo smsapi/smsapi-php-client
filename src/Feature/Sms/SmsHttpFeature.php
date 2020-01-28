@@ -12,6 +12,8 @@ use Smsapi\Client\Feature\Sms\Bag\SendSmsBag;
 use Smsapi\Client\Feature\Sms\Bag\SendSmssBag;
 use Smsapi\Client\Feature\Sms\Bag\SendSmsToGroupBag;
 use Smsapi\Client\Feature\Sms\Data\Sms;
+use Smsapi\Client\Feature\Sms\Mfa\MfaFeature;
+use Smsapi\Client\Feature\Sms\Mfa\MfaHttpFeature;
 use Smsapi\Client\Feature\Sms\Sendernames\SendernamesFeature;
 use Smsapi\Client\Feature\Sms\Sendernames\SendernamesHttpFeature;
 use Smsapi\Client\Infrastructure\RequestExecutor\RequestExecutorFactory;
@@ -39,6 +41,14 @@ class SmsHttpFeature implements SmsFeature
         return new SendernamesHttpFeature(
             $this->requestExecutorFactory->createRestRequestExecutor(),
             $this->dataFactoryProvider->provideSendernameFactory()
+        );
+    }
+
+    public function mfaFeature(): MfaFeature
+    {
+        return new MfaHttpFeature(
+            $this->requestExecutorFactory->createRestRequestExecutor(),
+            $this->dataFactoryProvider->provideMfaFactory()
         );
     }
 

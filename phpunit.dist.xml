@@ -54,6 +54,9 @@
             <directory>tests/Integration/Feature/Sms</directory>
             <directory>tests/Unit/Feature/Sms</directory>
         </testsuite>
+        <testsuite name="feature-mfa">
+            <directory>tests/Integration/Feature/Mfa</directory>
+        </testsuite>
         <testsuite name="feature-subusers">
             <directory>tests/Integration/Feature/Subusers</directory>
         </testsuite>
