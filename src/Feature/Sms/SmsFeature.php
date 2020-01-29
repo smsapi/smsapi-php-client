@@ -21,8 +21,6 @@ interface SmsFeature
 {
     public function sendernameFeature(): SendernamesFeature;
 
-    public function mfaFeature(): MfaFeature;
-
     public function sendSms(SendSmsBag $sendSmsBag): Sms;
 
     public function sendFlashSms(SendSmsBag $sendSmsBag): Sms;

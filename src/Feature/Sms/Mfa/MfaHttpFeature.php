@@ -26,18 +26,15 @@ class MfaHttpFeature implements MfaFeature
     }
 
     /**
-     * @param CreateMfaBag $createMfaBag
-     * @return Mfa
      * @throws SmsapiClientException
      */
-    public function createMfa(CreateMfaBag $createMfaBag): Mfa
+    public function generateMfa(CreateMfaBag $createMfaBag): Mfa
     {
         $result = $this->restRequestExecutor->create('mfa/codes', (array)$createMfaBag);
         return $this->mfaFactory->createFromObject($result);
     }
 
     /**
-     * @param VerificationMfaBag $verificationMfaBag
      * @throws SmsapiClientException
      */
     public function verificationMfa(VerificationMfaBag $verificationMfaBag)

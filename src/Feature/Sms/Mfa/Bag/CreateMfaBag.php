@@ -15,21 +15,13 @@ class CreateMfaBag
     /**
      * @var string
      */
-    public $phone_number;
+    public $phoneNumber;
 
-    /**
-     * CreateMfaBag constructor.
-     * @param string $phone_number
-     */
-    public function __construct(string $phone_number)
+    public function __construct(string $phoneNumber)
     {
-        $this->phone_number = $phone_number;
+        $this->phoneNumber = $phoneNumber;
     }
 
-    /**
-     * @param string $phonenumber
-     * @return static
-     */
     public static function notFast(string $phonenumber): self
     {
         $createMfaBag = new self($phonenumber);

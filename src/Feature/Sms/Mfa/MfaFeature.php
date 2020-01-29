@@ -13,7 +13,7 @@ use Smsapi\Client\Feature\Sms\Mfa\Data\Mfa;
  */
 interface MfaFeature
 {
-    public function createMfa(CreateMfaBag $createMfaBag): Mfa;
+    public function generateMfa(CreateMfaBag $createMfaBag): Mfa;
 
     public function verificationMfa(VerificationMfaBag $verificationMfaBag);
 }

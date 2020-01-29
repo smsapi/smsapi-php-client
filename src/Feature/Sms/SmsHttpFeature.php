@@ -44,14 +44,6 @@ class SmsHttpFeature implements SmsFeature
         );
     }
 
-    public function mfaFeature(): MfaFeature
-    {
-        return new MfaHttpFeature(
-            $this->requestExecutorFactory->createRestRequestExecutor(),
-            $this->dataFactoryProvider->provideMfaFactory()
-        );
-    }
-
     public function sendSms(SendSmsBag $sendSmsBag): Sms
     {
         $sendSmsBag->details = true;
