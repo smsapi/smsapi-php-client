@@ -6,27 +6,21 @@ namespace Smsapi\Client\Feature\Mfa\Bag;
 
 /**
  * @api
- * @property string $code
- * @property string $phone_number
  */
 class VerificationMfaBag
 {
     /**
      * @var string
      */
-    public $phone_number;
+    public $phoneNumber;
     /**
      * @var string
      */
     public $code;
 
-    /**
-     * @param string $code
-     * @param string $phone_number
-     */
-    public function __construct(string $code, string $phone_number)
+    public function __construct(string $code, string $phoneNumber)
     {
         $this->code = $code;
-        $this->phone_number = $phone_number;
+        $this->phoneNumber = $phoneNumber;
     }
 }
