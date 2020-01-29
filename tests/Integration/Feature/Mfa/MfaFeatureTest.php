@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Smsapi\Client\Tests\Integration\Feature\Mfa;
 
-use Smsapi\Client\Feature\Sms\Mfa\Bag\CreateMfaBag;
-use Smsapi\Client\Feature\Sms\Mfa\Bag\VerificationMfaBag;
-use Smsapi\Client\Feature\Sms\Mfa\Data\Mfa;
+use Smsapi\Client\Feature\Mfa\Bag\CreateMfaBag;
+use Smsapi\Client\Feature\Mfa\Bag\VerificationMfaBag;
+use Smsapi\Client\Feature\Mfa\Data\Mfa;
 use Smsapi\Client\SmsapiClientException;
 use Smsapi\Client\Tests\Fixture\PhoneNumberFixture;
 use Smsapi\Client\Tests\SmsapiClientIntegrationTestCase;

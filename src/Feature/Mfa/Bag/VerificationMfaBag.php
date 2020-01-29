@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Smsapi\Client\Feature\Sms\Mfa\Bag;
+namespace Smsapi\Client\Feature\Mfa\Bag;
 
 /**
  * @api
