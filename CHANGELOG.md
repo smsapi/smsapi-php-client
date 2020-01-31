@@ -5,8 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [2.6.0] - 2020-01-31
 ### Added
-- generation and verification MFA codes implement
-### Changed
+- generation and verification of MFA codes implement
 - `MfaFeature` uses mfa endpoint
 
 ## [2.5.0] - 2020-01-14
