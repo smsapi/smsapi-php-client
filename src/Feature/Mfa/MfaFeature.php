@@ -15,5 +15,5 @@ interface MfaFeature
 {
     public function generateMfa(CreateMfaBag $createMfaBag): Mfa;
 
-    public function verificationMfa(VerificationMfaBag $verificationMfaBag);
+    public function verifyMfa(VerificationMfaBag $verificationMfaBag);
 }

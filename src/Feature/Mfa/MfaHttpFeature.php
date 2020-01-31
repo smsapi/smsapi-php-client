@@ -37,7 +37,7 @@ class MfaHttpFeature implements MfaFeature
     /**
      * @throws SmsapiClientException
      */
-    public function verificationMfa(VerificationMfaBag $verificationMfaBag)
+    public function verifyMfa(VerificationMfaBag $verificationMfaBag)
     {
         $this->restRequestExecutor->create('mfa/codes/verifications', (array)$verificationMfaBag);
     }

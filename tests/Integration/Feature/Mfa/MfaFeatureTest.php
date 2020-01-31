@@ -55,7 +55,7 @@ class MfaFeatureTest extends SmsapiClientIntegrationTestCase
         $mfaFeature = self::$smsapiService->mfaFeature();
         $verificationMfaBag = new VerificationMfaBag($mfa->code, $mfa->phoneNumber);
         //when
-        $mfaFeature->verificationMfa($verificationMfaBag);
+        $mfaFeature->verifyMfa($verificationMfaBag);
         //then
         $this->assertTrue(true);
     }
@@ -72,7 +72,7 @@ class MfaFeatureTest extends SmsapiClientIntegrationTestCase
         $this->expectException(SmsapiClientException::class);
         $this->expectExceptionMessage('Not found');
         //when
-        $mfaFeature->verificationMfa($verificationMfaBag);
+        $mfaFeature->verifyMfa($verificationMfaBag);
     }
 
     /**
@@ -87,7 +87,7 @@ class MfaFeatureTest extends SmsapiClientIntegrationTestCase
         $this->expectException(SmsapiClientException::class);
         $this->expectExceptionMessage('MFA code cannot be empty');
         //when
-        $mfaFeature->verificationMfa($verificationMfaBag);
+        $mfaFeature->verifyMfa($verificationMfaBag);
     }
 
     /**
@@ -102,6 +102,6 @@ class MfaFeatureTest extends SmsapiClientIntegrationTestCase
         $this->expectException(SmsapiClientException::class);
         $this->expectExceptionMessage('MFA code has invalid format');
         //when
-        $mfaFeature->verificationMfa($verificationMfaBag);
+        $mfaFeature->verifyMfa($verificationMfaBag);
     }
 }
