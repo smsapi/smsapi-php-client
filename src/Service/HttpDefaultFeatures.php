@@ -14,6 +14,8 @@ use Smsapi\Client\Feature\Push\PushFeature;
 use Smsapi\Client\Feature\Push\PushHttpFeature;
 use Smsapi\Client\Feature\ShortUrl\ShortUlrHttpFeature;
 use Smsapi\Client\Feature\ShortUrl\ShortUrlFeature;
+use Smsapi\Client\Feature\Mfa\MfaFeature;
+use Smsapi\Client\Feature\Mfa\MfaHttpFeature;
 use Smsapi\Client\Feature\Sms\SmsFeature;
 use Smsapi\Client\Feature\Sms\SmsHttpFeature;
 use Smsapi\Client\Feature\Subusers\SubusersFeature;
@@ -41,6 +43,14 @@ trait HttpDefaultFeatures
     public function smsFeature(): SmsFeature
     {
         return new SmsHttpFeature($this->requestExecutorFactory, $this->dataFactoryProvider);
+    }
+
+    public function mfaFeature(): MfaFeature
+    {
+        $restRequestExecutor = $this->requestExecutorFactory->createRestRequestExecutor();
+        $mfaFactory = $this->dataFactoryProvider->provideMfaFactory();
+
+        return new MfaHttpFeature($restRequestExecutor, $mfaFactory);
     }
 
     public function hlrFeature(): HlrFeature

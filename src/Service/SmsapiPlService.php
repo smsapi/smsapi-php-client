@@ -12,6 +12,7 @@ use Smsapi\Client\Feature\Ping\PingFeature;
 use Smsapi\Client\Feature\Profile\SmsapiPlProfileFeature;
 use Smsapi\Client\Feature\Push\PushFeature;
 use Smsapi\Client\Feature\ShortUrl\ShortUrlFeature;
+use Smsapi\Client\Feature\Mfa\MfaFeature;
 use Smsapi\Client\Feature\Sms\SmsFeature;
 use Smsapi\Client\Feature\Subusers\SubusersFeature;
 use Smsapi\Client\Feature\Vms\VmsFeature;
@@ -24,6 +25,8 @@ interface SmsapiPlService
     public function pingFeature(): PingFeature;
 
     public function smsFeature(): SmsFeature;
+
+    public function mfaFeature(): MfaFeature;
 
     public function hlrFeature(): HlrFeature;
 
