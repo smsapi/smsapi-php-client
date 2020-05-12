@@ -42,6 +42,10 @@ class ContactFactory
             $contact->country = $object->country;
         }
 
+        if (isset($object->undelivered_messages)) {
+            $contact->undeliveredMessages = $object->undelivered_messages;
+        }
+
         $contact->groups = array_map(
             [$this->contactGroupFactory, 'createFromObjectWithoutPermissions'],
             $object->groups
@@ -72,7 +76,7 @@ class ContactFactory
     public function isCustomFieldProperty(string $propertyName): bool
     {
         return !in_array($propertyName, [
-            'id', 'date_created', 'date_updated', 'gender', 'email', 'phone_number', 'country', 'groups'
+            'id', 'date_created', 'date_updated', 'gender', 'email', 'phone_number', 'country', 'groups', 'undelivered_messages'
         ]);
     }
 }

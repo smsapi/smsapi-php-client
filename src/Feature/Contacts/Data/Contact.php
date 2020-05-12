@@ -11,7 +11,6 @@ use DateTimeInterface;
  */
 class Contact
 {
-
     /** @var string */
     public $id;
 
@@ -26,6 +25,9 @@ class Contact
 
     /** @var string */
     public $country;
+
+    /** @var int */
+    public $undeliveredMessages;
 
     /** @var DateTimeInterface */
     public $dateCreated;
