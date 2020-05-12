@@ -22,11 +22,6 @@ class ContactFactoryTest extends TestCase
         );
     }
 
-    public function test()
-    {
-        $this->assertTrue(true);
-    }
-
     /**
      * @test
      */
@@ -44,8 +39,8 @@ class ContactFactoryTest extends TestCase
         $contact = $this->contactFactory->createFromObject($contactData);
 
         $this->assertEquals('any', $contact->id);
-//        $this->assertEquals(new \DateTime('2020-05-11'), $contact->dateCreated);
-//        $this->assertEquals(new \DateTime('2020-05-12'), $contact->dateUpdated);
+        $this->assertEquals(new \DateTime('2020-05-11'), $contact->dateCreated);
+        $this->assertEquals(new \DateTime('2020-05-12'), $contact->dateUpdated);
         $this->assertEquals('M', $contact->gender);
     }
 
