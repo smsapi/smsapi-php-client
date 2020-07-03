@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Smsapi\Client\Infrastructure\RequestExecutor;
 
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
 class GuzzleClientLoggerDecorator implements ClientInterface
@@ -19,7 +21,7 @@ class GuzzleClientLoggerDecorator implements ClientInterface
         $this->logger = $logger;
     }
 
-    public function send(RequestInterface $request, array $options = [])
+    public function send(RequestInterface $request, array $options = []): ResponseInterface
     {
         $this->logger->info('Send', ['request' => $request, 'options' => $options]);
 
@@ -30,7 +32,7 @@ class GuzzleClientLoggerDecorator implements ClientInterface
         return $response;
     }
 
-    public function sendAsync(RequestInterface $request, array $options = [])
+    public function sendAsync(RequestInterface $request, array $options = []): PromiseInterface
     {
         $this->logger->info('Send async', ['request' => $request, 'options' => $options]);
 
@@ -41,7 +43,7 @@ class GuzzleClientLoggerDecorator implements ClientInterface
         return $promise;
     }
 
-    public function request($method, $uri, array $options = [])
+    public function request(string $method, $uri, array $options = []): ResponseInterface
     {
         $this->logger->info('Request', ['method' => $method, 'uri' => $uri, 'options' => $options]);
 
@@ -52,7 +54,7 @@ class GuzzleClientLoggerDecorator implements ClientInterface
         return $response;
     }
 
-    public function requestAsync($method, $uri, array $options = [])
+    public function requestAsync(string $method, $uri, array $options = []): PromiseInterface
     {
         $this->logger->info('Request async', ['method' => $method, 'uri' => $uri, 'options' => $options]);
 
@@ -63,7 +65,7 @@ class GuzzleClientLoggerDecorator implements ClientInterface
         return $promise;
     }
 
-    public function getConfig($option = null)
+    public function getConfig(?string $option = null)
     {
         $this->logger->info('Get config', ['option' => $option]);
 

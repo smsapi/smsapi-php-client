@@ -66,10 +66,14 @@ class GuzzleClientFactory
 
     private function createUserAgent(): string
     {
+        $guzzleVersion = defined('GuzzleHttp\ClientInterface::VERSION')
+            ? ClientInterface::VERSION
+            : ClientInterface::MAJOR_VERSION;
+
         return sprintf(
             'smsapi/php-client:%s;guzzle:%s;php:%s',
             SmsapiClient::VERSION,
-            ClientInterface::VERSION,
+            $guzzleVersion,
             PHP_VERSION
         );
     }
