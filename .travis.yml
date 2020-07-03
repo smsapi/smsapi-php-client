@@ -1,11 +1,23 @@
 language: php
+
 php:
-    - '7.1'
     - '7.2'
     - '7.3'
     - '7.4'
+    - 'nightly'
+
+jobs:
+    allow_failures:
+        - php: 'nightly'
+          env:
+              global:
+                  - COMPOSER_ARGS="--no-interaction --ignore-platform-reqs"
+
+env:
+    global:
+        - COMPOSER_ARGS="--no-interaction"
 
 before_script:
-    - composer install
+    - composer install $COMPOSER_ARGS
 
 script: ./vendor/bin/phpunit --configuration phpunit.dist.xml --testsuite unit
