@@ -5,30 +5,6 @@
         <property name="suite" value="all"/>
         <exec command="./vendor/bin/phpunit --testsuite=${suite}" passthru="true" />
     </target>
-    <target name="phpcbf-src">
-        <exec command="./vendor/bin/phpcbf --standard=./phpcs.xml src" passthru="true" />
-    </target>
-    <target name="phpcbf-tests">
-        <exec command="./vendor/bin/phpcbf --standard=./phpcs.xml tests" passthru="true" />
-    </target>
-    <target name="phpcs-src">
-        <exec command="./vendor/bin/phpcs --standard=./phpcs.xml src" passthru="true" />
-    </target>
-    <target name="phpcs-tests">
-        <exec command="./vendor/bin/phpcs --standard=./phpcs.xml tests" passthru="true" />
-    </target>
-    <target name="phpcbf">
-        <phingcall target="phpcbf-src" />
-        <phingcall target="phpcbf-tests" />
-    </target>
-    <target name="phpcs">
-        <phingcall target="phpcs-src" />
-        <phingcall target="phpcs-tests" />
-    </target>
-    <target name="build">
-        <phingcall target="phpcbf" />
-        <phingcall target="phpcs" />
-    </target>
     <target name="composer">
         <available property="is_composer_installed" file="composer" filepath="${env.PATH}" value="true" />
         <if>
