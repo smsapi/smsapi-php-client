@@ -27,6 +27,9 @@
         "symfony/yaml": "^3",
         "theodorejb/polycast": "^1",
         "marc-mabe/php-enum": "^3",
-        "phing/phing": "^2.5"
+        "phing/phing": "^2.5",
+        "doctrine/instantiator": "1.0.5",
+        "phpdocumentor/reflection-docblock": "^4.3",
+        "phpdocumentor/type-resolver": "^0.5"
     }
 }
