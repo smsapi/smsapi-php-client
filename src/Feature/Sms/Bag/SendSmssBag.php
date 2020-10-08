@@ -11,7 +11,6 @@ use DateTimeInterface;
  * @property string $from
  * @property string $message
  * @property string $template
- * @property string $encoding
  * @property array $idx
  * @property bool $checkIdx
  * @property string $partnerId
@@ -31,6 +30,9 @@ class SendSmssBag
 {
     /** @var array */
     public $to;
+
+    /** @var string */
+    public $encoding = 'utf-8';
 
     public static function withMessage(array $receivers, string $message): self
     {
