@@ -67,7 +67,7 @@ class SendernamesFeatureTest extends SmsapiClientIntegrationTestCase
         $sendernameFeature->deleteSendername($deleteSendernameBag);
 
         $this->expectException(ApiErrorException::class);
-        $this->expectExceptionMessage('Sendername not exists');
+        $this->expectExceptionMessage('Not found resource');
         $sendernameFeature->findSendername(new FindSendernameBag(self::SENDERNAME));
     }
 
