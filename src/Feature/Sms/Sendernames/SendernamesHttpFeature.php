@@ -6,7 +6,6 @@ namespace Smsapi\Client\Feature\Sms\Sendernames;
 use Smsapi\Client\Feature\Sms\Sendernames\Bag\CreateSendernameBag;
 use Smsapi\Client\Feature\Sms\Sendernames\Bag\DeleteSendernameBag;
 use Smsapi\Client\Feature\Sms\Sendernames\Bag\FindSendernameBag;
-use Smsapi\Client\Feature\Sms\Sendernames\Bag\FindSendernamesBag;
 use Smsapi\Client\Feature\Sms\Sendernames\Bag\MakeSendernameDefaultBag;
 use Smsapi\Client\Feature\Sms\Sendernames\Data\Sendername;
 use Smsapi\Client\Feature\Sms\Sendernames\Data\SendernameFactory;
