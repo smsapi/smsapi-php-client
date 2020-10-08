@@ -18,20 +18,21 @@ namespace Smsapi\Client\Feature\Contacts\Bag;
  */
 class CreateContactBag
 {
+    /**
+     * @deprecated
+     * @see withPhoneNumber
+     */
     public static function withPhone(string $phoneNumber): self
+    {
+        return self::withPhoneNumber($phoneNumber);
+    }
+
+    public static function withPhoneNumber(string $phoneNumber): self
     {
         $bag = new self();
         $bag->phoneNumber = $phoneNumber;
         return $bag;
-    }
 
-    /**
-     * @deprecated
-     * @see withPhone
-     */
-    public static function withPhoneNumber(int $phoneNumber): self
-    {
-        return self::withPhone((string)$phoneNumber);
     }
 
     public static function withEmail(string $email): self

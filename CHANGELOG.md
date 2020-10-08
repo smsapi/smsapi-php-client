@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 ## [Unreleased]
 ### Changed
 - utf-8 as default encoding
+- `CreateContactBag::withPhone` marked as deprecated
 
 ## [2.6.1] - 2020-05-14
 ### Fixed
