@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Smsapi\Client\Tests\Unit\Infrastructure\RequestExecutor;
 
-use GuzzleHttp\ClientInterface;
+use Psr\Http\Client\ClientInterface;
 use Smsapi\Client\Tests\Fixture\GuzzleClientFactoryMother;
 use Smsapi\Client\Tests\SmsapiClientUnitTestCase;
 

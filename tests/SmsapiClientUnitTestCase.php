@@ -7,6 +7,9 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use Smsapi\Client\Feature\Data\DataFactoryProvider;
 use Smsapi\Client\Infrastructure\RequestAssembler\GuzzleRequestAssembler;
 use Smsapi\Client\Infrastructure\RequestExecutor\LegacyRequestExecutor;
@@ -31,7 +34,23 @@ class SmsapiClientUnitTestCase extends SmsapiClientTestCase
     public function prepare()
     {
         $this->mockHandler = new MockHandler();
-        $guzzleHttp = new Client(['handler' => HandlerStack::create($this->mockHandler)]);
+
+        $guzzleHttp = new class($this->mockHandler) implements ClientInterface {
+            private $handler;
+
+            public function __construct(MockHandler $handler)
+            {
+                $this->handler = $handler;
+            }
+
+            public function sendRequest(RequestInterface $request): ResponseInterface
+            {
+                $guzzleClient = new Client(['handler' => HandlerStack::create($this->handler)]);
+
+                return $guzzleClient->send($request);
+            }
+        };
+
         $queryFormatter = new ComplexParametersQueryFormatter();
         $jsonDecode = new JsonDecode();
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Smsapi\Client\Tests\Fixture;
 
-use Smsapi\Client\Infrastructure\RequestExecutor\GuzzleClientFactory;
+use Smsapi\Client\Infrastructure\Client\GuzzleClientFactory;
 
 class GuzzleClientFactoryMother
 {

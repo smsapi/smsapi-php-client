@@ -7,7 +7,7 @@ namespace Smsapi\Client;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\NullLogger;
 use Smsapi\Client\Feature\Data\DataFactoryProvider;
-use Smsapi\Client\Infrastructure\RequestExecutor\GuzzleClientFactory;
+use Smsapi\Client\Infrastructure\Client\GuzzleClientFactory;
 use Smsapi\Client\Infrastructure\RequestExecutor\RequestExecutorFactory;
 use Smsapi\Client\Service\SmsapiComService;
 use Smsapi\Client\Service\SmsapiComHttpService;

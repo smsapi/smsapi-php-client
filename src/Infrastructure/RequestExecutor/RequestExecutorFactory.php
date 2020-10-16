@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Smsapi\Client\Infrastructure\RequestExecutor;
 
-use GuzzleHttp\ClientInterface;
+use Psr\Http\Client\ClientInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\NullLogger;
+use Smsapi\Client\Infrastructure\Client\GuzzleClientFactory;
 use Smsapi\Client\Infrastructure\RequestAssembler\GuzzleRequestAssembler;
 use Smsapi\Client\Infrastructure\RequestMapper\Query\Formatter\ComplexParametersQueryFormatter;
 use Smsapi\Client\Infrastructure\ResponseMapper\LegacyResponseMapper;
@@ -67,8 +68,6 @@ class RequestExecutorFactory
     private function createGuzzleClient(): ClientInterface
     {
         $this->guzzleClientFactory->setLogger($this->logger);
-        $guzzle = $this->guzzleClientFactory->createClient();
-
-        return $guzzle;
+        return $this->guzzleClientFactory->createClient();
     }
 }

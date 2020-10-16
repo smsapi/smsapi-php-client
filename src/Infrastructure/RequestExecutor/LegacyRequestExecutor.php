@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Smsapi\Client\Infrastructure\RequestExecutor;
 
-use GuzzleHttp\ClientInterface;
+use Psr\Http\Client\ClientInterface;
 use Smsapi\Client\Infrastructure\RequestAssembler\GuzzleRequestAssembler;
 use Smsapi\Client\Infrastructure\RequestMapper\LegacyRequestMapper;
 use Smsapi\Client\Infrastructure\ResponseMapper\LegacyResponseMapper;
@@ -38,7 +38,7 @@ class LegacyRequestExecutor
 
         $assembledRequest = $this->requestAssembler->assemble($request);
 
-        $response = $this->client->send($assembledRequest);
+        $response = $this->client->sendRequest($assembledRequest);
 
         return $this->legacyResponseMapper->map($response);
     }
