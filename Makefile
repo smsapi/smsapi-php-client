@@ -6,10 +6,10 @@ help:
 .DEFAULT_GOAL := help
 
 prepare: ## load dependencies
-	docker run --rm -i -t -v '$(PWD)':/app composer /usr/bin/composer update
+	docker-compose run -T php /usr/bin/composer update
 
 test: prepare ## run test
-	docker run --rm -t -v '$(PWD)':/app --network host php:7.0-alpine php app/vendor/bin/phing -f app/build.xml test
+	docker-compose run -T php php vendor/bin/phing -f build.xml test
 
 test-suite: prepare ## run test against suite, ex: make test-suite SUITE="unit"
-	docker run --rm -t -v '$(PWD)':/app --network host php:7.0-alpine php app/vendor/bin/phing -f app/build.xml test -Dsuite=$(SUITE)
+	docker-compose run -T php php vendor/bin/phing -f build.xml test -Dsuite=$(SUITE)
