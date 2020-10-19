@@ -7,6 +7,7 @@ namespace Smsapi\Client\Infrastructure\Client;
 use Psr\Http\Client\ClientInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\NullLogger;
+use Smsapi\Client\Infrastructure\Client\Decorator\GuzzleClientAuthorizationHeaderDecorator;
 use Smsapi\Client\Infrastructure\Client\Decorator\GuzzleClientBaseUriDecorator;
 use Smsapi\Client\Infrastructure\Client\Decorator\GuzzleClientLoggerDecorator;
 
@@ -31,9 +32,10 @@ class GuzzleClientFactory
 
     public function createClient(): ClientInterface
     {
-        $client = new GuzzleClient($this->apiToken, $this->proxy);
+        $client = new GuzzleClient($this->proxy);
         $client = new GuzzleClientLoggerDecorator($client, $this->logger);
         $client = new GuzzleClientBaseUriDecorator($client, $this->uri);
+        $client = new GuzzleClientAuthorizationHeaderDecorator($client, $this->apiToken);
 
         return $client;
     }

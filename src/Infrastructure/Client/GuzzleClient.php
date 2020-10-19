@@ -23,12 +23,10 @@ use Smsapi\Client\SmsapiClient;
  */
 class GuzzleClient implements ClientInterface
 {
-    private $apiToken;
     private $proxy;
 
-    public function __construct(string $apiToken, string $proxy)
+    public function __construct(string $proxy)
     {
-        $this->apiToken = $apiToken;
         $this->proxy = $proxy;
     }
 
@@ -54,7 +52,6 @@ class GuzzleClient implements ClientInterface
     private function createHeaders(): array
     {
         return [
-            'Authorization' => 'Bearer ' . $this->apiToken,
             'X-Request-Id' => $this->generateRequestId(),
             'User-Agent' => $this->createUserAgent(),
         ];
