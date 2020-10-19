@@ -10,6 +10,7 @@ use Psr\Log\NullLogger;
 use Smsapi\Client\Infrastructure\Client\Decorator\GuzzleClientAuthorizationHeaderDecorator;
 use Smsapi\Client\Infrastructure\Client\Decorator\GuzzleClientBaseUriDecorator;
 use Smsapi\Client\Infrastructure\Client\Decorator\GuzzleClientLoggerDecorator;
+use Smsapi\Client\Infrastructure\Client\Decorator\GuzzleClientUserAgentHeaderDecorator;
 
 /**
  * @internal
@@ -36,6 +37,7 @@ class GuzzleClientFactory
         $client = new GuzzleClientLoggerDecorator($client, $this->logger);
         $client = new GuzzleClientBaseUriDecorator($client, $this->uri);
         $client = new GuzzleClientAuthorizationHeaderDecorator($client, $this->apiToken);
+        $client = new GuzzleClientUserAgentHeaderDecorator($client);
 
         return $client;
     }

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Smsapi\Client\Infrastructure\Client;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\ClientInterface as GuzzleClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException as GuzzleRequestException;
 use GuzzleHttp\Exception\TransferException as GuzzleTransferException;
@@ -16,7 +15,6 @@ use Psr\Http\Message\ResponseInterface;
 use Smsapi\Client\Infrastructure\Client\Exception\ClientException;
 use Smsapi\Client\Infrastructure\Client\Exception\NetworkException;
 use Smsapi\Client\Infrastructure\Client\Exception\RequestException;
-use Smsapi\Client\SmsapiClient;
 
 /**
  * @internal
@@ -53,22 +51,11 @@ class GuzzleClient implements ClientInterface
     {
         return [
             'X-Request-Id' => $this->generateRequestId(),
-            'User-Agent' => $this->createUserAgent(),
         ];
     }
 
     private function generateRequestId(): string
     {
         return bin2hex(random_bytes(12));
-    }
-
-    private function createUserAgent(): string
-    {
-        return sprintf(
-            'smsapi/php-client:%s;guzzle:%s;php:%s',
-            SmsapiClient::VERSION,
-            GuzzleClientInterface::VERSION,
-            PHP_VERSION
-        );
     }
 }
