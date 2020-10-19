@@ -9,6 +9,7 @@ use Psr\Log\LoggerAwareTrait;
 use Psr\Log\NullLogger;
 use Smsapi\Client\Infrastructure\Client\Decorator\GuzzleClientAuthorizationHeaderDecorator;
 use Smsapi\Client\Infrastructure\Client\Decorator\GuzzleClientBaseUriDecorator;
+use Smsapi\Client\Infrastructure\Client\Decorator\GuzzleClientCorrelationIdHeaderDecorator;
 use Smsapi\Client\Infrastructure\Client\Decorator\GuzzleClientLoggerDecorator;
 use Smsapi\Client\Infrastructure\Client\Decorator\GuzzleClientUserAgentHeaderDecorator;
 
@@ -38,6 +39,7 @@ class GuzzleClientFactory
         $client = new GuzzleClientBaseUriDecorator($client, $this->uri);
         $client = new GuzzleClientAuthorizationHeaderDecorator($client, $this->apiToken);
         $client = new GuzzleClientUserAgentHeaderDecorator($client);
+        $client = new GuzzleClientCorrelationIdHeaderDecorator($client);
 
         return $client;
     }

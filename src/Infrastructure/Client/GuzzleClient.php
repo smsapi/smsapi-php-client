@@ -33,7 +33,6 @@ class GuzzleClient implements ClientInterface
         $guzzleClient = new Client([
             RequestOptions::HTTP_ERRORS => false,
             RequestOptions::PROXY => $this->proxy,
-            RequestOptions::HEADERS => $this->createHeaders(),
         ]);
 
         try {
@@ -45,17 +44,5 @@ class GuzzleClient implements ClientInterface
         } catch (GuzzleException $e) {
             throw ClientException::create($request, $e);
         }
-    }
-
-    private function createHeaders(): array
-    {
-        return [
-            'X-Request-Id' => $this->generateRequestId(),
-        ];
-    }
-
-    private function generateRequestId(): string
-    {
-        return bin2hex(random_bytes(12));
     }
 }
