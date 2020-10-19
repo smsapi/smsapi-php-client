@@ -11,7 +11,7 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * @internal
  */
-class GuzzleClientAcceptJsonDecorator implements ClientInterface
+class GuzzleClientAcceptJsonHeaderDecorator implements ClientInterface
 {
     private $client;
 
