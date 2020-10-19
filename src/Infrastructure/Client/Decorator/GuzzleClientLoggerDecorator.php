@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Smsapi\Client\Infrastructure\Client;
+namespace Smsapi\Client\Infrastructure\Client\Decorator;
 
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;

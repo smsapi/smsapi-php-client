@@ -24,20 +24,17 @@ use Smsapi\Client\SmsapiClient;
 class GuzzleClient implements ClientInterface
 {
     private $apiToken;
-    private $uri;
     private $proxy;
 
-    public function __construct(string $apiToken, string $uri, string $proxy)
+    public function __construct(string $apiToken, string $proxy)
     {
         $this->apiToken = $apiToken;
-        $this->uri = $uri;
         $this->proxy = $proxy;
     }
 
     public function sendRequest(RequestInterface $request): ResponseInterface
     {
         $guzzleClient = new Client([
-            'base_uri' => $this->createBaseUri(),
             RequestOptions::HTTP_ERRORS => false,
             RequestOptions::PROXY => $this->proxy,
             RequestOptions::HEADERS => $this->createHeaders(),
@@ -52,11 +49,6 @@ class GuzzleClient implements ClientInterface
         } catch (GuzzleException $e) {
             throw ClientException::create($request, $e);
         }
-    }
-
-    private function createBaseUri(): string
-    {
-        return rtrim($this->uri, '/') . '/';
     }
 
     private function createHeaders(): array
