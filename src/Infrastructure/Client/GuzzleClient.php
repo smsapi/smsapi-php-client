@@ -54,7 +54,6 @@ class GuzzleClient implements ClientInterface
     private function createHeaders(): array
     {
         return [
-            'Accept' => 'application/json',
             'Authorization' => 'Bearer ' . $this->apiToken,
             'X-Request-Id' => $this->generateRequestId(),
             'User-Agent' => $this->createUserAgent(),
