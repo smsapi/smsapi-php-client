@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Smsapi\Client\Infrastructure\Client\Decorator;
+namespace Smsapi\Client\Infrastructure\HttpClient\Decorator;
 
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
@@ -12,7 +12,7 @@ use Psr\Log\LoggerInterface;
 /**
  * @internal
  */
-class GuzzleClientLoggerDecorator implements ClientInterface
+class LoggerDecorator implements ClientInterface
 {
     private $client;
     private $logger;

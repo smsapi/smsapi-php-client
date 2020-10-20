@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Smsapi\Client\Infrastructure\Client\Decorator;
+namespace Smsapi\Client\Infrastructure\HttpClient\Decorator;
 
-use GuzzleHttp\ClientInterface as GuzzleClientInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -13,7 +12,7 @@ use Smsapi\Client\SmsapiClient;
 /**
  * @internal
  */
-class GuzzleClientUserAgentHeaderDecorator implements ClientInterface
+class HttpClientUserAgentHeaderDecorator implements ClientInterface
 {
     private $client;
 
@@ -37,9 +36,8 @@ class GuzzleClientUserAgentHeaderDecorator implements ClientInterface
     private function createUserAgent(): string
     {
         return sprintf(
-            'smsapi/php-client:%s;guzzle:%s;php:%s',
+            'smsapi/php-client:%s;php:%s',
             SmsapiClient::VERSION,
-            GuzzleClientInterface::VERSION,
             PHP_VERSION
         );
     }

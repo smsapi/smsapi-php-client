@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Smsapi\Client\Infrastructure\Client\Decorator;
+namespace Smsapi\Client\Infrastructure\HttpClient\Decorator;
 
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
@@ -11,7 +11,7 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * @internal
  */
-class GuzzleClientCorrelationIdHeaderDecorator implements ClientInterface
+class CorrelationIdHeaderDecorator implements ClientInterface
 {
     private $client;
 

@@ -7,6 +7,9 @@ use RuntimeException;
 use Smsapi\Client\Service\SmsapiComService;
 use Smsapi\Client\Service\SmsapiPlService;
 use Smsapi\Client\SmsapiHttpClient;
+use Smsapi\Client\Tests\Helper\HttpClient\HttpClient;
+use Smsapi\Client\Tests\Helper\HttpClient\RequestFactory;
+use Smsapi\Client\Tests\Helper\HttpClient\StreamFactory;
 
 class SmsapiClientIntegrationTestCase extends SmsapiClientTestCase
 {
@@ -31,7 +34,7 @@ class SmsapiClientIntegrationTestCase extends SmsapiClientTestCase
             throw new RuntimeException('Invalid API URI');
         }
 
-        $smsapiHttpClient = new SmsapiHttpClient();
+        $smsapiHttpClient = new SmsapiHttpClient(new HttpClient(), new RequestFactory(), new StreamFactory());
 
         if (Config::get('logger')) {
             $smsapiHttpClient->setLogger(new TestLogger());

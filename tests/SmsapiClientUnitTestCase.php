@@ -3,15 +3,7 @@ declare(strict_types=1);
 
 namespace Smsapi\Client\Tests;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Response;
-use Psr\Http\Client\ClientInterface;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 use Smsapi\Client\Feature\Data\DataFactoryProvider;
-use Smsapi\Client\Infrastructure\RequestAssembler\GuzzleRequestAssembler;
 use Smsapi\Client\Infrastructure\RequestExecutor\LegacyRequestExecutor;
 use Smsapi\Client\Infrastructure\RequestExecutor\RequestExecutorFactory;
 use Smsapi\Client\Infrastructure\RequestExecutor\RestRequestExecutor;
@@ -22,65 +14,61 @@ use Smsapi\Client\Infrastructure\ResponseMapper\JsonDecode;
 use Smsapi\Client\Infrastructure\ResponseMapper\LegacyResponseMapper;
 use Smsapi\Client\Infrastructure\ResponseMapper\RestResponseMapper;
 use Smsapi\Client\Service\SmsapiPlHttpService;
+use Smsapi\Client\Tests\Helper\HttpClient\HttpClientMock;
+use Smsapi\Client\Tests\Helper\HttpClient\RequestFactory;
+use Smsapi\Client\Tests\Helper\HttpClient\StreamFactory;
 
 class SmsapiClientUnitTestCase extends SmsapiClientTestCase
 {
-    /** @var MockHandler */
-    private $mockHandler;
+    /** @var HttpClientMock */
+    private $httpClient;
 
     /**
      * @before
      */
     public function prepare()
     {
-        $this->mockHandler = new MockHandler();
-
-        $guzzleHttp = new class($this->mockHandler) implements ClientInterface {
-            private $handler;
-
-            public function __construct(MockHandler $handler)
-            {
-                $this->handler = $handler;
-            }
-
-            public function sendRequest(RequestInterface $request): ResponseInterface
-            {
-                $guzzleClient = new Client(['handler' => HandlerStack::create($this->handler)]);
-
-                return $guzzleClient->send($request);
-            }
-        };
+        $this->httpClient = new HttpClientMock();
+        $requestFactory = new RequestFactory();
+        $streamFactory = new StreamFactory();
 
         $queryFormatter = new ComplexParametersQueryFormatter();
         $jsonDecode = new JsonDecode();
 
+        /** @var RequestExecutorFactory $requestExecutorFactory */
         $requestExecutorFactory = $this->prophesize(RequestExecutorFactory::class);
         $requestExecutorFactory
-            ->createLegacyRequestExecutor()
+            ->createLegacyRequestExecutor($this->httpClient)
             ->willReturn(
                 new LegacyRequestExecutor(
                     new LegacyRequestMapper($queryFormatter),
-                    $guzzleHttp,
+                    $this->httpClient,
                     new LegacyResponseMapper($jsonDecode),
-                    new GuzzleRequestAssembler()
+                    $requestFactory,
+                    $streamFactory
                 )
             );
         $requestExecutorFactory
-            ->createRestRequestExecutor()
+            ->createRestRequestExecutor($this->httpClient)
             ->willReturn(
                 new RestRequestExecutor(
                     new RestRequestMapper($queryFormatter),
-                    $guzzleHttp,
+                    $this->httpClient,
                     new RestResponseMapper($jsonDecode),
-                    new GuzzleRequestAssembler()
+                    $requestFactory,
+                    $streamFactory
                 )
             );
 
-        self::$smsapiService = new SmsapiPlHttpService($requestExecutorFactory->reveal(), new DataFactoryProvider());
+        self::$smsapiService = new SmsapiPlHttpService(
+            $this->httpClient,
+            $requestExecutorFactory->reveal(),
+            new DataFactoryProvider()
+        );
     }
 
     protected function mockResponse(int $statusCode, string $body)
     {
-        $this->mockHandler->append(new Response($statusCode, [], $body));
+        $this->httpClient->mockResponse($statusCode, $body);
     }
 }

@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Smsapi\Client\Infrastructure\RequestExecutor;
 
 use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 use Smsapi\Client\Infrastructure\Request;
-use Smsapi\Client\Infrastructure\RequestAssembler\GuzzleRequestAssembler;
+use Smsapi\Client\Infrastructure\RequestAssembler\RequestAssembler;
 use Smsapi\Client\Infrastructure\RequestMapper\RestRequestMapper;
 use Smsapi\Client\Infrastructure\ResponseMapper\RestResponseMapper;
 use stdClass;
@@ -19,18 +21,21 @@ class RestRequestExecutor
     private $requestMapper;
     private $client;
     private $restResponseMapper;
-    private $requestAssembler;
+    private $requestFactory;
+    private $streamFactory;
 
     public function __construct(
         RestRequestMapper $requestMapper,
         ClientInterface $client,
         RestResponseMapper $restResponseMapper,
-        GuzzleRequestAssembler $guzzleRequestAssembler
+        RequestFactoryInterface $requestFactory,
+        StreamFactoryInterface $streamFactory
     ) {
         $this->requestMapper = $requestMapper;
         $this->client = $client;
         $this->restResponseMapper = $restResponseMapper;
-        $this->requestAssembler = $guzzleRequestAssembler;
+        $this->requestFactory = $requestFactory;
+        $this->streamFactory = $streamFactory;
     }
 
     public function create(string $path, array $builtInParameters, array $userParameters = []): stdClass
@@ -68,7 +73,7 @@ class RestRequestExecutor
 
     private function sendRequestAndMapResponse(Request $request): stdClass
     {
-        $assembledRequest = $this->requestAssembler->assemble($request);
+        $assembledRequest = (new RequestAssembler($this->requestFactory, $this->streamFactory))->assemble($request);
 
         $response = $this->client->sendRequest($assembledRequest);
 

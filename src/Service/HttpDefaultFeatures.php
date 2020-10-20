@@ -37,17 +37,21 @@ trait HttpDefaultFeatures
 
     public function pingFeature(): PingFeature
     {
-        return new PingHttpFeature($this->requestExecutorFactory->createRestRequestExecutor());
+        return new PingHttpFeature($this->requestExecutorFactory->createRestRequestExecutor($this->externalHttpClient));
     }
 
     public function smsFeature(): SmsFeature
     {
-        return new SmsHttpFeature($this->requestExecutorFactory, $this->dataFactoryProvider);
+        return new SmsHttpFeature(
+            $this->externalHttpClient,
+            $this->requestExecutorFactory,
+            $this->dataFactoryProvider
+        );
     }
 
     public function mfaFeature(): MfaFeature
     {
-        $restRequestExecutor = $this->requestExecutorFactory->createRestRequestExecutor();
+        $restRequestExecutor = $this->requestExecutorFactory->createRestRequestExecutor($this->externalHttpClient);
         $mfaFactory = $this->dataFactoryProvider->provideMfaFactory();
 
         return new MfaHttpFeature($restRequestExecutor, $mfaFactory);
@@ -56,7 +60,7 @@ trait HttpDefaultFeatures
     public function hlrFeature(): HlrFeature
     {
         return new HlrHttpFeature(
-            $this->requestExecutorFactory->createLegacyRequestExecutor(),
+            $this->requestExecutorFactory->createLegacyRequestExecutor($this->externalHttpClient),
             $this->dataFactoryProvider->provideHlrFactory()
         );
     }
@@ -64,7 +68,7 @@ trait HttpDefaultFeatures
     public function subusersFeature(): SubusersFeature
     {
         return new SubusersHttpFeature(
-            $this->requestExecutorFactory->createRestRequestExecutor(),
+            $this->requestExecutorFactory->createRestRequestExecutor($this->externalHttpClient),
             $this->dataFactoryProvider->provideSubuserFactory()
         );
     }
@@ -72,7 +76,7 @@ trait HttpDefaultFeatures
     public function shortUrlFeature(): ShortUrlFeature
     {
         return new ShortUlrHttpFeature(
-            $this->requestExecutorFactory->createRestRequestExecutor(),
+            $this->requestExecutorFactory->createRestRequestExecutor($this->externalHttpClient),
             $this->dataFactoryProvider->provideShortUrlLinkFactory()
         );
     }
@@ -80,7 +84,7 @@ trait HttpDefaultFeatures
     public function contactsFeature(): ContactsFeature
     {
         return new ContactsHttpFeature(
-            $this->requestExecutorFactory->createRestRequestExecutor(),
+            $this->requestExecutorFactory->createRestRequestExecutor($this->externalHttpClient),
             $this->dataFactoryProvider
         );
     }
@@ -88,7 +92,7 @@ trait HttpDefaultFeatures
     public function pushFeature(): PushFeature
     {
         return new PushHttpFeature(
-            $this->requestExecutorFactory->createRestRequestExecutor(),
+            $this->requestExecutorFactory->createRestRequestExecutor($this->externalHttpClient),
             $this->dataFactoryProvider->providePushShipmentFactory()
         );
     }
@@ -96,7 +100,7 @@ trait HttpDefaultFeatures
     public function blacklistFeature(): BlacklistFeature
     {
         return new BlacklistHttpFeature(
-            $this->requestExecutorFactory->createRestRequestExecutor(),
+            $this->requestExecutorFactory->createRestRequestExecutor($this->externalHttpClient),
             $this->dataFactoryProvider->provideBlacklistedPhoneNumberFactory()
         );
     }

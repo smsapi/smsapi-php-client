@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Smsapi\Client\Infrastructure\Client;
+namespace Smsapi\Client\Tests\Helper\HttpClient;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
@@ -12,27 +12,16 @@ use GuzzleHttp\RequestOptions;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Smsapi\Client\Infrastructure\Client\Exception\ClientException;
-use Smsapi\Client\Infrastructure\Client\Exception\NetworkException;
-use Smsapi\Client\Infrastructure\Client\Exception\RequestException;
+use Smsapi\Client\Tests\Helper\HttpClient\Exception\ClientException;
+use Smsapi\Client\Tests\Helper\HttpClient\Exception\NetworkException;
+use Smsapi\Client\Tests\Helper\HttpClient\Exception\RequestException;
 
-/**
- * @internal
- */
-class GuzzleClient implements ClientInterface
+class HttpClient implements ClientInterface
 {
-    private $proxy;
-
-    public function __construct(string $proxy)
-    {
-        $this->proxy = $proxy;
-    }
-
     public function sendRequest(RequestInterface $request): ResponseInterface
     {
         $guzzleClient = new Client([
             RequestOptions::HTTP_ERRORS => false,
-            RequestOptions::PROXY => $this->proxy,
         ]);
 
         try {

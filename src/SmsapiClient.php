@@ -14,8 +14,6 @@ interface SmsapiClient extends LoggerAwareInterface
 {
     const VERSION = 'Unreleased';
 
-    public function setProxy(string $proxy): self;
-
     public function smsapiPlService(string $apiToken): SmsapiPlService;
 
     public function smsapiPlServiceWithUri(string $apiToken, string $uri): SmsapiPlService;

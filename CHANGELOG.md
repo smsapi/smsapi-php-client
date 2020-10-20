@@ -4,11 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- PSR-18 support
+- PSR-17 support
+
 ### Changed
 - utf-8 as default encoding
 - `CreateContactBag::withPhone` marked as deprecated
 
 ### Removed
+- built-in proxy support - use own implementation
+- concrete HTTP client dependency (Guzzle 6)
 - `SendSmsBag::setIdx`
 - `DeleteSmsBag`
 - `FindSendernamesBag`
