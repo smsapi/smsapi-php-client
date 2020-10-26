@@ -18,12 +18,6 @@ use Smsapi\Client\Feature\Profile\Data\ProfileFactory;
 use Smsapi\Client\Feature\Profile\Data\ProfilePriceCountryFactory;
 use Smsapi\Client\Feature\Profile\Data\ProfilePriceFactory;
 use Smsapi\Client\Feature\Profile\Data\ProfilePriceNetworkFactory;
-use Smsapi\Client\Feature\Push\Data\PushAppFactory;
-use Smsapi\Client\Feature\Push\Data\PushShipmentDispatchDetailsFactory;
-use Smsapi\Client\Feature\Push\Data\PushShipmentFactory;
-use Smsapi\Client\Feature\Push\Data\PushShipmentFallbackFactory;
-use Smsapi\Client\Feature\Push\Data\PushShipmentPayloadFactory;
-use Smsapi\Client\Feature\Push\Data\PushShipmentSummaryFactory;
 use Smsapi\Client\Feature\ShortUrl\Data\ShortUrlLinkFactory;
 use Smsapi\Client\Feature\Sms\Data\SmsFactory;
 use Smsapi\Client\Feature\Mfa\Data\MfaFactory;
@@ -88,17 +82,6 @@ class DataFactoryProvider
     public function provideShortUrlLinkFactory(): ShortUrlLinkFactory
     {
         return new ShortUrlLinkFactory();
-    }
-
-    public function providePushShipmentFactory(): PushShipmentFactory
-    {
-        return new PushShipmentFactory(
-            new PushAppFactory(),
-            new PushShipmentPayloadFactory(),
-            new PushShipmentSummaryFactory(),
-            new PushShipmentDispatchDetailsFactory(),
-            new PushShipmentFallbackFactory()
-        );
     }
 
     public function provideContactFactory(): ContactFactory
