@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Smsapi\Client\Tests\Helper\HttpClient\Exception;
+namespace Smsapi\Client\Guzzle\Exception;
 
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\RequestInterface;

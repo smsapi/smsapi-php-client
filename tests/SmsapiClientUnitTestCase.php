@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace Smsapi\Client\Tests;
 
 use Smsapi\Client\Feature\Data\DataFactoryProvider;
+use Smsapi\Client\Guzzle\RequestFactory;
+use Smsapi\Client\Guzzle\StreamFactory;
 use Smsapi\Client\Infrastructure\RequestExecutor\LegacyRequestExecutor;
 use Smsapi\Client\Infrastructure\RequestExecutor\RequestExecutorFactory;
 use Smsapi\Client\Infrastructure\RequestExecutor\RestRequestExecutor;
@@ -15,8 +17,6 @@ use Smsapi\Client\Infrastructure\ResponseMapper\LegacyResponseMapper;
 use Smsapi\Client\Infrastructure\ResponseMapper\RestResponseMapper;
 use Smsapi\Client\Service\SmsapiPlHttpService;
 use Smsapi\Client\Tests\Helper\HttpClient\HttpClientMock;
-use Smsapi\Client\Tests\Helper\HttpClient\RequestFactory;
-use Smsapi\Client\Tests\Helper\HttpClient\StreamFactory;
 
 class SmsapiClientUnitTestCase extends SmsapiClientTestCase
 {

@@ -2,12 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Smsapi\Client\Tests\Helper\HttpClient;
+namespace Smsapi\Client\Guzzle;
 
 use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
 
+/**
+ * @internal
+ */
 class StreamFactory implements StreamFactoryInterface
 {
     public function createStream(string $content = ''): StreamInterface

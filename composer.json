@@ -31,7 +31,9 @@
         "phing/phing": "^2.5",
         "doctrine/instantiator": "1.0.5",
         "phpdocumentor/reflection-docblock": "^4.3",
-        "phpdocumentor/type-resolver": "^0.5",
-        "guzzlehttp/guzzle": "^6"
+        "phpdocumentor/type-resolver": "^0.5"
+    },
+    "suggest": {
+        "guzzlehttp/guzzle": "^6 || ^7"
     }
 }

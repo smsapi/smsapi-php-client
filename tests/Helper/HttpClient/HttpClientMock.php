@@ -14,9 +14,10 @@ use GuzzleHttp\Psr7\Response;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Smsapi\Client\Tests\Helper\HttpClient\Exception\ClientException;
-use Smsapi\Client\Tests\Helper\HttpClient\Exception\NetworkException;
-use Smsapi\Client\Tests\Helper\HttpClient\Exception\RequestException;
+use Smsapi\Client\Guzzle\Exception\ClientException;
+use Smsapi\Client\Guzzle\Exception\NetworkException;
+use Smsapi\Client\Guzzle\Exception\RequestException;
+use Smsapi\Client\Guzzle\GuzzleDiscovery;
 
 class HttpClientMock implements ClientInterface
 {
@@ -24,6 +25,8 @@ class HttpClientMock implements ClientInterface
 
     public function __construct()
     {
+        GuzzleDiscovery::run();
+
         $this->mockHandler = new MockHandler();
     }
 
