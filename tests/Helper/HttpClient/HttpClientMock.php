@@ -4,51 +4,24 @@ declare(strict_types=1);
 
 namespace Smsapi\Client\Tests\Helper\HttpClient;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Exception\RequestException as GuzzleRequestException;
-use GuzzleHttp\Exception\TransferException as GuzzleTransferException;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Smsapi\Client\Guzzle\Exception\ClientException;
-use Smsapi\Client\Guzzle\Exception\NetworkException;
-use Smsapi\Client\Guzzle\Exception\RequestException;
-use Smsapi\Client\Guzzle\GuzzleDiscovery;
 
 class HttpClientMock implements ClientInterface
 {
-    private $mockHandler;
-
-    public function __construct()
-    {
-        GuzzleDiscovery::run();
-
-        $this->mockHandler = new MockHandler();
-    }
+    private $responseStatusCode;
+    private $responseBody;
 
     public function sendRequest(RequestInterface $request): ResponseInterface
     {
-        $guzzleClient = new Client([
-            'handler' => HandlerStack::create($this->mockHandler)
-        ]);
-
-        try {
-            return $guzzleClient->send($request);
-        } catch (GuzzleRequestException $e) {
-            throw RequestException::create($request, $e);
-        } catch (GuzzleTransferException $e) {
-            throw NetworkException::create($request, $e);
-        } catch (GuzzleException $e) {
-            throw ClientException::create($request, $e);
-        }
+        return new Response($this->responseStatusCode, [], $this->responseBody);
     }
 
-    public function mockResponse(int $statusCode, string $body)
+    public function mockResponse(int $responseStatusCode, string $responseBody)
     {
-        $this->mockHandler->append(new Response($statusCode, [], $body));
+        $this->responseStatusCode = $responseStatusCode;
+        $this->responseBody = $responseBody;
     }
 }
