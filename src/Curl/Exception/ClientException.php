@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Smsapi\Client\Guzzle\Exception;
+namespace Smsapi\Client\Curl\Exception;
 
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\RequestInterface;
-use Throwable;
 
 /**
  * @api
@@ -15,10 +14,11 @@ class ClientException extends \Exception implements ClientExceptionInterface
 {
     private $request;
 
-    public static function create(RequestInterface $request, Throwable $previous): self
+    public static function withRequest(string $message, RequestInterface $request): self
     {
-        $exception = new self($previous->getMessage(), 0, $previous);
+        $exception = new self($message);
         $exception->request = $request;
+
         return $exception;
     }
 

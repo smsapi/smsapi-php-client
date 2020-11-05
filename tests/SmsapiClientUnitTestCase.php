@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace Smsapi\Client\Tests;
 
 use Smsapi\Client\Feature\Data\DataFactoryProvider;
-use Smsapi\Client\Guzzle\RequestFactory;
-use Smsapi\Client\Guzzle\StreamFactory;
+use Smsapi\Client\Curl\RequestFactory;
+use Smsapi\Client\Curl\StreamFactory;
 use Smsapi\Client\Infrastructure\RequestExecutor\LegacyRequestExecutor;
 use Smsapi\Client\Infrastructure\RequestExecutor\RequestExecutorFactory;
 use Smsapi\Client\Infrastructure\RequestExecutor\RestRequestExecutor;

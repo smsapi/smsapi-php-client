@@ -25,26 +25,26 @@ Depending on which of SMSAPI service your account is, you should pick it calling
 
 ### PSR-17 and PSR-18
 
-Starting form version 3, SMSAPI PHP Client supports PSR-17 and PSR-18 compliant HTTP clients.
+Starting from version 3, SMSAPI PHP Client supports PSR-17 and PSR-18 compliant HTTP clients.
 That way this library is independent of client of your choice.
 You have to provide HTTP client, request factory and stream factory to use our library.
 
-For your convenience we provide an adapter for Guzzle. All yout have to do is to require *guzzlehttp/guzzle* dependency in your project.
-Example below shows how to make use of that adapter (pay attention to namespace *Smsapi\Client\Guzzle*):
+For your convenience we provide an adapter for Curl.
+Example below shows how to make use of that adapter (pay attention to namespace *Smsapi\Client\Curl*):
 
 ```php
 <?php
 
 declare(strict_types=1);
 
-use Smsapi\Client\Guzzle\SmsapiHttpClient;
+use Smsapi\Client\Curl\SmsapiHttpClient;
 
 require_once 'vendor/autoload.php';
 
 $client = new SmsapiHttpClient();
 ```
 
-If your are not willing to use Guzzle as HTTP client then you have to provide your own HTTP client, request factory and
+If your are not willing to use Curl as HTTP client then you have to provide your own HTTP client, request factory and
 stream factory, as in example below (pay attention to namespace *Smsapi\Client*):
 
 ```php

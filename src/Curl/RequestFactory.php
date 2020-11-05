@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Smsapi\Client\Guzzle;
+namespace Smsapi\Client\Curl;
 
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestFactoryInterface;

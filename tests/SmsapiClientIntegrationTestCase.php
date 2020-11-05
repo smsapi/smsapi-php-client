@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Smsapi\Client\Tests;
 
 use RuntimeException;
-use Smsapi\Client\Guzzle\SmsapiHttpClient;
+use Smsapi\Client\Curl\SmsapiHttpClient;
 use Smsapi\Client\Service\SmsapiComService;
 use Smsapi\Client\Service\SmsapiPlService;
 
