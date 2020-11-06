@@ -59,7 +59,7 @@ class HttpClient implements ClientInterface
 
     private function prepareRequestHeaders(RequestInterface $request, $httpClient)
     {
-        $headers = '';
+        $headers = [];
         foreach ($request->getHeaders() as $name => $values) {
             $headers[] = $name . ': ' . implode(', ', $values);
         }
