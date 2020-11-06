@@ -35,9 +35,13 @@ class BaseUriDecorator implements ClientInterface
 
         $baseUriParts = parse_url($this->baseUri);
 
-        $uri = $uri->withScheme($baseUriParts['scheme'] ?? '');
-        $uri = $uri->withHost($baseUriParts['host'] ?? '');
-        $uri = $uri->withPath($baseUriParts['path'] . $uri->getPath());
+        $scheme = $baseUriParts['scheme'] ?? '';
+        $host = $baseUriParts['host'] ?? '';
+        $path = $baseUriParts['path'] ?? '';
+
+        $uri = $uri->withScheme($scheme);
+        $uri = $uri->withHost($host);
+        $uri = $uri->withPath($path . $uri->getPath());
 
         return $request->withUri($uri);
     }
