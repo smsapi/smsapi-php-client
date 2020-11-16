@@ -37,7 +37,10 @@ trait HttpDefaultFeatures
 
     public function pingFeature(): PingFeature
     {
-        return new PingHttpFeature($this->requestExecutorFactory->createRestRequestExecutor());
+        $restRequestExecutor = $this->requestExecutorFactory->createRestRequestExecutor();
+        $pingFactory = $this->dataFactoryProvider->providePingFactory();
+
+        return new PingHttpFeature($restRequestExecutor, $pingFactory);
     }
 
     public function smsFeature(): SmsFeature
