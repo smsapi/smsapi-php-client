@@ -17,8 +17,6 @@ class PingFeatureTest extends SmsapiClientIntegrationTestCase
 
         $result = $pingFeature->ping();
 
-        $ping = new Ping();
-        $ping->smsapi = true;
-        $this->assertEquals($ping, $result);
+        $this->assertTrue($result->authorized);
     }
 }

@@ -8,5 +8,9 @@ namespace Smsapi\Client\Feature\Ping\Data;
  */
 class Ping
 {
-    public $smsapi;
+    /** @var bool */
+    public $authorized;
+
+    /** @var array */
+    public $unavailable;
 }

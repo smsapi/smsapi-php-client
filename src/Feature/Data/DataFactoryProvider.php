@@ -13,6 +13,7 @@ use Smsapi\Client\Feature\Contacts\Fields\Data\ContactFieldOptionFactory;
 use Smsapi\Client\Feature\Contacts\Groups\Permissions\Data\GroupPermissionFactory;
 use Smsapi\Client\Feature\Hlr\Data\HlrFactory;
 use Smsapi\Client\Feature\Mms\Data\MmsFactory;
+use Smsapi\Client\Feature\Ping\Data\PingFactory;
 use Smsapi\Client\Feature\Profile\Data\MoneyFactory;
 use Smsapi\Client\Feature\Profile\Data\ProfileFactory;
 use Smsapi\Client\Feature\Profile\Data\ProfilePriceCountryFactory;
@@ -117,5 +118,10 @@ class DataFactoryProvider
     public function provideConntactCustomFieldFactory(): ContactCustomFieldFactory
     {
         return new ContactCustomFieldFactory();
+    }
+
+    public function providePingFactory(): PingFactory
+    {
+        return new PingFactory();
     }
 }
