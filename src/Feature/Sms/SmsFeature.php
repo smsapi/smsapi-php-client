@@ -11,7 +11,6 @@ use Smsapi\Client\Feature\Sms\Bag\SendSmsBag;
 use Smsapi\Client\Feature\Sms\Bag\SendSmssBag;
 use Smsapi\Client\Feature\Sms\Bag\SendSmsToGroupBag;
 use Smsapi\Client\Feature\Sms\Data\Sms;
-use Smsapi\Client\Feature\Mfa\MfaFeature;
 use Smsapi\Client\Feature\Sms\Sendernames\SendernamesFeature;
 
 /**

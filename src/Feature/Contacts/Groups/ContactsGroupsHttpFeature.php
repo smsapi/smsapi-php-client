@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Smsapi\Client\Feature\Contacts\Groups;
 
-use Smsapi\Client\Feature\Contacts\Groups\Bag\FindGroupsBag;
 use Smsapi\Client\Feature\Data\DataFactoryProvider;
 use Smsapi\Client\Infrastructure\RequestExecutor\RestRequestExecutor;
 use Smsapi\Client\Feature\Contacts\Data\ContactGroup;

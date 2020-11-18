@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Smsapi\Client\Tests\Integration\Feature\Ping;
 
-use Smsapi\Client\Feature\Ping\Data\Ping;
 use Smsapi\Client\Tests\SmsapiClientIntegrationTestCase;
 
 class PingFeatureTest extends SmsapiClientIntegrationTestCase

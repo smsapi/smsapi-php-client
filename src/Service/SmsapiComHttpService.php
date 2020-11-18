@@ -8,8 +8,6 @@ use Psr\Http\Client\ClientInterface;
 use Smsapi\Client\Feature\Data\DataFactoryProvider;
 use Smsapi\Client\Feature\Profile\ProfileFeature;
 use Smsapi\Client\Feature\Profile\ProfileHttpFeature;
-use Smsapi\Client\Feature\Profile\SmsapiPlProfileFeature;
-use Smsapi\Client\Feature\Profile\SmsapiPlProfileHttpFeature;
 use Smsapi\Client\Infrastructure\RequestExecutor\RequestExecutorFactory;
 
 /**
