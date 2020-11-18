@@ -24,7 +24,7 @@ class SmsapiHttpClientTest extends SmsapiClientUnitTestCase
     {
         $changelog = file_get_contents(dirname(dirname(__DIR__)) . '/CHANGELOG.md');
 
-        preg_match('/^## \[(?<version>Unreleased|\d+.\d+.\d+)\]/m', $changelog, $matches);
+        preg_match('/^## \[(?<version>Unreleased|\d+.\d+.\d+)]/m', $changelog, $matches);
 
         $this->assertArrayHasKey('version', $matches);
 
