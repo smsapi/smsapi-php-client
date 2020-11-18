@@ -21,7 +21,8 @@
         "psr/log": "^1",
         "psr/http-message": "^1",
         "psr/http-client": "^1",
-        "guzzlehttp/guzzle": "^6"
+        "psr/http-factory": "^1",
+        "guzzlehttp/psr7": "^1"
     },
     "require-dev": {
         "phpunit/phpunit": "^6",
@@ -31,5 +32,8 @@
         "doctrine/instantiator": "1.0.5",
         "phpdocumentor/reflection-docblock": "^4.3",
         "phpdocumentor/type-resolver": "^0.5"
+    },
+    "suggest": {
+        "ext-curl": "*"
     }
 }

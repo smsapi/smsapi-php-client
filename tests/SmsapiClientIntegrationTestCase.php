@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace Smsapi\Client\Tests;
 
 use RuntimeException;
+use Smsapi\Client\Curl\SmsapiHttpClient;
 use Smsapi\Client\Service\SmsapiComService;
 use Smsapi\Client\Service\SmsapiPlService;
-use Smsapi\Client\SmsapiHttpClient;
 
 class SmsapiClientIntegrationTestCase extends SmsapiClientTestCase
 {

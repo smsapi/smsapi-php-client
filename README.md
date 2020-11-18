@@ -23,61 +23,121 @@ Execute: `composer require smsapi/php-client`
 
 Depending on which of SMSAPI service your account is, you should pick it calling one of a method from examples below:
 
-### How to use *SMSAPI.COM* client?
+### PSR-17 and PSR-18
+
+Starting from version 3, SMSAPI PHP Client supports PSR-17 and PSR-18 compliant HTTP clients.
+That way this library is independent of client of your choice.
+You have to provide HTTP client, request factory and stream factory to use our library.
+
+For your convenience we provide an adapter for Curl.
+Example below shows how to make use of that adapter (pay attention to namespace *Smsapi\Client\Curl*):
 
 ```php
 <?php
 
 declare(strict_types=1);
 
+use Smsapi\Client\Curl\SmsapiHttpClient;
+
 require_once 'vendor/autoload.php';
 
+$client = new SmsapiHttpClient();
+```
+
+If your are not willing to use Curl as HTTP client then you have to provide your own HTTP client, request factory and
+stream factory, as in example below (pay attention to namespace *Smsapi\Client*):
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 use Smsapi\Client\SmsapiHttpClient;
+
+require_once 'vendor/autoload.php';
+
+/**
+ * @var ClientInterface $httpClient
+ * @var RequestFactoryInterface $requestFactory
+ * @var StreamFactoryInterface $streamFactory
+ */
+require_once 'your-own-psr18-stuff.php';
+
+$client = new SmsapiHttpClient($httpClient, $requestFactory, $streamFactory);
+```
+
+All following examples consider you have client well-defined in `client.php` file.
+
+### How to use *SMSAPI.COM* service?
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use Smsapi\Client\SmsapiClient;
+
+require_once 'vendor/autoload.php';
+
+/**
+ * @var SmsapiClient $client
+ */
+require_once 'client.php';
 
 $apiToken = '0000000000000000000000000000000000000000';
 
-$service = (new SmsapiHttpClient())
-    ->smsapiComService($apiToken);
+$service = $client->smsapiComService($apiToken);
 ```
 
-### How to use *SMSAPI.PL* client?
+### How to use *SMSAPI.PL* service?
 
 ```php
 <?php
 
 declare(strict_types=1);
 
+use Smsapi\Client\SmsapiClient;
+
 require_once 'vendor/autoload.php';
 
-use Smsapi\Client\SmsapiHttpClient;
+/**
+ * @var SmsapiClient $client
+ */
+require_once 'client.php';
 
 $apiToken = '0000000000000000000000000000000000000000';
 
-$service = (new SmsapiHttpClient())
-    ->smsapiPlService($apiToken);
-```
+$service = $client->smsapiPlService($apiToken);
+``` 
 
-All following examples consider you have a account on SMSAPI.COM. 
-
-## How to use a custom URI?
+## How to use a service with custom URI?
 
 ```php
 <?php
 
 declare(strict_types=1);
 
+use Smsapi\Client\SmsapiClient;
+
 require_once 'vendor/autoload.php';
 
-use Smsapi\Client\SmsapiHttpClient;
+/**
+ * @var SmsapiClient $client
+ */
+require_once 'client.php';
 
 $apiToken = '0000000000000000000000000000000000000000';
 $uri = 'http://example.com';
 
-$service = (new SmsapiHttpClient())
-    ->smsapiComServiceWithUri($apiToken, $uri);
+$service = $client->smsapiComServiceWithUri($apiToken, $uri);
 ```
 
 ## How to use service business features?
+
+All following examples consider you have an account on SMSAPI.COM and service has been setup in `service.php` file.
 
 ### How to use ping feature?
 
@@ -86,14 +146,11 @@ $service = (new SmsapiHttpClient())
 
 declare(strict_types=1);
 
-require_once 'vendor/autoload.php';
+use Smsapi\Client\Service\SmsapiComService;
 
-use Smsapi\Client\SmsapiHttpClient;
+/** @var SmsapiComService $service */
+require_once 'service.php';
 
-$apiToken = '0000000000000000000000000000000000000000';
-
-$service = (new SmsapiHttpClient())
-    ->smsapiComService($apiToken);
 $result = $service->pingFeature()
     ->ping();
 
@@ -111,17 +168,14 @@ if ($result->authorized) {
 
 declare(strict_types=1);
 
-require_once 'vendor/autoload.php';
-
-use Smsapi\Client\SmsapiHttpClient;
+use Smsapi\Client\Service\SmsapiComService;
 use Smsapi\Client\Feature\Sms\Bag\SendSmsBag;
 
-$apiToken = '0000000000000000000000000000000000000000';
+/** @var SmsapiComService $service */
+require_once 'service.php';
 
 $sms = SendSmsBag::withMessage('someone phone number', 'some message');
 
-$service = (new SmsapiHttpClient())
-    ->smsapiComService($apiToken);
 $service->smsFeature()
     ->sendSms($sms);
 ```
@@ -133,18 +187,15 @@ $service->smsFeature()
 
 declare(strict_types=1);
 
-require_once 'vendor/autoload.php';
-
-use Smsapi\Client\SmsapiHttpClient;
+use Smsapi\Client\Service\SmsapiComService;
 use Smsapi\Client\Feature\Sms\Bag\SendSmsBag;
 
-$apiToken = '0000000000000000000000000000000000000000';
+/** @var SmsapiComService $service */
+require_once 'service.php';
 
 $sms = SendSmsBag::withMessage('someone phone number', 'some message');
 $sms->from = 'Test';
 
-$service = (new SmsapiHttpClient())
-    ->smsapiComService($apiToken);
 $service->smsFeature()
     ->sendSms($sms);
 ```
@@ -177,19 +228,7 @@ $sms->encoding = 'utf-8';
 
 ### How to use proxy server?
 
-```php
-<?php
-
-declare(strict_types=1);
-
-require_once 'vendor/autoload.php';
-
-use Smsapi\Client\SmsapiHttpClient;
-
-$proxyUrl = 'https://example.org';
-
-(new SmsapiHttpClient())->setProxy($proxyUrl);
-```
+To use proxy server you have to define it with your HTTP client. 
 
 ### How to log requests and responses?
 
@@ -202,10 +241,14 @@ declare(strict_types=1);
 
 use Psr\Log\LoggerInterface;
 use Psr\Log\LoggerTrait;
+use Smsapi\Client\SmsapiClient;
 
 require_once 'vendor/autoload.php';
 
-use Smsapi\Client\SmsapiHttpClient;
+/**
+ * @var SmsapiClient $client
+ */
+require_once 'client.php';
 
 $logger = new class() implements LoggerInterface
 {
@@ -217,7 +260,7 @@ $logger = new class() implements LoggerInterface
     }
 };
 
-(new SmsapiHttpClient())->setLogger($logger);
+$client->setLogger($logger);
 ```
 
 ## Test package
