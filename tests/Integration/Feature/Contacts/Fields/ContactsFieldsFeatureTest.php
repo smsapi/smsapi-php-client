@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Smsapi\Client\Tests\Integration\Contacts;
+namespace Smsapi\Client\Tests\Integration\Feature\Contacts\Fields;
 
 use Smsapi\Client\Feature\Contacts\Bag\CreateContactBag;
 use Smsapi\Client\Feature\Contacts\Bag\DeleteContactBag;
