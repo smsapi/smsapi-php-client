@@ -25,6 +25,7 @@
         "guzzlehttp/psr7": "^1"
     },
     "require-dev": {
+        "ext-mbstring": "*",
         "phpunit/phpunit": "^6",
         "symfony/yaml": "^3",
         "marc-mabe/php-enum": "^3",
