@@ -7,6 +7,7 @@ namespace Smsapi\Client\Curl;
 use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
+use RuntimeException;
 
 /**
  * @internal
@@ -20,11 +21,11 @@ class StreamFactory implements StreamFactoryInterface
 
     public function createStreamFromFile(string $filename, string $mode = 'r'): StreamInterface
     {
-        throw new \RuntimeException('not implemented');
+        throw new RuntimeException('not implemented');
     }
 
     public function createStreamFromResource($resource): StreamInterface
     {
-        throw new \RuntimeException('not implemented');
+        throw new RuntimeException('not implemented');
     }
 }

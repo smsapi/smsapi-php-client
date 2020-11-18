@@ -6,6 +6,7 @@ namespace Smsapi\Client\Tests\Unit\Infrastructure\ResponseMapper;
 
 use GuzzleHttp\Psr7\Response;
 use Smsapi\Client\Infrastructure\ResponseHttpCode;
+use Smsapi\Client\Infrastructure\ResponseMapper\ApiErrorException;
 use Smsapi\Client\Infrastructure\ResponseMapper\JsonDecode;
 use Smsapi\Client\Infrastructure\ResponseMapper\RestResponseMapper;
 use Smsapi\Client\Tests\SmsapiClientUnitTestCase;
@@ -81,7 +82,7 @@ class RestResponseMapperTest extends SmsapiClientUnitTestCase
 
     /**
      * @test
-     * @expectedException \Smsapi\Client\Infrastructure\ResponseMapper\ApiErrorException
+     * @expectedException ApiErrorException
      * @expectedExceptionMessage Service unavailable
      */
     public function it_should_throw_exception_on_service_unavailable()
@@ -93,7 +94,7 @@ class RestResponseMapperTest extends SmsapiClientUnitTestCase
 
     /**
      * @test
-     * @expectedException \Smsapi\Client\Infrastructure\ResponseMapper\ApiErrorException
+     * @expectedException ApiErrorException
      */
     public function it_should_throw_exception_on_unrecognized_status()
     {

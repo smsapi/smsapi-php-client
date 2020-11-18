@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Smsapi\Client\Tests\Unit\Feature\Contacts\Data;
 
+use DateTime;
 use PHPUnit\Framework\TestCase;
 use Smsapi\Client\Feature\Contacts\Data\ContactCustomFieldFactory;
 use Smsapi\Client\Feature\Contacts\Data\ContactFactory;
 use Smsapi\Client\Feature\Contacts\Data\ContactGroupFactory;
 use Smsapi\Client\Feature\Contacts\Groups\Permissions\Data\GroupPermissionFactory;
+use stdClass;
 
 class ContactFactoryTest extends TestCase
 {
@@ -27,7 +29,7 @@ class ContactFactoryTest extends TestCase
      */
     public function it_should_convert_mandatory_built_in_contact_fields()
     {
-        $contactData = new \stdClass();
+        $contactData = new stdClass();
         $contactData->id = 'any';
         $contactData->date_created = '2020-05-11';
         $contactData->date_updated = '2020-05-12';
@@ -39,8 +41,8 @@ class ContactFactoryTest extends TestCase
         $contact = $this->contactFactory->createFromObject($contactData);
 
         $this->assertEquals('any', $contact->id);
-        $this->assertEquals(new \DateTime('2020-05-11'), $contact->dateCreated);
-        $this->assertEquals(new \DateTime('2020-05-12'), $contact->dateUpdated);
+        $this->assertEquals(new DateTime('2020-05-11'), $contact->dateCreated);
+        $this->assertEquals(new DateTime('2020-05-12'), $contact->dateUpdated);
         $this->assertEquals('M', $contact->gender);
     }
 
@@ -91,9 +93,9 @@ class ContactFactoryTest extends TestCase
         $this->assertEquals('any2', $contact->customFields[1]->value);
     }
 
-    private function givenAnyContactData(): \stdClass
+    private function givenAnyContactData(): stdClass
     {
-        $contactData = new \stdClass();
+        $contactData = new stdClass();
         $contactData->id = 'any';
         $contactData->date_created = '2020-05-11';
         $contactData->date_updated = '2020-05-12';

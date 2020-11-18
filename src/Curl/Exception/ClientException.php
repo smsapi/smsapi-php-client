@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Smsapi\Client\Curl\Exception;
 
+use Exception;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\RequestInterface;
 
 /**
  * @api
  */
-class ClientException extends \Exception implements ClientExceptionInterface
+class ClientException extends Exception implements ClientExceptionInterface
 {
     private $request;
 

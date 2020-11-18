@@ -6,6 +6,7 @@ namespace Smsapi\Client\Tests\Unit\Infrastructure\ResponseMapper;
 
 use GuzzleHttp\Psr7\Response;
 use Smsapi\Client\Infrastructure\ResponseHttpCode;
+use Smsapi\Client\Infrastructure\ResponseMapper\ApiErrorException;
 use Smsapi\Client\Infrastructure\ResponseMapper\JsonDecode;
 use Smsapi\Client\Infrastructure\ResponseMapper\LegacyResponseMapper;
 use Smsapi\Client\Tests\SmsapiClientUnitTestCase;
@@ -40,7 +41,7 @@ class LegacyResponseMapperTest extends SmsapiClientUnitTestCase
 
     /**
      * @test
-     * @expectedException \Smsapi\Client\Infrastructure\ResponseMapper\ApiErrorException
+     * @expectedException ApiErrorException
      */
     public function it_should_return_error_on_ok_with_message_and_error()
     {
@@ -52,7 +53,7 @@ class LegacyResponseMapperTest extends SmsapiClientUnitTestCase
 
     /**
      * @test
-     * @expectedException \Smsapi\Client\Infrastructure\ResponseMapper\ApiErrorException
+     * @expectedException ApiErrorException
      */
     public function it_should_throw_exception_on_unrecognized_status()
     {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Smsapi\Client\Tests\Unit\Infrastructure\RequestMapper\Query\Formatter;
 
+use DateTime;
 use PHPUnit\Framework\TestCase;
 use Smsapi\Client\Infrastructure\RequestMapper\Query\Formatter\BuiltInParametersQueryFormatter;
 use Smsapi\Client\Infrastructure\RequestMapper\Query\QueryParametersData;
@@ -72,7 +73,7 @@ class BuiltInParametersQueryFormatterTest extends TestCase
      */
     public function it_should_format_datetime_values()
     {
-        $date = new \DateTime();
+        $date = new DateTime();
         $dateEncoded = rawurlencode($date->format('c'));
 
         $builtInParameters = [
