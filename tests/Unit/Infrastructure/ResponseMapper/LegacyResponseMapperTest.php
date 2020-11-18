@@ -41,24 +41,24 @@ class LegacyResponseMapperTest extends SmsapiClientUnitTestCase
 
     /**
      * @test
-     * @expectedException ApiErrorException
      */
     public function it_should_return_error_on_ok_with_message_and_error()
     {
         $bodyWithMessageAndError = '{"message":"some message","error":1}';
         $responseWithOkMessageAndError = $this->createResponse(ResponseHttpCode::OK, $bodyWithMessageAndError);
 
+        $this->expectException(ApiErrorException::class);
         $this->legacyResponseMapper->map($responseWithOkMessageAndError);
     }
 
     /**
      * @test
-     * @expectedException ApiErrorException
      */
     public function it_should_throw_exception_on_unrecognized_status()
     {
         $responseWithUnrecognizedStatus = new Response(400);
 
+        $this->expectException(ApiErrorException::class);
         $this->legacyResponseMapper->map($responseWithUnrecognizedStatus);
     }
 

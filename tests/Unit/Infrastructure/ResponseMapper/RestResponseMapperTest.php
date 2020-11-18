@@ -82,24 +82,24 @@ class RestResponseMapperTest extends SmsapiClientUnitTestCase
 
     /**
      * @test
-     * @expectedException ApiErrorException
-     * @expectedExceptionMessage Service unavailable
      */
     public function it_should_throw_exception_on_service_unavailable()
     {
         $responseWithServiceUnavailable = new Response(ResponseHttpCode::SERVICE_UNAVAILABLE);
 
+        $this->expectException(ApiErrorException::class);
+        $this->expectExceptionMessage("Service unavailable");
         $this->restResponseMapper->map($responseWithServiceUnavailable);
     }
 
     /**
      * @test
-     * @expectedException ApiErrorException
      */
     public function it_should_throw_exception_on_unrecognized_status()
     {
         $responseWithUnrecognizedStatus = new Response(400);
 
+        $this->expectException(ApiErrorException::class);
         $this->restResponseMapper->map($responseWithUnrecognizedStatus);
     }
 
