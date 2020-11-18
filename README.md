@@ -154,10 +154,10 @@ require_once 'service.php';
 $result = $service->pingFeature()
     ->ping();
 
-if ($result->smsapi) {
-    echo 'SMSAPI active';
+if ($result->authorized) {
+    echo 'Authorized';
 } else {
-    echo 'SMSAPI not active';
+    echo 'Not authorized';
 }
 ```
 

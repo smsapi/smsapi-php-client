@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Smsapi\Client\Feature\Ping;
 
-use Smsapi\Client\Infrastructure\ResponseMapper\ApiErrorException;
+use Smsapi\Client\Feature\Ping\Data\PingFactory;
 use Smsapi\Client\Feature\Ping\Data\Ping;
 use Smsapi\Client\Infrastructure\RequestExecutor\RestRequestExecutor;
 
@@ -13,22 +13,18 @@ use Smsapi\Client\Infrastructure\RequestExecutor\RestRequestExecutor;
 class PingHttpFeature implements PingFeature
 {
     private $restRequestExecutor;
+    private $pingFactory;
 
-    public function __construct(RestRequestExecutor $restRequestExecutor)
+    public function __construct(RestRequestExecutor $restRequestExecutor, PingFactory $pingFactory)
     {
         $this->restRequestExecutor = $restRequestExecutor;
+        $this->pingFactory = $pingFactory;
     }
 
     public function ping(): Ping
     {
-        $ping = new Ping();
-        try {
-            $this->restRequestExecutor->info('ping', []);
-            $ping->smsapi = true;
-        } catch (ApiErrorException $apiErrorException) {
-            $ping->smsapi = false;
-        }
+        $result = $this->restRequestExecutor->read('ping', []);
 
-        return $ping;
+        return $this->pingFactory->createFromObject($result);
     }
 }

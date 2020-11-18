@@ -13,17 +13,12 @@ use Smsapi\Client\Feature\Contacts\Fields\Data\ContactFieldOptionFactory;
 use Smsapi\Client\Feature\Contacts\Groups\Permissions\Data\GroupPermissionFactory;
 use Smsapi\Client\Feature\Hlr\Data\HlrFactory;
 use Smsapi\Client\Feature\Mms\Data\MmsFactory;
+use Smsapi\Client\Feature\Ping\Data\PingFactory;
 use Smsapi\Client\Feature\Profile\Data\MoneyFactory;
 use Smsapi\Client\Feature\Profile\Data\ProfileFactory;
 use Smsapi\Client\Feature\Profile\Data\ProfilePriceCountryFactory;
 use Smsapi\Client\Feature\Profile\Data\ProfilePriceFactory;
 use Smsapi\Client\Feature\Profile\Data\ProfilePriceNetworkFactory;
-use Smsapi\Client\Feature\Push\Data\PushAppFactory;
-use Smsapi\Client\Feature\Push\Data\PushShipmentDispatchDetailsFactory;
-use Smsapi\Client\Feature\Push\Data\PushShipmentFactory;
-use Smsapi\Client\Feature\Push\Data\PushShipmentFallbackFactory;
-use Smsapi\Client\Feature\Push\Data\PushShipmentPayloadFactory;
-use Smsapi\Client\Feature\Push\Data\PushShipmentSummaryFactory;
 use Smsapi\Client\Feature\ShortUrl\Data\ShortUrlLinkFactory;
 use Smsapi\Client\Feature\Sms\Data\SmsFactory;
 use Smsapi\Client\Feature\Mfa\Data\MfaFactory;
@@ -90,17 +85,6 @@ class DataFactoryProvider
         return new ShortUrlLinkFactory();
     }
 
-    public function providePushShipmentFactory(): PushShipmentFactory
-    {
-        return new PushShipmentFactory(
-            new PushAppFactory(),
-            new PushShipmentPayloadFactory(),
-            new PushShipmentSummaryFactory(),
-            new PushShipmentDispatchDetailsFactory(),
-            new PushShipmentFallbackFactory()
-        );
-    }
-
     public function provideContactFactory(): ContactFactory
     {
         return new ContactFactory($this->provideContactGroupFactory(), $this->provideConntactCustomFieldFactory());
@@ -134,5 +118,10 @@ class DataFactoryProvider
     public function provideConntactCustomFieldFactory(): ContactCustomFieldFactory
     {
         return new ContactCustomFieldFactory();
+    }
+
+    public function providePingFactory(): PingFactory
+    {
+        return new PingFactory();
     }
 }

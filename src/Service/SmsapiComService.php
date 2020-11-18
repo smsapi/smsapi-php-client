@@ -9,7 +9,6 @@ use Smsapi\Client\Feature\Contacts\ContactsFeature;
 use Smsapi\Client\Feature\Hlr\HlrFeature;
 use Smsapi\Client\Feature\Ping\PingFeature;
 use Smsapi\Client\Feature\Profile\ProfileFeature;
-use Smsapi\Client\Feature\Push\PushFeature;
 use Smsapi\Client\Feature\ShortUrl\ShortUrlFeature;
 use Smsapi\Client\Feature\Mfa\MfaFeature;
 use Smsapi\Client\Feature\Sms\SmsFeature;
@@ -35,9 +34,6 @@ interface SmsapiComService
     public function shortUrlFeature(): ShortUrlFeature;
 
     public function contactsFeature(): ContactsFeature;
-
-    /** @deprecated */
-    public function pushFeature(): PushFeature;
 
     public function blacklistFeature(): BlacklistFeature;
 }

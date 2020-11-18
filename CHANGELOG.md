@@ -11,10 +11,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 ### Changed
 - utf-8 as default encoding
 - `CreateContactBag::withPhone` marked as deprecated
+- `PingFeature::ping` returns authorization and service availability status
 
 ### Removed
 - built-in proxy support - use own implementation
 - concrete HTTP client dependency (Guzzle 6)
+- `PushFeature`
 - `SendSmsBag::setIdx`
 - `DeleteSmsBag`
 - `FindSendernamesBag`

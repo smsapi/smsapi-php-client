@@ -10,8 +10,6 @@ use Smsapi\Client\Feature\Contacts\ContactsHttpFeature;
 use Smsapi\Client\Feature\Data\DataFactoryProvider;
 use Smsapi\Client\Feature\Hlr\HlrFeature;
 use Smsapi\Client\Feature\Hlr\HlrHttpFeature;
-use Smsapi\Client\Feature\Push\PushFeature;
-use Smsapi\Client\Feature\Push\PushHttpFeature;
 use Smsapi\Client\Feature\ShortUrl\ShortUlrHttpFeature;
 use Smsapi\Client\Feature\ShortUrl\ShortUrlFeature;
 use Smsapi\Client\Feature\Mfa\MfaFeature;
@@ -37,7 +35,10 @@ trait HttpDefaultFeatures
 
     public function pingFeature(): PingFeature
     {
-        return new PingHttpFeature($this->requestExecutorFactory->createRestRequestExecutor($this->externalHttpClient));
+        $restRequestExecutor = $this->requestExecutorFactory->createRestRequestExecutor($this->externalHttpClient);
+        $pingFactory = $this->dataFactoryProvider->providePingFactory();
+
+        return new PingHttpFeature($restRequestExecutor, $pingFactory);
     }
 
     public function smsFeature(): SmsFeature
@@ -86,14 +87,6 @@ trait HttpDefaultFeatures
         return new ContactsHttpFeature(
             $this->requestExecutorFactory->createRestRequestExecutor($this->externalHttpClient),
             $this->dataFactoryProvider
-        );
-    }
-
-    public function pushFeature(): PushFeature
-    {
-        return new PushHttpFeature(
-            $this->requestExecutorFactory->createRestRequestExecutor($this->externalHttpClient),
-            $this->dataFactoryProvider->providePushShipmentFactory()
         );
     }
 
