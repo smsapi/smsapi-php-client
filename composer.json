@@ -21,8 +21,7 @@
         "psr/log": "^1",
         "psr/http-message": "^1",
         "psr/http-client": "^1",
-        "psr/http-factory": "^1",
-        "guzzlehttp/psr7": "^1"
+        "psr/http-factory": "^1"
     },
     "require-dev": {
         "ext-mbstring": "*",
@@ -32,9 +31,12 @@
         "phing/phing": "^2.5",
         "doctrine/instantiator": "1.0.5",
         "phpdocumentor/reflection-docblock": "^4.3",
-        "phpdocumentor/type-resolver": "^0.5"
+        "phpdocumentor/type-resolver": "^0.5",
+        "guzzlehttp/psr7": "^1",
+        "ext-curl": "*"
     },
     "suggest": {
-        "ext-curl": "*"
+        "ext-curl": "To use Curl HttpClient",
+        "guzzlehttp/psr7": "To use Curl HttpClient and HTTP message factories"
     }
 }
