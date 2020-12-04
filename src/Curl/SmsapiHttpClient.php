@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Smsapi\Client\Curl;
 
 use Psr\Log\LoggerInterface;
+use Smsapi\Client\Curl\Discovery\CurlDiscovery;
+use Smsapi\Client\Curl\Discovery\GuzzleHttpHelpersDiscovery;
 use Smsapi\Client\Service\SmsapiComService;
 use Smsapi\Client\Service\SmsapiPlService;
 use Smsapi\Client\SmsapiClient;
@@ -19,6 +21,7 @@ class SmsapiHttpClient implements SmsapiClient
     public function __construct()
     {
         CurlDiscovery::run();
+        GuzzleHttpHelpersDiscovery::run();
 
         $this->httpClient = new \Smsapi\Client\SmsapiHttpClient(
             new HttpClient(),
