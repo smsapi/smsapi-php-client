@@ -29,7 +29,12 @@ Starting from version 3, SMSAPI PHP Client supports PSR-17 and PSR-18 compliant 
 That way this library is independent of client of your choice.
 You have to provide HTTP client, request factory and stream factory to use our library.
 
-For your convenience we provide an adapter for Curl.
+For your convenience we provide an adapter for Curl. To use it you have to enable PHP curl extension and install some HTTP helpers:
+
+```
+composer require guzzlehttp/psr7:^1
+```
+
 Example below shows how to make use of that adapter (pay attention to namespace *Smsapi\Client\Curl*):
 
 ```php

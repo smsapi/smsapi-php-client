@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Smsapi\Client\Curl;
+namespace Smsapi\Client\Curl\Discovery;
 
 use RuntimeException;
 
 /**
  * @internal
+ * @todo switch to composer-runtime-api
  */
 class CurlDiscovery
 {
