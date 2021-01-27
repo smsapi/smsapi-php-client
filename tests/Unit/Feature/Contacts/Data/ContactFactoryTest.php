@@ -14,11 +14,9 @@ use stdClass;
 
 class ContactFactoryTest extends TestCase
 {
-    private $contactFactory;
-
-    protected function setUp()
+    private function createContactsFactory()
     {
-        $this->contactFactory = new ContactFactory(
+        return new ContactFactory(
             new ContactGroupFactory(new GroupPermissionFactory()),
             new ContactCustomFieldFactory()
         );
@@ -38,7 +36,7 @@ class ContactFactoryTest extends TestCase
 
         $this->assertTrue(true);
 
-        $contact = $this->contactFactory->createFromObject($contactData);
+        $contact = $this->createContactsFactory()->createFromObject($contactData);
 
         $this->assertEquals('any', $contact->id);
         $this->assertEquals(new DateTime('2020-05-11'), $contact->dateCreated);
@@ -52,26 +50,26 @@ class ContactFactoryTest extends TestCase
     public function it_should_convert_optional_built_in_contact_fields()
     {
         $contactData = $this->givenAnyContactData();
-        $contact = $this->contactFactory->createFromObject($contactData);
+        $contact = $this->createContactsFactory()->createFromObject($contactData);
         $this->assertNull($contact->email);
         $this->assertNull($contact->phoneNumber);
         $this->assertNull($contact->country);
         $this->assertNull($contact->undeliveredMessages);
 
         $contactData->email = 'any@example.com';
-        $contact = $this->contactFactory->createFromObject($contactData);
+        $contact = $this->createContactsFactory()->createFromObject($contactData);
         $this->assertEquals('any@example.com', $contact->email);
 
         $contactData->phone_number = '123123123';
-        $contact = $this->contactFactory->createFromObject($contactData);
+        $contact = $this->createContactsFactory()->createFromObject($contactData);
         $this->assertEquals('123123123', $contact->phoneNumber);
 
         $contactData->country = 'any';
-        $contact = $this->contactFactory->createFromObject($contactData);
+        $contact = $this->createContactsFactory()->createFromObject($contactData);
         $this->assertEquals('any', $contact->country);
 
         $contactData->undelivered_messages = 1;
-        $contact = $this->contactFactory->createFromObject($contactData);
+        $contact = $this->createContactsFactory()->createFromObject($contactData);
         $this->assertEquals(1, $contact->undeliveredMessages);
     }
 
@@ -85,7 +83,7 @@ class ContactFactoryTest extends TestCase
         $contactData->custom_field_1 = 'any1';
         $contactData->custom_field_2 = 'any2';
 
-        $contact = $this->contactFactory->createFromObject($contactData);
+        $contact = $this->createContactsFactory()->createFromObject($contactData);
 
         $this->assertEquals('custom_field_1', $contact->customFields[0]->name);
         $this->assertEquals('any1', $contact->customFields[0]->value);
