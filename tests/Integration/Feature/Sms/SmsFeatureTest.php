@@ -48,7 +48,7 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
     /**
      * @test
      */
-    public function it_should_receive_details_for_single_sms()
+    public function it_should_receive_content_details_for_single_sms()
     {
         $smsFeature = self::$smsapiService->smsFeature();
         $sendSmsBag = $this->givenSmsToSend();
@@ -107,16 +107,17 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
     /**
      * @test
      */
-    public function it_should_not_receive_details_for_smss()
+    public function it_should_not_receive_content_details_for_smss()
     {
         $smsFeature = self::$smsapiService->smsFeature();
         $sendSmsesBag = $this->givenSmssToSend();
         $sendSmsesBag->test = true;
 
+        /** @var Sms[] $results */
         $results = $smsFeature->sendSmss($sendSmsesBag);
 
         foreach ($results as $result) {
-            $this->assertNull($result->details);
+            $this->assertNull($result->content);
         }
     }
 
