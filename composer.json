@@ -27,7 +27,6 @@
         "ext-mbstring": "*",
         "phpunit/phpunit": "^6",
         "symfony/yaml": "^3",
-        "marc-mabe/php-enum": "^3",
         "doctrine/instantiator": "1.0.5",
         "phpdocumentor/reflection-docblock": "^4.3",
         "phpdocumentor/type-resolver": "^0.5",
