@@ -270,7 +270,7 @@ $client->setLogger($logger);
 
 ## Test package
 1. Download package: `composer create-project smsapi/php-client`
-2. Execute tests: `./vendor/bin/phing`
+2. Execute tests: `make test`
 
 ## Docs & Infos
 * [SMSAPI.COM API documentation](https://www.smsapi.com/docs)

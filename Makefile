@@ -9,7 +9,7 @@ prepare: ## load dependencies
 	docker-compose run -T php /usr/bin/composer update
 
 test: prepare ## run test
-	docker-compose run -T php php vendor/bin/phing -f build.xml test
+	docker-compose run -T php php vendor/bin/phpunit --configuration phpunit.xml
 
 test-suite: prepare ## run test against suite, ex: make test-suite SUITE="unit"
-	docker-compose run -T php php vendor/bin/phing -f build.xml test -Dsuite=$(SUITE)
+	docker-compose run -T php php vendor/bin/phpunit --configuration phpunit.xml --testsuite $(SUITE)
