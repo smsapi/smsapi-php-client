@@ -20,9 +20,4 @@ class Config
 
         return $config[$key] ?? null;
     }
-
-    public static function getServiceName(): ServiceName
-    {
-        return ServiceName::byValue(self::get('Service name'));
-    }
 }

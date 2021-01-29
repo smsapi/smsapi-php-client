@@ -27,7 +27,10 @@ class SmsToContactsGroupFeatureTest extends SmsapiClientIntegrationTestCase
     /** @var ContactGroup */
     private $contactGroup;
 
-    protected function setUp()
+    /**
+     * @before
+     */
+    public function createContacts()
     {
         $this->phoneNumber = PhoneNumberFixture::anyValidMobile();
 
@@ -42,7 +45,10 @@ class SmsToContactsGroupFeatureTest extends SmsapiClientIntegrationTestCase
         self::$smsapiService->contactsFeature()->groupsFeature()->assignContactToGroup($assignContactToGroupBag);
     }
 
-    protected function tearDown()
+    /**
+     * @after
+     */
+    public function removeContacts()
     {
         $contactsHelper = new ContactsHelper(self::$smsapiService->contactsFeature());
         $contactsHelper->deleteContact($this->contact->id);
