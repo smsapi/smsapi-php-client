@@ -37,11 +37,12 @@ class BaseUriDecorator implements ClientInterface
 
         $scheme = $baseUriParts['scheme'] ?? '';
         $host = $baseUriParts['host'] ?? '';
-        $path = $baseUriParts['path'] ?? '';
+        $basePath = $baseUriParts['path'] ?? '';
+        $basePath = rtrim($basePath, '/');
 
-        $uri = $uri->withScheme($scheme);
+        $uri = $uri->withPath($basePath . '/' . $uri->getPath());
         $uri = $uri->withHost($host);
-        $uri = $uri->withPath($path . $uri->getPath());
+        $uri = $uri->withScheme($scheme);
 
         return $request->withUri($uri);
     }
