@@ -1,0 +1,8 @@
+prepare-php8: ## load dependencies
+	docker-compose run -T php8 /usr/bin/composer update
+
+test-php8: prepare-php8 ## run test
+	docker-compose run -T php8 php vendor/bin/phpunit --configuration phpunit.xml
+
+test-suite-php8: prepare-php8 ## run test against suite, ex: make test-suite SUITE="unit"
+	docker-compose run -T php8 php vendor/bin/phpunit --configuration phpunit.xml --testsuite $(SUITE)

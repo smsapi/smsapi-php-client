@@ -7,3 +7,10 @@ services:
       - .:/app
     network_mode: host
 
+  php8:
+    build:
+      context: .
+      dockerfile: Dockerfile.php8
+    volumes:
+      - .:/app
+    network_mode: host

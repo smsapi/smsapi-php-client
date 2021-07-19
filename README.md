@@ -268,9 +268,42 @@ $logger = new class() implements LoggerInterface
 $client->setLogger($logger);
 ```
 
-## Test package
-1. Download package: `composer create-project smsapi/php-client`
-2. Execute tests: `./vendor/bin/phpunit --configuration phpunit.dist.xml`
+## How to test package
+
+Copy `phpunit.dist.xml` to `phpunit.xml`. You may adjust it to your needs then.
+
+Copy `tests-resources/config/config.dist.yml` to `tests-resources/config/config.yml`. Fill in SMSAPI service connection data.
+
+### How to run unit tests
+
+Unit tests are included into package build process and run against its current version on every commit (see `.travis.yml`).
+You can run those tests locally with ease using provided Docker configuration, simply run:
+
+```shell
+make test-suite SUITE="unit"
+```
+
+### How to run integration tests
+
+Note that integration test works within an account you have configured in `tests-resources/config/config.yml`. 
+Although those test have been written to self-cleanup on exit, in case of failure some trash data may stay.
+Use it with caution.
+
+```shell
+make test-suite SUITE="integration"
+```
+
+### How to run feature tests
+
+Feature test groups are defined in `phpunit.dist.xml`. To run tests execute:
+
+```shell
+make test-suite SUITE="feature-contacts"
+```
+
+### How to run tests against PHP8
+
+To run any of mentioned above against PHP8 use make targets with `php8` suffix. See `Makefile.php8`.
 
 ## Docs & Infos
 * [SMSAPI.COM API documentation](https://www.smsapi.com/docs)
