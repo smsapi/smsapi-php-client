@@ -1,0 +1,46 @@
+name: Tests
+
+on:
+    push:
+        branches:
+            - main
+            - master
+    pull_request:
+
+jobs:
+    tests:
+        name: PHP ${{ matrix.php }} / ${{ matrix.dependency-version }}
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                php:
+                    - 7.0
+                    - 7.1
+                    - 7.2
+                    - 7.3
+                    - 7.4
+                    - 8.0
+                    - 8.1
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v2
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php }}
+
+            -   id: composer-cache
+                run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+            -   name: Cache Composer dependencies
+                uses: actions/cache@v2
+                with:
+                    path: ${{ steps.composer-cache.outputs.dir }}
+                    key: composer-${{ runner.os }}-${{ matrix.php }}-${{ matrix.dependency-version }}-${{ hashFiles('composer.json') }}
+
+            -   name: Install dependencies
+                run: composer update --prefer-dist --no-interaction
+
+            -   name: Running unit tests
+                run: php vendor/bin/phpunit --configuration phpunit.dist.xml --testsuite unit
