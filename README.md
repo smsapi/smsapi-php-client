@@ -118,7 +118,7 @@ $apiToken = '0000000000000000000000000000000000000000';
 $service = $client->smsapiPlService($apiToken);
 ``` 
 
-## How to use a service with custom URI?
+### How to use *SMSAPI.SE* or *SMSAPI.BG* services?
 
 ```php
 <?php
@@ -135,7 +135,7 @@ require_once 'vendor/autoload.php';
 require_once 'client.php';
 
 $apiToken = '0000000000000000000000000000000000000000';
-$uri = 'http://example.com';
+$uri = 'https://smsapi.io/';
 
 $service = $client->smsapiComServiceWithUri($apiToken, $uri);
 ```
@@ -308,7 +308,11 @@ To run any of mentioned above against PHP8 use make targets with `php8` suffix. 
 ## Docs & Infos
 * [SMSAPI.COM API documentation](https://www.smsapi.com/docs)
 * [SMSAPI.PL API documentation](https://www.smsapi.pl/docs)
-* [Repository on GitHub](https://github.com/smsapi/smsapi-php-client)
-* [Package on Packagist](https://packagist.org/packages/smsapi/php-client)
+* [SMSAPI.SE API documentation](https://www.smsapi.se/docs)
+* [SMSAPI.BG API documentation](https://www.smsapi.bg/docs)
 * [SMSAPI.COM web page](https://smsapi.com)
 * [SMSAPI.PL web page](https://smsapi.pl)
+* [SMSAPI.SE web page](https://smsapi.se)
+* [SMSAPI.BG web page](https://smsapi.bg)
+* [Repository on GitHub](https://github.com/smsapi/smsapi-php-client)
+* [Package on Packagist](https://packagist.org/packages/smsapi/php-client)
