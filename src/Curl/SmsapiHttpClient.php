@@ -55,7 +55,9 @@ class SmsapiHttpClient implements SmsapiClient
 
     private function httpClient(): \Smsapi\Client\SmsapiHttpClient
     {
-        $this->httpClient->setLogger($this->logger);
+        if ($this->logger instanceof LoggerInterface) {
+            $this->httpClient->setLogger($this->logger);
+        }
 
         return $this->httpClient;
     }
