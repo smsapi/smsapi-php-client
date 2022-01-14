@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Smsapi\Client\Curl;
 
+use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 use Smsapi\Client\Curl\Discovery\CurlDiscovery;
 use Smsapi\Client\Curl\Discovery\GuzzleHttpHelpersDiscovery;
@@ -16,6 +17,8 @@ use Smsapi\Client\SmsapiClient;
  */
 class SmsapiHttpClient implements SmsapiClient
 {
+    use LoggerAwareTrait;
+
     private $httpClient;
 
     public function __construct()
@@ -30,28 +33,30 @@ class SmsapiHttpClient implements SmsapiClient
         );
     }
 
-    public function setLogger(LoggerInterface $logger)
-    {
-        $this->httpClient->setLogger($logger);
-    }
-
     public function smsapiPlService(string $apiToken): SmsapiPlService
     {
-        return $this->httpClient->smsapiPlService($apiToken);
+        return $this->httpClient()->smsapiPlService($apiToken);
     }
 
     public function smsapiPlServiceWithUri(string $apiToken, string $uri): SmsapiPlService
     {
-        return $this->httpClient->smsapiPlServiceWithUri($apiToken, $uri);
+        return $this->httpClient()->smsapiPlServiceWithUri($apiToken, $uri);
     }
 
     public function smsapiComService(string $apiToken): SmsapiComService
     {
-        return $this->httpClient->smsapiComService($apiToken);
+        return $this->httpClient()->smsapiComService($apiToken);
     }
 
     public function smsapiComServiceWithUri(string $apiToken, string $uri): SmsapiComService
     {
-        return $this->httpClient->smsapiComServiceWithUri($apiToken, $uri);
+        return $this->httpClient()->smsapiComServiceWithUri($apiToken, $uri);
+    }
+
+    private function httpClient(): \Smsapi\Client\SmsapiHttpClient
+    {
+        $this->httpClient->setLogger($this->logger);
+
+        return $this->httpClient;
     }
 }
