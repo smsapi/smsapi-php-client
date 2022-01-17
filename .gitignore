@@ -3,3 +3,4 @@
 /composer.lock
 /phpunit.xml
 /composer.phar
+.phpunit.result.cache
