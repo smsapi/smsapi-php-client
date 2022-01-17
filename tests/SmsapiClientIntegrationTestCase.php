@@ -33,10 +33,6 @@ class SmsapiClientIntegrationTestCase extends SmsapiClientTestCase
 
         $smsapiHttpClient = new SmsapiHttpClient();
 
-        if (Config::get('logger')) {
-            $smsapiHttpClient->setLogger(new TestLogger());
-        }
-
         $serviceName = Config::get('Service name');
         if ($serviceName === ServiceName::SMSAPI_PL) {
             self::$smsapiService = $smsapiHttpClient->smsapiPlServiceWithUri(self::$apiToken, $apiUri);
