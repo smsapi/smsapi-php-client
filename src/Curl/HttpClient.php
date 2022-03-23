@@ -88,7 +88,7 @@ class HttpClient implements ClientInterface
 
         $headerSize = curl_getinfo($httpClient, CURLINFO_HEADER_SIZE);
         $headerString = substr($response, 0, $headerSize);
-        $headers = array_filter(explode("\n", $headerString), 'trim');
+        $headers = array_filter(array_map('trim', explode("\n", $headerString)));
 
         $body = substr($response, $headerSize);
 
