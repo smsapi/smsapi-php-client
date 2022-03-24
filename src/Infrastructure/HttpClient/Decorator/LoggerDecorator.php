@@ -26,13 +26,20 @@ class LoggerDecorator implements ClientInterface
     public function sendRequest(RequestInterface $request): ResponseInterface
     {
         $this->logger->info('Request', [
+            'request' => $request,
             'method' => $request->getMethod(),
             'uri' => $request->getUri(),
+            'headers' => $request->getHeaders(),
+            'body' => $request->getBody()->getContents(),
         ]);
 
         $response = $this->client->sendRequest($request);
 
-        $this->logger->info('Response', ['response' => $response]);
+        $this->logger->info('Response', [
+            'response' => $response,
+            'headers' => $response->getHeaders(),
+            'body' => $response->getBody()->getContents(),
+        ]);
 
         return $response;
     }
