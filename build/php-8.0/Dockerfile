@@ -12,6 +12,6 @@ RUN pecl install xdebug-3.1.6 && \
     pecl clear-cache && \
     docker-php-ext-enable xdebug
 
-COPY --from=composer /usr/bin/composer /usr/bin/composer
+COPY --from=composer/composer:latest-bin /composer /usr/bin/composer
 
 WORKDIR /app/
