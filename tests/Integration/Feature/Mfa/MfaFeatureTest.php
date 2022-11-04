@@ -32,7 +32,7 @@ class MfaFeatureTest extends SmsapiClientIntegrationTestCase
     /**
      * @test
      */
-    public function it_should_not_create_mfa_for_an_ivalid_mobile_phone_number()
+    public function it_should_not_create_mfa_for_an_invalid_mobile_phone_number()
     {
         //given
         $mfaFeature = self::$smsapiService->mfaFeature();
@@ -97,7 +97,7 @@ class MfaFeatureTest extends SmsapiClientIntegrationTestCase
     {
         //given
         $mfaFeature = self::$smsapiService->mfaFeature();
-        $verificationMfaBag = new VerificationMfaBag('123 456', PhoneNumberFixture::anyValidMobile());
+        $verificationMfaBag = new VerificationMfaBag('invalid', PhoneNumberFixture::anyValidMobile());
         //expect
         $this->expectException(SmsapiClientException::class);
         $this->expectExceptionMessage('MFA code has invalid format');
