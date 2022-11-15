@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
         backupGlobals="false"
-        bootstrap="tests/bootstrap.php"
+        bootstrap="../tests/bootstrap.php"
         backupStaticAttributes="false"
         cacheTokens="true"
         colors="false"
@@ -17,54 +17,54 @@
 >
     <testsuites>
         <testsuite name="all">
-            <directory>tests</directory>
+            <directory>../tests</directory>
         </testsuite>
         <testsuite name="unit">
-            <directory>tests/Unit</directory>
+            <directory>../tests/Unit</directory>
         </testsuite>
         <testsuite name="integration">
-            <directory>tests/Integration</directory>
+            <directory>../tests/Integration</directory>
         </testsuite>
         <testsuite name="feature-contacts">
-            <directory>tests/Integration/Feature/Contacts</directory>
-            <directory>tests/Unit/Feature/Contacts</directory>
+            <directory>../tests/Integration/Feature/Contacts</directory>
+            <directory>../tests/Unit/Feature/Contacts</directory>
         </testsuite>
         <testsuite name="feature-hlr">
-            <directory>tests/Integration/Feature/Hlr</directory>
+            <directory>../tests/Integration/Feature/Hlr</directory>
         </testsuite>
         <testsuite name="feature-mms">
-            <directory>tests/Integration/Feature/Mms</directory>
+            <directory>../tests/Integration/Feature/Mms</directory>
         </testsuite>
         <testsuite name="feature-ping">
-            <directory>tests/Integration/Feature/Ping</directory>
+            <directory>../tests/Integration/Feature/Ping</directory>
         </testsuite>
         <testsuite name="feature-profile">
-            <directory>tests/Integration/Feature/Profile</directory>
+            <directory>../tests/Integration/Feature/Profile</directory>
         </testsuite>
         <testsuite name="feature-push">
-            <directory>tests/Unit/Feature/Push</directory>
+            <directory>../tests/Unit/Feature/Push</directory>
         </testsuite>
         <testsuite name="feature-sendernames">
-            <directory>tests/Integration/Feature/Sendernames</directory>
+            <directory>../tests/Integration/Feature/Sendernames</directory>
         </testsuite>
         <testsuite name="feature-shorturl">
-            <directory>tests/Integration/Feature/ShortUrl</directory>
+            <directory>../tests/Integration/Feature/ShortUrl</directory>
         </testsuite>
         <testsuite name="feature-sms">
-            <directory>tests/Integration/Feature/Sms</directory>
-            <directory>tests/Unit/Feature/Sms</directory>
+            <directory>../tests/Integration/Feature/Sms</directory>
+            <directory>../tests/Unit/Feature/Sms</directory>
         </testsuite>
         <testsuite name="feature-mfa">
-            <directory>tests/Integration/Feature/Mfa</directory>
+            <directory>../tests/Integration/Feature/Mfa</directory>
         </testsuite>
         <testsuite name="feature-subusers">
-            <directory>tests/Integration/Feature/Subusers</directory>
+            <directory>../tests/Integration/Feature/Subusers</directory>
         </testsuite>
         <testsuite name="feature-vms">
-            <directory>tests/Integration/Feature/Vms</directory>
+            <directory>../tests/Integration/Feature/Vms</directory>
         </testsuite>
         <testsuite name="feature-blacklist">
-            <directory>tests/Integration/Feature/Blacklist</directory>
+            <directory>../tests/Integration/Feature/Blacklist</directory>
         </testsuite>
     </testsuites>
 

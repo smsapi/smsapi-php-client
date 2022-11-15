@@ -1,5 +1,5 @@
 /tests-resources/config/config.yml
+/tests-resources/phpunit.xml
 /vendor
 /composer.lock
-/phpunit.xml
 .phpunit.result.cache
