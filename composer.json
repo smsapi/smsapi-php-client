@@ -31,7 +31,8 @@
         "phpdocumentor/reflection-docblock": "^4.3 || ^5.2.0",
         "phpdocumentor/type-resolver": "^0.5 || ^1.3.0",
         "guzzlehttp/psr7": "^1",
-        "ext-curl": "*"
+        "ext-curl": "*",
+        "roave/security-advisories": "dev-latest"
     },
     "suggest": {
         "ext-curl": "To use Curl HttpClient",
