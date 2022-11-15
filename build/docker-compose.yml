@@ -1,0 +1,17 @@
+version: '3.5'
+
+services:
+
+  php-7.0:
+    build:
+      context: php-7.0
+    volumes:
+      - ..:/app
+    network_mode: host
+
+  php-8.0:
+    build:
+      context: php-8.0
+    volumes:
+      - ..:/app
+    network_mode: host

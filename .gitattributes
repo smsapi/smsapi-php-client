@@ -1,14 +1,8 @@
 /.github                export-ignore
+/build                  export-ignore
 /tests                  export-ignore
 /tests-resources        export-ignore
 /.gitattributes         export-ignore
 /.gitignore             export-ignore
-/.docker-compose.yml    export-ignore
-/Dockerfile             export-ignore
-/Dockerfile.php8        export-ignore
-/Makefile               export-ignore
-/Makefile.php8          export-ignore
-/phpcs.xml              export-ignore
-/phpunit.dist.xml       export-ignore
 
 *.php diff=php

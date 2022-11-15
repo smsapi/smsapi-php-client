@@ -43,4 +43,4 @@ jobs:
                 run: composer update --prefer-dist --no-interaction
 
             -   name: Running unit tests
-                run: php vendor/bin/phpunit --configuration phpunit.dist.xml --testsuite unit
+                run: php vendor/bin/phpunit --configuration tests-resources/phpunit.dist.xml --testsuite unit
