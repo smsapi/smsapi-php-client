@@ -9,9 +9,44 @@ services:
       - ..:/app
     network_mode: host
 
+  php-7.1:
+    build:
+      context: php-7.1
+    volumes:
+      - ..:/app
+    network_mode: host
+
+  php-7.2:
+    build:
+      context: php-7.2
+    volumes:
+      - ..:/app
+    network_mode: host
+
+  php-7.3:
+    build:
+      context: php-7.3
+    volumes:
+      - ..:/app
+    network_mode: host
+
+  php-7.4:
+    build:
+      context: php-7.4
+    volumes:
+      - ..:/app
+    network_mode: host
+
   php-8.0:
     build:
       context: php-8.0
+    volumes:
+      - ..:/app
+    network_mode: host
+
+  php-8.1:
+    build:
+      context: php-8.1
     volumes:
       - ..:/app
     network_mode: host

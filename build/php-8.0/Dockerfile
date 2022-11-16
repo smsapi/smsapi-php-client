@@ -8,7 +8,7 @@ RUN apk update && \
         g++ \
         make
 
-RUN pecl install xdebug-3.0.2 && \
+RUN pecl install xdebug-3.1.6 && \
     pecl clear-cache && \
     docker-php-ext-enable xdebug
 

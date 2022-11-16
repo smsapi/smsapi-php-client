@@ -1,5 +1,5 @@
-FROM composer:2.2 as composer
-FROM php:7.0-cli-alpine
+FROM composer:latest as composer
+FROM php:8.1-cli-alpine
 
 RUN apk update && \
     apk upgrade && \
@@ -8,7 +8,7 @@ RUN apk update && \
         g++ \
         make
 
-RUN pecl install xdebug-2.8.1 && \
+RUN pecl install xdebug-3.1.6 && \
     pecl clear-cache && \
     docker-php-ext-enable xdebug
 
