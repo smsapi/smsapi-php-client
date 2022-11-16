@@ -7,6 +7,7 @@ namespace Smsapi\Client\Feature\Blacklist\Bag;
 /**
  * @api
  */
+#[\AllowDynamicProperties]
 class DeleteBlacklistedPhoneNumberBag
 {
     /** @var string */

@@ -10,6 +10,7 @@ namespace Smsapi\Client\Feature\Contacts\Groups\Permissions\Bag;
  * @property string $write
  * @property string $send
  */
+#[\AllowDynamicProperties]
 class UpdateGroupPermissionBag
 {
 

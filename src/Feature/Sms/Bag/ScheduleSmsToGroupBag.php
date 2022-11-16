@@ -21,6 +21,7 @@ use DateTimeInterface;
  * @property string $notifyUrl
  * @property bool $test
  */
+#[\AllowDynamicProperties]
 class ScheduleSmsToGroupBag
 {
 

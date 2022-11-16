@@ -7,6 +7,7 @@ namespace Smsapi\Client\Feature\Mms\Bag;
  * @api
  * @property bool $test
  */
+#[\AllowDynamicProperties]
 class SendMmsBag
 {
 

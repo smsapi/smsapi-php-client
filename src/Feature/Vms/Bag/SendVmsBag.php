@@ -13,6 +13,7 @@ namespace Smsapi\Client\Feature\Vms\Bag;
  * @property bool $checkIdx
  * @property bool $test
  */
+#[\AllowDynamicProperties]
 class SendVmsBag
 {
 

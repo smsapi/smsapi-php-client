@@ -10,6 +10,7 @@ use DateTimeInterface;
  * @api
  * @property DateTimeInterface $expireAt
  */
+#[\AllowDynamicProperties]
 class CreateBlacklistedPhoneNumberBag
 {
     /** @var string */

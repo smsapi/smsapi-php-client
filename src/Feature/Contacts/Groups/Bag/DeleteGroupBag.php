@@ -8,6 +8,7 @@ namespace Smsapi\Client\Feature\Contacts\Groups\Bag;
  * @api
  * @property bool $deleteContacts
  */
+#[\AllowDynamicProperties]
 class DeleteGroupBag
 {
 

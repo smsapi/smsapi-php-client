@@ -7,6 +7,7 @@ namespace Smsapi\Client\Feature\Contacts\Groups\Permissions\Bag;
 /**
  * @api
  */
+#[\AllowDynamicProperties]
 class FindGroupPermissionBag
 {
 

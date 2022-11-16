@@ -6,6 +6,7 @@ namespace Smsapi\Client\Feature\Sms\Sendernames\Bag;
 /**
  * @api
  */
+#[\AllowDynamicProperties]
 class MakeSendernameDefaultBag
 {
     public $sender;

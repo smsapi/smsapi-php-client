@@ -10,6 +10,7 @@ namespace Smsapi\Client\Feature\Contacts\Groups\Bag;
  * @property string $idx
  * @property integer $contactExpireAfter
  */
+#[\AllowDynamicProperties]
 class UpdateGroupBag
 {
 

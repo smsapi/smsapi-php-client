@@ -6,6 +6,7 @@ namespace Smsapi\Client\Feature\Subusers\Bag;
 /**
  * @api
  */
+#[\AllowDynamicProperties]
 class DeleteSubuserBag
 {
     public $id;

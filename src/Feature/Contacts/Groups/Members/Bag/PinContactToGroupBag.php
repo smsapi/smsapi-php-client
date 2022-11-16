@@ -7,6 +7,7 @@ namespace Smsapi\Client\Feature\Contacts\Groups\Members\Bag;
 /**
  * @api
  */
+#[\AllowDynamicProperties]
 class PinContactToGroupBag
 {
 

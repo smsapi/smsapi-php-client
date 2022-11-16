@@ -10,6 +10,7 @@ use Smsapi\Client\Feature\Bag\PaginationBag;
  * @api
  * @property string $q
  */
+#[\AllowDynamicProperties]
 class FindBlacklistedPhoneNumbersBag
 {
     use PaginationBag;

@@ -25,6 +25,7 @@ use DateTimeInterface;
  * @property string $param3
  * @property string $param4
  */
+#[\AllowDynamicProperties]
 class SendSmsBag
 {
     /** @var string */

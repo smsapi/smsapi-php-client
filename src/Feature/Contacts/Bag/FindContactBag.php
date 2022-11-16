@@ -7,6 +7,7 @@ namespace Smsapi\Client\Feature\Contacts\Bag;
 /**
  * @api
  */
+#[\AllowDynamicProperties]
 class FindContactBag
 {
 

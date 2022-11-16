@@ -50,3 +50,10 @@ services:
     volumes:
       - ..:/app
     network_mode: host
+
+  php-8.2:
+    build:
+      context: php-8.2
+    volumes:
+      - ..:/app
+    network_mode: host

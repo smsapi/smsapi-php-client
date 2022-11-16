@@ -11,6 +11,7 @@ namespace Smsapi\Client\Feature\Subusers\Bag;
  * @property bool $active
  * @property string $description
  */
+#[\AllowDynamicProperties]
 class UpdateSubuserBag
 {
     /** @var string */

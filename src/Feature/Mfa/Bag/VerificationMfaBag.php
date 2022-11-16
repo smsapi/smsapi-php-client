@@ -7,6 +7,7 @@ namespace Smsapi\Client\Feature\Mfa\Bag;
 /**
  * @api
  */
+#[\AllowDynamicProperties]
 class VerificationMfaBag
 {
     /**

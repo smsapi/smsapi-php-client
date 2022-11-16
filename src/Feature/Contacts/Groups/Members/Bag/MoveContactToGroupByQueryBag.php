@@ -15,6 +15,7 @@ namespace Smsapi\Client\Feature\Contacts\Groups\Members\Bag;
  * @property string $gender
  * @property string $birthdayDate
  */
+#[\AllowDynamicProperties]
 class MoveContactToGroupByQueryBag
 {
 

@@ -16,6 +16,7 @@ namespace Smsapi\Client\Feature\Contacts\Bag;
  * @property string $city
  * @property string $source
  */
+#[\AllowDynamicProperties]
 class UpdateContactBag
 {
 

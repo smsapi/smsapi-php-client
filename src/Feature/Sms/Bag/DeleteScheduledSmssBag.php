@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Smsapi\Client\Feature\Sms\Bag;
 
+/**
+ * @api
+ */
+#[\AllowDynamicProperties]
 class DeleteScheduledSmssBag
 {
     /** @var array */

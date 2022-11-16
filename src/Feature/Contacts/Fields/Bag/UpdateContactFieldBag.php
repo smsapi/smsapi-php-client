@@ -7,6 +7,7 @@ namespace Smsapi\Client\Feature\Contacts\Fields\Bag;
 /**
  * @api
  */
+#[\AllowDynamicProperties]
 class UpdateContactFieldBag
 {
 

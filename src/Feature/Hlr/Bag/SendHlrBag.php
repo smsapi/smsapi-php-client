@@ -8,6 +8,7 @@ namespace Smsapi\Client\Feature\Hlr\Bag;
  * @api
  * @property string $idx
  */
+#[\AllowDynamicProperties]
 class SendHlrBag
 {
 

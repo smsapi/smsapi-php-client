@@ -8,6 +8,7 @@ namespace Smsapi\Client\Feature\Contacts\Fields\Bag;
  * @api
  * @property string $type
  */
+#[\AllowDynamicProperties]
 class CreateContactFieldBag
 {
 

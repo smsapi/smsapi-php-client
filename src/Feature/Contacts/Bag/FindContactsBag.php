@@ -18,6 +18,7 @@ use Smsapi\Client\Feature\Bag\SortBag;
  * @property string $gender
  * @property string $birthdayDate
  */
+#[\AllowDynamicProperties]
 class FindContactsBag
 {
     use PaginationBag;

@@ -14,12 +14,13 @@ use DateTimeInterface;
  * @property DateTimeInterface $expire
  * @property string $description
  */
+#[\AllowDynamicProperties]
 class CreateShortUrlLinkBag
 {
 
     public static function withUrl(string $url): self
     {
-        $bag = new self();
+        $bag = new CreateShortUrlLinkBag();
         $bag->url = $url;
         return $bag;
     }

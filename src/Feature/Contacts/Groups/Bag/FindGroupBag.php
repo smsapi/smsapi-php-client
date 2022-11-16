@@ -7,6 +7,7 @@ namespace Smsapi\Client\Feature\Contacts\Groups\Bag;
 /**
  * @api
  */
+#[\AllowDynamicProperties]
 class FindGroupBag
 {
 

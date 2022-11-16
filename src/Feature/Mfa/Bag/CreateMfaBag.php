@@ -10,6 +10,7 @@ namespace Smsapi\Client\Feature\Mfa\Bag;
  * @property string $content
  * @property bool $fast
  */
+#[\AllowDynamicProperties]
 class CreateMfaBag
 {
     /**

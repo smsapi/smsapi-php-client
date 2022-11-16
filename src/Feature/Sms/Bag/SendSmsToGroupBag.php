@@ -20,6 +20,7 @@ use DateTimeInterface;
  * @property string $notifyUrl
  * @property bool $test
  */
+#[\AllowDynamicProperties]
 class SendSmsToGroupBag
 {
     /** @var string */
