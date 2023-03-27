@@ -21,36 +21,6 @@ jobs:
                     - 7.4
                     - 8.0
                     - 8.1
-        steps:
-            -   name: Checkout
-                uses: actions/checkout@v2
-
-            -   name: Setup PHP
-                uses: shivammathur/setup-php@v2
-                with:
-                    php-version: ${{ matrix.php }}
-
-            -   id: composer-cache
-                run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-
-            -   name: Cache Composer dependencies
-                uses: actions/cache@v2
-                with:
-                    path: ${{ steps.composer-cache.outputs.dir }}
-                    key: composer-${{ runner.os }}-${{ matrix.php }}-${{ hashFiles('composer.json') }}
-
-            -   name: Install dependencies
-                run: composer update --prefer-dist --no-interaction
-
-            -   name: Running unit tests
-                run: php vendor/bin/phpunit --configuration tests-resources/phpunit.dist.xml --testsuite unit
-
-    tests-rc:
-        name: PHP ${{ matrix.php }}
-        runs-on: ubuntu-latest
-        strategy:
-            matrix:
-                php:
                     - 8.2
         steps:
             -   name: Checkout
@@ -71,7 +41,7 @@ jobs:
                     key: composer-${{ runner.os }}-${{ matrix.php }}-${{ hashFiles('composer.json') }}
 
             -   name: Install dependencies
-                run: composer update --prefer-dist --no-interaction --ignore-platform-req=PHP
+                run: composer update --prefer-dist --no-interaction
 
             -   name: Running unit tests
                 run: php vendor/bin/phpunit --configuration tests-resources/phpunit.dist.xml --testsuite unit
