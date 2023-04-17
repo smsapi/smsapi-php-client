@@ -1,6 +1,6 @@
 # SMSAPI PHP Client
 
-[![Build Status](https://travis-ci.org/smsapi/smsapi-php-client.svg?branch=master)](https://travis-ci.org/smsapi/smsapi-php-client)
+[![Build Status](https://github.com/smsapi/smsapi-php-client/actions/workflows/tests.yml/badge.svg)](https://github.com/smsapi/smsapi-php-client/actions/workflows/tests.yml)
 [![Packagist - latest version](https://img.shields.io/packagist/v/smsapi/php-client.svg)](https://packagist.org/packages/smsapi/php-client)
 [![Packagist - downloads](https://img.shields.io/packagist/dt/smsapi/php-client.svg)](https://packagist.org/packages/smsapi/php-client)
 [![Packagist - license](https://img.shields.io/packagist/l/smsapi/php-client.svg)](https://packagist.org/packages/smsapi/php-client)
@@ -276,7 +276,7 @@ Copy `tests-resources/config/config.dist.yml` to `tests-resources/config/config.
 
 ### How to run unit tests
 
-Unit tests are included into package build process and run against its current version on every commit (see `.travis.yml`).
+Unit tests are included into package build process and run against its current version on every commit (see workflow Tests).
 You can run those tests locally with ease using provided Docker configuration, simply run:
 
 ```shell
