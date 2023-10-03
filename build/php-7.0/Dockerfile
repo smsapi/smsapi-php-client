@@ -8,10 +8,6 @@ RUN apk update && \
         g++ \
         make
 
-RUN pecl install xdebug-2.8.1 && \
-    pecl clear-cache && \
-    docker-php-ext-enable xdebug
-
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 WORKDIR /app/
