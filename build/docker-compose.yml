@@ -57,3 +57,10 @@ services:
     volumes:
       - ..:/app
     network_mode: host
+
+  php-8.3:
+    build:
+      context: php-8.3
+    volumes:
+      - ..:/app
+    network_mode: host
