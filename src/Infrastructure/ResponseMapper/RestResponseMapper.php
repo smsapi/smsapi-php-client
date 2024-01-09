@@ -40,6 +40,8 @@ class RestResponseMapper
             return new stdClass();
         } elseif ($statusCode == ResponseHttpCode::SERVICE_UNAVAILABLE) {
             throw ApiErrorException::withMessageAndStatusCode('Service unavailable', $statusCode);
+        } elseif ($statusCode == ResponseHttpCode::REQUEST_TIMEOUT) {
+            throw ApiErrorException::withMessageAndStatusCode('Request timed out', $statusCode);
         } elseif ($contents) {
             $object = $this->jsonDecode->decode($contents);
 
