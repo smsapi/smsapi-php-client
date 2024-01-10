@@ -47,7 +47,46 @@ class LegacyRequestMapperTest extends TestCase
     /**
      * @test
      */
-    public function it_should_create_request_with_parameters()
+    public function it_should_always_set_format_json_parameter()
+    {
+        $builtInParameters = [];
+        $userParameters = [];
+
+        $request = $this->mapper->map('anyPath', $builtInParameters, $userParameters);
+
+        $this->assertEquals('format=json', $request->getBody());
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_prepend_format_parameter_to_built_in_parameters_when_none()
+    {
+        $builtInParameters = [];
+        $userParameters = ['any2' => 'any'];
+
+        $request = $this->mapper->map('anyPath', $builtInParameters, $userParameters);
+
+        $this->assertEquals('format=json&any2=any', $request->getBody());
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_prepend_format_parameter_to_built_in_parameters_when_set()
+    {
+        $builtInParameters = ['any1' => 'any'];
+        $userParameters = [];
+
+        $request = $this->mapper->map('anyPath', $builtInParameters, $userParameters);
+
+        $this->assertEquals('format=json&any1=any', $request->getBody());
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_merge_both_built_in_and_user_parameters()
     {
         $builtInParameters = [
             'any1' => 'any',
@@ -58,6 +97,6 @@ class LegacyRequestMapperTest extends TestCase
 
         $request = $this->mapper->map('anyPath', $builtInParameters, $userParameters);
 
-        $this->assertEquals('any1=any&format=json&any2=any', $request->getBody());
+        $this->assertEquals('format=json&any1=any&any2=any', $request->getBody());
     }
 }
