@@ -25,10 +25,30 @@ class LegacyRequestMapperTest extends TestCase
     /**
      * @test
      */
-    public function it_should_create_post_request_with_parameters()
+    public function it_should_use_path_as_request_uri()
     {
         $path = 'anyPath';
 
+        $request = $this->mapper->map($path, []);
+
+        $this->assertEquals($path, $request->getUri());
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_send_request_as_post()
+    {
+        $request = $this->mapper->map('anyPath', []);
+
+        $this->assertEquals(RequestHttpMethod::POST, $request->getMethod());
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_create_request_with_parameters()
+    {
         $builtInParameters = [
             'any1' => 'any',
         ];
@@ -36,10 +56,7 @@ class LegacyRequestMapperTest extends TestCase
             'any2' => 'any',
         ];
 
-        $request = $this->mapper->map($path, $builtInParameters, $userParameters);
-
-        $this->assertEquals($path, $request->getUri());
-        $this->assertEquals(RequestHttpMethod::POST, $request->getMethod());
+        $request = $this->mapper->map('anyPath', $builtInParameters, $userParameters);
 
         $this->assertEquals('any1=any&format=json&any2=any', $request->getBody());
     }
