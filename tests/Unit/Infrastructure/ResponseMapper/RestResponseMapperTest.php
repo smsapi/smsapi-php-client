@@ -95,6 +95,18 @@ class RestResponseMapperTest extends SmsapiClientUnitTestCase
     /**
      * @test
      */
+    public function it_should_throw_exception_on_request_timeout()
+    {
+        $responseWithServiceUnavailable = new Response(ResponseHttpCode::REQUEST_TIMEOUT);
+
+        $this->expectException(ApiErrorException::class);
+        $this->expectExceptionMessage("Request timed out");
+        $this->restResponseMapper->map($responseWithServiceUnavailable);
+    }
+
+    /**
+     * @test
+     */
     public function it_should_throw_exception_on_unrecognized_status()
     {
         $responseWithUnrecognizedStatus = new Response(400);
