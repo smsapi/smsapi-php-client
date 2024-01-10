@@ -110,6 +110,8 @@ class SmsHttpFeature implements SmsFeature
 
     public function sendSmss(SendSmssBag $sendSmssBag): array
     {
+        $sendSmssBag->to = implode(',', $sendSmssBag->to);
+
         return array_map(
             [$this->dataFactoryProvider->provideSmsFactory(), 'createFromObject'],
             $this->makeRequest($sendSmssBag)->list
@@ -118,6 +120,8 @@ class SmsHttpFeature implements SmsFeature
 
     public function sendFlashSmss(SendSmssBag $sendSmssBag): array
     {
+        $sendSmssBag->to = implode(',', $sendSmssBag->to);
+
         return array_map(
             [$this->dataFactoryProvider->provideSmsFactory(), 'createFromObject'],
             $this->makeRequest($sendSmssBag)->list
@@ -146,6 +150,7 @@ class SmsHttpFeature implements SmsFeature
 
     public function scheduleSmss(ScheduleSmssBag $scheduleSmssBag): array
     {
+        $scheduleSmssBag->to = implode(',', $scheduleSmssBag->to);
         $scheduleSmssBag->dateValidate = true;
 
         return array_map(
