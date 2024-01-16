@@ -30,7 +30,7 @@ use DateTimeInterface;
 #[\AllowDynamicProperties]
 class ScheduleSmssBag
 {
-    /** @var array */
+    /** @var array|string */
     public $to;
 
     /** @var DateTimeInterface */

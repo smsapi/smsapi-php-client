@@ -20,4 +20,9 @@ class PhoneNumberFixture
     {
         return (string)((int)self::$validMobile + self::$i++);
     }
+
+    public static function xValidMobile(int $x): array
+    {
+        return array_map(function () {return self::anyValidMobile();}, range(1, $x));
+    }
 }

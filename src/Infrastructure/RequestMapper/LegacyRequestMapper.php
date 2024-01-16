@@ -34,9 +34,7 @@ class LegacyRequestMapper
         array $builtInParameters,
         array $userParameters
     ): Request {
-        $builtInParameters['format'] = 'json';
-
-        $parameters = new QueryParametersData($builtInParameters, $userParameters);
+        $parameters = new QueryParametersData(['format' => 'json'] + $builtInParameters, $userParameters);
 
         return new Request($method, $path, $this->queryFormatter->format($parameters));
     }
