@@ -25,6 +25,7 @@ use DateTimeInterface;
  * @property array $param2
  * @property array $param3
  * @property array $param4
+ * @property string $timeRestriction
  */
 #[\AllowDynamicProperties]
 class ScheduleSmssBag

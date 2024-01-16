@@ -24,6 +24,7 @@ use DateTimeInterface;
  * @property string $param2
  * @property string $param3
  * @property string $param4
+ * @property string $timeRestriction
  */
 #[\AllowDynamicProperties]
 class SendSmsBag

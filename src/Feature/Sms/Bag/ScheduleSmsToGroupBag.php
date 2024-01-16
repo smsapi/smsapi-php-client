@@ -20,6 +20,7 @@ use DateTimeInterface;
  * @property bool $normalize
  * @property string $notifyUrl
  * @property bool $test
+ * @property string $timeRestriction
  */
 #[\AllowDynamicProperties]
 class ScheduleSmsToGroupBag
