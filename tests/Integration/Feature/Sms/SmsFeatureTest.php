@@ -82,12 +82,12 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
     public function it_should_send_smss()
     {
         $smsFeature = self::$smsapiService->smsFeature();
-        $sendSmssBag = $this->givenSmssToSend();
+        $sendSmssBag = $this->givenSmssToSend(2);
         $sendSmssBag->test = true;
 
         $results = $smsFeature->sendSmss($sendSmssBag);
 
-        $this->assertCount(count($sendSmssBag->to), $results);
+        $this->assertCount(2, $results);
     }
 
     /**
@@ -96,12 +96,12 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
     public function it_should_send_flash_smss()
     {
         $smsFeature = self::$smsapiService->smsFeature();
-        $sendSmssBag = $this->givenSmssToSend();
+        $sendSmssBag = $this->givenSmssToSend(2);
         $sendSmssBag->test = true;
 
         $results = $smsFeature->sendFlashSmss($sendSmssBag);
 
-        $this->assertCount(count($sendSmssBag->to), $results);
+        $this->assertCount(2, $results);
     }
 
     /**
@@ -110,7 +110,7 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
     public function it_should_not_receive_content_details_for_smss()
     {
         $smsFeature = self::$smsapiService->smsFeature();
-        $sendSmsesBag = $this->givenSmssToSend();
+        $sendSmsesBag = $this->givenSmssToSend(2);
         $sendSmsesBag->test = true;
 
         /** @var Sms[] $results */
@@ -142,12 +142,12 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
     public function it_should_schedule_smss()
     {
         $smsFeature = self::$smsapiService->smsFeature();
-        $scheduleSmssBag = $this->givenSmssToSchedule();
+        $scheduleSmssBag = $this->givenSmssToSchedule(2);
         $scheduleSmssBag->test = true;
 
         $results = $smsFeature->scheduleSmss($scheduleSmssBag);
 
-        $this->assertCount(count($scheduleSmssBag->to), $results);
+        $this->assertCount(2, $results);
     }
 
     /**
@@ -171,7 +171,7 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
     public function it_should_delete_scheduled_smss()
     {
         $smsFeature = self::$smsapiService->smsFeature();
-        $scheduleSmssBag = $this->givenSmssToSchedule();
+        $scheduleSmssBag = $this->givenSmssToSchedule(2);
 
         $results = $smsFeature->scheduleSmss($scheduleSmssBag);
         $smsIds = array_map(function (Sms $sms) {
@@ -190,12 +190,9 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
         return SendSmsBag::withMessage($someReceiver, 'some message');
     }
 
-    private function givenSmssToSend(): SendSmssBag
+    private function givenSmssToSend(int $x): SendSmssBag
     {
-        $receivers = [
-            PhoneNumberFixture::anyValidMobile(),
-            PhoneNumberFixture::anyValidMobile(),
-        ];
+        $receivers = PhoneNumberFixture::xValidMobile($x);
         return SendSmssBag::withMessage($receivers, 'some message');
     }
 
@@ -206,13 +203,10 @@ class SmsFeatureTest extends SmsapiClientIntegrationTestCase
         return ScheduleSmsBag::withMessage($someDate, $someReceiver, 'some message');
     }
 
-    private function givenSmssToSchedule(): ScheduleSmssBag
+    private function givenSmssToSchedule(int $x): ScheduleSmssBag
     {
         $someDate = new DateTime('+1 day noon');
-        $receivers = [
-            PhoneNumberFixture::anyValidMobile(),
-            PhoneNumberFixture::anyValidMobile(),
-        ];
+        $receivers = PhoneNumberFixture::xValidMobile($x);
         return ScheduleSmssBag::withMessage($someDate, $receivers, 'some message');
     }
 }

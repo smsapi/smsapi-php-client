@@ -29,7 +29,7 @@ use DateTimeInterface;
 #[\AllowDynamicProperties]
 class SendSmssBag
 {
-    /** @var array */
+    /** @var array|string */
     public $to;
 
     /** @var string */
