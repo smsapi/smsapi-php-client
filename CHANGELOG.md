@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 ## [Unreleased]
 ### Fixed
 - sending/scheduling smses in large amount 
+### Added
+- PHP-8.3 support
 
 ## [3.0.9] - 2024-01-09
 ### Fixed
