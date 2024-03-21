@@ -7,6 +7,7 @@ namespace Smsapi\Client\Infrastructure\HttpClient\Decorator;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Smsapi\Client\Infrastructure\HttpClient\RequestException;
 
 /**
  * @internal
@@ -37,6 +38,10 @@ class BaseUriDecorator implements ClientInterface
 
         $scheme = $baseUriParts['scheme'] ?? '';
         $host = $baseUriParts['host'] ?? '';
+        if (!$scheme || !$host) {
+            throw RequestException::withRequest("Base URI has no scheme or host", $request);
+        }
+
         $basePath = $baseUriParts['path'] ?? '';
         $basePath = rtrim($basePath, '/');
 

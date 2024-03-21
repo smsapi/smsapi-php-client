@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Smsapi\Client\Curl\Exception;
 
-use Psr\Http\Client\RequestExceptionInterface;
+use Smsapi\Client\Infrastructure\HttpClient\RequestException as HttpClientRequestException;
 
 /**
  * @api
+ * @deprecated
+ * @see HttpClientRequestException
  */
-class RequestException extends ClientException implements RequestExceptionInterface
+class RequestException extends HttpClientRequestException
 {
 
 }

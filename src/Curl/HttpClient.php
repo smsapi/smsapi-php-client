@@ -8,8 +8,8 @@ use GuzzleHttp\Psr7\Response;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Smsapi\Client\Curl\Exception\NetworkException;
-use Smsapi\Client\Curl\Exception\RequestException;
+use Smsapi\Client\Infrastructure\HttpClient\NetworkException;
+use Smsapi\Client\Infrastructure\HttpClient\RequestException;
 
 /**
  * @internal

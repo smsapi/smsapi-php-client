@@ -27,10 +27,6 @@ class SmsapiClientIntegrationTestCase extends SmsapiClientTestCase
 
         $apiUri = Config::get('API URI');
 
-        if (!filter_var($apiUri, FILTER_VALIDATE_URL)) {
-            throw new RuntimeException('Invalid API URI');
-        }
-
         $smsapiHttpClient = new SmsapiHttpClient();
 
         $serviceName = Config::get('Service name');

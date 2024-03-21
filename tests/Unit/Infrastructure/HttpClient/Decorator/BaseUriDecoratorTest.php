@@ -7,6 +7,7 @@ namespace Smsapi\Client\Tests\Unit\Infrastructure\HttpClient\Decorator;
 use GuzzleHttp\Psr7\Request;
 use PHPUnit\Framework\TestCase;
 use Smsapi\Client\Infrastructure\HttpClient\Decorator\BaseUriDecorator;
+use Smsapi\Client\Infrastructure\HttpClient\RequestException;
 use Smsapi\Client\Tests\Helper\HttpClient\HttpClientRequestSpy;
 
 class BaseUriDecoratorTest extends TestCase
@@ -39,16 +40,18 @@ class BaseUriDecoratorTest extends TestCase
      *  ["example.com/base/", "example.com/base/endpoint"]
      *  ["example.com:80", "//example.com/endpoint"]
      *  ["example.com:80/base/", "//example.com/base/endpoint"]
+     *  ["any://"]
+     *  ["any:///"]
+     *  ["any://:80/"]
      */
-    public function send_request_without_base_schema(string $baseUri, string $expectedRequestUri)
+    public function send_request_without_base_schema_or_host(string $baseUri)
     {
         $sentRequestSpy = new HttpClientRequestSpy();
         $decorator = new BaseUriDecorator($sentRequestSpy, $baseUri);
 
+        $this->expectException(RequestException::class);
+        $this->expectExceptionMessage('Base URI has no scheme or host');
         $this->sendRequestToAnyEndpoint($decorator);
-
-        $this->assertEquals($expectedRequestUri, (string)$sentRequestSpy->getLastSentRequest()->getUri());
-        $this->assertEquals('', $sentRequestSpy->getLastSentRequest()->getUri()->getScheme());
     }
 
     /**
@@ -58,14 +61,6 @@ class BaseUriDecoratorTest extends TestCase
      *  ["any://example.com:80", "any://example.com/endpoint", "example.com"]
      *  ["any://example", "any://example/endpoint", "example"]
      *  ["any://example:80", "any://example/endpoint", "example"]
-     *  ["example.com", "example.com/endpoint", ""]
-     *  ["example.com:80", "//example.com/endpoint", "example.com"]
-     *  ["example", "example/endpoint", ""]
-     *  ["example:80", "//example/endpoint", "example"]
-     *  ["example.com/base/", "example.com/base/endpoint", ""]
-     *  ["example.com:80/base/", "//example.com/base/endpoint", "example.com"]
-     *  ["example/base/", "example/base/endpoint", ""]
-     *  ["example:80/base/", "//example/base/endpoint", "example"]
      */
     public function send_request_with_base_host(string $baseUri, string $expectedRequestUri, string $expectedRequestHost)
     {
@@ -81,30 +76,8 @@ class BaseUriDecoratorTest extends TestCase
     /**
      * @test
      * @testWith
-     *  ["any://", "/endpoint"]
-     *  ["any:///", "/endpoint"]
-     *  ["any://:80/", "/endpoint"] 
-     */
-    public function send_request_without_base_host(string $baseUri, string $expectedRequestUri)
-    {
-        $sentRequestSpy = new HttpClientRequestSpy();
-        $decorator = new BaseUriDecorator($sentRequestSpy, $baseUri);
-
-        $this->sendRequestToAnyEndpoint($decorator);
-
-        $this->assertEquals($expectedRequestUri, (string)$sentRequestSpy->getLastSentRequest()->getUri());
-        $this->assertEquals('', $sentRequestSpy->getLastSentRequest()->getUri()->getHost());
-    }
-
-    /**
-     * @test
-     * @testWith
      *  ["any://example.com:80", "any://example.com/endpoint", ""]
      *  ["any://example:80", "any://example/endpoint", ""]
-     *  ["example.com:80", "//example.com/endpoint", ""]
-     *  ["example:80", "//example/endpoint", ""]
-     *  ["example.com:80/base/", "//example.com/base/endpoint", ""]
-     *  ["example:80/base/", "//example/base/endpoint", ""]
      */
     public function send_request_with_base_port(string $baseUri, string $expectedRequestUri, string $expectedRequestPort)
     {
@@ -124,10 +97,6 @@ class BaseUriDecoratorTest extends TestCase
      *  ["any://example", "any://example/endpoint"]
      *  ["any://example.com/base", "any://example.com/base/endpoint"]
      *  ["any://example/base", "any://example/base/endpoint"]
-     *  ["example.com", "example.com/endpoint"]
-     *  ["example", "example/endpoint"]
-     *  ["example.com/base/", "example.com/base/endpoint"]
-     *  ["example/base/", "example/base/endpoint"]
      */
     public function send_request_without_base_port(string $baseUri, string $expectedRequestUri)
     {
@@ -144,21 +113,12 @@ class BaseUriDecoratorTest extends TestCase
      * @test
      * @testWith
      *  ["any://example.com/base", "any://example.com/base/endpoint", "/base/endpoint"]
-     *  ["any://example/base", "any://example/base/endpoint", "/base/endpoint"]
-     *  ["example.com/base", "example.com/base/endpoint", "example.com/base/endpoint"]
-     *  ["example/base", "example/base/endpoint", "example/base/endpoint"]
      *  ["any://example.com:80/base/", "any://example.com/base/endpoint", "/base/endpoint"]
      *  ["any://example:80/base", "any://example/base/endpoint", "/base/endpoint"]
-     *  ["example.com:80/base", "//example.com/base/endpoint", "/base/endpoint"]
-     *  ["example:80/base", "//example/base/endpoint", "/base/endpoint"]
      *  ["any://example.com/base/", "any://example.com/base/endpoint", "/base/endpoint"]
      *  ["any://example/base/", "any://example/base/endpoint", "/base/endpoint"]
-     *  ["example.com/base/", "example.com/base/endpoint", "example.com/base/endpoint"]
-     *  ["example/base/", "example/base/endpoint", "example/base/endpoint"]
      *  ["any://example.com:80/base/", "any://example.com/base/endpoint", "/base/endpoint"]
      *  ["any://example:80/base", "any://example/base/endpoint", "/base/endpoint"]
-     *  ["example.com:80/base/", "//example.com/base/endpoint", "/base/endpoint"]
-     *  ["example:80/base/", "//example/base/endpoint", "/base/endpoint"]
      */
     public function send_request_with_base_path(string $baseUri, string $expectedRequestUri, string $expectedRequestPath)
     {
@@ -176,20 +136,12 @@ class BaseUriDecoratorTest extends TestCase
      * @testWith
      *  ["any://example.com", "any://example.com/endpoint", "/endpoint"]
      *  ["any://example", "any://example/endpoint", "/endpoint"]
-     *  ["example.com", "example.com/endpoint", "example.com/endpoint"]
-     *  ["example", "example/endpoint", "example/endpoint"]
      *  ["any://example.com:80", "any://example.com/endpoint", "/endpoint"]
      *  ["any://example:80", "any://example/endpoint", "/endpoint"]
-     *  ["example.com:80", "//example.com/endpoint", "/endpoint"]
-     *  ["example:80", "//example/endpoint", "/endpoint"]
      *  ["any://example.com/", "any://example.com/endpoint", "/endpoint"]
      *  ["any://example/", "any://example/endpoint", "/endpoint"]
-     *  ["example.com/", "example.com/endpoint", "example.com/endpoint"]
-     *  ["example/", "example/endpoint", "example/endpoint"]
      *  ["any://example.com:80/", "any://example.com/endpoint", "/endpoint"]
      *  ["any://example:80/", "any://example/endpoint", "/endpoint"]
-     *  ["example.com:80/", "//example.com/endpoint", "/endpoint"]
-     *  ["example:80/", "//example/endpoint", "/endpoint"]
      */
     public function send_request_without_base_path(string $baseUri, string $expectedRequestUri, string $expectedRequestPath)
     {
