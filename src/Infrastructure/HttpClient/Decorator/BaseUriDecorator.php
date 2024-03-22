@@ -34,14 +34,14 @@ class BaseUriDecorator implements ClientInterface
     {
         $uri = $request->getUri();
 
+        if (!filter_var($this->baseUri, FILTER_VALIDATE_URL)) {
+            throw RequestException::withRequest("Invalid Base URI", $request);
+        }
+
         $baseUriParts = parse_url($this->baseUri);
 
         $scheme = $baseUriParts['scheme'] ?? '';
         $host = $baseUriParts['host'] ?? '';
-        if (!$scheme || !$host) {
-            throw RequestException::withRequest("Base URI has no scheme or host", $request);
-        }
-
         $basePath = $baseUriParts['path'] ?? '';
         $basePath = rtrim($basePath, '/');
 

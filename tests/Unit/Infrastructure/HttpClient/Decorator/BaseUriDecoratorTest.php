@@ -44,13 +44,13 @@ class BaseUriDecoratorTest extends TestCase
      *  ["any:///"]
      *  ["any://:80/"]
      */
-    public function send_request_without_base_schema_or_host(string $baseUri)
+    public function dont_send_request_without_base_schema_or_host(string $baseUri)
     {
         $sentRequestSpy = new HttpClientRequestSpy();
         $decorator = new BaseUriDecorator($sentRequestSpy, $baseUri);
 
         $this->expectException(RequestException::class);
-        $this->expectExceptionMessage('Base URI has no scheme or host');
+        $this->expectExceptionMessage('Invalid Base URI');
         $this->sendRequestToAnyEndpoint($decorator);
     }
 
