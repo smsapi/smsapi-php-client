@@ -36,10 +36,10 @@ class BaseUriDecoratorTest extends TestCase
     /**
      * @test
      * @testWith
-     *  ["example.com", "example.com/endpoint"]
-     *  ["example.com/base/", "example.com/base/endpoint"]
-     *  ["example.com:80", "//example.com/endpoint"]
-     *  ["example.com:80/base/", "//example.com/base/endpoint"]
+     *  ["example.com"]
+     *  ["example.com/base/"]
+     *  ["example.com:80"]
+     *  ["example.com:80/base/"]
      *  ["any://"]
      *  ["any:///"]
      *  ["any://:80/"]
