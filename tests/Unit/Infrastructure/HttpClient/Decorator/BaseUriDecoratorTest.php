@@ -19,8 +19,8 @@ class BaseUriDecoratorTest extends TestCase
      *  ["http://example.com", "http://example.com/endpoint", "http"]
      *  ["any://example.com", "any://example.com/endpoint", "any"]
      *  ["any://example.com/base/", "any://example.com/base/endpoint", "any"]
-     *  ["any://example.com:80", "any://example.com/endpoint", "any"]
-     *  ["any://example.com:80/base/", "any://example.com/base/endpoint", "any"]
+     *  ["any://example.com:80", "any://example.com:80/endpoint", "any"]
+     *  ["any://example.com:80/base/", "any://example.com:80/base/endpoint", "any"]
      */
     public function send_request_with_base_schema(string $baseUri, string $expectedRequestUri, string $expectedRequestSchema)
     {
@@ -58,9 +58,9 @@ class BaseUriDecoratorTest extends TestCase
      * @test
      * @testWith
      *  ["any://example.com", "any://example.com/endpoint", "example.com"]
-     *  ["any://example.com:80", "any://example.com/endpoint", "example.com"]
+     *  ["any://example.com:80", "any://example.com:80/endpoint", "example.com"]
      *  ["any://example", "any://example/endpoint", "example"]
-     *  ["any://example:80", "any://example/endpoint", "example"]
+     *  ["any://example:80", "any://example:80/endpoint", "example"]
      */
     public function send_request_with_base_host(string $baseUri, string $expectedRequestUri, string $expectedRequestHost)
     {
@@ -76,8 +76,8 @@ class BaseUriDecoratorTest extends TestCase
     /**
      * @test
      * @testWith
-     *  ["any://example.com:80", "any://example.com/endpoint", ""]
-     *  ["any://example:80", "any://example/endpoint", ""]
+     *  ["any://example.com:80", "any://example.com:80/endpoint", "80"]
+     *  ["any://example:80", "any://example:80/endpoint", "80"]
      */
     public function send_request_with_base_port(string $baseUri, string $expectedRequestUri, string $expectedRequestPort)
     {
@@ -113,12 +113,12 @@ class BaseUriDecoratorTest extends TestCase
      * @test
      * @testWith
      *  ["any://example.com/base", "any://example.com/base/endpoint", "/base/endpoint"]
-     *  ["any://example.com:80/base/", "any://example.com/base/endpoint", "/base/endpoint"]
-     *  ["any://example:80/base", "any://example/base/endpoint", "/base/endpoint"]
+     *  ["any://example.com:80/base/", "any://example.com:80/base/endpoint", "/base/endpoint"]
+     *  ["any://example:80/base", "any://example:80/base/endpoint", "/base/endpoint"]
      *  ["any://example.com/base/", "any://example.com/base/endpoint", "/base/endpoint"]
      *  ["any://example/base/", "any://example/base/endpoint", "/base/endpoint"]
-     *  ["any://example.com:80/base/", "any://example.com/base/endpoint", "/base/endpoint"]
-     *  ["any://example:80/base", "any://example/base/endpoint", "/base/endpoint"]
+     *  ["any://example.com:80/base/", "any://example.com:80/base/endpoint", "/base/endpoint"]
+     *  ["any://example:80/base", "any://example:80/base/endpoint", "/base/endpoint"]
      */
     public function send_request_with_base_path(string $baseUri, string $expectedRequestUri, string $expectedRequestPath)
     {
@@ -136,12 +136,12 @@ class BaseUriDecoratorTest extends TestCase
      * @testWith
      *  ["any://example.com", "any://example.com/endpoint", "/endpoint"]
      *  ["any://example", "any://example/endpoint", "/endpoint"]
-     *  ["any://example.com:80", "any://example.com/endpoint", "/endpoint"]
-     *  ["any://example:80", "any://example/endpoint", "/endpoint"]
+     *  ["any://example.com:80", "any://example.com:80/endpoint", "/endpoint"]
+     *  ["any://example:80", "any://example:80/endpoint", "/endpoint"]
      *  ["any://example.com/", "any://example.com/endpoint", "/endpoint"]
      *  ["any://example/", "any://example/endpoint", "/endpoint"]
-     *  ["any://example.com:80/", "any://example.com/endpoint", "/endpoint"]
-     *  ["any://example:80/", "any://example/endpoint", "/endpoint"]
+     *  ["any://example.com:80/", "any://example.com:80/endpoint", "/endpoint"]
+     *  ["any://example:80/", "any://example:80/endpoint", "/endpoint"]
      */
     public function send_request_without_base_path(string $baseUri, string $expectedRequestUri, string $expectedRequestPath)
     {

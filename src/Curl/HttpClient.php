@@ -34,7 +34,13 @@ class HttpClient implements ClientInterface
 
     private function prepareRequestHttpClient(RequestInterface $request)
     {
-        $url = sprintf("%s://%s%s", $request->getUri()->getScheme(), $request->getUri()->getHost(), $request->getRequestTarget());
+        $url = strtr("{scheme}://{host}{port}{path}", [
+            '{scheme}' => $request->getUri()->getScheme(),
+            '{host}' => $request->getUri()->getHost(),
+            '{port}' => $request->getUri()->getPort() ? ':' . $request->getUri()->getPort() : '',
+            '{path}' => $request->getRequestTarget()
+        ]);
+
         $httpClient = curl_init($url);
 
         if ($httpClient === false) {
