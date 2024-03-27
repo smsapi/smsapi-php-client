@@ -7,6 +7,7 @@ namespace Smsapi\Client\Infrastructure\HttpClient\Decorator;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Smsapi\Client\Infrastructure\HttpClient\RequestException;
 
 /**
  * @internal
@@ -33,14 +34,20 @@ class BaseUriDecorator implements ClientInterface
     {
         $uri = $request->getUri();
 
+        if (!filter_var($this->baseUri, FILTER_VALIDATE_URL)) {
+            throw RequestException::withRequest("Invalid Base URI", $request);
+        }
+
         $baseUriParts = parse_url($this->baseUri);
 
         $scheme = $baseUriParts['scheme'] ?? '';
         $host = $baseUriParts['host'] ?? '';
+        $port = $baseUriParts['port'] ?? null;
         $basePath = $baseUriParts['path'] ?? '';
         $basePath = rtrim($basePath, '/');
 
         $uri = $uri->withPath($basePath . '/' . $uri->getPath());
+        $uri = $uri->withPort($port);
         $uri = $uri->withHost($host);
         $uri = $uri->withScheme($scheme);
 

@@ -8,8 +8,8 @@ use GuzzleHttp\Psr7\Response;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Smsapi\Client\Curl\Exception\NetworkException;
-use Smsapi\Client\Curl\Exception\RequestException;
+use Smsapi\Client\Infrastructure\HttpClient\NetworkException;
+use Smsapi\Client\Infrastructure\HttpClient\RequestException;
 
 /**
  * @internal
@@ -34,7 +34,13 @@ class HttpClient implements ClientInterface
 
     private function prepareRequestHttpClient(RequestInterface $request)
     {
-        $url = sprintf("%s://%s%s", $request->getUri()->getScheme(), $request->getUri()->getHost(), $request->getRequestTarget());
+        $url = strtr("{scheme}://{host}{port}{path}", [
+            '{scheme}' => $request->getUri()->getScheme(),
+            '{host}' => $request->getUri()->getHost(),
+            '{port}' => $request->getUri()->getPort() ? ':' . $request->getUri()->getPort() : '',
+            '{path}' => $request->getRequestTarget()
+        ]);
+
         $httpClient = curl_init($url);
 
         if ($httpClient === false) {
