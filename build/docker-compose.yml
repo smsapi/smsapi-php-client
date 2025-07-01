@@ -64,3 +64,10 @@ services:
     volumes:
       - ..:/app
     network_mode: host
+
+  php-8.4:
+    build:
+      context: php-8.4
+    volumes:
+      - ..:/app
+    network_mode: host
