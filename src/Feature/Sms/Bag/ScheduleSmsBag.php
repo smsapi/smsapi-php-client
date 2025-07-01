@@ -68,7 +68,7 @@ class ScheduleSmsBag
     }
 
     /**
-     * @todo method signature to be changed in next major release as implicitly marking parameters as nullable is deprecated since PHP 8.4
+     * @todo method signature to be changed in next major release as implicitly marking parameter as nullable is deprecated since PHP 8.4
      */
     public function setExternalId(string $idx, bool $checkIdx = null): self
     {
