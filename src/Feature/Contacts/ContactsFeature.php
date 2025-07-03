@@ -19,6 +19,7 @@ interface ContactsFeature
 {
     /**
      * @return Contact[]
+     * @todo method signature to be changed in next major release as implicitly marking parameter as nullable is deprecated since PHP 8.4
      */
     public function findContacts(FindContactsBag $findContactsBag = null): array;
 

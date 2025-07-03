@@ -1,7 +1,7 @@
 .PHONY: prepare-php-8.3 test-php-8.3 test-suite-php-8.3
 
 prepare-php-8.3: ## load dependencies with php 8.3
-	docker-compose run -T php-8.3 /usr/bin/composer update --ignore-platform-req=PHP
+	docker-compose run -T php-8.3 /usr/bin/composer update
 
 test-php-8.3: prepare-php-8.3 ## run tests against php 8.3
 	docker-compose run -T php-8.3 php vendor/bin/phpunit --configuration tests-resources/phpunit.xml
