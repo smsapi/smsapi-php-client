@@ -71,3 +71,10 @@ services:
     volumes:
       - ..:/app
     network_mode: host
+
+  php-8.5:
+    build:
+      context: php-8.5
+    volumes:
+      - ..:/app
+    network_mode: host
