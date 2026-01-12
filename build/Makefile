@@ -17,7 +17,7 @@ help:
 	| awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 build: ## build php images
-	docker-compose build
+	docker compose build
 
 test: ## test all against all php images
 	$(MAKE) test-php-7.0
