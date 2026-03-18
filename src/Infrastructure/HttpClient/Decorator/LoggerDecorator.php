@@ -7,6 +7,7 @@ namespace Smsapi\Client\Infrastructure\HttpClient\Decorator;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -26,21 +27,47 @@ class LoggerDecorator implements ClientInterface
     public function sendRequest(RequestInterface $request): ResponseInterface
     {
         $this->logger->info('Request', [
-            'request' => $request,
             'method' => $request->getMethod(),
             'uri' => $request->getUri(),
-            'headers' => $request->getHeaders(),
-            'body' => $request->getBody()->getContents(),
+            'headers' => $this->sanitizeHeaders($request->getHeaders()),
+            'body' => $this->readBody($request->getBody()),
         ]);
 
         $response = $this->client->sendRequest($request);
 
         $this->logger->info('Response', [
-            'response' => $response,
             'headers' => $response->getHeaders(),
-            'body' => $response->getBody()->getContents(),
+            'body' => $this->readBody($response->getBody()),
         ]);
 
         return $response;
+    }
+
+    private function readBody(StreamInterface $stream): string
+    {
+        if ($stream->isSeekable()) {
+            $body = (string) $stream;
+            $stream->rewind();
+
+            return $body;
+        }
+
+        return '<non-seekable stream, size=' . ($stream->getSize() ?? 'unknown') . '>';
+    }
+
+    private function sanitizeHeaders(array $headers): array
+    {
+        $sensitiveHeaders = ['authorization', 'proxy-authorization'];
+
+        foreach ($headers as $name => $values) {
+            if (in_array(strtolower($name), $sensitiveHeaders, true)) {
+                $headers[$name] = array_map(function (string $value): string {
+                    $len = strlen($value);
+                    return sprintf('xxxx... (len = %d)', $len);
+                }, $values);
+            }
+        }
+
+        return $headers;
     }
 }
