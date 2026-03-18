@@ -77,6 +77,8 @@ class HttpClient implements ClientInterface
     {
         curl_setopt($httpClient, CURLOPT_HEADER, true);
         curl_setopt($httpClient, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($httpClient, CURLOPT_SSL_VERIFYPEER, true);
+        curl_setopt($httpClient, CURLOPT_SSL_VERIFYHOST, 2);
     }
 
     private function execute(RequestInterface $request, $httpClient): ResponseInterface
