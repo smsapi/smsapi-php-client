@@ -3,14 +3,7 @@ FROM php:8.0-cli-alpine
 
 RUN apk update && \
     apk upgrade && \
-    apk add --no-cache \
-        autoconf \
-        g++ \
-        make
-
-RUN pecl install xdebug-3.1.6 && \
-    pecl clear-cache && \
-    docker-php-ext-enable xdebug
+    apk add --no-cache make
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
