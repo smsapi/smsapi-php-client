@@ -49,9 +49,9 @@ class SendSmsToGroupBag
     }
 
     /**
-     * @todo method signature to be changed in next major release as implicitly marking parameter as nullable is deprecated since PHP 8.4
+     * @param bool|null $checkIdx
      */
-    public function setExternalId(string $idx, bool $checkIdx = null): self
+    public function setExternalId(string $idx, $checkIdx = null): self
     {
         $this->idx = [$idx];
         $this->checkIdx = $checkIdx;
@@ -63,7 +63,10 @@ class SendSmsToGroupBag
      * @deprecated
      * @see SendSmsToGroupBag::setExternalId()
      */
-    public function setIdx(array $idx, bool $checkIdx = null): self
+    /**
+     * @param bool|null $checkIdx
+     */
+    public function setIdx(array $idx, $checkIdx = null): self
     {
         $this->idx = $idx;
         $this->checkIdx = $checkIdx;
