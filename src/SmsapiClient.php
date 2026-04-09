@@ -12,7 +12,7 @@ use Smsapi\Client\Service\SmsapiPlService;
  */
 interface SmsapiClient extends LoggerAwareInterface
 {
-    const VERSION = '3.0.13';
+    const VERSION = '4.0.0';
 
     public function smsapiPlService(string $apiToken): SmsapiPlService;
 

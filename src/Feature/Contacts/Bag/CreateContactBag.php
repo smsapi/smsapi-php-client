@@ -19,15 +19,6 @@ namespace Smsapi\Client\Feature\Contacts\Bag;
 #[\AllowDynamicProperties]
 class CreateContactBag
 {
-    /**
-     * @deprecated
-     * @see withPhoneNumber
-     */
-    public static function withPhone(string $phoneNumber): self
-    {
-        return self::withPhoneNumber($phoneNumber);
-    }
-
     public static function withPhoneNumber(string $phoneNumber): self
     {
         $bag = new self();

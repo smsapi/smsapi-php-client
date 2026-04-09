@@ -58,19 +58,4 @@ class SendSmsToGroupBag
 
         return $this;
     }
-
-    /**
-     * @deprecated
-     * @see SendSmsToGroupBag::setExternalId()
-     */
-    /**
-     * @param bool|null $checkIdx
-     */
-    public function setIdx(array $idx, $checkIdx = null): self
-    {
-        $this->idx = $idx;
-        $this->checkIdx = $checkIdx;
-
-        return $this;
-    }
 }
