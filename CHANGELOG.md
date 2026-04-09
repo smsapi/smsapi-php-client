@@ -13,6 +13,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - deprecated `\Smsapi\Client\Curl\Exception\NetworkException`
 - deprecated `\Smsapi\Client\Curl\Exception\ClientException`
 
+## Changed
+- method signature `\Smsapi\Client\Feature\Contacts\ContactsFeature::findContacts`
+- method signature `\Smsapi\Client\Feature\Sms\Bag\ScheduleSmsBag::setExternalId`
+- method signature `\Smsapi\Client\Feature\Sms\Bag\ScheduleSmssBag::setExternalId`
+- method signature `\Smsapi\Client\Feature\Sms\Bag\ScheduleSmsToGroupBag::setExternalId`
+- method signature `\Smsapi\Client\Feature\Sms\Bag\SendSmsBag::setExternalId`
+- method signature `\Smsapi\Client\Feature\Sms\Bag\SendSmssBag::setExternalId`
+- method signature `\Smsapi\Client\Feature\Sms\Bag\SendSmsToGroupBag::setExternalId`
+
 ## [3.0.13] - 2026-01-12
 ### Added
 - PHP-8.5 support
