@@ -77,19 +77,4 @@ class ScheduleSmsBag
 
         return $this;
     }
-
-    /**
-     * @deprecated
-     * @see ScheduleSmsBag::setExternalId()
-     */
-    /**
-     * @param bool|null $checkIdx
-     */
-    public function setIdx(array $idx, $checkIdx = null): self
-    {
-        $this->idx = $idx;
-        $this->checkIdx = $checkIdx;
-
-        return $this;
-    }
 }

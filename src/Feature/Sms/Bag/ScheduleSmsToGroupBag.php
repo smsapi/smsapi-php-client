@@ -65,19 +65,4 @@ class ScheduleSmsToGroupBag
 
         return $this;
     }
-
-    /**
-     * @deprecated
-     * @see ScheduleSmsToGroupBag::setExternalId()
-     */
-    /**
-     * @param bool|null $checkIdx
-     */
-    public function setIdx(array $idx, $checkIdx = null): self
-    {
-        $this->idx = $idx;
-        $this->checkIdx = $checkIdx;
-
-        return $this;
-    }
 }
