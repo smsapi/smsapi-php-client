@@ -103,8 +103,7 @@ class HttpClient implements ClientInterface
 
     private function closeHttpClient($httpClient)
     {
-        // curl_close() has no effect since PHP 8.0 and is deprecated since PHP 8.5
-        if (PHP_VERSION_ID < 80000) {
+        if (is_resource($httpClient)) {
             curl_close($httpClient);
         }
     }
