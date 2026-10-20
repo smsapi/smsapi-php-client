@@ -45,7 +45,7 @@ class HttpClient implements ClientInterface
 
         if ($httpClient === false) {
             throw NetworkException::withRequest(
-                'Cannot prepare HTTP client: ' . curl_error($httpClient),
+                'Cannot prepare HTTP client',
                 $request
             );
         }
@@ -103,6 +103,9 @@ class HttpClient implements ClientInterface
 
     private function closeHttpClient($httpClient)
     {
-        curl_close($httpClient);
+        // curl_close() has no effect since PHP 8.0 and is deprecated since PHP 8.5
+        if (PHP_VERSION_ID < 80000) {
+            curl_close($httpClient);
+        }
     }
 }
