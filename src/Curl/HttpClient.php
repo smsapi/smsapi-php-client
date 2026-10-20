@@ -25,9 +25,11 @@ class HttpClient implements ClientInterface
         $this->prepareRequestHeaders($request, $httpClient);
         $this->prepareResponseOptions($httpClient);
 
-        $response = $this->execute($request, $httpClient);
-
-        $this->closeHttpClient($httpClient);
+        try {
+            $response = $this->execute($request, $httpClient);
+        } finally {
+            $this->closeHttpClient($httpClient);
+        }
 
         return $response;
     }
@@ -103,8 +105,7 @@ class HttpClient implements ClientInterface
 
     private function closeHttpClient($httpClient)
     {
-        // curl_close() has no effect since PHP 8.0 and is deprecated since PHP 8.5
-        if (PHP_VERSION_ID < 80000) {
+        if (is_resource($httpClient)) {
             curl_close($httpClient);
         }
     }

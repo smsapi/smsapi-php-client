@@ -1,4 +1,4 @@
-FROM composer:2.2 as composer
+FROM composer:2.2 AS composer
 FROM php:7.0-cli-alpine
 
 RUN apk update && \
