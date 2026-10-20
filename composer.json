@@ -37,5 +37,17 @@
     "suggest": {
         "ext-curl": "To use Curl HttpClient",
         "guzzlehttp/psr7": "To use Curl HttpClient and HTTP message factories"
+    },
+    "config": {
+        "policy": {
+            "advisories": {
+                "ignore-id": {
+                    "PKSA-xz3r-9gp4-4m1z": "CVE-2026-109413: Unbounded Recursion in the YAML Inline Lexer Lets a Single Document Crash the Process - require-dev dependency, not applicable",
+                    "PKSA-v5yj-8nmz-sk2q": "CVE-2026-45304: YAML Parser Exponential Memory Allocation via Recursive Collection-Alias Expansion - require-dev dependency, not applicable",
+                    "PKSA-ft77-7h5f-p3r6": "CVE-2026-45305: YAML Parser ReDoS via Catastrophic Backtracking in Parser::cleanup() Regex - require-dev dependency, not applicable",
+                    "PKSA-b14r-zh1d-vdrc": "CVE-2026-45133: YAML Parser Stack Exhaustion via Unbounded Recursion in Nested Blocks, Sequences, and Mappings - require-dev dependency, not applicable"
+                }
+            }
+        }
     }
 }
