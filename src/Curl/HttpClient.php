@@ -25,9 +25,11 @@ class HttpClient implements ClientInterface
         $this->prepareRequestHeaders($request, $httpClient);
         $this->prepareResponseOptions($httpClient);
 
-        $response = $this->execute($request, $httpClient);
-
-        $this->closeHttpClient($httpClient);
+        try {
+            $response = $this->execute($request, $httpClient);
+        } finally {
+            $this->closeHttpClient($httpClient);
+        }
 
         return $response;
     }
